@@ -15,10 +15,15 @@
 <div class="container-fluid" style="height:100%">
     <div class="row" style="height:10vw">
         <div class="col-4">
-            
+    
         </div>
         <div class="col-6">
-            <p></p>
+            <div class="text-center" id="mobile" style="display: none;">
+            <button onclick="goDirection('s')">Down</button>
+            <button onclick="goDirection('w')">Up</button>
+            <button onclick="goDirection('d')">Right</button>
+            <button onclick="goDirection('a')">Left</button>
+            </div>
         </div>
         <div class="col-2">
             <button id="switchInventory" onclick="switchInventory()">Normal Inventory</button>
