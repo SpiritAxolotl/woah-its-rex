@@ -1,0 +1,17 @@
+#inventory {
+    border-style: solid;
+    border-color: black;
+    font-size:1vw;
+}
+#switchInventory {
+    border-style: solid;
+    border-color: black;
+    font-size:1vw;
+    width:100%;
+}
+#blockDisplay {
+    font-size: 2vw;
+}
+#resetMine {
+    width:50%
+}

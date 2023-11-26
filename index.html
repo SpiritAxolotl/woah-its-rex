@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="css.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+    $( document ).ready(function() {
+        init();
+    });
+    </script>
+</head>
+<body>
+<div class="container-fluid" style="height:100%">
+    <div class="row" style="height:10vw">
+        <div class="col-4">
+            
+        </div>
+        <div class="col-6">
+            <p></p>
+        </div>
+        <div class="col-2">
+            <button id="switchInventory" onclick="switchInventory()">Normal Inventory</button>
+            <p id="inventory"></p>
+        </div>
+    </div>
+    <div class="row flex-grow-1" style="height:50%">
+        <div class="col-2 text-center"  style="border-style: solid;">
+            <button id="resetMine" onclick="resetMine()">Reset Mine</button>
+            <br><br>
+            <p id="mineResetProgress">0/1,000,000</p>
+            <p id="blocksMined">0 Blocks Mined</p>
+        </div>
+        <div class="col-2">
+
+        </div>
+        <div class="col-4">
+            <p id="blockDisplay" style="text-align:center;">text</p>
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+crossorigin="anonymous"></script>
+</body>
