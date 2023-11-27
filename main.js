@@ -435,6 +435,8 @@ function mineReset() {
             }
         }
     }
+    furthestLeft = curX - 1;
+    furthestRight = curX + 1;
     canMine = true;
     blocksRevealedThisReset = 0;
 }
