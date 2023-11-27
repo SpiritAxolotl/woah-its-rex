@@ -388,7 +388,7 @@ function playSound(type) {
         curDirection = ""
     } else {
         clearInterval(loopTimer);
-        loopTimer = setInterval(movePlayer, 5, direction);
+        loopTimer = setInterval(movePlayer, 20, direction);
         curDirection = direction;
     }
     
