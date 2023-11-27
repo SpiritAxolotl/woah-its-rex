@@ -94,6 +94,8 @@ function movePlayer(dir) {
 }
 document.addEventListener('keydown', (event) => {
     var name = event.key;
+    clearInterval(loopTimer);
+    curDirection = "";
     movePlayer(name);
   }, false);
 
