@@ -273,7 +273,7 @@ let probabilityTable = {
       let blockToGive = "";
       let summedProbability = 0;
       let chosenValue = Math.random();
-      chosenValue /= 1000;
+      chosenValue /= 1;
       for (var propertyName in probabilityTable) {
         summedProbability += probabilityTable[propertyName][0];
         if (chosenValue < summedProbability) {
