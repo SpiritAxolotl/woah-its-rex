@@ -1,7 +1,11 @@
-#inventory {
+.inventoryDisplay {
     border-style: solid;
     border-color: black;
     font-size:1vw;
+    margin:5px;
+}
+.oreDisplay {
+    margin:0.1vh;
 }
 #switchInventory {
     border-style: solid;
