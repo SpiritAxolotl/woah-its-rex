@@ -1,11 +1,13 @@
 let mine = [];
-let curX = 5;
+let curX = 1000000000;
 let curY = 0;
+let furthestLeft = 1000000000
+let furthestRight = 1000000000;
 let currentDisplay = ""
 let facing = "down";
 let totalMined = 0;
-let blocksRevealed = 0;
-
+let blocksRevealedThisReset = 0;
+let canMine = true;
 
 function init () {
     createInventory();
@@ -22,75 +24,73 @@ function init () {
     localStorage.setItem("playedBefore", true);
 }
 function createMine() {
-    for (let i = 0; i < 1000; i++) {
-        mine.push([]);
-        mine[0][i] = "🟩";
-    }
-    for (let i = 1; i < mine.length; i++) {
-        mine[i][999] = "⬜";
-        mine[i].fill("⬜");
-    }
-    mine[0][5] = "⬛";
-    mine[1][5] = "🟫"
+    mine.push([]);
+    mine[0][1000000000] = "⛏️";
+    displayArea();
+    checkAllAround();
     displayArea();
 }
 
 function movePlayer(dir) {
-    switch (dir) {
-        case "s":
-            if (curY < 999) {
-                mine[curY][curX] = "⚪"
-                curY ++;
-                checkAllAround(); 
-                if (mine[curY][curX] != "⚪") {
-                    totalMined++;
-                    giveBlock(mine[curY][curX]);
-                }
-                mine[curY][curX] = "⬛";
-            }  
-            break;
-        case "w":
-            if (curY > 0) {
-                mine[curY][curX] = "⚪"
-                curY --;
-                checkAllAround(); 
-                if (mine[curY][curX] != "⚪") {
-                    totalMined++;
-                    giveBlock(mine[curY][curX]);
-                }
-                mine[curY][curX] = "⬛";
-            }  
-            break;
-        case "a":
-            if (curX > 0) {
-                mine[curY][curX] = "⚪"
-                curX --;
-                checkAllAround(); 
-                if (mine[curY][curX] != "⚪") {
-                    giveBlock(mine[curY][curX]);
-                    totalMined++;
-                }
-                mine[curY][curX] = "⬛"; 
-            }  
-            break;
-        case "d":
-            if (curX < 999) {
-                mine[curY][curX] = "⚪"
-                curX++;
-                checkAllAround(); 
-                if (mine[curY][curX] != "⚪") {
-                    totalMined++;
-                    giveBlock(mine[curY][curX]);
-                }
-                mine[curY][curX] = "⬛";
-            }  
-            break;
-        default:
-            console.log("wrong key!!");
+    if (canMine) {
+        switch (dir) {
+            case "s":
+                    mine[curY][curX] = "⚪"
+                    curY ++;
+                    checkAllAround(); 
+                    if (mine[curY][curX] != "⚪") {
+                        totalMined++;
+                        giveBlock(mine[curY][curX]);
+                    }
+                    mine[curY][curX] = "⛏️";
+                break;
+            case "w":
+                if (curY > 0) {
+                    mine[curY][curX] = "⚪"
+                    curY --;
+                    checkAllAround(); 
+                    if (mine[curY][curX] != "⚪") {
+                        totalMined++;
+                        giveBlock(mine[curY][curX]);
+                    }
+                    mine[curY][curX] = "⛏️";
+                }  
+                break;
+            case "a":
+                if (curX > 0) {
+                    mine[curY][curX] = "⚪"
+                    curX --;
+                    checkAllAround(); 
+                    if (mine[curY][curX] != "⚪") {
+                        giveBlock(mine[curY][curX]);
+                        totalMined++;
+                    }
+                    mine[curY][curX] = "⛏️"; 
+                    if (curX < furthestLeft) {
+                        furthestLeft = curX;
+                    }
+                }  
+                break;
+            case "d":
+                    mine[curY][curX] = "⚪"
+                    curX++;
+                    checkAllAround(); 
+                    if (mine[curY][curX] != "⚪") {
+                        totalMined++;
+                        giveBlock(mine[curY][curX]);
+                    }
+                    mine[curY][curX] = "⛏️";
+                    if (curX > furthestRight) {
+                        furthestRight = curX;
+                    }
+                break;
+            default:
+                console.log("wrong key!!");
+        }
+        document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: -" + curY;
+        displayArea();
     }
-    document.getElementById("location").innerHTML = "X: " + curX + " | Y: -" + curY;
-    displayArea();
-    //saveData();
+    
 }
 document.addEventListener('keydown', (event) => {
     var name = event.key;
@@ -101,43 +101,46 @@ document.addEventListener('keydown', (event) => {
   function displayArea() {
     let output ="";
     let constraints = getParams(5, 5);
-    for (let r = curY - constraints[2]; r <= curY + constraints[3]; r++) {
-        for (let c = curX - constraints[0]; c <= curX + constraints[1]; c++) {
+    for (let r = curY - constraints[1]; r <= curY + 5 + (5-constraints[1]); r++) {
+        if (mine[r] == undefined) {
+            mine.push([]);
+        }
+        for (let c = curX - constraints[0]; c <= curX + 5 + (5-constraints[0]); c++) {
+            if (mine[r][c] == undefined) {
+                if (r == 0) {
+                    mine[r][c] = "🟩";
+                } else {
+                    mine[r][c] = "⬜";
+                }
+                
+            }
+      }
+    }
+    
+    for (let r = curY - constraints[1]; r <= curY + 5 + (5-constraints[1]); r++) {
+        for (let c = curX - constraints[0]; c <= curX + 5 + (5-constraints[0]); c++) {
             output += mine[r][c];
         }
         output += "<br>";
     }
     document.getElementById("blockDisplay").innerHTML = output;
-
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealed + "/1,000,000 Blocks Revealed";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/100,000 Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
   }
   function getParams(distanceX, distanceY) {
     let displayLeft = 0;
-    let displayRight = 0;
     let displayUp = 0;
-    let displayDown = 0;
-    if (curX > 5) {
+    if (curX > distanceX) {
         displayLeft = distanceX;
     } else {
         displayLeft = curX;
     }
-    if (curX < 994) {
-        displayRight = distanceX;
-    } else {
-        displayRight = 999 - curX;
-    }
-    if (curY > 5) {
+    if (curY > distanceY) {
         displayUp = distanceY;
     } else {
         displayUp = curY;
     }
-    if (curY < 994) {
-        displayDown = distanceY;
-    } else {
-        displayDown = 999 - curY;
-    }
-    return [displayLeft, displayRight, displayUp, displayDown];
+    return [displayLeft, displayUp];
   }
 
 
@@ -145,26 +148,27 @@ document.addEventListener('keydown', (event) => {
     if (curX - 1 >= 0) {
         if (mine[curY][curX - 1] == "⬜") {
             mine[curY][curX - 1] = generateBlock();
-            blocksRevealed++;
+            blocksRevealedThisReset++;
         }
     }
-    if (curX + 1 < 1000) {
-        if (mine[curY][curX + 1] == "⬜") {
+    if (mine[curY][curX + 1] == "⬜") {
             mine[curY][curX + 1] = generateBlock();
-            blocksRevealed++;
+            blocksRevealedThisReset++;
         }
-    }
-    if (curY + 1 < 1000) {
-        if (mine[curY + 1][curX] == "⬜") {
+    if (mine[curY + 1][curX] == "⬜") {
             mine[curY + 1][curX] = generateBlock();
-            blocksRevealed++;
+            blocksRevealedThisReset++;
         }
-    }
+    
     if (curY - 1 >= 0) {
         if (mine[curY - 1][curX] == "⬜") {
             mine[curY - 1][curX] = generateBlock();
-            blocksRevealed++;
+            blocksRevealedThisReset++;
         }
+    }
+    if (blocksRevealedThisReset > 100000) {
+        canMine = false;
+        mineReset();
     }
   }
 
@@ -322,12 +326,12 @@ function switchInventory(){
 function resetMine() {
     clearInterval(loopTimer);
     curDirection = "";
-    mine = [];
-    curX = 5;
+    mine = [[]];
+    curX = 1000000000;
     curY = 0;
-    blocksRevealed = 0;
+    blocksRevealedThisReset = 0;
     createMine();
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealed + "/1,000,000 Blocks Revealed";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/100,000 Blocks Revealed This Reset";
 }
 
 function saveData(block) {
@@ -350,7 +354,7 @@ function loadData() {
         }
     }
     totalMined = JSON.parse(localStorage.getItem("amountMined"));
-    document.getElementById("blocksMined").innerHTML = totalMined + "Blocks Mined";
+    document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
 }
 
 function playSound(type) {
@@ -385,7 +389,7 @@ function playSound(type) {
         curDirection = ""
     } else {
         clearInterval(loopTimer);
-        loopTimer = setInterval(movePlayer, 10, direction);
+        loopTimer = setInterval(movePlayer, 5, direction);
         curDirection = direction;
     }
     
@@ -416,6 +420,24 @@ function moveOne(dir) {
     curDirection = "";
 }
 
+function deleteExcessIndices() {
+    if (curY > 1000) {
+        mine[curY - 1000] = [];
+    }
+}
+
+function mineReset() {
+    let constraints = getParams(0, 1000);
+    if (furthestLeft < curX - 1000) {
+        for (let r = constraints[1]; r < curY + 1000; r++) {
+            if (mine[r] != undefined) {
+                mine[r].fill(undefined, furthestLeft, curX-1000);
+            }
+        }
+    }
+    canMine = true;
+    blocksRevealedThisReset = 0;
+}
 
 
 
