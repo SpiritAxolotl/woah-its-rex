@@ -187,7 +187,7 @@ if (Math.floor(Math.random() * 50) == 25) {
         saveData(type);
 }
 let probabilityTable = {
-"👁️" : [1/360000000, [0,0,0,0]],
+"👁️" : [1/192000000, [0,0,0,0]],
 "🪩" : [1/99999999, [0,0,0,0]], 
 "👀" : [1/95520089, [0,0,0,0]],
 "🥗" : [1/80000000, [0,0,0,0]],
@@ -293,7 +293,7 @@ let probabilityTable = {
         } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 2000000) {
             spawnMessage(blockToGive);
             playSound("transcendent");
-        } else if (1 / (probabilityTable[blockToGive][0]) >= 100000) {
+        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 100000) {
             spawnMessage(blockToGive);
             playSound("exotic");
         }
@@ -382,9 +382,10 @@ function playSound(type) {
   function goDirection(direction) {
     if (curDirection == direction) {
         clearInterval(loopTimer);
+        curDirection = ""
     } else {
         clearInterval(loopTimer);
-        loopTimer = setInterval(movePlayer, 50, direction);
+        loopTimer = setInterval(movePlayer, 10, direction);
         curDirection = direction;
     }
     
@@ -408,6 +409,11 @@ function spawnMessage(block) {
     setTimeout(() => {
         document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here"
       }, 10000);
+}
+function moveOne(dir) {
+    clearInterval(loopTimer);
+    movePlayer(dir);
+    curDirection = "";
 }
 
 

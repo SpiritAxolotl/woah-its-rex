@@ -7,6 +7,9 @@
 .oreDisplay {
     margin:0.1vh;
 }
+.movementButton {
+    width:5vw;
+}
 #switchInventory {
     border-style: solid;
     border-color: black;
