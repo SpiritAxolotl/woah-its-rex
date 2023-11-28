@@ -3,12 +3,18 @@
     border-color: black;
     font-size:1vw;
     margin:5px;
+    height:10%;
+    overflow-y: scroll;
 }
 .oreDisplay {
     margin:0.1vh;
 }
 .movementButton {
     width:6vw;
+}
+.craftingAmountsDisplay {
+    font-size: 1vw;
+    border-style: solid;
 }
 #switchInventory {
     border-style: solid;
