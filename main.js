@@ -425,25 +425,41 @@ function playSound(type) {
     let audio;
     switch (type) {
         case "exotic":
-            audio = new Audio("https://static.wikia.nocookie.net/rex-3/images/e/e0/Achillgoesdownyourspine.mp3");
+            audio = new Audio("Achillgoesdownyourspine.mp3.mpeg");
             break;
         case "transcendent":
-            audio = new Audio("https://static.wikia.nocookie.net/rex-3/images/8/89/Transcendent.mp3");
+            audio = new Audio("Transcendent.mp3.mpeg");
             break;
         case "enigmatic":
-            audio = new Audio("https://static.wikia.nocookie.net/rex-3/images/a/a2/Yourvisionbeginstoblur.mp3");
+            audio = new Audio("Yourvisionbeginstoblur.mp3.mpeg");
             break;
         case "unfathomable":
-            audio = new Audio("https://static.wikia.nocookie.net/rex-3/images/c/c7/Unfathsound.mp3");
+            audio = new Audio("Unfathsound.mp3.mpeg");
             break;
         case "otherworldly":
-            audio = new Audio("https://static.wikia.nocookie.net/rex-3/images/4/49/Otherworld.mp3");
+            audio = new Audio("Otherworld.mp3.mpeg");
             break;
         }
-        audio.volume=0.2;
+        audio.volume = 0.2;
         audio.play();
   }
-
+/*let chill;
+let ringing;
+let visionblur;
+let unfath;
+let ow;
+function tS() {
+    chill = new Audio("Achillgoesdownyourspine.mp3.mpeg");
+    chill.volume = 0.2;
+    ringing = new Audio("Transcendent.mp3.mpeg");
+    ringing.volume = 0.2;
+    visionblur = new Audio("Yourvisionbeginstoblur.mp3.mpeg");
+    visionblur.volume = 0.2;
+    unfath = new Audio("Unfathsound.mp3.mpeg");
+    unfath.volume = 0.2;
+    ow = new Audio("Otherworld.mp3.mpeg");
+    ow.volume = 0.2;
+}*/
 
   let loopTimer = null;
   let curDirection = "";
@@ -472,9 +488,11 @@ function createInventory() {
         }
     }
 }
+let spawnOre;
 function spawnMessage(block) {
     document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0]));
-    setTimeout(() => {
+    clearTimeout(spawnOre);
+    spawnOre = setTimeout(() => {
         document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here"
       }, 20000);
 }

@@ -4,12 +4,12 @@ async function rollAbilities() {
             canMine = await(pickaxeAbility3(curX, curY));
         }
     } else if (currentPickaxe == "Name2") {
-        if (Math.round(Math.random() * 40) == 20) {
+        if (Math.round(Math.random() * 20) == 10) {
             canMine = await(pickaxeAbility1(curX, curY, 3));
         }
     }
     if (currentPickaxe == "Name3") {
-    if (Math.round(Math.random() * 40) == 20) {
+    if (Math.round(Math.random() * 30) == 15) {
         canMine = await(pickaxeAbility2(curX, curY));
     }
 }
@@ -43,8 +43,8 @@ function pickaxeAbility1(x, y, size) {
 }
 function pickaxeAbility2(x, y) {
     return new Promise((resolve) => {
-        let thisLuck = 1.5;
-        let constraints = getParams(5, 5);
+        let thisLuck = 1000;
+        let constraints = getParams(6, 6);
         canMine = false;
         let origin = [y, x];
     for (let i = 0; i < constraints[0]; i++) {
@@ -88,7 +88,7 @@ function pickaxeAbility2(x, y) {
 }
 function pickaxeAbility3(x, y) {
     return new Promise((resolve) => {
-        let thisLuck = 1.1;
+        let thisLuck = 1000;
         let constraints = getParams(5, 5);
         canMine = false;
         let origin = [y, x];
