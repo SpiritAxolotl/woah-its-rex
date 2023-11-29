@@ -19,7 +19,7 @@ function saveAllData() {
         dataStorage[0].push([propertyName, [probabilityTable[propertyName][1]]]);
     }
     dataStorage[1].push([pickaxes, currentPickaxe]);
-    dataStorage[2].push([totalMined])
+    dataStorage[2].push(totalMined)
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
 
@@ -37,7 +37,7 @@ function loadAllData() {
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
     
     for (var propertyName in probabilityTable) {
-            if (document.getElementById(propertyName + 1) != null) {
+            if (document.getElementById(propertyName + "1") != null) {
                 for (let i = 1; i < 5; i++) {
                     updateInventory(propertyName, i)
                     if (probabilityTable[propertyName][1][i - 1] > 0) {

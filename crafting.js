@@ -187,7 +187,7 @@ function createRecipes() {
     for (let i = 0; i < allRecipes[3].length; i++) {
         let element = document.createElement('p');
         element.id = (allRecipes[3][i][0] + ("recipe3display"));
-        element.innerHTML = allRecipes[2][i][0] + " " + probabilityTable[allRecipes[3][i][0]][1][0] + "/" + allRecipes[3][i][1];
+        element.innerHTML = allRecipes[3][i][0] + " " + probabilityTable[allRecipes[3][i][0]][1][0] + "/" + allRecipes[3][i][1];
         if (probabilityTable[allRecipes[3][i][0]][1][0] >= allRecipes[3][i][1]) {
             element.style.color = "green";
         } else {
@@ -229,14 +229,15 @@ function updateActiveRecipe() {
 function craftPickaxe(num) {
     canCraft = true;
     if (!(pickaxes[num][1])) {
-        for (let i = 0; i < allRecipes[num - 1][0].length; i++) {
+        for (let i = 0; i < allRecipes[num - 1].length; i++) {
+            console.log(allRecipes[num - 1][i][1]);
             if (!(probabilityTable[allRecipes[num-1][i][0]][1][0] >= allRecipes[num - 1][i][1])) {
                 canCraft = false;
                 break;
             } 
         }
         if (canCraft) {
-            for (let i = 0; i < allRecipes[num - 1][0].length; i++) {
+            for (let i = 0; i < allRecipes[num - 1].length; i++) {
                 probabilityTable[allRecipes[num-1][i][0]][1][0] -= allRecipes[num - 1][i][1];
                 updateInventory(allRecipes[num - 1][i][0], 1);
             }
