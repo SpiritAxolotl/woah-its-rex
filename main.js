@@ -59,6 +59,7 @@ function movePlayer(dir) {
                     prepareArea("s");
                     curY++; 
                     mine[curY][curX] = "⛏️";
+                    deleteExcessIndices();
                     break;
             case "w":
                 if (curY > 0) {
@@ -67,6 +68,7 @@ function movePlayer(dir) {
                     prepareArea("w");
                     curY--; 
                     mine[curY][curX] = "⛏️";
+                    deleteExcessIndices();
                 }  
                 break;
             case "a":
@@ -79,6 +81,7 @@ function movePlayer(dir) {
                     if (curX < furthestLeft) {
                         furthestLeft = curX;
                     }
+                    deleteExcessIndices();
                 }  
                 break;
             case "d":
@@ -90,6 +93,7 @@ function movePlayer(dir) {
                     if (curX > furthestRight) {
                         furthestRight = curX;
                     }
+                deleteExcessIndices();
                 break;
             default:
                 console.log("wrong key!!");
@@ -134,6 +138,9 @@ function prepareArea(direction) {
             
         }
     }
+    if (mine[curY - constraints[1]] == undefined) {
+        mine[curY - constraints[1]] = [];
+    }
     for (let c = curX - constraints[0]; c < curX + 50; c++) {
         if (mine[curY - constraints[1]][c] == undefined) {
             if (curY - constraints[1] == 0) {
@@ -141,26 +148,32 @@ function prepareArea(direction) {
             } else {
                 mine[curY - constraints[1]][c] = "⬜"
             }
-            
+        }
+        if(mine[curY - constraints[1] + 1][c] == "⚪" && mine[curY - constraints[1]][c] == "⬜") {
+            mine[curY - constraints[1]][c] = "🟫";   
         }
         if (mine[curY + 50][c] == undefined) {
             mine[curY + 50][c] = "⬜";
         }
+        if(mine[curY + 50][c] == "⚪" && mine[curY + 51][c] == "⬜") {
+            mine[curY + 51][c] = "🟫";   
+        }
+        
     }
     for (let r = curY - constraints[1]; r < curY + 50; r++) {
         if (mine[r][curX - constraints[0]] == undefined) {
             if (r == 0) {
-                mine[r][curX - constraints[0]] = "🟩"
+                mine[r][curX - constraints[0]] = "🟩";
             } else {
-                mine[r][curX - constraints[0]] = "⬜"
+                mine[r][curX - constraints[0]] = "⬜";
             }
             
         }
         if (mine[r][curX + 50] == undefined) {
             if (r == 0) {
-                mine[r][curX + 50] = "🟩"
+                mine[r][curX + 50] = "🟩";
             } else {
-                mine[r][curX + 50] = "⬜"
+                mine[r][curX + 50] = "⬜";
             }
             
         }
@@ -534,7 +547,7 @@ function moveOne(dir) {
 
 function deleteExcessIndices() {
     if (curY > 1000) {
-        mine[curY - 1000] = [];
+        mine[curY - 1000] = undefined;
     }
 }
 
