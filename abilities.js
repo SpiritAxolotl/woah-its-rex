@@ -7,22 +7,30 @@ async function rollAbilities() {
         if (Math.round(Math.random() * 20) == 10) {
             canMine = await(pickaxeAbility1(curX, curY, 4));
         }
-    }
-    if (currentPickaxe == "Name3") {
+    } else if (currentPickaxe == "Name3") {
     if (Math.round(Math.random() * 40) == 15) {
         canMine = await(pickaxeAbility2(curX, curY));
     }
+    } else if (currentPickaxe == "Name4") {
+    if (Math.round(Math.random() * 20) == 10) {
+        canMine = await(pickaxeAbility4(curX, curY));
+    }
+    }
 }
-}
 
 
 
 
 
 
-function pickaxeAbility1(x, y, size) {
+function pickaxeAbility1(x, y, size, customLuck) {
     return new Promise((resolve) => {
-    let thisLuck = 1.2;
+        let thisLuck;
+        if (customLuck != undefined) {
+            thisLuck = customLuck;
+        } else {
+            thisLuck = 1.2;
+        }
     canMine = false;
     let constraints = getParams(size, size);
     for (let r = y - constraints[1]; r <= y + size; r++) {
@@ -111,6 +119,18 @@ function pickaxeAbility3(x, y) {
             y--;
             mineBlock(x, y, "ability", thisLuck);
         }
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
+function pickaxeAbility4(x, y) {
+    return new Promise((resolve) => {
+        let constraints = getParams(7, 7);
+        let area1 = Math.round((Math.random() * (-(constraints[0]) - 7)) + 7);
+        let area2 = Math.round((Math.random() * (-(constraints[1]) - 7)) + 7);
+        pickaxeAbility1((x + area1), (y + area2), 3, 1.75)
+        displayArea();
     setTimeout(() => {
         resolve(true);
     }, 5);

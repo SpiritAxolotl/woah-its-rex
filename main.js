@@ -12,7 +12,8 @@ let pickaxes = [
     ["Basic", true],
     ["Name1", false],
     ["Name2", false],
-    ["Name3", false]
+    ["Name3", false],
+    ["Name4", false]
 ]
 let currentPickaxe = "Basic";
 
@@ -23,11 +24,6 @@ function init () {
     if (!game2PlayedBefore1) {
         localStorage.setItem("pickaxeData", JSON.stringify([currentPickaxe, pickaxes]));
         localStorage.setItem("game2PlayedBefore1", true);
-    }
-    let playedBefore3 = localStorage.getItem("playedBefore3");
-    if (!playedBefore3) {
-        localStorage.clear();
-        localStorage.setItem("playedBefore3", true);
     }
     let playedBefore = localStorage.getItem("playedBefore");
     if (playedBefore) {
@@ -415,9 +411,10 @@ function loadData() {
     }
     totalMined = JSON.parse(localStorage.getItem("amountMined"));
     let data = JSON.parse(localStorage.getItem("pickaxeData"));
-    console.log(data);
     currentPickaxe = data[0];
-    pickaxes = data[1];
+    for (let i = 0; i < data[1].length; i++) {
+        pickaxes[i][1] = data[1][i][1];
+    }
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
 }
 
@@ -425,7 +422,7 @@ function playSound(type) {
     let audio;
     switch (type) {
         case "exotic":
-            chill.volume = 0.2;
+            chill.volume = 0.5;
             if (chill.currentTime == 0) {
                 chill.play();
             } else {
