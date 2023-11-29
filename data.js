@@ -28,7 +28,8 @@ function loadAllData() {
     for (let i = 0; i < data[0].length; i++) {
         probabilityTable[data[0][i][0]][1] = data[0][i][1][0];
     }
-    for (let i = 0; i < data[1][0].length; i++) {
+    for (let i = 0; i < data[1][0][0].length; i++) {
+        
         pickaxes[i][1] = data[1][0][0][i][1];
     }
     currentPickaxe = data[1][0][1];
