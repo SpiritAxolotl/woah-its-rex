@@ -425,6 +425,7 @@ function playSound(type) {
     let audio;
     switch (type) {
         case "exotic":
+            chill.volume = 0.2;
             if (chill.currentTime == 0) {
                 chill.play();
             } else {
@@ -432,6 +433,7 @@ function playSound(type) {
             }
             break;
         case "transcendent":
+            ringing.volume = 0.2;
             if (ringing.currentTime == 0) {
                 ringing.play();
             } else {
@@ -439,6 +441,7 @@ function playSound(type) {
             }
             break;
         case "enigmatic":
+            visionblur.volume = 0.2;
             if (visionblur.currentTime == 0) {
                 visionblur.play();
             } else {
@@ -446,6 +449,7 @@ function playSound(type) {
             }
             break;
         case "unfathomable":
+            unfath.volume = 0.2;
             if (unfath.currentTime == 0) {
                 unfath.play();
             } else {
@@ -453,6 +457,7 @@ function playSound(type) {
             }
             break;
         case "otherworldly":
+            ow.volume = 0.2;
             if (ow.currentTime == 0) {
                 ow.play();
             } else {
@@ -483,9 +488,6 @@ function loadContent() {
         allAudios[i].load();
         allAudios[i].volume = 0;
         allAudios[i].play();
-        allAudios[i].currentTime = 0;
-        allAudios[i].pause();
-        allAudios[i].volume = 0.2
     }
 
     document.getElementById("pressPlay").style.display = "none";
