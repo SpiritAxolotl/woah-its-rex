@@ -9,11 +9,11 @@ let totalMined = 0;
 let blocksRevealedThisReset = 0;
 let canMine = false;
 let pickaxes = [
-    ["Basic", true],
-    ["Name1", false],
-    ["Name2", false],
-    ["Name3", false],
-    ["Name4", false]
+    ["Basic Pickaxe", true],
+    ["Advanced Pickaxe", false],
+    ["DynAxe", false],
+    ["X-Axe", false],
+    ["RandAxe", false]
 ]
 let currentPickaxe = 0;
 
@@ -451,7 +451,6 @@ function playSound(type) {
   let ringing;
   let chill;
 function loadContent() {
-    console.log(probabilityTable);
     allAudios = [];
     chill = new Audio("Achillgoesdownyourspine.mp3");
     ringing = new Audio("Transcendent.mp3");

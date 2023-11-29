@@ -5,9 +5,9 @@ function saveData(block) {
         let data = [currentPickaxe, pickaxes];
         localStorage.setItem("pickaxeData", JSON.stringify(data));
     } else {
-        console.log("cleared");
         localStorage.clear();
         saveAllData();
+        repeatDataSave();
         localStorage.setItem("game2DataChanges", true)
     }
 }
@@ -35,9 +35,9 @@ function loadData() {
             pickaxes[i][1] = data[1][i][1];
         }
         document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
-        console.log("cleared");
         localStorage.clear();
         localStorage.setItem("game2DataChanges", true);
+        repeatDataSave();
     } else {
         loadAllData();
     }

@@ -21,7 +21,6 @@ function saveAllData() {
     dataStorage[1].push([pickaxes, currentPickaxe]);
     dataStorage[2].push([totalMined])
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
-    console.log("saved");
 }
 
 function loadAllData() {
