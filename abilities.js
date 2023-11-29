@@ -22,7 +22,7 @@ async function rollAbilities() {
 
 function pickaxeAbility1(x, y, size) {
     return new Promise((resolve) => {
-    let thisLuck = 1.2;
+    let thisLuck = 1000;
     canMine = false;
     let constraints = getParams(size, size);
     for (let r = y - constraints[1]; r <= y + size; r++) {

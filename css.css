@@ -16,6 +16,14 @@
     font-size: 1vw;
     border-style: solid;
 }
+#pressPlay {
+    height:100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #switchInventory {
     border-style: solid;
     border-color: black;

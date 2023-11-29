@@ -7,7 +7,7 @@ let currentDisplay = ""
 let facing = "down";
 let totalMined = 0;
 let blocksRevealedThisReset = 0;
-let canMine = true;
+let canMine = false;
 let pickaxes = [
     ["Basic", true],
     ["Name1", false],
@@ -425,30 +425,48 @@ function playSound(type) {
     let audio;
     switch (type) {
         case "exotic":
-            audio = new Audio("Achillgoesdownyourspine.mp3.mpeg");
+            if (chill.currentTime == 0) {
+                chill.play();
+            } else {
+                chill.currentTime = 0;
+            }
             break;
         case "transcendent":
-            audio = new Audio("Transcendent.mp3.mpeg");
+            if (ringing.currentTime == 0) {
+                ringing.play();
+            } else {
+                ringing.currentTime = 0;
+            }
             break;
         case "enigmatic":
-            audio = new Audio("Yourvisionbeginstoblur.mp3.mpeg");
+            if (visionblur.currentTime == 0) {
+                visionblur.play();
+            } else {
+                visionblur.currentTime = 0;
+            }
             break;
         case "unfathomable":
-            audio = new Audio("Unfathsound.mp3.mpeg");
+            if (unfath.currentTime == 0) {
+                unfath.play();
+            } else {
+                unfath.currentTime = 0;
+            }
             break;
         case "otherworldly":
-            audio = new Audio("Otherworld.mp3.mpeg");
+            if (ow.currentTime == 0) {
+                ow.play();
+            } else {
+                ow.currentTime = 0;
+            }
             break;
         }
-        audio.volume = 0.2;
-        audio.play();
   }
-/*let chill;
+let chill;
 let ringing;
 let visionblur;
 let unfath;
 let ow;
-function tS() {
+function loadContent() {
     chill = new Audio("Achillgoesdownyourspine.mp3.mpeg");
     chill.volume = 0.2;
     ringing = new Audio("Transcendent.mp3.mpeg");
@@ -459,7 +477,12 @@ function tS() {
     unfath.volume = 0.2;
     ow = new Audio("Otherworld.mp3.mpeg");
     ow.volume = 0.2;
-}*/
+
+    document.getElementById("pressPlay").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+    canMine = true;
+}
+
 
   let loopTimer = null;
   let curDirection = "";
