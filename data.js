@@ -33,6 +33,9 @@ function loadAllData() {
     }
     currentPickaxe = data[1][0][1];
 
+    totalMined = data[2]
+    document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
+    
     for (var propertyName in probabilityTable) {
             if (document.getElementById(propertyName + 1) != null) {
                 for (let i = 1; i < 5; i++) {
@@ -45,6 +48,7 @@ function loadAllData() {
         
     }
 }
+
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {

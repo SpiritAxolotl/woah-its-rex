@@ -12,7 +12,7 @@ async function rollAbilities() {
         canMine = await(pickaxeAbility2(curX, curY));
     }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[4][0]) {
-    if (Math.round(Math.random() * 40) == 20) {
+    if (Math.round(Math.random() * 30) == 20) {
         canMine = await(pickaxeAbility4(curX, curY));
     }
     }
