@@ -14,7 +14,7 @@ function saveData(block) {
 
 function loadData() {
     let dataChanges = localStorage.getItem("game2DataChanges");
-    if (!dataChanges) {
+    if (dataChanges == null || dataChanges == undefined || dataChanges == false) {
         for (var propertyName in probabilityTable) {
             if (localStorage.getItem(propertyName) != null) {
                 if (document.getElementById(propertyName + 1) != null) {
