@@ -230,12 +230,10 @@ function craftPickaxe(num) {
     canCraft = true;
     if (!(pickaxes[num][1])) {
         for (let i = 0; i < allRecipes[num - 1][0].length; i++) {
-            if (probabilityTable[allRecipes[num-1][i][0]][1][0] >= allRecipes[num - 1][i][1]) {
-                canCraft = true;
-            } else {
+            if (!(probabilityTable[allRecipes[num-1][i][0]][1][0] >= allRecipes[num - 1][i][1])) {
                 canCraft = false;
                 break;
-            }
+            } 
         }
         if (canCraft) {
             for (let i = 0; i < allRecipes[num - 1][0].length; i++) {
