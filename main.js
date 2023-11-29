@@ -58,7 +58,7 @@ function movePlayer(dir) {
     if (canMine) {
         switch (dir) {
             case "s":
-                    mineBlock(curX, curY + 1, "mining", 1);
+                    mineBlock(curX, curY + 1, "mining", 1000);
                     mine[curY][curX] = "⚪"
                     prepareArea("s");
                     curY++; 
