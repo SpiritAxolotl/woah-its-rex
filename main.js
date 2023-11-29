@@ -486,8 +486,6 @@ function loadContent() {
     
     for (let i = 0; i < allAudios.length; i++) {
         allAudios[i].load();
-        allAudios[i].volume = 0;
-        allAudios[i].play();
     }
 
     document.getElementById("pressPlay").style.display = "none";
