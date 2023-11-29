@@ -15,21 +15,18 @@ let pickaxes = [
     ["Name3", false],
     ["Name4", false]
 ]
-let currentPickaxe = "Basic";
+let currentPickaxe = 0;
 
 function init () {
     createInventory();
     createMine();
-    let game2PlayedBefore1 = localStorage.getItem("game2PlayedBefore1");
-    if (!game2PlayedBefore1) {
-        localStorage.setItem("pickaxeData", JSON.stringify([currentPickaxe, pickaxes]));
-        localStorage.setItem("game2PlayedBefore1", true);
-    }
     let playedBefore = localStorage.getItem("playedBefore");
     if (playedBefore) {
         loadData();
     }
+    repeatDataSave();
     localStorage.setItem("playedBefore", true);
+    localStorage.setItem("game2DataChanges", true);
     createRecipes();
 }
 function createMine() {
@@ -120,7 +117,9 @@ function mineBlock(x, y, cause, luck) {
 }
 document.addEventListener('keydown', (event) => {
     var name = event.key;
-    clearInterval(loopTimer);
+    if (name == "a" || name == "s" || name == "d" || name == "w") {
+        clearInterval(loopTimer);
+    }
     curDirection = "";
     movePlayer(name);
   }, false);
@@ -256,7 +255,6 @@ if (type == "🟩") {
 }
     probabilityTable[type][1][inv - 1]++;
     updateInventory(type, inv);
-    saveData(type);
 }
 let probabilityTable = {
 "👁️" : [1/1920000000, [0,0,0,0]],
@@ -391,6 +389,7 @@ function switchInventory(){
 }
 
 function resetMine() {
+    
     clearInterval(loopTimer);
     curDirection = "";
     mine = [[]];
@@ -399,36 +398,6 @@ function resetMine() {
     blocksRevealedThisReset = 0;
     createMine();
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/100,000 Blocks Revealed This Reset";
-}
-
-function saveData(block) {
-    localStorage.setItem("" + block, JSON.stringify(probabilityTable[block][1]));
-    localStorage.setItem("amountMined", JSON.stringify(totalMined));
-    let data = [currentPickaxe, pickaxes];
-    localStorage.setItem("pickaxeData", JSON.stringify(data));
-}
-
-function loadData() {
-    for (var propertyName in probabilityTable) {
-        if (localStorage.getItem(propertyName) != null) {
-            if (document.getElementById(propertyName + 1) != null) {
-                probabilityTable[propertyName][1] = JSON.parse(localStorage.getItem(propertyName));
-                for (let i = 1; i < 5; i++) {
-                    updateInventory(propertyName, i)
-                    if (probabilityTable[propertyName][1][i - 1] > 0) {
-                        document.getElementById(propertyName + i).style.display = "block";
-                    }
-                }
-            } 
-        }
-    }
-    totalMined = JSON.parse(localStorage.getItem("amountMined"));
-    let data = JSON.parse(localStorage.getItem("pickaxeData"));
-    currentPickaxe = data[0];
-    for (let i = 0; i < data[1].length; i++) {
-        pickaxes[i][1] = data[1][i][1];
-    }
-    document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
 }
 
 function playSound(type) {
@@ -482,6 +451,7 @@ function playSound(type) {
   let ringing;
   let chill;
 function loadContent() {
+    console.log(probabilityTable);
     allAudios = [];
     chill = new Audio("Achillgoesdownyourspine.mp3");
     ringing = new Audio("Transcendent.mp3");

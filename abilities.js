@@ -1,18 +1,18 @@
 async function rollAbilities() {
-    if (currentPickaxe == "Name1") {
+    if (pickaxes[currentPickaxe][0] == pickaxes[1][0]) {
         if (Math.round(Math.random() * 30) == 15) {
             canMine = await(pickaxeAbility3(curX, curY));
         }
-    } else if (currentPickaxe == "Name2") {
-        if (Math.round(Math.random() * 20) == 10) {
+    } else if (pickaxes[currentPickaxe][0] == pickaxes[2][0]) {
+        if (Math.round(Math.random() * 35) == 17) {
             canMine = await(pickaxeAbility1(curX, curY, 4));
         }
-    } else if (currentPickaxe == "Name3") {
-    if (Math.round(Math.random() * 40) == 15) {
+    } else if (pickaxes[currentPickaxe][0] == pickaxes[3][0]) {
+    if (Math.round(Math.random() * 40) == 20) {
         canMine = await(pickaxeAbility2(curX, curY));
     }
-    } else if (currentPickaxe == "Name4") {
-    if (Math.round(Math.random() * 20) == 10) {
+    } else if (pickaxes[currentPickaxe][0] == pickaxes[4][0]) {
+    if (Math.round(Math.random() * 40) == 20) {
         canMine = await(pickaxeAbility4(curX, curY));
     }
     }
@@ -100,7 +100,7 @@ function pickaxeAbility3(x, y) {
         let constraints = getParams(6, 6);
         canMine = false;
         let origin = [y, x];
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             x++;
             mineBlock(x, y, "ability", thisLuck);
         }
@@ -110,7 +110,7 @@ function pickaxeAbility3(x, y) {
             mineBlock(x, y, "ability", thisLuck);
         }
         x = origin[1];
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             y++;
             mineBlock(x, y, "ability", thisLuck);
         }

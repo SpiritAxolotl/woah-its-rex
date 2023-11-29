@@ -238,19 +238,16 @@ function craftPickaxe(num) {
         if (canCraft) {
             for (let i = 0; i < allRecipes[num - 1][0].length; i++) {
                 probabilityTable[allRecipes[num-1][i][0]][1][0] -= allRecipes[num - 1][i][1];
-                saveData(allRecipes[num - 1][i][0]);
                 updateInventory(allRecipes[num - 1][i][0], 1);
             }
         let temp = document.getElementById("recipe" + num).children;
         temp[temp.length - 1].innerHTML = "Equip!";
         updateActiveRecipe();
         pickaxes[num][1] = true;
-        currentPickaxe = pickaxes[num][0];
-        saveData("🟫", 1);
+        currentPickaxe = num;
         }
     } else {
-        currentPickaxe = pickaxes[num][0];
-        saveData("🟫", 1);
+        currentPickaxe = num;
     }
     
 }
