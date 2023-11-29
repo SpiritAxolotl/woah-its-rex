@@ -461,22 +461,32 @@ function playSound(type) {
             break;
         }
   }
-let chill;
-let ringing;
-let visionblur;
-let unfath;
-let ow;
+  let visionblur;
+  let unfath;
+  let ow;
+  let ringing;
+  let chill;
 function loadContent() {
+    allAudios = [];
     chill = new Audio("Achillgoesdownyourspine.mp3.mpeg");
-    chill.volume = 0.2;
     ringing = new Audio("Transcendent.mp3.mpeg");
-    ringing.volume = 0.2;
     visionblur = new Audio("Yourvisionbeginstoblur.mp3.mpeg");
-    visionblur.volume = 0.2;
     unfath = new Audio("Unfathsound.mp3.mpeg");
-    unfath.volume = 0.2;
     ow = new Audio("Otherworld.mp3.mpeg");
-    ow.volume = 0.2;
+    allAudios.push(chill);
+    allAudios.push(ringing);
+    allAudios.push(visionblur);
+    allAudios.push(unfath);
+    allAudios.push(ow);
+    
+    for (let i = 0; i < allAudios.length; i++) {
+        allAudios[i].load();
+        allAudios[i].volume = 0;
+        allAudios[i].play();
+        allAudios[i].currentTime = 0;
+        allAudios[i].pause();
+        allAudios[i].volume = 0.2
+    }
 
     document.getElementById("pressPlay").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
