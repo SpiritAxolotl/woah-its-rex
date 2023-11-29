@@ -349,13 +349,13 @@ let probabilityTable = {
         } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 160000000){
             spawnMessage(blockToGive);
             playSound("unfathomable");
-        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 5000000) {
+        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 25000000) {
             spawnMessage(blockToGive);
             playSound("enigmatic");
-        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 2000000) {
+        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 5000000) {
             spawnMessage(blockToGive);
             playSound("transcendent");
-        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 100000) {
+        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 750000) {
             spawnMessage(blockToGive);
             playSound("exotic");
         }
