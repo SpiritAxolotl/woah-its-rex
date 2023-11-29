@@ -250,29 +250,29 @@ if (type == "🟩") {
     saveData(type);
 }
 let probabilityTable = {
-"👁️" : [1/192000000, [0,0,0,0]],
-"🪩" : [1/99999999, [0,0,0,0]], 
-"👀" : [1/95520089, [0,0,0,0]],
-"🥗" : [1/80000000, [0,0,0,0]],
-"💸" : [1/75400000, [0,0,0,0]],
-"⌛" : [1/75000000, [0,0,0,0]], 
-"🪐" : [1/70900075, [0,0,0,0]], 
-"🧀" : [1/61800001, [0,0,0,0]],
-"🌀" : [1/61800000, [0,0,0,0]], 
-"🧊" : [1/58300000, [0,0,0,0]],
-"🌌" : [1/55000000, [0,0,0,0]],
-"🥀" : [1/53800000, [0,0,0,0]], 
-"🥉" : [1/44444444, [0,0,0,0]], 
-"🪞" : [1/42680005, [0,0,0,0]],
-"🔩" : [1/42083600, [0,0,0,0]],
-"❄️" : [1/38650000, [0,0,0,0]],
-"💥" : [1/37500000, [0,0,0,0]], 
-"🌟" : [1/25728000, [0,0,0,0]],
-"🌪️" : [1/24701000, [0,0,0,0]],
-"🌏" : [1/21320000, [0,0,0,0]],
-"📝" : [1/20000000, [0,0,0,0]], 
-"💎" : [1/17000000, [0,0,0,0]], 
-"🔥" : [1/16000000, [0,0,0,0]],
+"👁️" : [1/1920000000, [0,0,0,0]],
+"🪩" : [1/999999999, [0,0,0,0]], 
+"👀" : [1/955200890, [0,0,0,0]],
+"🥗" : [1/800000000, [0,0,0,0]],
+"💸" : [1/754000000, [0,0,0,0]],
+"⌛" : [1/750000000, [0,0,0,0]], 
+"🪐" : [1/709000750, [0,0,0,0]], 
+"🧀" : [1/618000001, [0,0,0,0]],
+"🌀" : [1/618000000, [0,0,0,0]], 
+"🧊" : [1/583000000, [0,0,0,0]],
+"🌌" : [1/550000000, [0,0,0,0]],
+"🥀" : [1/538000000, [0,0,0,0]], 
+"🥉" : [1/444444444, [0,0,0,0]], 
+"🪞" : [1/426800050, [0,0,0,0]],
+"🔩" : [1/420836000, [0,0,0,0]],
+"❄️" : [1/386500000, [0,0,0,0]],
+"💥" : [1/375000000, [0,0,0,0]], 
+"🌟" : [1/257280000, [0,0,0,0]],
+"🌪️" : [1/247010000, [0,0,0,0]],
+"🌏" : [1/213200000, [0,0,0,0]],
+"📝" : [1/200000000, [0,0,0,0]], 
+"💎" : [1/170000000, [0,0,0,0]], 
+"🔥" : [1/160000000, [0,0,0,0]],
 "🔆" : [1/9600000, [0,0,0,0]],
 "☄️" : [1/9500000, [0,0,0,0]],
 "🌲" : [1/9490000, [0,0,0,0]],
@@ -343,10 +343,10 @@ let probabilityTable = {
           break;
         }
         }
-        if (Math.round(1 / (probabilityTable[blockToGive][0])) > 75000000) {
+        if (Math.round(1 / (probabilityTable[blockToGive][0])) > 750000000) {
             spawnMessage(blockToGive);
             playSound("otherworldly");
-        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 16000000){
+        } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 160000000){
             spawnMessage(blockToGive);
             playSound("unfathomable");
         } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 5000000) {
@@ -473,11 +473,11 @@ function playSound(type) {
   let chill;
 function loadContent() {
     allAudios = [];
-    chill = new Audio("Achillgoesdownyourspine.mp3.mpeg");
-    ringing = new Audio("Transcendent.mp3.mpeg");
-    visionblur = new Audio("Yourvisionbeginstoblur.mp3.mpeg");
-    unfath = new Audio("Unfathsound.mp3.mpeg");
-    ow = new Audio("Otherworld.mp3.mpeg");
+    chill = new Audio("Achillgoesdownyourspine.mp3");
+    ringing = new Audio("Transcendent.mp3");
+    visionblur = new Audio("Yourvisionbeginstoblur.mp3");
+    unfath = new Audio("Unfathsound.mp3");
+    ow = new Audio("Otherworldly.mp3");
     allAudios.push(chill);
     allAudios.push(ringing);
     allAudios.push(visionblur);
