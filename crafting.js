@@ -198,7 +198,7 @@ function createRecipes() {
     tempButton = document.createElement('button');
     tempButton.id="craftPickaxe4";
     tempButton.setAttribute("onclick", "craftPickaxe(4)");
-    if (pickaxes[3][1]) {
+    if (pickaxes[4][1]) {
         tempButton.innerHTML = "Equip!";
     } else {
         tempButton.innerHTML = "Craft!";
