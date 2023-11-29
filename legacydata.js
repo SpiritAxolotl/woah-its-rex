@@ -39,6 +39,9 @@ function loadData() {
         localStorage.setItem("game2DataChanges", true);
         repeatDataSave();
     } else {
+        if (localStorage.getItem("playerData") == null || localStorage.getItem("playerData") == undefined) {
+            saveAllData();
+        }
         loadAllData();
     }
 }
