@@ -406,41 +406,51 @@ function playSound(type) {
         case "exotic":
             chill.volume = 0.5;
             if (chill.currentTime == 0) {
+                chill.load();
                 chill.play();
             } else {
                 chill.currentTime = 0;
+                chill.play();
             }
             break;
         case "transcendent":
             ringing.volume = 0.2;
             if (ringing.currentTime == 0) {
+                ringing.load();
                 ringing.play();
             } else {
                 ringing.currentTime = 0;
+                ringing.play();
             }
             break;
         case "enigmatic":
             visionblur.volume = 0.2;
             if (visionblur.currentTime == 0) {
+                visionblur.load();
                 visionblur.play();
             } else {
                 visionblur.currentTime = 0;
+                visionblur.play();
             }
             break;
         case "unfathomable":
             unfath.volume = 0.2;
             if (unfath.currentTime == 0) {
+                unfath.load();
                 unfath.play();
             } else {
                 unfath.currentTime = 0;
+                unfath.play();
             }
             break;
         case "otherworldly":
             ow.volume = 0.2;
             if (ow.currentTime == 0) {
+                ow.load();
                 ow.play();
             } else {
                 ow.currentTime = 0;
+                ow.play();
             }
             break;
         }
