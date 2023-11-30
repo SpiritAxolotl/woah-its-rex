@@ -48,6 +48,13 @@ function loadAllData() {
             } 
         
     }
+    let removedPickaxe = localStorage.getItem("removedPickaxeFive");
+    if (removedPickaxe) {
+        localStorage.setItem("removedPickaxeFive", true);
+    } else {
+        pickaxes[5][1] = false;
+        localStorage.setItem("removedPickaxeFive", true);
+    }
 }
 
 let dataTimer = null;

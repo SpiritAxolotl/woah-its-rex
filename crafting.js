@@ -231,7 +231,6 @@ function craftPickaxe(num) {
     canCraft = true;
     if (!(pickaxes[num][1])) {
         for (let i = 0; i < allRecipes[num - 1].length; i++) {
-            console.log(allRecipes[num - 1][i][1]);
             if (!(probabilityTable[allRecipes[num-1][i][0]][1][0] >= allRecipes[num - 1][i][1])) {
                 canCraft = false;
                 break;
