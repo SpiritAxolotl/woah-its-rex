@@ -501,7 +501,7 @@ function createInventory() {
 let spawnOre;
 function spawnMessage(block, location) {
     if (currentPickaxe == 5) {
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0])) + "<br>X: " + (location[1] - 1000000000) + " | Y:" + location[0];
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0])) + "<br>X: " + (location[1] - 1000000000) + " | Y:" + -(location[0]);
     } else {
         document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0]));
     }
