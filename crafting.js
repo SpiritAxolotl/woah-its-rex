@@ -49,6 +49,20 @@ let allRecipes = [
         ["🎄", 1],
         ["💍", 1],
         ["🔋", 1]
+    ],
+    [
+        ["🟫", 2500000],
+        ["🟧", 100000],
+        ["🟪", 90000],
+        ["❤️", 30], 
+        ["🤍", 15],
+        ["💠", 5],
+        ["⚜️", 5],
+        ["🍁", 5],
+        ["🐟", 2],
+        ["🏆", 1],
+        ["⌚", 1],
+        ["⭐", 1]
     ]
 ]
 
@@ -200,6 +214,34 @@ function createRecipes() {
     tempButton.id="craftPickaxe5";
     tempButton.setAttribute("onclick", "craftPickaxe(5)");
     if (pickaxes[5][1]) {
+        tempButton.innerHTML = "Equip!";
+    } else {
+        tempButton.innerHTML = "Craft!";
+    }
+    tempElement.appendChild(tempButton);
+    recipeElements.push(tempElement);
+
+
+    //RECIPE 6
+    tempElement = document.createElement('div');
+    tempElement.id = "recipe6";
+    tempElement.style.display = "none";
+    tempElement.classList = "craftingAmountsDisplay";
+    for (let i = 0; i < allRecipes[5].length; i++) {
+        let element = document.createElement('p');
+        element.id = (allRecipes[5][i][0] + ("recipe5display"));
+        element.innerHTML = allRecipes[5][i][0] + " " + probabilityTable[allRecipes[5][i][0]][1][0] + "/" + allRecipes[5][i][1];
+        if (probabilityTable[allRecipes[5][i][0]][1][0] >= allRecipes[5][i][1]) {
+            element.style.color = "green";
+        } else {
+            element.style.color = "red";
+        }
+    tempElement.appendChild(element);
+    }
+    tempButton = document.createElement('button');
+    tempButton.id="craftPickaxe6";
+    tempButton.setAttribute("onclick", "craftPickaxe(6)");
+    if (pickaxes[6][1]) {
         tempButton.innerHTML = "Equip!";
     } else {
         tempButton.innerHTML = "Craft!";

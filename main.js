@@ -14,8 +14,9 @@ let pickaxes = [
     ["DynAxe", false],
     ["X-Axe", false],
     ["RandAxe", false],
-    ["Name5", false]
-]
+    ["Name5", false],
+    ["Name6", false]
+];
 let currentPickaxe = 0;
 
 function init () {
@@ -104,15 +105,16 @@ function movePlayer(dir) {
 }
 
 function mineBlock(x, y, cause, luck) {
-    if (mine[y][x] != "⚪") {
+    if (mine[y][x] != "⚪" && mine[y][x] != "⛏️")  {
         giveBlock(mine[y][x]);
         mine[y][x] = "⚪"
         checkAllAround(x, y, luck);
         totalMined++;
         if (cause != "ability") {
             rollAbilities();
+            updateActiveRecipe();
         }
-        updateActiveRecipe();
+
     }
     
 }
