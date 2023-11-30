@@ -14,7 +14,7 @@ let pickaxes = [
     ["DynAxe", false],
     ["X-Axe", false],
     ["RandAxe", false],
-    ["Name5", true]
+    ["Name5", false]
 ]
 let currentPickaxe = 0;
 
