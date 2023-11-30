@@ -35,12 +35,26 @@ let allRecipes = [
         ["❤️", 5],
         ["🤍", 3],
         ["⚙️", 1]
+    ],
+    [
+        ["🟫", 750000],
+        ["🟢", 25000],
+        ["🔵", 17500],
+        ["🟡", 15000], 
+        ["🟠", 10000],
+        ["💜", 10],
+        ["🤍", 7],
+        ["🃏", 3],
+        ["🎲", 2],
+        ["🎄", 1],
+        ["💍", 1],
+        ["🔋", 1]
     ]
 ]
 
 
 let recipeElements = [];
-function displayRecipe1() {
+function displayRecipe(num) {
     let parent = document.getElementById("displayRecipe")
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
@@ -48,51 +62,10 @@ function displayRecipe1() {
     for (let i = 0; i < recipeElements.length; i++) {
         recipeElements[i].style.display = "none";
     }
-    parent.appendChild(recipeElements[0]);
-    recipeElements[0].style.display = "block";
+    parent.appendChild(recipeElements[num]);
+    recipeElements[num].style.display = "block";
     updateActiveRecipe();
 }
-
-
-function displayRecipe2() {
-    let parent = document.getElementById("displayRecipe")
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-    for (let i = 0; i < recipeElements.length; i++) {
-        recipeElements[i].style.display = "none";
-    }
-    parent.appendChild(recipeElements[1]);
-    recipeElements[1].style.display = "block";
-    updateActiveRecipe();
-}
-
-function displayRecipe3() {
-    let parent = document.getElementById("displayRecipe")
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-    for (let i = 0; i < recipeElements.length; i++) {
-        recipeElements[i].style.display = "none";
-    }
-    parent.appendChild(recipeElements[2]);
-    recipeElements[2].style.display = "block";
-    updateActiveRecipe();
-}
-
-function displayRecipe4() {
-    let parent = document.getElementById("displayRecipe")
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-    for (let i = 0; i < recipeElements.length; i++) {
-        recipeElements[i].style.display = "none";
-    }
-    parent.appendChild(recipeElements[3]);
-    recipeElements[3].style.display = "block";
-    updateActiveRecipe();
-}
-
 
 function createRecipes() {
     //RECIPE 1
@@ -186,7 +159,7 @@ function createRecipes() {
     tempElement.classList = "craftingAmountsDisplay";
     for (let i = 0; i < allRecipes[3].length; i++) {
         let element = document.createElement('p');
-        element.id = (allRecipes[3][i][0] + ("recipe3display"));
+        element.id = (allRecipes[3][i][0] + ("recipe4display"));
         element.innerHTML = allRecipes[3][i][0] + " " + probabilityTable[allRecipes[3][i][0]][1][0] + "/" + allRecipes[3][i][1];
         if (probabilityTable[allRecipes[3][i][0]][1][0] >= allRecipes[3][i][1]) {
             element.style.color = "green";
@@ -199,6 +172,34 @@ function createRecipes() {
     tempButton.id="craftPickaxe4";
     tempButton.setAttribute("onclick", "craftPickaxe(4)");
     if (pickaxes[4][1]) {
+        tempButton.innerHTML = "Equip!";
+    } else {
+        tempButton.innerHTML = "Craft!";
+    }
+    tempElement.appendChild(tempButton);
+    recipeElements.push(tempElement);
+
+
+    //RECIPE 5
+    tempElement = document.createElement('div');
+    tempElement.id = "recipe5";
+    tempElement.style.display = "none";
+    tempElement.classList = "craftingAmountsDisplay";
+    for (let i = 0; i < allRecipes[4].length; i++) {
+        let element = document.createElement('p');
+        element.id = (allRecipes[4][i][0] + ("recipe5display"));
+        element.innerHTML = allRecipes[4][i][0] + " " + probabilityTable[allRecipes[4][i][0]][1][0] + "/" + allRecipes[4][i][1];
+        if (probabilityTable[allRecipes[4][i][0]][1][0] >= allRecipes[4][i][1]) {
+            element.style.color = "green";
+        } else {
+            element.style.color = "red";
+        }
+    tempElement.appendChild(element);
+    }
+    tempButton = document.createElement('button');
+    tempButton.id="craftPickaxe5";
+    tempButton.setAttribute("onclick", "craftPickaxe(5)");
+    if (pickaxes[5][1]) {
         tempButton.innerHTML = "Equip!";
     } else {
         tempButton.innerHTML = "Craft!";

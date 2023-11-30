@@ -13,7 +13,8 @@ let pickaxes = [
     ["Advanced Pickaxe", false],
     ["DynAxe", false],
     ["X-Axe", false],
-    ["RandAxe", false]
+    ["RandAxe", false],
+    ["Name5", true]
 ]
 let currentPickaxe = 0;
 
@@ -193,18 +194,24 @@ function displayArea() {
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/100,000 Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
   }
-  function getParams(distanceX, distanceY) {
+  function getParams(distanceX, distanceY, x, y) {
+    if (x == undefined) {
+        x = curX;
+    }
+    if (y == undefined) {
+        y = curY;
+    }
     let displayLeft = 0;
     let displayUp = 0;
-    if (curX > distanceX) {
+    if (x > distanceX) {
         displayLeft = distanceX;
     } else {
-        displayLeft = curX;
+        displayLeft = x;
     }
-    if (curY > distanceY) {
+    if (y > distanceY) {
         displayUp = distanceY;
     } else {
-        displayUp = curY;
+        displayUp = y;
     }
     return [displayLeft, displayUp];
   }
@@ -213,22 +220,22 @@ function displayArea() {
   function checkAllAround(x, y, luck) {
         if (x - 1 >= 0) {
             if (mine[y][x - 1] == "⬜") {
-                mine[y][x - 1] = generateBlock(luck);
+                mine[y][x - 1] = generateBlock(luck, [y, x-1]);
                 blocksRevealedThisReset++;
             }
         }
         if (mine[y][x + 1] == "⬜") {
-                mine[y][x + 1] = generateBlock(luck);
+                mine[y][x + 1] = generateBlock(luck, [y, x+1]);
                 blocksRevealedThisReset++;
             }
         if (mine[y + 1][x] == "⬜") {
-                mine[y + 1][x] = generateBlock(luck);
+                mine[y + 1][x] = generateBlock(luck, [y+1, x-1]);
                 blocksRevealedThisReset++;
             }
         
         if (y - 1 >= 0) {
             if (mine[y - 1][x] == "⬜") {
-                mine[y - 1][x] = generateBlock(luck);
+                mine[y - 1][x] = generateBlock(luck, [y-1, x-1]);
                 blocksRevealedThisReset++;
             }
         }
@@ -242,19 +249,21 @@ function displayArea() {
 let multis = [1, 50, 150, 500];
 let inv = 0;
 function giveBlock(type, inv) {
-inv = 1;
-if (Math.floor(Math.random() * 50) == 25) {
-        inv = 2;
-    } else if (Math.floor(Math.random() * 150) == 75) {
-        inv = 3;
-    }   else if (Math.floor(Math.random() * 500) == 250) {
-        inv = 4;
+    if (type != "⛏️") {
+        inv = 1;
+        if (Math.floor(Math.random() * 50) == 25) {
+                inv = 2;
+            } else if (Math.floor(Math.random() * 150) == 75) {
+                inv = 3;
+            }   else if (Math.floor(Math.random() * 500) == 250) {
+                inv = 4;
+            }
+        if (type == "🟩") {
+                type = "🟫";
+        }   
+            probabilityTable[type][1][inv - 1]++;
+            updateInventory(type, inv);
     }
-if (type == "🟩") {
-        type = "🟫";
-}
-    probabilityTable[type][1][inv - 1]++;
-    updateInventory(type, inv);
 }
 let probabilityTable = {
 "👁️" : [1/1920000000, [0,0,0,0]],
@@ -337,7 +346,7 @@ let probabilityTable = {
 "🟧": [1/30, [0,0,0,0]],
 "🟫" : [1/1, [0,0,0,0]]
   }
-  function generateBlock(luck) {
+  function generateBlock(luck, location) {
       let blockToGive = "";
       let summedProbability = 0;
       let chosenValue = Math.random();
@@ -350,19 +359,19 @@ let probabilityTable = {
         }
         }
         if (Math.round(1 / (probabilityTable[blockToGive][0])) > 750000000) {
-            spawnMessage(blockToGive);
+            spawnMessage(blockToGive, location);
             playSound("otherworldly");
         } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 160000000){
-            spawnMessage(blockToGive);
+            spawnMessage(blockToGive, location);
             playSound("unfathomable");
         } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 25000000) {
-            spawnMessage(blockToGive);
+            spawnMessage(blockToGive, location);
             playSound("enigmatic");
         } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 5000000) {
-            spawnMessage(blockToGive);
+            spawnMessage(blockToGive, location);
             playSound("transcendent");
         } else if (Math.round(1 / (probabilityTable[blockToGive][0])) >= 750000) {
-            spawnMessage(blockToGive);
+            spawnMessage(blockToGive, location);
             playSound("exotic");
         }
         return blockToGive;
@@ -488,8 +497,12 @@ function createInventory() {
     }
 }
 let spawnOre;
-function spawnMessage(block) {
-    document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0]));
+function spawnMessage(block, location) {
+    if (currentPickaxe == 5) {
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0])) + "<br>X: " + (location[1] - 1000000000) + " | Y:" + location[0];
+    } else {
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0]));
+    }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
         document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here"

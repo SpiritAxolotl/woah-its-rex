@@ -15,7 +15,11 @@ async function rollAbilities() {
     if (Math.round(Math.random() * 30) == 20) {
         canMine = await(pickaxeAbility4(curX, curY));
     }
-    }
+    } else if (pickaxes[currentPickaxe][0] == pickaxes[5][0]) {
+        if (Math.round(Math.random() * 50) == 25) {
+            canMine = await(pickaxeAbility5(curX, curY, 0));
+        }
+        }
 }
 
 
@@ -97,7 +101,7 @@ function pickaxeAbility2(x, y) {
 function pickaxeAbility3(x, y) {
     return new Promise((resolve) => {
         let thisLuck = 1.2;
-        let constraints = getParams(6, 6);
+        let constraints = getParams(6, 6, x, y);
         canMine = false;
         let origin = [y, x];
         for (let i = 0; i < 6; i++) {
@@ -131,6 +135,67 @@ function pickaxeAbility4(x, y) {
         let area2 = Math.round((Math.random() * (-(constraints[1]) - 7)) + 7);
         pickaxeAbility1((x + area1), (y + area2), 3, 1.75)
         displayArea();
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
+async function pickaxeAbility5(x, y, reps) {
+    return new Promise((resolve) => {
+        if (reps < 4) {
+            let procs = [
+                [],
+                [],
+                [],
+                []
+            ];
+        
+        let thisLuck = 3;
+        let constraints = getParams(7, 7, x, y);
+        canMine = false;
+        let origin = [y, x];
+        for (let i = 0; i < 7; i++) {
+            x++;
+            mineBlock(x, y, "ability", thisLuck);
+        }
+        if (Math.random() <= 0.8) {
+            procs[0] = [x, y, true]
+        }
+        x = origin[1];
+        for (let i = 0; i < constraints[0]; i++) {
+            x--;
+            mineBlock(x, y, "ability", thisLuck);
+        }
+        if (Math.random() <= 0.8) {
+            procs[1] = [x, y, true]
+        }
+        x = origin[1];
+        for (let i = 0; i < 7; i++) {
+            y++;
+            mineBlock(x, y, "ability", thisLuck);
+        }
+        if (Math.random() <= 0.8) {
+            procs[2] = [x, y, true]
+        }
+        y = origin[0];
+        for (let i = 0; i < constraints[1]; i++) {
+            y--;
+            mineBlock(x, y, "ability", thisLuck);
+        }
+        if (Math.random() <= 0.8) {
+            procs[3] = [x, y, true]
+        }
+        reps++;
+        for (let i = 0; i < procs.length; i++) {
+            if (procs[i][1]) {
+                pickaxeAbility5(procs[i][0], procs[i][1], reps);
+            }
+        }
+        resolve(true);
+        } else {
+            displayArea();
+            resolve(true);
+        }
     setTimeout(() => {
         resolve(true);
     }, 5);
