@@ -106,7 +106,7 @@ function movePlayer(dir) {
 
 function mineBlock(x, y, cause, luck) {
     if (mine[y][x] != "⚪" && mine[y][x] != "⛏️")  {
-        giveBlock(mine[y][x]);
+        giveBlock(mine[y][x], x, y);
         mine[y][x] = "⚪"
         checkAllAround(x, y, luck);
         totalMined++;
@@ -114,6 +114,7 @@ function mineBlock(x, y, cause, luck) {
             rollAbilities();
             updateActiveRecipe();
         }
+        
 
     }
     
@@ -231,13 +232,13 @@ function displayArea() {
                 blocksRevealedThisReset++;
             }
         if (mine[y + 1][x] == "⬜") {
-                mine[y + 1][x] = generateBlock(luck, [y+1, x-1]);
+                mine[y + 1][x] = generateBlock(luck, [y+1, x]);
                 blocksRevealedThisReset++;
             }
         
         if (y - 1 >= 0) {
             if (mine[y - 1][x] == "⬜") {
-                mine[y - 1][x] = generateBlock(luck, [y-1, x-1]);
+                mine[y - 1][x] = generateBlock(luck, [y-1, x]);
                 blocksRevealedThisReset++;
             }
         }
@@ -248,14 +249,14 @@ function displayArea() {
     }
   }
 
-let multis = [1, 50, 150, 500];
+let multis = [1, 50, 250, 500];
 let inv = 0;
-function giveBlock(type, inv) {
+function giveBlock(type, x, y) {
     if (type != "⛏️") {
         inv = 1;
         if (Math.floor(Math.random() * 50) == 25) {
                 inv = 2;
-            } else if (Math.floor(Math.random() * 150) == 75) {
+            } else if (Math.floor(Math.random() * 250) == 125) {
                 inv = 3;
             }   else if (Math.floor(Math.random() * 500) == 250) {
                 inv = 4;
@@ -265,6 +266,9 @@ function giveBlock(type, inv) {
         }   
             probabilityTable[type][1][inv - 1]++;
             updateInventory(type, inv);
+        if (Math.round(1/probabilityTable[type][0]) >= 750000) {
+            logFind(type, x, y);
+        }
     }
 }
 let probabilityTable = {
@@ -439,7 +443,7 @@ function playSound(type) {
             ow.volume = 0.2;
             ow.volume = 0.2;
             ow.currentTime = 0;
-            iw.play();
+            ow.play();
             break;
         }
   }
@@ -482,8 +486,6 @@ function loadContent() {
         loopTimer = setInterval(movePlayer, 25, direction);
         curDirection = direction;
     }
-    
-    
   }
 
 function createInventory() {
@@ -535,6 +537,18 @@ function mineReset() {
     furthestRight = curX + 1;
     canMine = true;
     blocksRevealedThisReset = 0;
+}
+let latestFinds = [];
+function logFind(type, x, y) {
+    let output = "";
+    latestFinds.push([type, x, y]);
+    if (latestFinds.length > 10) {
+        latestFinds.splice(0, 1);
+    }
+    for (let i = 0; i < latestFinds.length; i++) {
+        output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + "<br>";
+    }
+    document.getElementById("latestFinds").innerHTML = output;
 }
 
 
