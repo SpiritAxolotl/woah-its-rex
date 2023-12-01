@@ -508,7 +508,7 @@ function spawnMessage(block, location) {
     if (latestSpawns.length > 10) {
         latestSpawns.splice(0, 1);
     }
-    for (let i = 0; i < latestSpawns.length; i++) {
+    for (let i = latestSpawns.length - 1; i >= 0; i--) {
         output += latestSpawns[i][0] + " 1/" + Math.round(1 / (probabilityTable[latestSpawns[i][0]][0]));
         if (currentPickaxe == 5) {
             output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
@@ -560,7 +560,7 @@ function logFind(type, x, y, variant) {
     if (latestFinds.length > 10) {
         latestFinds.splice(0, 1);
     }
-    for (let i = 0; i < latestFinds.length; i++) {
+    for (let i = latestFinds.length - 1; i >= 0; i--) {
         if (latestFinds[i][3] != "Normal") {
             output += latestFinds[i][3] + " ";
         }
