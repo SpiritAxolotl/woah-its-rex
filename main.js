@@ -501,7 +501,22 @@ function createInventory() {
     }
 }
 let spawnOre;
+let latestSpawns = [];
 function spawnMessage(block, location) {
+    let output = "";
+    latestSpawns.push([block, location[1], location[0]]);
+    if (latestSpawns.length > 10) {
+        latestSpawns.splice(0, 1);
+    }
+    for (let i = 0; i < latestSpawns.length; i++) {
+        output += latestSpawns[i][0] + " 1/" + Math.round(1 / (probabilityTable[latestSpawns[i][0]][0]));
+        if (currentPickaxe == 5) {
+            output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
+        } else {
+            output += "<br>";
+        }
+    }
+    document.getElementById("latestSpawns").innerHTML = output;
     if (currentPickaxe == 5) {
         document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0])) + "<br>X: " + (location[1] - 1000000000) + " | Y:" + -(location[0]);
     } else {

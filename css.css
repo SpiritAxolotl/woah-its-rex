@@ -16,6 +16,13 @@
     font-size: 1vw;
     border-style: solid;
 }
+.latestDisplay {
+    text-align: center;
+    border-style: solid;
+    float: left;
+    width: 50%;
+    font-size: 1vw;
+}
 #pressPlay {
     height:100%;
     width: 100%;

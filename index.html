@@ -35,8 +35,14 @@
                 <button onclick="moveOne('s')" class="movementButton">Down 1</button>
                 <button onclick="moveOne('d')" class="movementButton">Right 1</button>
                 </div>
-            <p id="blockDisplay" style="text-align:center;"></p>  
-            <p id="latestFinds" style="text-align: center; border-style: solid;">Latest Finds Will Appear Here</p>
+            <p id="blockDisplay" style="text-align:center;"></p>
+            <div>
+                <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
+            </div>
+            <div>
+                <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
+            </div>
+            
         </div>
         <div class="col-2 text-center"  style="border-style: solid; height:100%;">
             <button id="resetMine" onclick="resetMine()">Reset Mine</button>
