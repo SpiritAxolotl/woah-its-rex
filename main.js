@@ -250,7 +250,7 @@ function displayArea() {
   }
 
 let multis = [1, 50, 250, 500];
-let inv = 0;
+let inv;
 function giveBlock(type, x, y) {
     if (type != "⛏️") {
         inv = 1;
@@ -267,7 +267,7 @@ function giveBlock(type, x, y) {
             probabilityTable[type][1][inv - 1]++;
             updateInventory(type, inv);
         if (Math.round(1/probabilityTable[type][0]) >= 750000) {
-            logFind(type, x, y);
+            logFind(type, x, y, names[inv - 1]);
         }
     }
 }
@@ -390,7 +390,7 @@ function updateInventory(type, inv) {
     }
 }
 
-let names = ["Normal", "Electrified", "Radioactive", "Explosive"]
+let names = ["Normal", "Electrified", "Radioactive", "Explosive"];
 function switchInventory(){ 
     document.getElementById(("inventory") + variant).style.display = "none";
   if (variant == 4) {
@@ -554,13 +554,16 @@ function mineReset() {
     blocksRevealedThisReset = 0;
 }
 let latestFinds = [];
-function logFind(type, x, y) {
+function logFind(type, x, y, variant) {
     let output = "";
-    latestFinds.push([type, x, y]);
+    latestFinds.push([type, x, y, variant]);
     if (latestFinds.length > 10) {
         latestFinds.splice(0, 1);
     }
     for (let i = 0; i < latestFinds.length; i++) {
+        if (latestFinds[i][3] != "Normal") {
+            output += latestFinds[i][3] + " ";
+        }
         output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + "<br>";
     }
     document.getElementById("latestFinds").innerHTML = output;
