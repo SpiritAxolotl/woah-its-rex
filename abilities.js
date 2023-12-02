@@ -15,12 +15,12 @@ async function rollAbilities() {
         updateActiveRecipe();
     }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[4][0]) {
-    if (Math.round(Math.random() * 30) == 20) {
+    if (Math.round(Math.random() *40) == 20) {
         canMine = await(pickaxeAbility4(curX, curY));
         updateActiveRecipe();
     }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[5][0]) {
-        if (Math.round(Math.random() * 50) == 25) {
+        if (Math.round(Math.random() * 70) == 40) {
             canMine = await(pickaxeAbility5(curX, curY, 0));
             updateActiveRecipe();
         }
@@ -161,7 +161,7 @@ function pickaxeAbility5(x, y, reps) {
                 []
             ];
         
-        let thisLuck = 2.3;
+        let thisLuck = 2;
         let constraints = getParams(6, 6, x, y);
         let origin = [y, x];
         for (let i = 0; i < 6; i++) {
