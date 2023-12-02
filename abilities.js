@@ -1,37 +1,38 @@
 async function rollAbilities() {
+    let boost = 1;
     if (pickaxes[currentPickaxe][0] == pickaxes[1][0]) {
         if (Math.round(Math.random() * 30) == 15) {
-            canMine = await(pickaxeAbility3(curX, curY));
+            canMine = await(pickaxeAbility3(curX, curY, boost));
             updateActiveRecipe();
         }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[2][0]) {
         if (Math.round(Math.random() * 35) == 17) {
-            canMine = await(pickaxeAbility1(curX, curY, 3));
+            canMine = await(pickaxeAbility1(curX, curY, 3, boost));
             updateActiveRecipe();
         }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[3][0]) {
     if (Math.round(Math.random() * 30) == 20) {
-        canMine = await(pickaxeAbility2(curX, curY));
+        canMine = await(pickaxeAbility2(curX, curY, boost));
         updateActiveRecipe();
     }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[4][0]) {
     if (Math.round(Math.random() *40) == 20) {
-        canMine = await(pickaxeAbility4(curX, curY));
+        canMine = await(pickaxeAbility4(curX, curY, boost));
         updateActiveRecipe();
     }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[5][0]) {
         if (Math.round(Math.random() * 70) == 40) {
-            canMine = await(pickaxeAbility5(curX, curY, 0));
+            canMine = await(pickaxeAbility5(curX, curY, 0, boost));
             updateActiveRecipe();
         }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[6][0]) {
         if (Math.round(Math.random() * 50) == 25) {
-            canMine = await(pickaxeAbility6(curX, curY, 0));
+            canMine = await(pickaxeAbility6(curX, curY, 0, boost));
             updateActiveRecipe();
         }
     }else if (pickaxes[currentPickaxe][0] == pickaxes[7][0]) {   
         if (Math.round(Math.random() * 17) == 7) {
-            canMine = await(pickaxeAbility7(curX, curY, 0));
+            canMine = await(pickaxeAbility7(curX, curY, boost));
             updateActiveRecipe();
         }
     }
@@ -46,13 +47,13 @@ async function rollAbilities() {
 
 
 
-function pickaxeAbility1(x, y, size, customLuck) {
+function pickaxeAbility1(x, y, size, customLuck, boost) {
     return new Promise((resolve) => {
         let thisLuck;
         if (customLuck != undefined) {
-            thisLuck = customLuck;
+            thisLuck = customLuck * boost;
         } else {
-            thisLuck = 1.2;
+            thisLuck = 1.2 * boost;
         }
     canMine = false;
     let constraints = getParams(size, size);
@@ -72,9 +73,9 @@ function pickaxeAbility1(x, y, size, customLuck) {
             }, 5);
           });
 }
-function pickaxeAbility2(x, y) {
+function pickaxeAbility2(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 2;
+        let thisLuck = 2 * boost;
         let constraints = getParams(6, 6);
         canMine = false;
         let origin = [y, x];
@@ -117,9 +118,9 @@ function pickaxeAbility2(x, y) {
     }, 5);
         });
 }
-function pickaxeAbility3(x, y) {
+function pickaxeAbility3(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 1.2;
+        let thisLuck = 1.2 * boost;
         let constraints = getParams(6, 6, x, y);
         canMine = false;
         let origin = [y, x];
@@ -147,19 +148,20 @@ function pickaxeAbility3(x, y) {
     }, 5);
         });
 }
-function pickaxeAbility4(x, y) {
+function pickaxeAbility4(x, y, boost) {
     return new Promise((resolve) => {
+        let thisLuck = 1.75 * boost;
         let constraints = getParams(7, 7);
         let area1 = Math.round((Math.random() * (-(constraints[0]) - 7)) + 7);
         let area2 = Math.round((Math.random() * (-(constraints[1]) - 7)) + 7);
-        pickaxeAbility1((x + area1), (y + area2), 3, 1.75)
+        pickaxeAbility1((x + area1), (y + area2), 3, thisLuck)
         displayArea();
     setTimeout(() => {
         resolve(true);
     }, 5);
         });
 }
-function pickaxeAbility5(x, y, reps) {
+function pickaxeAbility5(x, y, reps, boost) {
     return new Promise((resolve) => {
         canMine = false;
         if (reps < 4) {
@@ -170,7 +172,7 @@ function pickaxeAbility5(x, y, reps) {
                 []
             ];
         
-        let thisLuck = 2;
+        let thisLuck = 2 * boost;
         let constraints = getParams(6, 6, x, y);
         let origin = [y, x];
         for (let i = 0; i < 6; i++) {
@@ -221,7 +223,7 @@ function pickaxeAbility5(x, y, reps) {
         });
 }
 
-function pickaxeAbility6(x, y, reps) {
+function pickaxeAbility6(x, y, reps, boost) {
     return new Promise((resolve) => {
         canMine = false;
         if (reps < 4) {
@@ -231,7 +233,7 @@ function pickaxeAbility6(x, y, reps) {
                 [],
                 []
             ];
-        let thisLuck = 2.75;
+        let thisLuck = 2.75 * boost;
         let constraints = getParams(4, 4, x, y);
         let origin = [y, x];
     for (let i = 0; i < constraints[0]; i++) {
@@ -295,9 +297,9 @@ function pickaxeAbility6(x, y, reps) {
     }, 5);
         });
 }
-function pickaxeAbility7(x, y) {
+function pickaxeAbility7(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 7.5
+        let thisLuck = 7.5 * boost;
         let constraints = getParams(20, 20);
         let area1 = Math.round((Math.random() * (-(constraints[0]) - 20)) + 20);
         let area2 = Math.round((Math.random() * (-(constraints[1]) - 20)) + 20);
@@ -305,7 +307,7 @@ function pickaxeAbility7(x, y) {
         let c = x + area1 + 1;
         for (let i = c; i < c + 4; i++) {
             if (mine[r][i] == "⬜") {
-                mine[r][i] = generateBlock(thisLuck, i, r);
+                mine[r][i] = generateBlock(thisLuck, [r, i]);
             }
             if (mine[r][i] != "⛏️") {
                 mineBlock(i, r, "ability", thisLuck);
@@ -315,7 +317,7 @@ function pickaxeAbility7(x, y) {
         for (let i = 0; i < 4; i++) {
             for (let j = c - 1; j < c+5; j++) {
                 if (mine[r][j] == "⬜") {
-                    mine[r][j] = generateBlock(thisLuck, j, r);
+                    mine[r][j] = generateBlock(thisLuck, [r, j]);
                 }
                 if (mine[r][j] != "⛏️") {
                     mineBlock(j, r, "ability", thisLuck);

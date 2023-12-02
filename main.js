@@ -537,8 +537,8 @@ function moveOne(dir) {
 }
 
 function deleteExcessIndices() {
-    if (curY > 1000) {
-        mine[curY - 1000] = undefined;
+    if (curY > 2000) {
+        mine[curY - 2000] = undefined;
     }
 }
 
