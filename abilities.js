@@ -161,10 +161,10 @@ function pickaxeAbility5(x, y, reps) {
                 []
             ];
         
-        let thisLuck = 3;
-        let constraints = getParams(7, 7, x, y);
+        let thisLuck = 2.3;
+        let constraints = getParams(6, 6, x, y);
         let origin = [y, x];
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 6; i++) {
             x++;
             mineBlock(x, y, "ability", thisLuck);
         }
@@ -180,7 +180,7 @@ function pickaxeAbility5(x, y, reps) {
             procs[1] = [x, y, true]
         }
         x = origin[1];
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 6; i++) {
             y++;
             mineBlock(x, y, "ability", thisLuck);
         }
