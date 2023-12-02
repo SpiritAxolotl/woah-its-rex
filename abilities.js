@@ -26,8 +26,12 @@ async function rollAbilities() {
         }
     } else if (pickaxes[currentPickaxe][0] == pickaxes[6][0]) {
         if (Math.round(Math.random() * 50) == 25) {
+            let temp1 = blocksRevealedThisReset;
+            let temp2 = totalMined;
             canMine = await(pickaxeAbility6(curX, curY, 0));
             updateActiveRecipe();
+            console.log(blocksRevealedThisReset - temp1);
+            console.log(totalMined - temp2);
         }
     }
 }
