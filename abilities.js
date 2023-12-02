@@ -204,7 +204,7 @@ function pickaxeAbility5(x, y, reps, boost) {
         reps++;
         for (let i = 0; i < procs.length; i++) {
             if (procs[i][1]) {
-                pickaxeAbility5(procs[i][0], procs[i][1], reps);
+                pickaxeAbility5(procs[i][0], procs[i][1], reps, boost);
             }
         }
         resolve(true);
@@ -279,7 +279,7 @@ function pickaxeAbility6(x, y, reps, boost) {
     reps++;
         for (let i = 0; i < procs.length; i++) {
             if (procs[i][1]) {
-                pickaxeAbility6(procs[i][0], procs[i][1], reps);
+                pickaxeAbility6(procs[i][0], procs[i][1], reps, boost);
             }
         }
         resolve(true);
