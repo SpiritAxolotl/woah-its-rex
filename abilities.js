@@ -29,8 +29,17 @@ async function rollAbilities() {
             canMine = await(pickaxeAbility6(curX, curY, 0));
             updateActiveRecipe();
         }
+    }else if (pickaxes[currentPickaxe][0] == pickaxes[7][0]) {   
+        if (Math.round(Math.random() * 17) == 7) {
+            canMine = await(pickaxeAbility7(curX, curY, 0));
+            updateActiveRecipe();
+        }
     }
 }
+//let temp1 = blocksRevealedThisReset;
+//let temp2 = totalMined;
+//console.log(blocksRevealedThisReset - temp1);
+//console.log(totalMined - temp2);
 
 
 
@@ -50,7 +59,7 @@ function pickaxeAbility1(x, y, size, customLuck) {
     for (let r = y - constraints[1]; r <= y + size; r++) {
         for (let c = x - constraints[0]; c <= x + size; c++) {
             if (mine[r][c] == "⬜") {
-                mine[r][c] = generateBlock(1);
+                mine[r][c] = generateBlock(1, c, r);
             }
             if (mine[r][c] != "⛏️") {
                 mineBlock(c, r, "ability", thisLuck);
@@ -281,6 +290,48 @@ function pickaxeAbility6(x, y, reps) {
         displayArea();
         resolve(true);
     }
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
+function pickaxeAbility7(x, y) {
+    return new Promise((resolve) => {
+        let thisLuck = 7.5
+        let constraints = getParams(20, 20);
+        let area1 = Math.round((Math.random() * (-(constraints[0]) - 20)) + 20);
+        let area2 = Math.round((Math.random() * (-(constraints[1]) - 20)) + 20);
+        let r = y + area2;
+        let c = x + area1 + 1;
+        for (let i = c; i < c + 4; i++) {
+            if (mine[r][i] == "⬜") {
+                mine[r][i] = generateBlock(thisLuck, i, r);
+            }
+            if (mine[r][i] != "⛏️") {
+                mineBlock(i, r, "ability", thisLuck);
+            }
+        }
+        r++;
+        for (let i = 0; i < 4; i++) {
+            for (let j = c - 1; j < c+5; j++) {
+                if (mine[r][j] == "⬜") {
+                    mine[r][j] = generateBlock(thisLuck, j, r);
+                }
+                if (mine[r][j] != "⛏️") {
+                    mineBlock(j, r, "ability", thisLuck);
+                }
+            }
+            r++;
+        }
+        for (let i = c; i < c + 4; i++) {
+            if (mine[r][i] == "⬜") {
+                mine[r][i] = generateBlock(thisLuck, i, r);
+            }
+            if (mine[r][i] != "⛏️") {
+                mineBlock(i, r, "ability", thisLuck);
+            }
+        }
+        displayArea();
     setTimeout(() => {
         resolve(true);
     }, 5);

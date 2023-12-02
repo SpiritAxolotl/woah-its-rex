@@ -15,7 +15,8 @@ let pickaxes = [
     ["X-Axe", false],
     ["RandAxe", false],
     ["Name5", false],
-    ["Name6", false]
+    ["Name6", false],
+    ["Name7", false]
 ];
 let gears = [false];
 let currentPickaxe = 0;
@@ -130,7 +131,7 @@ document.addEventListener('keydown', (event) => {
     movePlayer(name);
   }, false);
 
-function prepareArea(direction) {
+function prepareArea() {
     let constraints = getParams(50, 50)
     if (mine[curY + 50] == undefined) {
         mine.push([]);
