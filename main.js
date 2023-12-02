@@ -17,6 +17,7 @@ let pickaxes = [
     ["Name5", false],
     ["Name6", false]
 ];
+let gears = [false];
 let currentPickaxe = 0;
 
 function init () {
@@ -29,7 +30,8 @@ function init () {
     repeatDataSave();
     localStorage.setItem("playedBefore", true);
     localStorage.setItem("game2DataChanges", true);
-    createRecipes();
+    createPickaxeRecipes();
+    createGearRecipes();
 }
 function createMine() {
     for (let r = curY; r < curY + 50; r++) {
@@ -510,14 +512,14 @@ function spawnMessage(block, location) {
     }
     for (let i = latestSpawns.length - 1; i >= 0; i--) {
         output += latestSpawns[i][0] + " 1/" + Math.round(1 / (probabilityTable[latestSpawns[i][0]][0]));
-        if (currentPickaxe == 5) {
+        if (currentPickaxe == 5 || gears[0]) {
             output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
         } else {
             output += "<br>";
         }
     }
     document.getElementById("latestSpawns").innerHTML = output;
-    if (currentPickaxe == 5) {
+    if (currentPickaxe == 5 || gears[0]) {
         document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0])) + "<br>X: " + (location[1] - 1000000000) + " | Y:" + -(location[0]);
     } else {
         document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (probabilityTable[block][0]));

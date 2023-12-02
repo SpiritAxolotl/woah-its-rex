@@ -111,7 +111,7 @@ function pickaxeAbility2(x, y) {
 function pickaxeAbility3(x, y) {
     return new Promise((resolve) => {
         let thisLuck = 1.2;
-        let constraints = getParams(7, 7, x, y);
+        let constraints = getParams(6, 6, x, y);
         canMine = false;
         let origin = [y, x];
         for (let i = 0; i < 6; i++) {

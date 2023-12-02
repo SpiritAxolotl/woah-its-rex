@@ -1,5 +1,6 @@
-let allRecipes = [
+let pickaxeRecipes = [
     [
+        //PICKAXE 1
         ["🟫", 7500],
         ["🟧", 500],
         ["🟥", 300],
@@ -7,6 +8,7 @@ let allRecipes = [
         ["⚫", 50]
     ],
     [
+        //PICKAXE 2
         ["🟫", 30000],
         ["🟢", 2000],
         ["🔵", 1750],
@@ -17,6 +19,7 @@ let allRecipes = [
         ["🟤", 500]
     ], 
     [
+        //PICKAXE 3
         ["🟫", 75000],
         ["🟢", 7500],
         ["🔵", 5000],
@@ -27,6 +30,7 @@ let allRecipes = [
         ["🤍", 1]
     ],
     [   
+        //PICKAXE 4
         [ "🟫", 150000],
         ["🟢", 12500],
         ["🔵", 9000],
@@ -37,6 +41,7 @@ let allRecipes = [
         ["⚙️", 1]
     ],
     [
+        //PICKAXE 6
         ["🟫", 750000],
         ["🟢", 25000],
         ["🔵", 17500],
@@ -51,6 +56,7 @@ let allRecipes = [
         ["🔋", 1]
     ],
     [
+        //PICKAXE 7
         ["🟫", 2500000],
         ["🟧", 100000],
         ["🟪", 90000],
@@ -64,225 +70,161 @@ let allRecipes = [
         ["🏆", 1]
     ]
 ]
+let gearRecipes = [
+    //ORE TRACKER
+    [
+        ["🟫", 300000],
+        ["🟧", 25000],
+        ["🟥", 25000],
+        ["🟪", 25000],
+        ["🔋", 1] 
+    ],
+]
 
 
-let recipeElements = [];
+let recipeElements = [[], []];
 function displayRecipe(num) {
-    let parent = document.getElementById("displayRecipe")
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
+    if (document.getElementById("pickaxeCrafts").style.display == "block") {
+        let parent = document.getElementById("displayRecipe")
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+        for (let i = 0; i < recipeElements[0].length; i++) {
+            recipeElements[0][i].style.display = "none";
+        }
+        parent.appendChild(recipeElements[0][num]);
+        recipeElements[0][num].style.display = "block";
+        updateActiveRecipe();
+    } else {
+        let parent = document.getElementById("displayRecipe")
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+        for (let i = 0; i < recipeElements[1].length; i++) {
+            recipeElements[1][i].style.display = "none";
+        }
+        parent.appendChild(recipeElements[1][num]);
+        recipeElements[1][num].style.display = "block";
+        updateActiveRecipe();
     }
-    for (let i = 0; i < recipeElements.length; i++) {
-        recipeElements[i].style.display = "none";
-    }
-    parent.appendChild(recipeElements[num]);
-    recipeElements[num].style.display = "block";
-    updateActiveRecipe();
+
+    
 }
 
-function createRecipes() {
-    //RECIPE 1
-    let tempElement = document.createElement('div');
-    tempElement.id = "recipe1";
-    tempElement.style.display = "none";
-    tempElement.classList = "craftingAmountsDisplay";
-    for (let i = 0; i < allRecipes[0].length; i++) {
-        let element = document.createElement('p');
-        element.id = (allRecipes[0][i][0] + ("recipe1display"));
-        element.innerHTML = allRecipes[0][i][0] + " " + probabilityTable[allRecipes[0][i][0]][1][0] + "/" + allRecipes[0][i][1];
-        if (probabilityTable[allRecipes[0][i][0]][1][0] >= allRecipes[0][i][1]) {
-            element.style.color = "green";
-        } else {
-            element.style.color = "red";
+function createPickaxeRecipes() {
+    for (let i = 0; i < pickaxeRecipes.length; i++) {
+        let tempElement = document.createElement('div');
+        tempElement.id = "pickaxeRecipe" + (i+1);
+        tempElement.style.display = "none";
+        tempElement.classList = "craftingAmountsDisplay";
+        for (let j = 0; j < pickaxeRecipes[i].length; j++) {
+            let element = document.createElement('p');
+            element.id = (pickaxeRecipes[i][j][0] + ("pickaxeRecipe" + (i+1) + "Display"));
+            element.innerHTML = pickaxeRecipes[i][j][0] + " " + probabilityTable[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
+            if (probabilityTable[pickaxeRecipes[i][i][0]][1][0] >= pickaxeRecipes[i][j][1]) {
+                element.style.color = "green";
+            } else {
+                element.style.color = "red";
+            }
+        tempElement.appendChild(element);
         }
-    tempElement.appendChild(element);
-    }
-    let tempButton = document.createElement('button');
-    tempButton.id="craftPickaxe1";
-    tempButton.setAttribute("onclick", "craftPickaxe(1)");
-    if (pickaxes[1][1]) {
-        tempButton.innerHTML = "Equip!";
-    } else {
-        tempButton.innerHTML = "Craft!";
-    }
-    tempElement.appendChild(tempButton);
-    recipeElements.push(tempElement);
-
-
-    //RECIPE 2
-    tempElement = document.createElement('div');
-    tempElement.id = "recipe2";
-    tempElement.style.display = "none";
-    tempElement.classList = "craftingAmountsDisplay";
-    for (let i = 0; i < allRecipes[1].length; i++) {
-        let element = document.createElement('p');
-        element.id = (allRecipes[1][i][0] + ("recipe2display"));
-        element.innerHTML = allRecipes[1][i][0] + " " + probabilityTable[allRecipes[1][i][0]][1][0] + "/" + allRecipes[1][i][1];
-        if (probabilityTable[allRecipes[1][i][0]][1][0] >= allRecipes[1][i][1]) {
-            element.style.color = "green";
+        let tempButton = document.createElement('button');
+        tempButton.id="craftPickaxe" + (i+1);
+        tempButton.setAttribute("onclick", "craftPickaxe(" + (i+1) + ")");
+        if (pickaxes[1][1]) {
+            tempButton.innerHTML = "Equip!";
         } else {
-            element.style.color = "red";
+            tempButton.innerHTML = "Craft!";
         }
-    tempElement.appendChild(element);
+        tempElement.appendChild(tempButton);
+        recipeElements[0].push(tempElement);
     }
-    tempButton = document.createElement('button');
-    tempButton.id="craftPickaxe2";
-    tempButton.setAttribute("onclick", "craftPickaxe(2)");
-    if (pickaxes[2][1]) {
-        tempButton.innerHTML = "Equip!";
-    } else {
-        tempButton.innerHTML = "Craft!";
-    }
-    tempElement.appendChild(tempButton);
-    recipeElements.push(tempElement);
-
-
-    //RECIPE 3
-    tempElement = document.createElement('div');
-    tempElement.id = "recipe3";
-    tempElement.style.display = "none";
-    tempElement.classList = "craftingAmountsDisplay";
-    for (let i = 0; i < allRecipes[2].length; i++) {
-        let element = document.createElement('p');
-        element.id = (allRecipes[2][i][0] + ("recipe3display"));
-        element.innerHTML = allRecipes[2][i][0] + " " + probabilityTable[allRecipes[2][i][0]][1][0] + "/" + allRecipes[2][i][1];
-        if (probabilityTable[allRecipes[2][i][0]][1][0] >= allRecipes[2][i][1]) {
-            element.style.color = "green";
+    
+}
+function createGearRecipes() {
+    for (let i = 0; i < gearRecipes.length; i++) {
+        let tempElement = document.createElement('div');
+        tempElement.id = "gearRecipe" + (i+1);
+        tempElement.style.display = "none";
+        tempElement.classList = "craftingAmountsDisplay";
+        for (let j = 0; j < gearRecipes[i].length; j++) {
+            let element = document.createElement('p');
+            element.id = (gearRecipes[i][j][0] + ("gearRecipe" + (i+1) + "Display"));
+            element.innerHTML = gearRecipes[i][j][0] + " " + probabilityTable[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
+            if (probabilityTable[gearRecipes[i][i][0]][1][0] >= gearRecipes[i][j][1]) {
+                element.style.color = "green";
+            } else {
+                element.style.color = "red";
+            }
+        tempElement.appendChild(element);
+        }
+        let tempButton = document.createElement('button');
+        tempButton.id="craftGear" + (i+1);
+        tempButton.setAttribute("onclick", "craftGear(" + (i+1) + ")");
+        if (gears[i]) {
+            tempButton.innerHTML = "Owned!";
         } else {
-            element.style.color = "red";
+            tempButton.innerHTML = "Craft!";
         }
-    tempElement.appendChild(element);
+        tempElement.appendChild(tempButton);
+        recipeElements[1].push(tempElement);
     }
-    tempButton = document.createElement('button');
-    tempButton.id="craftPickaxe3";
-    tempButton.setAttribute("onclick", "craftPickaxe(3)");
-    if (pickaxes[3][1]) {
-        tempButton.innerHTML = "Equip!";
-    } else {
-        tempButton.innerHTML = "Craft!";
-    }
-    tempElement.appendChild(tempButton);
-    recipeElements.push(tempElement);
-
-
-    //RECIPE 4
-    tempElement = document.createElement('div');
-    tempElement.id = "recipe4";
-    tempElement.style.display = "none";
-    tempElement.classList = "craftingAmountsDisplay";
-    for (let i = 0; i < allRecipes[3].length; i++) {
-        let element = document.createElement('p');
-        element.id = (allRecipes[3][i][0] + ("recipe4display"));
-        element.innerHTML = allRecipes[3][i][0] + " " + probabilityTable[allRecipes[3][i][0]][1][0] + "/" + allRecipes[3][i][1];
-        if (probabilityTable[allRecipes[3][i][0]][1][0] >= allRecipes[3][i][1]) {
-            element.style.color = "green";
-        } else {
-            element.style.color = "red";
-        }
-    tempElement.appendChild(element);
-    }
-    tempButton = document.createElement('button');
-    tempButton.id="craftPickaxe4";
-    tempButton.setAttribute("onclick", "craftPickaxe(4)");
-    if (pickaxes[4][1]) {
-        tempButton.innerHTML = "Equip!";
-    } else {
-        tempButton.innerHTML = "Craft!";
-    }
-    tempElement.appendChild(tempButton);
-    recipeElements.push(tempElement);
-
-
-    //RECIPE 5
-    tempElement = document.createElement('div');
-    tempElement.id = "recipe5";
-    tempElement.style.display = "none";
-    tempElement.classList = "craftingAmountsDisplay";
-    for (let i = 0; i < allRecipes[4].length; i++) {
-        let element = document.createElement('p');
-        element.id = (allRecipes[4][i][0] + ("recipe5display"));
-        element.innerHTML = allRecipes[4][i][0] + " " + probabilityTable[allRecipes[4][i][0]][1][0] + "/" + allRecipes[4][i][1];
-        if (probabilityTable[allRecipes[4][i][0]][1][0] >= allRecipes[4][i][1]) {
-            element.style.color = "green";
-        } else {
-            element.style.color = "red";
-        }
-    tempElement.appendChild(element);
-    }
-    tempButton = document.createElement('button');
-    tempButton.id="craftPickaxe5";
-    tempButton.setAttribute("onclick", "craftPickaxe(5)");
-    if (pickaxes[5][1]) {
-        tempButton.innerHTML = "Equip!";
-    } else {
-        tempButton.innerHTML = "Craft!";
-    }
-    tempElement.appendChild(tempButton);
-    recipeElements.push(tempElement);
-
-
-    //RECIPE 6
-    tempElement = document.createElement('div');
-    tempElement.id = "recipe6";
-    tempElement.style.display = "none";
-    tempElement.classList = "craftingAmountsDisplay";
-    for (let i = 0; i < allRecipes[5].length; i++) {
-        let element = document.createElement('p');
-        element.id = (allRecipes[5][i][0] + ("recipe5display"));
-        element.innerHTML = allRecipes[5][i][0] + " " + probabilityTable[allRecipes[5][i][0]][1][0] + "/" + allRecipes[5][i][1];
-        if (probabilityTable[allRecipes[5][i][0]][1][0] >= allRecipes[5][i][1]) {
-            element.style.color = "green";
-        } else {
-            element.style.color = "red";
-        }
-    tempElement.appendChild(element);
-    }
-    tempButton = document.createElement('button');
-    tempButton.id="craftPickaxe6";
-    tempButton.setAttribute("onclick", "craftPickaxe(6)");
-    if (pickaxes[6][1]) {
-        tempButton.innerHTML = "Equip!";
-    } else {
-        tempButton.innerHTML = "Craft!";
-    }
-    tempElement.appendChild(tempButton);
-    recipeElements.push(tempElement);
+    
 }
 
 
 function updateActiveRecipe() {
-    for (let i = 0; i < recipeElements.length; i++) {
-        if (recipeElements[i].style.display == "block") {
-            let parent = recipeElements[i];
-            let elements = parent.children;
-            for (let j = 0; j < elements.length - 1; j++) {
-                elements[j].innerHTML = allRecipes[i][j][0] + " " + probabilityTable[allRecipes[i][j][0]][1][0] + "/" + allRecipes[i][j][1];
-                if (probabilityTable[allRecipes[i][j][0]][1][0] >= allRecipes[i][j][1]) {
-                    elements[j].style.color = "green";
-                } else {
-                    elements[j].style.color = "red";
+    if (document.getElementById("pickaxeCrafts").style.display == "block") {
+        for (let i = 0; i < recipeElements[0].length; i++) {
+            if (recipeElements[0][i].style.display == "block") {
+                let parent = recipeElements[0][i];
+                let elements = parent.children;
+                for (let j = 0; j < elements.length - 1; j++) {
+                    elements[j].innerHTML = pickaxeRecipes[i][j][0] + " " + probabilityTable[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
+                    if (probabilityTable[pickaxeRecipes[i][j][0]][1][0] >= pickaxeRecipes[i][j][1]) {
+                        elements[j].style.color = "green";
+                    } else {
+                        elements[j].style.color = "red";
+                    }
                 }
             }
+            
         }
-        
+    } else {
+        for (let i = 0; i < recipeElements[1].length; i++) {
+            if (recipeElements[1][i].style.display == "block") {
+                let parent = recipeElements[1][i];
+                let elements = parent.children;
+                for (let j = 0; j < elements.length - 1; j++) {
+                    elements[j].innerHTML = gearRecipes[i][j][0] + " " + probabilityTable[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
+                    if (probabilityTable[gearRecipes[i][j][0]][1][0] >= gearRecipes[i][j][1]) {
+                        elements[j].style.color = "green";
+                    } else {
+                        elements[j].style.color = "red";
+                    }
+                }
+            }
+            
+        }
     }
+    
 }
 
 function craftPickaxe(num) {
     canCraft = true;
     if (!(pickaxes[num][1])) {
-        for (let i = 0; i < allRecipes[num - 1].length; i++) {
-            if (!(probabilityTable[allRecipes[num-1][i][0]][1][0] >= allRecipes[num - 1][i][1])) {
+        for (let i = 0; i < pickaxeRecipes[num - 1].length; i++) {
+            if (!(probabilityTable[pickaxeRecipes[num-1][i][0]][1][0] >= pickaxeRecipes[num - 1][i][1])) {
                 canCraft = false;
                 break;
             } 
         }
         if (canCraft) {
-            for (let i = 0; i < allRecipes[num - 1].length; i++) {
-                probabilityTable[allRecipes[num-1][i][0]][1][0] -= allRecipes[num - 1][i][1];
-                updateInventory(allRecipes[num - 1][i][0], 1);
+            for (let i = 0; i < pickaxeRecipes[num - 1].length; i++) {
+                probabilityTable[pickaxeRecipes[num-1][i][0]][1][0] -= pickaxeRecipes[num - 1][i][1];
+                updateInventory(pickaxeRecipes[num - 1][i][0], 1);
             }
-        let temp = document.getElementById("recipe" + num).children;
+        let temp = document.getElementById("pickaxeRecipe" + num).children;
         temp[temp.length - 1].innerHTML = "Equip!";
         updateActiveRecipe();
         pickaxes[num][1] = true;
@@ -292,4 +234,35 @@ function craftPickaxe(num) {
         currentPickaxe = num;
     }
     
+}
+function craftGear(num) {
+    canCraft = true;
+    if (!(gears[num - 1])) {
+        for (let i = 0; i < gearRecipes[num - 1].length; i++) {
+            if (!(probabilityTable[gearRecipes[num-1][i][0]][1][0] >= gearRecipes[num - 1][i][1])) {
+                canCraft = false;
+                break;
+            } 
+        }
+        if (canCraft) {
+            for (let i = 0; i < gearRecipes[num - 1].length; i++) {
+                probabilityTable[gearRecipes[num-1][i][0]][1][0] -= gearRecipes[num - 1][i][1];
+                updateInventory(gearRecipes[num - 1][i][0], 1);
+            }
+        let temp = document.getElementById("gearRecipe" + num).children;
+        temp[temp.length - 1].innerHTML = "Owned!";
+        console.log(temp);
+        updateActiveRecipe();
+        gears[num - 1] = true; 
+        }
+    }
+}
+
+function showPickaxes() {
+    document.getElementById("pickaxeCrafts").style.display = "block";
+    document.getElementById("gearCrafts").style.display = "none";
+}
+function showGears() {
+    document.getElementById("pickaxeCrafts").style.display = "none";
+    document.getElementById("gearCrafts").style.display = "block";
 }

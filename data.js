@@ -8,11 +8,10 @@ function saveAllData() {
         //STATS, 2
         [],
         //UPDATES, 3
-        [
-            [
-        
-            ]
-        ]
+        [],
+        //GEARS, 4
+        []
+
     ];
 
     for (var propertyName in probabilityTable) {
@@ -20,6 +19,7 @@ function saveAllData() {
     }
     dataStorage[1].push([pickaxes, currentPickaxe]);
     dataStorage[2].push(totalMined)
+    dataStorage[4].push(gears);
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
 
@@ -46,16 +46,15 @@ function loadAllData() {
                     }
                 }
             } 
-        
     }
-    let removedPickaxe = localStorage.getItem("removedPickaxeFive");
-    if (removedPickaxe) {
-        localStorage.setItem("removedPickaxeFive", true);
-    } else {
-        pickaxes[5][1] = false;
-        localStorage.setItem("removedPickaxeFive", true);
+    if (data[4] != undefined || data[4] != null) {
+        for (let i = 0; i < data[4][0].length; i++) {
+            console.log(data[4][0][i]);
+            gears[i] = data[4][0][i];
+        }
     }
 }
+
 
 let dataTimer = null;
 let dataLooping = false;

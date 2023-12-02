@@ -54,12 +54,20 @@
             <hr>
             <p>Crafting</p>
         <p id="craftingClick">
+            <button onclick="showPickaxes()">Pickaxes</button>
+            <button onclick="showGears()">Gears</button>
+            <div id="pickaxeCrafts" style="display: block;">
             <button onclick="displayRecipe(0)">Pickaxe 1</button>
             <button onclick="displayRecipe(1)">Pickaxe 2</button>
             <button onclick="displayRecipe(2)">Pickaxe 3</button>
             <button onclick="displayRecipe(3)">Pickaxe 4</button>
             <button onclick="displayRecipe(4)">Pickaxe 5</button>
             <button onclick="displayRecipe(5)">Pickaxe 6</button>
+            </div>
+            <div id="gearCrafts" style="display: none;">
+                <button onclick="displayRecipe(0)">Ore Tracker</button>
+            </div>
+            
         </p>
         <div id="displayRecipe">
                 
