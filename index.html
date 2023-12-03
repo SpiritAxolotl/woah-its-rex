@@ -10,9 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script>
-    $( document ).ready(function() {
-        init();
-    });
     </script>
 </head>
 <body>
@@ -28,12 +25,14 @@
                 <button onclick="goDirection('w')" class="movementButton">Up</button>
                 <button onclick="goDirection('s')" class="movementButton">Down</button>
                 <button onclick="goDirection('d')" class="movementButton">Right</button>
+                <button onclick="teleport()" class="movementButton">Teleport!</button>
                 </div>
                 <div class="text-center" id="mobile" style="display: block;">
                 <button onclick="moveOne('a')" class="movementButton">Left 1</button>
                 <button onclick="moveOne('w')" class="movementButton">Up 1</button>
                 <button onclick="moveOne('s')" class="movementButton">Down 1</button>
                 <button onclick="moveOne('d')" class="movementButton">Right 1</button>
+                <button onclick="switchDistance()" class="movementButton" id="meterDisplay">2000m</button>
                 </div>
             <p id="blockDisplay" style="text-align:center;"></p>
             <div>
@@ -46,6 +45,7 @@
         </div>
         <div class="col-2 text-center"  style="border-style: solid; height:100%;">
             <button id="resetMine" onclick="resetMine()">Reset Mine</button>
+            <button onclick="showData()">Data</button>
             <br><br>
             <p id="mineResetProgress">0/1,000,000</p>
             <p id="blocksMined">0 Blocks Mined</p>
@@ -87,6 +87,15 @@
         
     </div>
 </div>
+</div>
+<div id="dataExport" style="display: none;">
+    <div> 
+        <input type="text" id="dataText" style="width:50vw;">
+        <button onclick="exportData()">Export Data</button>
+        <button onclick="importData(document.getElementById('dataText').value)">Import Data</button>
+        <button onclick="hideData()">Back to Game</button>
+    </div>
+   
 </div>
 
 

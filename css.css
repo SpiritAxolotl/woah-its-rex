@@ -31,6 +31,14 @@
     align-items: center;
     justify-content: center;
 }
+#dataExport {
+    height:100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #switchInventory {
     border-style: solid;
     border-color: black;

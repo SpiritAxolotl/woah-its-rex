@@ -134,8 +134,8 @@ function createPickaxeRecipes() {
         for (let j = 0; j < pickaxeRecipes[i].length; j++) {
             let element = document.createElement('p');
             element.id = (pickaxeRecipes[i][j][0] + ("pickaxeRecipe" + (i+1) + "Display"));
-            element.innerHTML = pickaxeRecipes[i][j][0] + " " + probabilityTable[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
-            if (probabilityTable[pickaxeRecipes[i][i][0]][1][0] >= pickaxeRecipes[i][j][1]) {
+            element.innerHTML = pickaxeRecipes[i][j][0] + " " + oreList[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
+            if (oreList[pickaxeRecipes[i][i][0]][1][0] >= pickaxeRecipes[i][j][1]) {
                 element.style.color = "green";
             } else {
                 element.style.color = "red";
@@ -164,8 +164,8 @@ function createGearRecipes() {
         for (let j = 0; j < gearRecipes[i].length; j++) {
             let element = document.createElement('p');
             element.id = (gearRecipes[i][j][0] + ("gearRecipe" + (i+1) + "Display"));
-            element.innerHTML = gearRecipes[i][j][0] + " " + probabilityTable[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
-            if (probabilityTable[gearRecipes[i][i][0]][1][0] >= gearRecipes[i][j][1]) {
+            element.innerHTML = gearRecipes[i][j][0] + " " + oreList[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
+            if (oreList[gearRecipes[i][i][0]][1][0] >= gearRecipes[i][j][1]) {
                 element.style.color = "green";
             } else {
                 element.style.color = "red";
@@ -194,8 +194,8 @@ function updateActiveRecipe() {
                 let parent = recipeElements[0][i];
                 let elements = parent.children;
                 for (let j = 0; j < elements.length - 1; j++) {
-                    elements[j].innerHTML = pickaxeRecipes[i][j][0] + " " + probabilityTable[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
-                    if (probabilityTable[pickaxeRecipes[i][j][0]][1][0] >= pickaxeRecipes[i][j][1]) {
+                    elements[j].innerHTML = pickaxeRecipes[i][j][0] + " " + oreList[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
+                    if (oreList[pickaxeRecipes[i][j][0]][1][0] >= pickaxeRecipes[i][j][1]) {
                         elements[j].style.color = "green";
                     } else {
                         elements[j].style.color = "red";
@@ -210,8 +210,8 @@ function updateActiveRecipe() {
                 let parent = recipeElements[1][i];
                 let elements = parent.children;
                 for (let j = 0; j < elements.length - 1; j++) {
-                    elements[j].innerHTML = gearRecipes[i][j][0] + " " + probabilityTable[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
-                    if (probabilityTable[gearRecipes[i][j][0]][1][0] >= gearRecipes[i][j][1]) {
+                    elements[j].innerHTML = gearRecipes[i][j][0] + " " + oreList[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
+                    if (oreList[gearRecipes[i][j][0]][1][0] >= gearRecipes[i][j][1]) {
                         elements[j].style.color = "green";
                     } else {
                         elements[j].style.color = "red";
@@ -228,14 +228,14 @@ function craftPickaxe(num) {
     canCraft = true;
     if (!(pickaxes[num][1])) {
         for (let i = 0; i < pickaxeRecipes[num - 1].length; i++) {
-            if (!(probabilityTable[pickaxeRecipes[num-1][i][0]][1][0] >= pickaxeRecipes[num - 1][i][1])) {
+            if (!(oreList[pickaxeRecipes[num-1][i][0]][1][0] >= pickaxeRecipes[num - 1][i][1])) {
                 canCraft = false;
                 break;
             } 
         }
         if (canCraft) {
             for (let i = 0; i < pickaxeRecipes[num - 1].length; i++) {
-                probabilityTable[pickaxeRecipes[num-1][i][0]][1][0] -= pickaxeRecipes[num - 1][i][1];
+                oreList[pickaxeRecipes[num-1][i][0]][1][0] -= pickaxeRecipes[num - 1][i][1];
                 updateInventory(pickaxeRecipes[num - 1][i][0], 1);
             }
         let temp = document.getElementById("pickaxeRecipe" + num).children;
@@ -253,14 +253,14 @@ function craftGear(num) {
     canCraft = true;
     if (!(gears[num - 1])) {
         for (let i = 0; i < gearRecipes[num - 1].length; i++) {
-            if (!(probabilityTable[gearRecipes[num-1][i][0]][1][0] >= gearRecipes[num - 1][i][1])) {
+            if (!(oreList[gearRecipes[num-1][i][0]][1][0] >= gearRecipes[num - 1][i][1])) {
                 canCraft = false;
                 break;
             } 
         }
         if (canCraft) {
             for (let i = 0; i < gearRecipes[num - 1].length; i++) {
-                probabilityTable[gearRecipes[num-1][i][0]][1][0] -= gearRecipes[num - 1][i][1];
+                oreList[gearRecipes[num-1][i][0]][1][0] -= gearRecipes[num - 1][i][1];
                 updateInventory(gearRecipes[num - 1][i][0], 1);
             }
         let temp = document.getElementById("gearRecipe" + num).children;

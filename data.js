@@ -14,8 +14,8 @@ function saveAllData() {
 
     ];
 
-    for (var propertyName in probabilityTable) {
-        dataStorage[0].push([propertyName, [probabilityTable[propertyName][1]]]);
+    for (var propertyName in oreList) {
+        dataStorage[0].push([propertyName, [oreList[propertyName][1]]]);
     }
     dataStorage[1].push([pickaxes, currentPickaxe]);
     dataStorage[2].push(totalMined)
@@ -26,7 +26,9 @@ function saveAllData() {
 function loadAllData() {
     let data = JSON.parse(localStorage.getItem("playerData"));
     for (let i = 0; i < data[0].length; i++) {
-        probabilityTable[data[0][i][0]][1] = data[0][i][1][0];
+        if (oreList[data[0][i][0]] != undefined) {
+            oreList[data[0][i][0]][1] = data[0][i][1][0];
+        }
     }
     for (let i = 0; i < data[1][0][0].length; i++) {
         
@@ -37,11 +39,11 @@ function loadAllData() {
     totalMined = data[2]
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
     
-    for (var propertyName in probabilityTable) {
+    for (var propertyName in oreList) {
             if (document.getElementById(propertyName + "1") != null) {
                 for (let i = 1; i < 5; i++) {
                     updateInventory(propertyName, i)
-                    if (probabilityTable[propertyName][1][i - 1] > 0) {
+                    if (oreList[propertyName][1][i - 1] > 0) {
                         document.getElementById(propertyName + i).style.display = "block";
                     }
                 }
@@ -60,4 +62,46 @@ let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
         dataTimer = setInterval(saveAllData, 2000);
+}
+
+function exportData() {
+    let data = JSON.parse(localStorage.getItem("playerData"));
+    document.getElementById("dataText").value = JSON.stringify(data);
+    if (confirm("Download as file?")) {
+        exportDataAsFile(JSON.stringify(data), "data.txt", "text/plain");
+    }
+}
+function importData(data) {
+    if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
+        localStorage.setItem("playerData", JSON.stringify(data));
+        saveAllData();
+    }
+}
+
+function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
+    let textFileAsBlob = new Blob([textToWrite], { type: fileType });
+    let downloadLink = document.createElement('a');
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = 'Download File';
+
+    if (window.webkitURL != null) {
+        downloadLink.href = window.webkitURL.createObjectURL(
+            textFileAsBlob
+        );
+    } else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+function showData() {
+    document.getElementById("mainContent").style.display = "none";
+    document.getElementById("dataExport").style.display = "block";
+}
+
+function hideData() {
+    document.getElementById("dataExport").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
 }
