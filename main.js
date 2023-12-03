@@ -518,7 +518,7 @@ document.addEventListener('keydown', (event) => {
 function prepareArea() {
     let constraints = getParams(50, 50)
     if (mine[curY + 50] == undefined) {
-        mine.push([]);
+        mine[curY + 50] = [];
     }
     if (mine[curY + 50][curX] == undefined) {
         for (let c = curX - constraints[0]; c < curX + 50; c++) {
@@ -581,7 +581,7 @@ function displayArea() {
         output += "<br>";
     }
     document.getElementById("blockDisplay").innerHTML = output;
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/100,000 Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/25,000 Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
   }
   function getParams(distanceX, distanceY, x, y) {
@@ -630,7 +630,9 @@ function displayArea() {
             }
         }
 
-    if (blocksRevealedThisReset > 100000) {
+    if (blocksRevealedThisReset > 25000) {
+        clearInterval(loopTimer);
+        blocksRevealedThisReset = 0;
         canMine = false;
         mineReset();
     }
@@ -718,7 +720,7 @@ function resetMine() {
     curY = 0;
     blocksRevealedThisReset = 0;
     createMine();
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/100,000 Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/25,000 Blocks Revealed This Reset";
 }
 
 function playSound(type) {
@@ -847,19 +849,38 @@ function deleteExcessIndices() {
     }
 }
 
-function mineReset() {
-    let constraints = getParams(0, 1000);
-    if (furthestLeft < curX - 1000) {
-        for (let r = constraints[1]; r < curY + 1000; r++) {
-            if (mine[r] != undefined) {
-                mine[r].fill(undefined, furthestLeft, curX-1000);
-            }
-        }
-    }
-    furthestLeft = curX - 1;
-    furthestRight = curX + 1;
-    canMine = true;
-    blocksRevealedThisReset = 0;
+async function mineReset() {
+    let temp = curDirection;
+    curDirection = "";
+    canMine = await mineResetAid();
+    checkAllAround(curX, curY, 1);
+    mine[curY][curX] = "⛏️"
+    displayArea();
+    console.log(temp);
+    goDirection(temp);
+}
+function mineResetAid() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            mine = [[]];
+            curX = 1000000000;
+            let x = 1000000000;
+            let y = curY;
+            console.log(curX, curY);
+            for (let r = y - 50; r < y + 50; r++) {
+                if(mine[r] == undefined) {
+                    mine[r] = [];
+                }
+                for (let c = x - 50; c < x + 50; c++) {
+                    mine[r][c] = "⬜";
+                }
+            }    
+            checkAllAround(curX, curY, 1);
+        }, 500);
+        setTimeout(() => {
+        resolve(true);
+        }, 3000);
+        });
 }
 let latestFinds = [];
 function logFind(type, x, y, variant) {
