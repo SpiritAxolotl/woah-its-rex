@@ -275,9 +275,9 @@ let rockLayer = {
     "🔮" : 1/60000000,
     "🔋" : 1/36000000,
     "💍" : 1/15000000,
+    "🥏" : 1/8000000,
     "⚜️" : 1/6250000,
     "💠" : 1/6000000,
-    "🥏" : 1/8000000,
     "🤍": 1/2000000, 
     "🖤": 1/1750000, 
     "🤎": 1/1500000, 
@@ -725,7 +725,7 @@ function playSound(type) {
     let audio;
     switch (type) {
         case "exotic":
-            chill.volume = 0.5;
+            chill.volume = 1;
             chill.currentTime = 0;
             chill.play();
             break;
