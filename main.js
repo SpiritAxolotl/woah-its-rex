@@ -630,7 +630,7 @@ function displayArea() {
             }
         }
 
-    if (blocksRevealedThisReset > 2500) {
+    if (blocksRevealedThisReset > 25000) {
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
