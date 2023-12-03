@@ -889,6 +889,8 @@ function setLayer(y) {
 }
 
 async function teleport() {
+    canMine = false;
+    clearInterval(loopTimer);
     canMine = await toLocation();
     displayArea();
 }
