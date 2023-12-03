@@ -876,7 +876,7 @@ function logFind(type, x, y, variant) {
     }
     document.getElementById("latestFinds").innerHTML = output;
 }
-let lastLayerChange = 4000;
+let lastLayerChange = 6000;
 let currentLayer = dirtLayer;
 function setLayer(y) {
     let tempNum = y;
