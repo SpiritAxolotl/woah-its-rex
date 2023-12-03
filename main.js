@@ -510,9 +510,9 @@ document.addEventListener('keydown', (event) => {
     var name = event.key;
     if (name == "a" || name == "s" || name == "d" || name == "w") {
         clearInterval(loopTimer);
+        curDirection = "";
+        movePlayer(name);
     }
-    curDirection = "";
-    movePlayer(name);
   }, false);
 
 function prepareArea() {
@@ -630,7 +630,7 @@ function displayArea() {
             }
         }
 
-    if (blocksRevealedThisReset > 25000) {
+    if (blocksRevealedThisReset > 2500) {
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
