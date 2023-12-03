@@ -732,25 +732,22 @@ function playSound(type) {
             chill.play();
             break;
         case "transcendent":
-            ringing.volume = 0.2;
+            ringing.volume = 0.6;
             ringing.currentTime = 0;
             ringing.play();
             break;
         case "enigmatic":
-            visionblur.volume = 0.2;
-            visionblur.volume = 0.2;
+            visionblur.volume = 0.6;
             visionblur.currentTime = 0;
             visionblur.play();
             break;
         case "unfathomable":
-            unfath.volume = 0.2;
-            unfath.volume = 0.2;
+            unfath.volume = 0.6;
             unfath.currentTime = 0;
             unfath.play();
             break;
         case "otherworldly":
-            ow.volume = 0.2;
-            ow.volume = 0.2;
+            ow.volume = 0.6;
             ow.currentTime = 0;
             ow.play();
             break;
