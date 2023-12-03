@@ -876,15 +876,16 @@ function logFind(type, x, y, variant) {
     }
     document.getElementById("latestFinds").innerHTML = output;
 }
-let lastLayerChange = 0;
+let lastLayerChange = 4000;
 let currentLayer = dirtLayer;
 function setLayer(y) {
     let tempNum = y;
-    if (tempNum <= 16000) {
+    if (tempNum <= 14000) {
     tempNum = Math.floor(tempNum / 2000);
     currentLayer = allLayers[tempNum];
-    } else {
-        currentLayer = allLayers[7];
+    } else if (y > (lastLayerChange + 10000)) {
+        lastLayerChange += 10000;
+        currentLayer = allLayers[Math.round(Math.random() * 7)];
     }
 }
 
@@ -908,6 +909,7 @@ function toLocation() {
             mine[r][c] = "⬜";
         }
     }    
+    setLayer(y);
     curX = x;
     curY = y;
     checkAllAround(curX, curY, 1);
