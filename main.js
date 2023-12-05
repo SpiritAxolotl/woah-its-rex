@@ -8,6 +8,7 @@ let facing = "down";
 let totalMined = 0;
 let blocksRevealedThisReset = 0;
 let canMine = false;
+let lastDirection = "";
 let pickaxes = [
     ["Basic Pickaxe", true],
     ["Advanced Pickaxe", false],
@@ -446,8 +447,8 @@ function movePlayer(dir) {
                     prepareArea("s");
                     curY++; 
                     mine[curY][curX] = "⛏️";
-                    deleteExcessIndices();
                     setLayer(curY);
+                    lastDirection = "s";
                     break;
             case "w":
                 if (curY > 0) {
@@ -456,7 +457,7 @@ function movePlayer(dir) {
                     prepareArea("w");
                     curY--; 
                     mine[curY][curX] = "⛏️";
-                    deleteExcessIndices();
+                    lastDirection = "w";
                     setLayer(curY);
                 }  
                 break;
@@ -470,7 +471,7 @@ function movePlayer(dir) {
                     if (curX < furthestLeft) {
                         furthestLeft = curX;
                     }
-                    deleteExcessIndices();
+                    lastDirection = "a";
                 }  
                 break;
             case "d":
@@ -482,7 +483,7 @@ function movePlayer(dir) {
                     if (curX > furthestRight) {
                         furthestRight = curX;
                     }
-                deleteExcessIndices();
+                lastDirection = "s";
                 break;
             default:
                 console.log("wrong key!!");
@@ -584,7 +585,7 @@ function displayArea() {
         output += "<br>";
     }
     document.getElementById("blockDisplay").innerHTML = output;
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/25,000 Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/40,000 Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
   }
   function getParams(distanceX, distanceY, x, y) {
@@ -633,7 +634,7 @@ function displayArea() {
             }
         }
 
-    if (blocksRevealedThisReset > 25000) {
+    if (blocksRevealedThisReset > 40000) {
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
@@ -643,7 +644,7 @@ function displayArea() {
 
 let multis = [1, 50, 250, 500];
 let inv;
-function giveBlock(type, x, y) {
+function giveBlock(type, x, y, fromReset) {
     if (type != "⛏️") {
         inv = 1;
         if (Math.floor(Math.random() * 50) == 25) {
@@ -656,11 +657,13 @@ function giveBlock(type, x, y) {
         if (type == "🟩") {
                 type = "🟫";
         }   
+        if (fromReset == undefined) {
+            if (Math.round(1/oreList[type][0]) >= 750000) {
+                logFind(type, x, y, names[inv - 1]);
+            }
+        }
             oreList[type][1][inv - 1]++;
             updateInventory(type, inv);
-        if (Math.round(1/oreList[type][0]) >= 750000) {
-            logFind(type, x, y, names[inv - 1]);
-        }
     }
 }
 function generateBlock(luck, location) {
@@ -723,7 +726,7 @@ function resetMine() {
     curY = 0;
     blocksRevealedThisReset = 0;
     createMine();
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/25,000 Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/40,000 Blocks Revealed This Reset";
 }
 
 function playSound(type) {
@@ -843,21 +846,84 @@ function moveOne(dir) {
     curDirection = "";
 }
 
-function deleteExcessIndices() {
-    if (curY > 2000) {
-        mine[curY - 2000] = undefined;
-    }
-}
-
 async function mineReset() {
     let temp = curDirection;
     curDirection = "";
+    let temp2 = await collectOres(temp);
     canMine = await mineResetAid();
     checkAllAround(curX, curY, 1);
     mine[curY][curX] = "⛏️"
     displayArea();
     console.log(temp);
     goDirection(temp);
+}
+function collectOres(temp) {
+    return new Promise((resolve) => {
+        let direction = "";
+        console.log(curDirection)
+        if (temp != "") {
+            temp = curDirection;
+        } else {
+            direction = lastDirection;
+        }
+        console.log(direction);
+        if (direction == "s") {
+            let constraints = getParams(20, 250);
+            for (let r = curY - 20; r < curY + constraints[1]; r++) {
+                for (let c = curX - constraints[0]; c < curX + 20; c++) {
+                    if (mine[r] != undefined) {
+                        if (oreList[mine[r][c]] != undefined) {
+                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                                giveBlock(mine[r][c], 0, 0, true);
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (direction == "w") {
+            let constraints = getParams(20, 20);
+            for (let r = curY - constraints[1]; r < curY + 250; r++) {
+                for (let c = curX - constraints[0]; c < curX + 20; c++) {
+                    if (mine[r] != undefined) {
+                        if (oreList[mine[r][c]] != undefined) {
+                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                                giveBlock(mine[r][c], 0, 0, true);
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (direction == "a") {
+            let constraints = getParams(20, 20);
+            for (let r = curY - constraints[1]; r < curY + 20; r++) {
+                for (let c = curX - constraints[0]; c < curX + 250; c++) {
+                    if (mine[r] != undefined) {
+                        if (oreList[mine[r][c]] != undefined) {
+                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                                giveBlock(mine[r][c], 0, 0, true);
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (direction == "d") {
+            let constraints = getParams(250, 20);
+            for (let r = curY - constraints[1]; r < curY + 20; r++) {
+                for (let c = curX - constraints[0]; c < curX + 20; c++) {
+                    if (mine[r] != undefined) {
+                        if (oreList[mine[r][c]] != undefined) {
+                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                                giveBlock(mine[r][c], 0, 0, true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        setTimeout(() => {
+        resolve(true);
+        }, 1000);
+        });
 }
 function mineResetAid() {
     return new Promise((resolve) => {
@@ -879,7 +945,7 @@ function mineResetAid() {
         }, 500);
         setTimeout(() => {
         resolve(true);
-        }, 3000);
+        }, 1500);
         });
 }
 let latestFinds = [];
