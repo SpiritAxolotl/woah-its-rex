@@ -16,7 +16,8 @@ let pickaxes = [
     ["RandAxe", false],
     ["Name5", false],
     ["Name6", false],
-    ["Name7", false]
+    ["Name7", false],
+    ["Name8", false]
 ];
 let gears = [false];
 let currentPickaxe = 0;

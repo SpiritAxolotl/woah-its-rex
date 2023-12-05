@@ -30,17 +30,24 @@ async function rollAbilities() {
             canMine = await(pickaxeAbility6(curX, curY, 0, boost));
             updateActiveRecipe();
         }
-    }else if (pickaxes[currentPickaxe][0] == pickaxes[7][0]) {   
+    } else if (pickaxes[currentPickaxe][0] == pickaxes[7][0]) {   
         if (Math.round(Math.random() * 17) == 7) {
             canMine = await(pickaxeAbility7(curX, curY, boost));
+            updateActiveRecipe();
+        }
+    } else if (pickaxes[currentPickaxe][0] == pickaxes[8][0]) {   
+        if (Math.round(Math.random() * 30) == 0) {
+            canMine = await(pickaxeAbility8(curX, curY, boost));
+            updateActiveRecipe();
+        } else if (Math.round(Math.random() * 15) == 0) {
+            canMine = await(pickaxeAbility9(curX, curY, boost));
             updateActiveRecipe();
         }
     }
 }
 //let temp1 = blocksRevealedThisReset;
 //let temp2 = totalMined;
-//console.log(blocksRevealedThisReset - temp1);
-//console.log(totalMined - temp2);
+//console.log(blocksRevealedThisReset - temp1, totalMined - temp2);
 
 
 
@@ -327,6 +334,70 @@ function pickaxeAbility7(x, y, boost) {
             if (mine[r][i] != "⛏️") {
                 mineBlock(i, r, "ability", thisLuck);
             }
+        }
+        displayArea();
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
+function pickaxeAbility8(x, y, boost) {
+    return new Promise((resolve) => {
+        let thisLuck = 10 * boost;
+        let constraints = getParams(9, 9);
+        let dist = 9;
+        for (let r = y + 6; r >= y - constraints[1]; r--) {
+            for (let c = x - dist; c <= x + dist; c++) {
+                if (c >= x - constraints[0]) {
+                    if (mine[r][c] == "⬜") {
+                        mine[r][c] = generateBlock(thisLuck, c, r);
+                    }
+                    if (mine[r][c] != "⛏️") {
+                        mineBlock(c, r, "ability", thisLuck);
+                    }
+                }
+            }
+            dist--;
+        }
+        displayArea();
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
+
+function pickaxeAbility9(x, y, boost) {
+    return new Promise((resolve) => {
+        let thisLuck = 8 * boost;
+        let constraints = getParams(4, 3);
+        let reps = 1;
+        for (let r = y - constraints[1]; r < y; r++) {
+            for (let c = x - constraints[0]; c < x + 5; c++) {
+                if (reps != 4 && reps != 6) {
+                    if (mine[r][c] == "⬜") {
+                        mine[r][c] = generateBlock(thisLuck, c, r);
+                    }
+                    if (mine[r][c] != "⛏️") {
+                        mineBlock(c, r, "ability", thisLuck);
+                    }
+                }
+                reps++; 
+            }
+        }
+        reps = 1;
+        let dist = 3;
+        for (let r = y; r < y+4; r++) {
+            for (let c = x - dist; c <= x + dist; c++) {
+                if (c >= x - constraints[0]) {
+                    if (mine[r][c] == "⬜") {
+                        mine[r][c] = generateBlock(thisLuck, c, r);
+                    }
+                    if (mine[r][c] != "⛏️") {
+                        mineBlock(c, r, "ability", thisLuck);
+                    }
+                }
+            }
+            dist--;
         }
         displayArea();
     setTimeout(() => {
