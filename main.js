@@ -860,20 +860,18 @@ async function mineReset() {
 function collectOres(temp) {
     return new Promise((resolve) => {
         let direction = "";
-        console.log(curDirection)
         if (temp != "") {
-            temp = curDirection;
-        } else {
+            direction = temp;
+        } else if (lastDirection != "") {
             direction = lastDirection;
         }
-        console.log(direction);
         if (direction == "s") {
             let constraints = getParams(20, 250);
             for (let r = curY - 20; r < curY + constraints[1]; r++) {
                 for (let c = curX - constraints[0]; c < curX + 20; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
-                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
                                 giveBlock(mine[r][c], 0, 0, true);
                             }
                         }
@@ -886,7 +884,7 @@ function collectOres(temp) {
                 for (let c = curX - constraints[0]; c < curX + 20; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
-                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
                                 giveBlock(mine[r][c], 0, 0, true);
                             }
                         }
@@ -899,7 +897,7 @@ function collectOres(temp) {
                 for (let c = curX - constraints[0]; c < curX + 250; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
-                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
                                 giveBlock(mine[r][c], 0, 0, true);
                             }
                         }
@@ -912,7 +910,7 @@ function collectOres(temp) {
                 for (let c = curX - constraints[0]; c < curX + 20; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
-                            if (oreList[mine[r][c]][0] <= 1/750000) {
+                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
                                 giveBlock(mine[r][c], 0, 0, true);
                             }
                         }
@@ -932,7 +930,6 @@ function mineResetAid() {
             curX = 1000000000;
             let x = 1000000000;
             let y = curY;
-            console.log(curX, curY);
             for (let r = y - 50; r < y + 50; r++) {
                 if(mine[r] == undefined) {
                     mine[r] = [];
