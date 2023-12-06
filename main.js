@@ -23,6 +23,8 @@ let pickaxes = [
 let gears = [false];
 let currentPickaxe = 0;
 let oreList = {
+    "✈️" : [1/9110000000, [0,0,0,0]],
+    "🫃" : [1/6600000000, [0,0,0,0]],
     "👁️" : [1/1920000000, [0,0,0,0]], //ADDED
     "🪩" : [1/999999999, [0,0,0,0]], //ADDED
     "👀" : [1/955200890, [0,0,0,0]], //ADDED
@@ -131,7 +133,8 @@ let oreList = {
     "🪨" : [1/1, [0,0,0,0]],
     "☢️" : [1/1, [0,0,0,0]],
     "🌵" : [1/1, [0,0,0,0]],
-    "📰" : [1/1, [0,0,0,0]]
+    "📰" : [1/1, [0,0,0,0]],
+    "🎂" : [1/1, [0,0,0,0]]
 }
 //ALL LAYERS
 let dirtLayer = {
@@ -406,7 +409,13 @@ let paperLayer = {
     "🟧": 1/30, 
     "📰" : 1/1
 }
-let allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer];
+
+let sillyLayer = {
+    "✈️" : 1/9110000000,
+    "🫃" : 1/6600000000,
+    "🎂" : 1/1
+}
+let allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer, sillyLayer];
 function init () {
     createInventory();
     createMine();
@@ -969,7 +978,11 @@ function setLayer(y) {
     currentLayer = allLayers[tempNum];
     } else if (y > (lastLayerChange + 10000)) {
         lastLayerChange += 10000;
-        currentLayer = allLayers[Math.round(Math.random() * 7)];
+        if (Math.round(Math.random() * 77) == 33) {
+            currentLayer = sillyLayer;
+        } else {
+            currentLayer = allLayers[Math.round(Math.random() * 7)];
+        }
     }
 }
 
