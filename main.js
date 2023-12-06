@@ -418,6 +418,7 @@ let sillyLayer = {
 let allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer, sillyLayer];
 function init () {
     createInventory();
+    createIndex();
     createMine();
     let playedBefore = localStorage.getItem("playedBefore");
     if (playedBefore) {
@@ -708,7 +709,7 @@ function generateBlock(luck, location) {
 }
 let variant = 1;
 function updateInventory(type, inv) {
-    document.getElementById(type + inv).innerHTML = type + " | 1/" + (Math.round( 1 / oreList[type][0])) * multis[inv - 1] + " | x" + oreList[type][1][inv - 1];
+    document.getElementById(type + inv).innerHTML = type + " | 1/" + ((Math.round( 1 / oreList[type][0])) * multis[inv - 1]).toLocaleString() + " | x" + oreList[type][1][inv - 1];
     if (oreList[type][1][inv - 1] > 0) {
         document.getElementById(type + inv).style.display = "block";
     }
@@ -724,6 +725,9 @@ function switchInventory(){
   }
   document.getElementById(("inventory") + variant).style.display = "block";
   document.getElementById("switchInventory").innerHTML = names[variant - 1] + " Inventory"
+  document.getElementById("indexDisplay").style.display = "none";
+  document.getElementById("showIndex").innerHTML = "Show Index";
+  showing = false;
 }
 
 function resetMine() {
@@ -817,9 +821,35 @@ function createInventory() {
             tempElement.id = (propertyName + i);
             tempElement.classList = "oreDisplay";
             tempElement.style.display = "none";
-            tempElement.innerHTML = propertyName + " | 1/" + (Math.round( 1 / oreList[propertyName][0])) * multis[i - 1] + " | x" + oreList[propertyName][1][i - 1];
+            tempElement.innerHTML = propertyName + " | 1/" + ((Math.round( 1 / oreList[propertyName][0])).toLocaleString() * multis[i - 1]).toLocaleString() + " | x" + oreList[propertyName][1][i - 1];
             document.getElementById(("inventory") + i).appendChild(tempElement);
         }
+    }
+}
+function createIndex() {
+    let output = "";
+    for (let i = 0; i < allLayers.length - 1; i++) {
+        for (var propertyName in allLayers[i]) {
+            if ((Math.round(1/(oreList[propertyName][0]))) <=1 || (Math.round(1/(oreList[propertyName][0]))) >2000000) {
+                output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0]))).toLocaleString() + " | " + (i * 2000) + "-" + ((i+1) * 2000) + "m<br>";
+            }
+        }
+        output += "--------------<br>"
+    }
+    document.getElementById("indexDisplay").innerHTML = output;
+}
+let showing = false;
+function showIndex() {
+    if (showing) {
+        document.getElementById("indexDisplay").style.display = "none";
+        document.getElementById("showIndex").innerHTML = "Show Index";
+        document.getElementById("inventory" + (variant)).style.display = "block";
+        showing = false;
+    } else {
+        document.getElementById("indexDisplay").style.display = "block";
+        document.getElementById("showIndex").innerHTML = "Show Inventory";
+        document.getElementById("inventory" + (variant)).style.display = "none";
+        showing = true;
     }
 }
 let spawnOre;
@@ -831,7 +861,7 @@ function spawnMessage(block, location) {
         latestSpawns.splice(0, 1);
     }
     for (let i = latestSpawns.length - 1; i >= 0; i--) {
-        output += latestSpawns[i][0] + " 1/" + Math.round(1 / (oreList[latestSpawns[i][0]][0]));
+        output += latestSpawns[i][0] + " 1/" + (Math.round(1 / (oreList[latestSpawns[i][0]][0]))).toLocaleString();
         if (currentPickaxe == 5 || gears[0]) {
             output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
         } else {
@@ -840,9 +870,9 @@ function spawnMessage(block, location) {
     }
     document.getElementById("latestSpawns").innerHTML = output;
     if (currentPickaxe == 5 || gears[0]) {
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (oreList[block][0])) + "<br>X: " + (location[1] - 1000000000) + " | Y:" + -(location[0]);
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + "<br>X: " + (location[1] - 1000000000) + " | Y:" + -(location[0]);
     } else {
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + Math.round(1 / (oreList[block][0]));
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString();
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {

@@ -5,6 +5,7 @@
     margin:5px;
     height:10%;
     overflow-y: scroll;
+    text-align: center;
 }
 .oreDisplay {
     margin:0.1vh;
@@ -23,6 +24,12 @@
     width: 50%;
     font-size: 1vw;
 }
+.inventoryButtons {
+    border-style: solid;
+    border-color: black;
+    font-size:1vw;
+    width:100%;
+}
 #pressPlay {
     height:100%;
     width: 100%;
@@ -39,12 +46,7 @@
     align-items: center;
     justify-content: center;
 }
-#switchInventory {
-    border-style: solid;
-    border-color: black;
-    font-size:1vw;
-    width:100%;
-}
+
 #blockDisplay {
     font-size: 2vw;
 }

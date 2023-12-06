@@ -19,7 +19,7 @@
     <div id="mainContent" style="display: none;">
         <div class="container-fluid" style="height:100%">
     <div class="row" style="height:100%;">
-        <div class="col-8">
+        <div class="col-7">
             <div class="text-center" id="mobile" style="display: block;">
                 <button onclick="goDirection('a')" class="movementButton">Left</button>
                 <button onclick="goDirection('w')" class="movementButton">Up</button>
@@ -75,13 +75,17 @@
                 
         </div>
         </div>
-        <div class="col-2">
-            <button id="switchInventory" onclick="switchInventory()">Normal Inventory</button>
+        <div class="col-3">
             <div>
-                <div id="inventory1" class="inventoryDisplay"></div>
+                <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
+                <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
+            </div>
+            <div>
+                <p id="inventory1" class="inventoryDisplay"></p>
                 <p id="inventory2" class="inventoryDisplay" style="display:none"></p>
                 <p id="inventory3" class="inventoryDisplay" style="display:none"></p>
                 <p id="inventory4" class="inventoryDisplay" style="display:none"></p>
+                <p id="indexDisplay" class="inventoryDisplay" style="display:none;"></p>
             </div>
             
         </div>
