@@ -368,7 +368,7 @@ function pickaxeAbility8(x, y, boost) {
 
 function pickaxeAbility9(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 8000 * boost;
+        let thisLuck = 8 * boost;
         let constraints = getParams(4, 3);
         let reps = 1;
         for (let r = y - constraints[1]; r < y; r++) {
