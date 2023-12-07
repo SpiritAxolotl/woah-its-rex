@@ -712,6 +712,8 @@ function updateInventory(type, inv) {
     document.getElementById(type + inv).innerHTML = type + " | 1/" + ((Math.round( 1 / oreList[type][0])) * multis[inv - 1]).toLocaleString() + " | x" + oreList[type][1][inv - 1];
     if (oreList[type][1][inv - 1] > 0) {
         document.getElementById(type + inv).style.display = "block";
+    } else {
+        document.getElementById(type + inv).style.display = "none";
     }
 }
 
@@ -731,13 +733,13 @@ function switchInventory(){
 }
 
 function resetMine() {
-    
     clearInterval(loopTimer);
     curDirection = "";
     mine = [[]];
     curX = 1000000000;
     curY = 0;
     blocksRevealedThisReset = 0;
+    currentLayer = allLayers[0];
     createMine();
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/40,000 Blocks Revealed This Reset";
 }
@@ -809,7 +811,7 @@ function loadContent() {
         curDirection = ""
     } else {
         clearInterval(loopTimer);
-        loopTimer = setInterval(movePlayer, 25, direction);
+        loopTimer = setInterval(movePlayer, 5, direction);
         curDirection = direction;
     }
   }
