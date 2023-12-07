@@ -430,6 +430,7 @@ function init () {
     createPickaxeRecipes();
     createGearRecipes();
     document.getElementById('dataText').value = "";
+    keepRunning();
 }
 function createMine() {
     for (let r = curY; r < curY + 50; r++) {
@@ -788,8 +789,11 @@ function playSound(type) {
   let ow;
   let ringing;
   let chill;
+  let keepRunningAudio;
 function loadContent() {
     allAudios = [];
+    keepRunningAudio = new Audio("ambiencebyx2corp.mp3")
+    keepRunningAudio.load();
     chill = new Audio("Achillgoesdownyourspine.mp3");
     ringing = new Audio("Transcendent.mp3");
     visionblur = new Audio("Yourvisionbeginstoblur.mp3");
@@ -1072,4 +1076,11 @@ function switchDistance() {
         distanceMulti = 2;
     }
     document.getElementById("meterDisplay").innerHTML = y + "m";
+}
+
+
+function keepRunning() {
+    keepRunningAudio.loop = true;
+    keepRunningAudio.volume = 0.05;
+    keepRunningAudio.play();
 }
