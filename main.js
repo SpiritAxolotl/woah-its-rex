@@ -1078,18 +1078,12 @@ function switchDistance() {
     document.getElementById("meterDisplay").innerHTML = y + "m";
 }
 
-
 function keepRunning() {
     keepRunningAudio.loop = true;
     keepRunningAudio.volume = 0.05;
     keepRunningAudio.play();
 }
-function toggleMusic() {
-    if (document.getElementById("musicToggle").checked) {
-        keepRunningAudio.loop = false;
-        keepRunningAudio.pause();
-        keepRunningAudio.currentTime = 0;
-    } else {
-        keepRunning();
-    }
+
+function changeMusicVolume(percent) {
+    keepRunningAudio.volume = 0.05 * (percent / 100);
 }
