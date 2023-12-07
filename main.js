@@ -429,6 +429,7 @@ function init () {
     localStorage.setItem("game2DataChanges", true);
     createPickaxeRecipes();
     createGearRecipes();
+    document.getElementById('dataText').value = "";
 }
 function createMine() {
     for (let r = curY; r < curY + 50; r++) {
@@ -795,7 +796,6 @@ function loadContent() {
     for (let i = 0; i < allAudios.length; i++) {
         allAudios[i].load();
     }
-
     document.getElementById("pressPlay").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
     canMine = true;

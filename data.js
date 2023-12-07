@@ -51,7 +51,7 @@ function loadAllData() {
     }
     if (data[4] != undefined || data[4] != null) {
         for (let i = 0; i < data[4][0].length; i++) {
-            console.log(data[4][0][i]);
+            console.log(data[4]);
             gears[i] = data[4][0][i];
         }
     }
@@ -73,8 +73,11 @@ function exportData() {
 }
 function importData(data) {
     if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
-        localStorage.setItem("playerData", JSON.stringify(data));
-        saveAllData();
+        clearInterval(dataTimer);
+        localStorage.setItem("playerData", data);
+        setTimeout(() => {
+        location.reload();
+        }, 100);
     }
 }
 
@@ -97,11 +100,13 @@ function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
     downloadLink.click();
 }
 function showData() {
+    canMine = false;
     document.getElementById("mainContent").style.display = "none";
     document.getElementById("dataExport").style.display = "block";
 }
 
 function hideData() {
+    canMine = true;
     document.getElementById("dataExport").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
 }
