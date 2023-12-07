@@ -1027,7 +1027,7 @@ function setLayer(y) {
         if (Math.round(Math.random() * 77) == 33) {
             currentLayer = sillyLayer;
         } else {
-            currentLayer = allLayers[Math.round(Math.random() * 7)];
+            currentLayer = allLayers[Math.floor(Math.random() * 8)];
         }
     }
 }
