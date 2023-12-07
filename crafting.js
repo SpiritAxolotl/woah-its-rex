@@ -129,6 +129,15 @@ function displayRecipe(num) {
         }
         parent.appendChild(recipeElements[0][num]);
         recipeElements[0][num].style.display = "block";
+        let temp = parent.children;
+        temp = temp[0].children;
+        temp = temp[temp.length - 1];
+        console.log(num);
+        if (currentPickaxe == num + 1) {
+            temp.innerHTML = "Equipped!";
+        } else if (pickaxes[num + 1][1]) {
+            temp.innerHTML = "Equip!";
+        }
         updateActiveRecipe();
     } else {
         let parent = document.getElementById("displayRecipe")
@@ -260,12 +269,14 @@ function craftPickaxe(num) {
                 updateInventory(pickaxeRecipes[num - 1][i][0], 1);
             }
         let temp = document.getElementById("pickaxeRecipe" + num).children;
-        temp[temp.length - 1].innerHTML = "Equip!";
+        temp[temp.length - 1].innerHTML = "Equipped!";
         updateActiveRecipe();
         pickaxes[num][1] = true;
         currentPickaxe = num;
         }
     } else {
+        let temp = document.getElementById("pickaxeRecipe" + num).children;
+        temp[temp.length - 1].innerHTML = "Equipped!";
         currentPickaxe = num;
     }
     

@@ -1,48 +1,57 @@
 async function rollAbilities() {
     let boost = 1;
-    if (pickaxes[currentPickaxe][0] == pickaxes[1][0]) {
-        if (Math.round(Math.random() * 30) == 15) {
-            canMine = await(pickaxeAbility3(curX, curY, boost));
-            updateActiveRecipe();
-        }
-    } else if (pickaxes[currentPickaxe][0] == pickaxes[2][0]) {
-        if (Math.round(Math.random() * 35) == 17) {
-            canMine = await(pickaxeAbility1(curX, curY, 3, 1.2, boost));
-            updateActiveRecipe();
-        }
-    } else if (pickaxes[currentPickaxe][0] == pickaxes[3][0]) {
-    if (Math.round(Math.random() * 30) == 20) {
-        canMine = await(pickaxeAbility2(curX, curY, boost));
-        updateActiveRecipe();
-    }
-    } else if (pickaxes[currentPickaxe][0] == pickaxes[4][0]) {
-    if (Math.round(Math.random() *40) == 20) {
-        canMine = await(pickaxeAbility4(curX, curY, boost));
-        updateActiveRecipe();
-    }
-    } else if (pickaxes[currentPickaxe][0] == pickaxes[5][0]) {
-        if (Math.round(Math.random() * 70) == 40) {
-            canMine = await(pickaxeAbility5(curX, curY, 0, boost));
-            updateActiveRecipe();
-        }
-    } else if (pickaxes[currentPickaxe][0] == pickaxes[6][0]) {
-        if (Math.round(Math.random() * 50) == 25) {
-            canMine = await(pickaxeAbility6(curX, curY, 0, boost));
-            updateActiveRecipe();
-        }
-    } else if (pickaxes[currentPickaxe][0] == pickaxes[7][0]) {   
-        if (Math.round(Math.random() * 17) == 7) {
-            canMine = await(pickaxeAbility7(curX, curY, boost));
-            updateActiveRecipe();
-        }
-    } else if (pickaxes[currentPickaxe][0] == pickaxes[8][0]) {   
-        if (Math.round(Math.random() * 30) == 0) {
-            canMine = await(pickaxeAbility8(curX, curY, boost));
-            updateActiveRecipe();
-        } else if (Math.round(Math.random() * 15) == 0) {
-            canMine = await(pickaxeAbility9(curX, curY, boost));
-            updateActiveRecipe();
-        }
+    switch (currentPickaxe) {
+        case 1:
+            if (Math.round(Math.random() * 30) == 15) {
+                canMine = await(pickaxeAbility3(curX, curY, boost));
+                updateActiveRecipe();
+            }
+            break;
+        case 2:
+            if (Math.round(Math.random() * 35) == 17) {
+                canMine = await(pickaxeAbility1(curX, curY, 3, 1.2, boost));
+                updateActiveRecipe();
+            }
+            break;
+        case 3:
+            if (Math.round(Math.random() * 30) == 20) {
+                canMine = await(pickaxeAbility2(curX, curY, boost));
+                updateActiveRecipe();
+            }
+            break;
+        case 4:
+            if (Math.round(Math.random() *40) == 20) {
+                canMine = await(pickaxeAbility4(curX, curY, boost));
+                updateActiveRecipe();
+            }
+            break;
+        case 5:
+            if (Math.round(Math.random() * 70) == 40) {
+                canMine = await(pickaxeAbility5(curX, curY, 0, boost));
+                updateActiveRecipe();
+            }
+            break;
+        case 6:
+            if (Math.round(Math.random() * 50) == 25) {
+                canMine = await(pickaxeAbility6(curX, curY, 0, boost));
+                updateActiveRecipe();
+            }
+            break;
+        case 7:
+            if (Math.round(Math.random() * 17) == 7) {
+                canMine = await(pickaxeAbility7(curX, curY, boost));
+                updateActiveRecipe();
+            }
+            break;
+        case 8:
+            if (Math.round(Math.random() * 60) == 30) {
+                canMine = await(pickaxeAbility8(curX, curY, boost));
+                updateActiveRecipe();
+            } else if (Math.round(Math.random() * 30) == 15) {
+                canMine = await(pickaxeAbility9(curX, curY, boost));
+                updateActiveRecipe();
+            }
+            break;
     }
 }
 //let temp1 = blocksRevealedThisReset;
