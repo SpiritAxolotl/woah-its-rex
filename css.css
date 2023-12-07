@@ -85,7 +85,7 @@
   .slider:before {
     position: absolute;
     content: "";
-    height: 75%;
+    height: 65%;
     width: 35%;
     left: 10%;
     bottom: 5px;
