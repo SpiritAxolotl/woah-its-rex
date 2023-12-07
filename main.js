@@ -690,7 +690,10 @@ function generateBlock(luck, location) {
           break;
         }
         }
-        if (Math.round(1 / (probabilityTable[blockToGive])) > 750000000) {
+        if (Math.round(1 / (probabilityTable[blockToGive])) > 5000000000) {
+            spawnMessage(blockToGive, location);
+            playSound("zenith");
+        } else if (Math.round(1 / (probabilityTable[blockToGive])) > 750000000) {
             spawnMessage(blockToGive, location);
             playSound("otherworldly");
         } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 160000000){
@@ -773,6 +776,11 @@ function playSound(type) {
             ow.currentTime = 0;
             ow.play();
             break;
+        case "zenith":
+            zenith.volume = 0.6;
+            zenith.currentTime = 0;
+            zenith.play();
+            break;
         }
   }
   let visionblur;
@@ -787,11 +795,13 @@ function loadContent() {
     visionblur = new Audio("Yourvisionbeginstoblur.mp3");
     unfath = new Audio("Unfathsound.mp3");
     ow = new Audio("Otherworldly.mp3");
+    zenith = new Audio("Zenithsound.mp3");
     allAudios.push(chill);
     allAudios.push(ringing);
     allAudios.push(visionblur);
     allAudios.push(unfath);
     allAudios.push(ow);
+    allAudios.push(zenith);
     
     for (let i = 0; i < allAudios.length; i++) {
         allAudios[i].load();
@@ -1030,6 +1040,7 @@ function toLocation() {
     let x = curX;
     let y = document.getElementById("meterDisplay").innerHTML;
     y = Number(y.substring(0, y.length - 1));
+    y += 50;
     for (let r = y - 50; r < y + 50; r++) {
         if(mine[r] == undefined) {
             mine[r] = [];
