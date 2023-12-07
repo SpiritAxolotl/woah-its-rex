@@ -1049,7 +1049,7 @@ function toLocation() {
             mine[r][c] = "⬜";
         }
     }    
-    setLayer(y);
+    setLayer(y - 50);
     curX = x;
     curY = y;
     checkAllAround(curX, curY, 1);
