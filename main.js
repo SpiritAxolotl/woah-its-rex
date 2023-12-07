@@ -892,7 +892,7 @@ function spawnMessage(block, location) {
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
-        document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here"
+        document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here!"
       }, 20000);
 }
 function moveOne(dir) {
@@ -1081,7 +1081,7 @@ function switchDistance() {
 
 function keepRunning() {
     keepRunningAudio.loop = true;
-    keepRunningAudio.volume = 0.01;
+    keepRunningAudio.volume = 0.05;
     keepRunningAudio.play();
 }
 function toggleMusic() {
