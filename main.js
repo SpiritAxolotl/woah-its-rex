@@ -1028,6 +1028,7 @@ function setLayer(y) {
 async function teleport() {
     canMine = false;
     clearInterval(loopTimer);
+    curDirection = "";
     canMine = await toLocation();
     displayArea();
 }
