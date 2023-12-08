@@ -535,10 +535,12 @@ function prepareArea(facing) {
    switch(facing) {
     case "a":
         for (let r = curY - constraints[1]; r < curY + 50; r++) {
-            if (r == 0) {
-                mine[r][curX - constraints[0]] = "🟩";
-            } else {
-                mine[r][curX - constraints[0]] = "⬜";
+            if (mine[r][curX - constraints[0]] == undefined) {
+                if (r == 0) {
+                    mine[r][curX - constraints[0]] = "🟩";
+                } else {
+                    mine[r][curX - constraints[0]] = "⬜";
+                }
             }
         }
     case "s":
