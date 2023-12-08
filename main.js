@@ -1080,3 +1080,13 @@ function keepRunning() {
 function changeMusicVolume(percent) {
     keepRunningAudio.volume = 0.05 * (percent / 100);
 }
+
+function toggleMusic() {
+    if (keepRunningAudio.paused) {
+        keepRunningAudio.play();
+        document.getElementById("musicButton").innerHTML = "Mute Music";
+    } else {
+        keepRunningAudio.pause();
+        document.getElementById("musicButton").innerHTML = "Unmute Music";
+    }
+}
