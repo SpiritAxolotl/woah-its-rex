@@ -668,7 +668,7 @@ function giveBlock(type, x, y, fromReset) {
         }   
         if (fromReset == undefined) {
             if (Math.round(1/oreList[type][0]) >= 750000) {
-                logFind(type, x, y, names[inv - 1]);
+                logFind(type, x, y, names[inv - 1], totalMined);
             }
         }
             oreList[type][1][inv - 1]++;
@@ -849,6 +849,11 @@ function createIndex() {
         }
         output += "--------------<br>"
     }
+    for (var propertyName in oreList) {
+        if (Math.round(1/(oreList[propertyName][0]) <= 2000000 && Math.round(1/(oreList[propertyName][0]) > 1))) {
+            output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0]))).toLocaleString() + " | Everywhere<br>";
+        }
+    }
     document.getElementById("indexDisplay").innerHTML = output;
 }
 let showing = false;
@@ -998,9 +1003,9 @@ function mineResetAid() {
         });
 }
 let latestFinds = [];
-function logFind(type, x, y, variant) {
+function logFind(type, x, y, variant, atMined) {
     let output = "";
-    latestFinds.push([type, x, y, variant]);
+    latestFinds.push([type, x, y, variant, atMined]);
     if (latestFinds.length > 10) {
         latestFinds.splice(0, 1);
     }
@@ -1008,7 +1013,7 @@ function logFind(type, x, y, variant) {
         if (latestFinds[i][3] != "Normal") {
             output += latestFinds[i][3] + " ";
         }
-        output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + "<br>";
+        output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | At " + latestFinds[i][4].toLocaleString() +  " Mined.<br>";
     }
     document.getElementById("latestFinds").innerHTML = output;
 }
