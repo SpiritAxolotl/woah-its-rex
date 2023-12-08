@@ -599,7 +599,7 @@ function displayArea() {
     document.getElementById("blockDisplay").innerHTML = output;
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
-    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: -" + curY;
+    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: " + (-curY);
   }
   function getParams(distanceX, distanceY, x, y) {
     if (x == undefined) {
@@ -887,7 +887,7 @@ function spawnMessage(block, location) {
     }
     document.getElementById("latestSpawns").innerHTML = output;
     if (currentPickaxe == 5 || gears[0]) {
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + "<br>X: " + (location[1] - 1000000000) + " | Y:" + -(location[0]);
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + "<br>X: " + (location[1] - 1000000000) + " | Y: " + -(location[0]);
     } else {
         document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString();
     }
