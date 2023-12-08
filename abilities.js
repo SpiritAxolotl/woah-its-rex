@@ -1,5 +1,8 @@
 async function rollAbilities() {
     let boost = 1;
+    if (gears[1]) {
+        boost = 1.1;
+    }
     switch (currentPickaxe) {
         case 1:
             if (Math.round(Math.random() * 30) == 15) {
