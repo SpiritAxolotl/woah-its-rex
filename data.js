@@ -77,7 +77,7 @@ function importData(data) {
         localStorage.setItem("playerData", data);
         setTimeout(() => {
         location.reload();
-        }, 100);
+        }, 1000);
     }
 }
 

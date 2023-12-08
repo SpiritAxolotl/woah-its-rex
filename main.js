@@ -434,9 +434,9 @@ function init () {
     keepRunning();
 }
 function createMine() {
-    for (let r = curY; r < curY + 50; r++) {
+    for (let r = curY; r < curY + 51; r++) {
         mine.push([]);
-        for (let c = curX - 50; c < curX + 50; c++) {
+        for (let c = curX - 51; c < curX + 51; c++) {
             if (r == 0) {
                 mine[r][c] = "🟩";
             } else {
@@ -501,7 +501,6 @@ function movePlayer(dir) {
             default:
                 console.log("wrong key!!");
         }
-        prepareArea();
         displayArea();
     }
     
@@ -531,60 +530,51 @@ document.addEventListener('keydown', (event) => {
     }
   }, false);
 
-function prepareArea() {
-    let constraints = getParams(50, 50)
-    if (mine[curY + 50] == undefined) {
-        mine[curY + 50] = [];
-    }
-    if (mine[curY + 50][curX] == undefined) {
-        for (let c = curX - constraints[0]; c < curX + 50; c++) {
-            if (mine[curY][c] == undefined) {
-                mine[curY][c] = "⬜"
-            }
-            
-        }
-    }
-    if (mine[curY - constraints[1]] == undefined) {
-        mine[curY - constraints[1]] = [];
-    }
-    for (let c = curX - constraints[0]; c < curX + 50; c++) {
-        if (mine[curY - constraints[1]][c] == undefined) {
-            if (curY - constraints[1] == 0) {
-                mine[curY - constraints[1]][c] = "🟩"
-            } else {
-                mine[curY - constraints[1]][c] = "⬜"
-            }
-        }
-        if(mine[curY - constraints[1] + 1][c] == "⚪" && mine[curY - constraints[1]][c] == "⬜") {
-            mine[curY - constraints[1]][c] = "🟫";   
-        }
-        if (mine[curY + 50][c] == undefined) {
-            mine[curY + 50][c] = "⬜";
-        }
-        if(mine[curY + 50][c] == "⚪" && mine[curY + 51][c] == "⬜") {
-            mine[curY + 51][c] = "🟫";   
-        }
-        
-    }
-    for (let r = curY - constraints[1]; r < curY + 50; r++) {
-        if (mine[r][curX - constraints[0]] == undefined) {
+function prepareArea(facing) {
+   let constraints = getParams(50, 50);
+   switch(facing) {
+    case "a":
+        for (let r = curY - constraints[1]; r < curY + 50; r++) {
             if (r == 0) {
                 mine[r][curX - constraints[0]] = "🟩";
             } else {
                 mine[r][curX - constraints[0]] = "⬜";
             }
-            
         }
-        if (mine[r][curX + 50] == undefined) {
-            if (r == 0) {
-                mine[r][curX + 50] = "🟩";
-            } else {
-                mine[r][curX + 50] = "⬜";
+    case "s":
+        if (mine[curY + 50] == undefined) {
+            mine[curY + 50] = [];
+        }
+        for (let c = curX - constraints[0]; c < curX + 50; c++) {
+            if (mine[curY + 50][c] == undefined) {
+                mine[curY + 50][c] = "⬜"
             }
-            
         }
-    
-    }
+    case "d":
+        for (let r = curY - constraints[1]; r < curY + 50; r++) {
+            if (mine[r][curX + 50] == undefined) {
+                if (r == 0) {
+                    mine[r][curX + 50] = "🟩";
+                } else {
+                    mine[r][curX + 50] = "⬜";
+                }
+                
+            }
+        }
+    case "w":
+        if (mine[curY - constraints[1]] == undefined) {
+            mine[curY - constraints[1]] = [];
+        }
+        for (let c = curX - constraints[0]; c < curX + 50; c++) {
+            if (mine[curY - constraints[1]][c] == undefined) {
+                if (curY - constraints[1] == 0) {
+                    mine[curY - constraints[1]][c] = "🟩";
+                } else {
+                    mine[curY - constraints[1]][c] = "⬜";
+                }
+            }
+        }
+   }
         
 }
 function displayArea() {
