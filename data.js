@@ -64,16 +64,39 @@ function repeatDataSave() {
         dataTimer = setInterval(saveAllData, 2000);
 }
 
+function toBinary(string) {
+    const codeUnits = new Uint16Array(string.length);
+    for (let i = 0; i < codeUnits.length; i++) {
+        codeUnits[i] = string.charCodeAt(i);
+    }
+    return btoa(String.fromCharCode(...new Uint8Array(codeUnits.buffer)));
+}
+
+function fromBinary(encoded) {
+    const binary = atob(encoded);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < bytes.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+    }
+    return String.fromCharCode(...new Uint16Array(bytes.buffer));
+}
+
 function exportData() {
-    let data = JSON.parse(localStorage.getItem("playerData"));
-    document.getElementById("dataText").value = JSON.stringify(data);
-    if (confirm("Download as file?")) {
-        exportDataAsFile(JSON.stringify(data), "data.txt", "text/plain");
+    let data = toBinary(JSON.stringify(JSON.parse(localStorage.getItem("playerData"))));
+    let textField = document.getElementById("dataText");
+    textField.value = data;
+    if (confirm("Download save data as file?")) {
+        exportDataAsFile(data, "data.txt", "text/plain");
+    } else {
+        textField.select();
+        textField.setSelectionRange(0, 99999);
+        alert("The textbox has been selected for you; make sure to copy your data to your clipboard so you don't lose it!");
     }
 }
 function importData(data) {
     if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
         clearInterval(dataTimer);
+        data = fromBinary(data);
         localStorage.setItem("playerData", data);
         setTimeout(() => {
         location.reload();
