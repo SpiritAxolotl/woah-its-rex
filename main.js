@@ -7,6 +7,7 @@ let currentDisplay = ""
 let facing = "down";
 let totalMined = 0;
 let blocksRevealedThisReset = 0;
+const mineCapacity = 40000; // in case this ever needs to be raised
 let canMine = false;
 let lastDirection = "";
 let pickaxes = [
@@ -500,7 +501,6 @@ function movePlayer(dir) {
             default:
                 console.log("wrong key!!");
         }
-        document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: -" + curY;
         prepareArea();
         displayArea();
     }
@@ -597,8 +597,9 @@ function displayArea() {
         output += "<br>";
     }
     document.getElementById("blockDisplay").innerHTML = output;
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/40,000 Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
+    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: -" + curY;
   }
   function getParams(distanceX, distanceY, x, y) {
     if (x == undefined) {
@@ -646,7 +647,7 @@ function displayArea() {
             }
         }
 
-    if (blocksRevealedThisReset > 40000) {
+    if (blocksRevealedThisReset >= 40000) {
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
@@ -746,7 +747,7 @@ function resetMine() {
     blocksRevealedThisReset = 0;
     currentLayer = allLayers[0];
     createMine();
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/40,000 Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
 }
 
 function playSound(type) {
