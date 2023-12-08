@@ -543,6 +543,7 @@ function prepareArea(facing) {
                 }
             }
         }
+        break;
     case "s":
         if (mine[curY + 50] == undefined) {
             mine[curY + 50] = [];
@@ -552,6 +553,7 @@ function prepareArea(facing) {
                 mine[curY + 50][c] = "⬜"
             }
         }
+        break;
     case "d":
         for (let r = curY - constraints[1]; r < curY + 50; r++) {
             if (mine[r][curX + 50] == undefined) {
@@ -563,6 +565,7 @@ function prepareArea(facing) {
                 
             }
         }
+        break;
     case "w":
         if (mine[curY - constraints[1]] == undefined) {
             mine[curY - constraints[1]] = [];
@@ -576,6 +579,7 @@ function prepareArea(facing) {
                 }
             }
         }
+        break;
    }
         
 }
