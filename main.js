@@ -21,7 +21,7 @@ let pickaxes = [
     ["Name7", false],
     ["Name8", false]
 ];
-let gears = [false];
+let gears = [false, false, false];
 let currentPickaxe = 0;
 let oreList = {
     "✈️" : [1/9110000000, [0,0,0,0]],
@@ -535,6 +535,9 @@ function prepareArea(facing) {
    switch(facing) {
     case "a":
         for (let r = curY - constraints[1]; r < curY + 50; r++) {
+            if (mine[r] == undefined) {
+                mine[r] = [];
+            }
             if (mine[r][curX - constraints[0]] == undefined) {
                 if (r == 0) {
                     mine[r][curX - constraints[0]] = "🟩";
@@ -556,6 +559,9 @@ function prepareArea(facing) {
         break;
     case "d":
         for (let r = curY - constraints[1]; r < curY + 50; r++) {
+            if (mine[r] == undefined) {
+                mine[r] = [];
+            }
             if (mine[r][curX + 50] == undefined) {
                 if (r == 0) {
                     mine[r][curX + 50] = "🟩";
@@ -816,13 +822,17 @@ function loadContent() {
 
   let loopTimer = null;
   let curDirection = "";
+  let miningSpeed = 25;
   function goDirection(direction) {
     if (curDirection == direction) {
         clearInterval(loopTimer);
         curDirection = ""
     } else {
         clearInterval(loopTimer);
-        loopTimer = setInterval(movePlayer, 25, direction);
+        if (gears[2]) {
+            miningSpeed = 15;
+        }
+        loopTimer = setInterval(movePlayer, miningSpeed, direction);
         curDirection = direction;
     }
   }

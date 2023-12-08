@@ -51,7 +51,6 @@ function loadAllData() {
     }
     if (data[4] != undefined || data[4] != null) {
         for (let i = 0; i < data[4][0].length; i++) {
-            console.log(data[4]);
             gears[i] = data[4][0][i];
         }
     }
