@@ -341,7 +341,7 @@ function pickaxeAbility7(x, y, boost) {
         }
         for (let i = c; i < c + 4; i++) {
             if (mine[r][i] == "⬜") {
-                mine[r][i] = generateBlock(thisLuck, i, r);
+                mine[r][i] = generateBlock(thisLuck, [r, i]);
             }
             if (mine[r][i] != "⛏️") {
                 mineBlock(i, r, "ability", thisLuck);
@@ -362,7 +362,7 @@ function pickaxeAbility8(x, y, boost) {
             for (let c = x - dist; c <= x + dist; c++) {
                 if (c >= x - constraints[0]) {
                     if (mine[r][c] == "⬜") {
-                        mine[r][c] = generateBlock(thisLuck, c, r);
+                        mine[r][c] = generateBlock(thisLuck, [r, c]);
                     }
                     if (mine[r][c] != "⛏️") {
                         mineBlock(c, r, "ability", thisLuck);
@@ -387,7 +387,7 @@ function pickaxeAbility9(x, y, boost) {
             for (let c = x - constraints[0]; c < x + 5; c++) {
                 if (reps != 4 && reps != 6) {
                     if (mine[r][c] == "⬜") {
-                        mine[r][c] = generateBlock(thisLuck, c, r);
+                        mine[r][c] = generateBlock(thisLuck, [r, c]);
                     }
                     if (mine[r][c] != "⛏️") {
                         mineBlock(c, r, "ability", thisLuck);
@@ -402,7 +402,7 @@ function pickaxeAbility9(x, y, boost) {
             for (let c = x - dist; c <= x + dist; c++) {
                 if (c >= x - constraints[0]) {
                     if (mine[r][c] == "⬜") {
-                        mine[r][c] = generateBlock(thisLuck, c, r);
+                        mine[r][c] = generateBlock(thisLuck, [r, c]);
                     }
                     if (mine[r][c] != "⛏️") {
                         mineBlock(c, r, "ability", thisLuck);
