@@ -412,7 +412,9 @@ let paperLayer = {
 }
 
 let sillyLayer = {
+    "💅" : 1/11201200200,
     "✈️" : 1/9110000000,
+    "🪢" : 1/8181818181, 
     "🫃" : 1/6600000000,
     "🎂" : 1/1
 }
@@ -591,9 +593,9 @@ function prepareArea(facing) {
 }
 function displayArea() {
     let output ="";
-    let constraints = getParams(7, 7); 
-    for (let r = curY - constraints[1]; r <= curY + 7 + (7-constraints[1]); r++) {
-        for (let c = curX - constraints[0]; c <= curX + 7 + (7-constraints[0]); c++) {
+    let constraints = getParams(9, 9); 
+    for (let r = curY - constraints[1]; r <= curY + 9 + (9-constraints[1]); r++) {
+        for (let c = curX - constraints[0]; c <= curX + 9 + (9-constraints[0]); c++) {
             output += mine[r][c];
         }
         output += "<br>";
