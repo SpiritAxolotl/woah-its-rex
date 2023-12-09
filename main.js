@@ -7,7 +7,7 @@ let currentDisplay = ""
 let facing = "down";
 let totalMined = 0;
 let blocksRevealedThisReset = 0;
-const mineCapacity = 40000; // in case this ever needs to be raised
+let mineCapacity = 40000; // in case this ever needs to be raised
 let canMine = false;
 let lastDirection = "";
 let pickaxes = [
@@ -651,7 +651,7 @@ function displayArea() {
             }
         }
 
-    if (blocksRevealedThisReset >= 40000) {
+    if (blocksRevealedThisReset >= mineCapacity) {
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
@@ -751,6 +751,7 @@ function resetMine() {
     blocksRevealedThisReset = 0;
     currentLayer = allLayers[0];
     createMine();
+    mineCapacity = 40000;
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
 }
 
@@ -908,6 +909,9 @@ function spawnMessage(block, location) {
     spawnOre = setTimeout(() => {
         document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here!"
       }, 20000);
+    if (blocksRevealedThisReset > mineCapacity - 5000) {
+        mineCapacity += 2000;
+    }
 }
 function moveOne(dir) {
     clearInterval(loopTimer);
@@ -916,6 +920,7 @@ function moveOne(dir) {
 }
 
 async function mineReset() {
+    mineCapacity = 40000;
     let temp = curDirection;
     curDirection = "";
     let temp2 = await collectOres(temp);
@@ -923,7 +928,6 @@ async function mineReset() {
     checkAllAround(curX, curY, 1);
     mine[curY][curX] = "⛏️"
     displayArea();
-    console.log(temp);
     goDirection(temp);
 }
 function collectOres(temp) {
