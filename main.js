@@ -935,9 +935,9 @@ function collectOres(temp) {
             direction = lastDirection;
         }
         if (direction == "s") {
-            let constraints = getParams(20, 250);
-            for (let r = curY - 20; r < curY + constraints[1]; r++) {
-                for (let c = curX - constraints[0]; c < curX + 20; c++) {
+            let constraints = getParams(30, 250);
+            for (let r = curY - 30; r < curY + constraints[1]; r++) {
+                for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
@@ -948,9 +948,9 @@ function collectOres(temp) {
                 }
             }
         } else if (direction == "w") {
-            let constraints = getParams(20, 20);
+            let constraints = getParams(30, 30);
             for (let r = curY - constraints[1]; r < curY + 250; r++) {
-                for (let c = curX - constraints[0]; c < curX + 20; c++) {
+                for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
@@ -961,8 +961,8 @@ function collectOres(temp) {
                 }
             }
         } else if (direction == "a") {
-            let constraints = getParams(20, 20);
-            for (let r = curY - constraints[1]; r < curY + 20; r++) {
+            let constraints = getParams(30, 30);
+            for (let r = curY - constraints[1]; r < curY + 30; r++) {
                 for (let c = curX - constraints[0]; c < curX + 250; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
@@ -974,9 +974,9 @@ function collectOres(temp) {
                 }
             }
         } else if (direction == "d") {
-            let constraints = getParams(250, 20);
-            for (let r = curY - constraints[1]; r < curY + 20; r++) {
-                for (let c = curX - constraints[0]; c < curX + 20; c++) {
+            let constraints = getParams(250, 30);
+            for (let r = curY - constraints[1]; r < curY + 30; r++) {
+                for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
