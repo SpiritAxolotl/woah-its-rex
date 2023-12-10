@@ -510,18 +510,20 @@ function movePlayer(dir) {
 
 function mineBlock(x, y, cause, luck) {
     if (mine[y][x] != "⚪" && mine[y][x] != "⛏️")  {
-        giveBlock(mine[y][x], x, y);
-        mine[y][x] = "⚪"
-        checkAllAround(x, y, luck);
-        totalMined++;
-        if (cause != "ability") {
-            rollAbilities();
-            updateActiveRecipe();
+        if (cause == "reset") {
+            giveBlock(mine[y][x], x, y, true);
+            mine[y][x] = "⚪"
+        } else {
+            giveBlock(mine[y][x], x, y, true);
+            mine[y][x] = "⚪"
+            checkAllAround(x, y, luck);
+            totalMined++;
+            if (cause != "ability") {
+                rollAbilities();
+                updateActiveRecipe();
+            }
         }
-        
-
     }
-    
 }
 document.addEventListener('keydown', (event) => {
     var name = event.key;
@@ -655,7 +657,9 @@ function displayArea() {
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
-        mineReset();
+        setTimeout(() => {
+            mineReset();
+            }, 250);
     }
   }
 
@@ -674,11 +678,9 @@ function giveBlock(type, x, y, fromReset) {
         if (type == "🟩") {
                 type = "🟫";
         }   
-        if (fromReset == undefined) {
             if (Math.round(1/oreList[type][0]) >= 750000) {
-                logFind(type, x, y, names[inv - 1], totalMined);
+                logFind(type, x, y, names[inv - 1], totalMined, fromReset);
             }
-        }
             oreList[type][1][inv - 1]++;
             updateInventory(type, inv);
     }
@@ -940,12 +942,12 @@ function collectOres(temp) {
         }
         if (direction == "s") {
             let constraints = getParams(30, 250);
-            for (let r = curY - 30; r < curY + constraints[1]; r++) {
+            for (let r = curY - constraints[1]; r < curY + 30; r++) {
                 for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                giveBlock(mine[r][c], 0, 0, true);
+                                mineBlock(c, r, "reset", 1);
                             }
                         }
                     }
@@ -958,7 +960,7 @@ function collectOres(temp) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                giveBlock(mine[r][c], 0, 0, true);
+                                mineBlock(c, r, "reset", 1);
                             }
                         }
                     }
@@ -971,7 +973,7 @@ function collectOres(temp) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                giveBlock(mine[r][c], 0, 0, true);
+                                mineBlock(c, r, "reset", 1);
                             }
                         }
                     }
@@ -984,7 +986,7 @@ function collectOres(temp) {
                     if (mine[r] != undefined) {
                         if (oreList[mine[r][c]] != undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                giveBlock(mine[r][c], 0, 0, true);
+                                mineBlock(c, r, "reset", 1);
                             }
                         }
                     }
@@ -1019,7 +1021,7 @@ function mineResetAid() {
         });
 }
 let latestFinds = [];
-function logFind(type, x, y, variant, atMined) {
+function logFind(type, x, y, variant, atMined, fromReset) {
     let output = "";
     latestFinds.push([type, x, y, variant, atMined]);
     if (latestFinds.length > 10) {
@@ -1029,7 +1031,11 @@ function logFind(type, x, y, variant, atMined) {
         if (latestFinds[i][3] != "Normal") {
             output += latestFinds[i][3] + " ";
         }
-        output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | At " + latestFinds[i][4].toLocaleString() +  " Mined.<br>";
+        if (fromReset) {
+            output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | FROM RESET<br>"
+        } else {
+            output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | At " + latestFinds[i][4].toLocaleString() +  " Mined.<br>";
+        }
     }
     document.getElementById("latestFinds").innerHTML = output;
 }
