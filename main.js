@@ -514,7 +514,7 @@ function mineBlock(x, y, cause, luck) {
             giveBlock(mine[y][x], x, y, true);
             mine[y][x] = "⚪"
         } else {
-            giveBlock(mine[y][x], x, y, true);
+            giveBlock(mine[y][x], x, y);
             mine[y][x] = "⚪"
             checkAllAround(x, y, luck);
             totalMined++;
