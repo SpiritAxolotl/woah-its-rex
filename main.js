@@ -1041,7 +1041,7 @@ function mineResetAid() {
 let latestFinds = [];
 function logFind(type, x, y, variant, atMined, fromReset) {
     let output = "";
-    latestFinds.push([type, x, y, variant, atMined]);
+    latestFinds.push([type, x, y, variant, atMined, fromReset]);
     if (latestFinds.length > 10) {
         latestFinds.splice(0, 1);
     }
@@ -1049,7 +1049,7 @@ function logFind(type, x, y, variant, atMined, fromReset) {
         if (latestFinds[i][3] != "Normal") {
             output += latestFinds[i][3] + " ";
         }
-        if (fromReset) {
+        if (latestFinds[i][5]) {
             output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | FROM RESET<br>"
         } else {
             output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | At " + latestFinds[i][4].toLocaleString() +  " Mined.<br>";
