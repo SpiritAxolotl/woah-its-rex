@@ -436,20 +436,25 @@ let sillyLayer = {
 }
 let allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer, sillyLayer];
 function init () {
+    let canContinue = false;
     createInventory();
     createIndex();
     createMine();
     let playedBefore = localStorage.getItem("playedBefore");
     if (playedBefore) {
-        loadData();
+        canContinue = loadAllData();
+    } else {
+        canContinue = true;
     }
-    repeatDataSave();
-    localStorage.setItem("playedBefore", true);
-    localStorage.setItem("game2DataChanges", true);
-    createPickaxeRecipes();
-    createGearRecipes();
-    document.getElementById('dataText').value = "";
-    keepRunning();
+    if (canContinue) {
+        repeatDataSave();
+        localStorage.setItem("playedBefore", true);
+        localStorage.setItem("game2DataChanges", true);
+        createPickaxeRecipes();
+        createGearRecipes();
+        document.getElementById('dataText').value = "";
+        keepRunning();
+    }
 }
 function createMine() {
     for (let r = curY; r < curY + 51; r++) {
@@ -1087,16 +1092,18 @@ function toLocation() {
     let x = curX;
     let y = document.getElementById("meterDisplay").innerHTML;
     y = Number(y.substring(0, y.length - 1));
-    y += 50;
     for (let r = y - 50; r < y + 50; r++) {
         if(mine[r] == undefined) {
             mine[r] = [];
         }
         for (let c = x - 50; c < x + 50; c++) {
-            mine[r][c] = "⬜";
+            if (mine[r][c] == undefined) {
+                mine[r][c] = "⬜";
+            }
         }
     }    
     setLayer(y - 50);
+    mine[curY][curX] = "⚪";
     curX = x;
     curY = y;
     checkAllAround(curX, curY, 1);
@@ -1107,18 +1114,18 @@ function toLocation() {
     }, 1000);
     });
 }
-let distanceMulti = 2;
+let distanceMulti = 1;
 function switchDistance() {
     let y = document.getElementById("meterDisplay").innerHTML;
     y = Number(y.substring(0, y.length - 1));
     if (y < 14000) {
-        y = 2000 * distanceMulti;
+        y = 2000 * distanceMulti; 
         distanceMulti ++;
     } else {
-        y = 2000;
-        distanceMulti = 2;
+        y = 50;
+        distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = y + "m";
+    document.getElementById("meterDisplay").innerHTML = (y + 50) + "m";
 }
 
 function keepRunning() {

@@ -24,35 +24,45 @@ function saveAllData() {
 }
 
 function loadAllData() {
-    let data = JSON.parse(localStorage.getItem("playerData"));
-    for (let i = 0; i < data[0].length; i++) {
-        if (oreList[data[0][i][0]] != undefined) {
-            oreList[data[0][i][0]][1] = data[0][i][1][0];
+    localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
+    try {
+        let data = JSON.parse(localStorage.getItem("playerData"));
+        for (let i = 0; i < data[0].length; i++) {
+            if (oreList[data[0][i][0]] != undefined) {
+                oreList[data[0][i][0]][1] = data[0][i][1][0];
+            }
         }
-    }
-    for (let i = 0; i < data[1][0][0].length; i++) {
-        
-        pickaxes[i][1] = data[1][0][0][i][1];
-    }
-    currentPickaxe = data[1][0][1];
-
-    totalMined = data[2]
-    document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
+        for (let i = 0; i < data[1][0][0].length; i++) {
+            
+            pickaxes[i][1] = data[1][0][0][i][1];
+        }
+        currentPickaxe = data[1][0][1];
     
-    for (var propertyName in oreList) {
-            if (document.getElementById(propertyName + "1") != null) {
-                for (let i = 1; i < 5; i++) {
-                    updateInventory(propertyName, i)
-                    if (oreList[propertyName][1][i - 1] > 0) {
-                        document.getElementById(propertyName + i).style.display = "block";
+        totalMined = data[2]
+        document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
+        
+        for (var propertyName in oreList) {
+                if (document.getElementById(propertyName + "1") != null) {
+                    for (let i = 1; i < 5; i++) {
+                        updateInventory(propertyName, i)
+                        if (oreList[propertyName][1][i - 1] > 0) {
+                            document.getElementById(propertyName + i).style.display = "block";
+                        }
                     }
-                }
-            } 
-    }
-    if (data[4] != undefined || data[4] != null) {
-        for (let i = 0; i < data[4][0].length; i++) {
-            gears[i] = data[4][0][i];
+                } 
         }
+        if (data[4] != undefined || data[4] != null) {
+            for (let i = 0; i < data[4][0].length; i++) {
+                gears[i] = data[4][0][i];
+            }
+        }
+        localStorage.removeItem("dataBackup");
+        return true;
+    } catch(error) {
+        console.log(error);
+        localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
+        window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
+        return false;
     }
 }
 
@@ -60,7 +70,7 @@ function loadAllData() {
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-        dataTimer = setInterval(saveAllData, 2000);
+dataTimer = setInterval(saveAllData, 2000);
 }
 
 function toBinary(string) {
@@ -93,13 +103,28 @@ function exportData() {
     }
 }
 function importData(data) {
-    if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
-        clearInterval(dataTimer);
-        data = fromBinary(data);
-        localStorage.setItem("playerData", data);
-        setTimeout(() => {
-        location.reload();
-        }, 1000);
+    if (data == "") {
+        if (confirm("You are importing nothing, this will perform a hard reset on your save file. Are you sure you want to do this?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    } else {
+        if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
+            localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
+            clearInterval(dataTimer);
+            try {
+                data = fromBinary(data);
+                localStorage.setItem("playerData", data);
+                setTimeout(() => {
+                location.reload();
+                }, 1000);
+            } catch(error) {
+                console.log(error);
+                localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
+                window.alert("DATA CORRUPTION DETECTED, CONTACT A MODERATOR IN THE DISCORD");
+            }
+            
+        }
     }
 }
 
