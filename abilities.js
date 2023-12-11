@@ -29,19 +29,22 @@ async function rollAbilities() {
             }
             break;
         case 5:
-            if (Math.round(Math.random() * 70) == 40) {
+            if (Math.round(Math.random() * 50) == 40) {
+                
                 canMine = await(pickaxeAbility5(curX, curY, 0, boost));
                 updateActiveRecipe();
+                
             }
             break;
         case 6:
             if (Math.round(Math.random() * 50) == 25) {
                 canMine = await(pickaxeAbility6(curX, curY, 0, boost));
                 updateActiveRecipe();
+                
             }
             break;
         case 7:
-            if (Math.round(Math.random() * 17) == 7) {
+            if (Math.round(Math.random() * 15) == 7) {
                 canMine = await(pickaxeAbility7(curX, curY, boost));
                 updateActiveRecipe();
             }
@@ -178,7 +181,7 @@ function pickaxeAbility4(x, y, boost) {
 function pickaxeAbility5(x, y, reps, boost) {
     return new Promise((resolve) => {
         canMine = false;
-        if (reps < 4) {
+        if (reps < 3) {
             let procs = [
                 [],
                 [],
@@ -186,7 +189,7 @@ function pickaxeAbility5(x, y, reps, boost) {
                 []
             ];
         
-        let thisLuck = 2 * boost;
+        let thisLuck = 1.75 * boost;
         let constraints = getParams(6, 6, x, y);
         let origin = [y, x];
         for (let i = 0; i < 6; i++) {
@@ -240,7 +243,7 @@ function pickaxeAbility5(x, y, reps, boost) {
 function pickaxeAbility6(x, y, reps, boost) {
     return new Promise((resolve) => {
         canMine = false;
-        if (reps < 4) {
+        if (reps < 3) {
             let procs = [
                 [],
                 [],
@@ -314,12 +317,12 @@ function pickaxeAbility6(x, y, reps, boost) {
 function pickaxeAbility7(x, y, boost) {
     return new Promise((resolve) => {
         let thisLuck = 7.5 * boost;
-        let constraints = getParams(20, 20);
-        let area1 = Math.round((Math.random() * (-(constraints[0]) - 20)) + 20);
-        let area2 = Math.round((Math.random() * (-(constraints[1]) - 20)) + 20);
+        let constraints = getParams(40, 40);
+        let area1 = Math.round((Math.random() * (-(constraints[0]) - 40)) + 40);
+        let area2 = Math.round((Math.random() * (-(constraints[1]) - 20)) + 40);
         let r = y + area2;
         let c = x + area1 + 1;
-        for (let i = c; i < c + 4; i++) {
+        for (let i = c; i < c + 5; i++) {
             if (mine[r][i] == "⬜") {
                 mine[r][i] = generateBlock(thisLuck, [r, i]);
             }
@@ -328,8 +331,8 @@ function pickaxeAbility7(x, y, boost) {
             }
         }
         r++;
-        for (let i = 0; i < 4; i++) {
-            for (let j = c - 1; j < c+5; j++) {
+        for (let i = 0; i < 5; i++) {
+            for (let j = c - 1; j < c+6; j++) {
                 if (mine[r][j] == "⬜") {
                     mine[r][j] = generateBlock(thisLuck, [r, j]);
                 }
@@ -339,7 +342,7 @@ function pickaxeAbility7(x, y, boost) {
             }
             r++;
         }
-        for (let i = c; i < c + 4; i++) {
+        for (let i = c; i < c + 5; i++) {
             if (mine[r][i] == "⬜") {
                 mine[r][i] = generateBlock(thisLuck, [r, i]);
             }
@@ -355,7 +358,7 @@ function pickaxeAbility7(x, y, boost) {
 }
 function pickaxeAbility8(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 12.5 * boost;
+        let thisLuck = 17.5 * boost;
         let constraints = getParams(9, 9);
         let dist = 9;
         for (let r = y + 6; r >= y - constraints[1]; r--) {
@@ -380,7 +383,7 @@ function pickaxeAbility8(x, y, boost) {
 
 function pickaxeAbility9(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 15 * boost;
+        let thisLuck = 20 * boost;
         let constraints = getParams(4, 3);
         let reps = 1;
         for (let r = y - constraints[1]; r < y; r++) {
