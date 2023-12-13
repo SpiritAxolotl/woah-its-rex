@@ -292,7 +292,7 @@ function pickaxeAbility8(x, y, reps, boost) {
                 [],
                 []
             ];
-        let thisLuck = 2.5 * boost;
+        let thisLuck = 3 * boost;
         let constraints = getParams(8, 8, x, y);
         let origin = [y, x];
         for (let i = 0; i < 8; i++) {
