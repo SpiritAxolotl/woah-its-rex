@@ -24,6 +24,7 @@ let pickaxes = [
 let gears = [false, false, false];
 let currentPickaxe = 0;
 let oreList = {
+    "🐱" : [1/Infinity, [0,0,0,0]],
     "🌳" : [1/9250000000, [0,0,0,0]],
     "✈️" : [1/9110000000, [0,0,0,0]],
     "💵" : [1/8900000000, [0,0,0,0]],
@@ -880,7 +881,7 @@ function createIndex() {
     let output = "";
     for (let i = 0; i < allLayers.length - 1; i++) {
         for (var propertyName in allLayers[i]) {
-            num = (Math.round(1/(oreList[propertyName][0]))) <=1 || (Math.round(1/(oreList[propertyName][0])))
+            num = (Math.round(1/(oreList[propertyName][0])));
             if (num > 2000000 && num < 5000000000) {
                 output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0]))).toLocaleString() + " | " + (i * 2000) + "-" + ((i+1) * 2000) + "m<br>";
             }
@@ -912,13 +913,17 @@ let spawnOre;
 let latestSpawns = [];
 function spawnMessage(block, location) {
     let output = "";
-    latestSpawns.push([block, location[1], location[0]]);
+    if (currentPickaxe == 5 || gears[0]) {
+        latestSpawns.push([block, location[1], location[0]]);
+    } else {
+        latestSpawns.push([block, undefined, undefined]);
+    }
     if (latestSpawns.length > 10) {
         latestSpawns.splice(0, 1);
     }
     for (let i = latestSpawns.length - 1; i >= 0; i--) {
         output += latestSpawns[i][0] + " 1/" + (Math.round(1 / (oreList[latestSpawns[i][0]][0]))).toLocaleString();
-        if (currentPickaxe == 5 || gears[0]) {
+        if (latestSpawns[i][1] != undefined) {
             output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
         } else {
             output += "<br>";
@@ -1122,7 +1127,7 @@ function switchDistance() {
         y = 2000 * distanceMulti; 
         distanceMulti ++;
     } else {
-        y = 50;
+        y = 0;
         distanceMulti = 1;
     }
     document.getElementById("meterDisplay").innerHTML = (y + 50) + "m";
