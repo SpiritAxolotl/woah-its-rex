@@ -12,7 +12,7 @@ async function rollAbilities() {
             break;
         case 2:
             if (Math.round(Math.random() * 35) == 17) {
-                canMine = await(pickaxeAbility1(curX, curY, 3, 1.2, boost));
+                canMine = await(pickaxeAbility1(curX, curY, 3, 1.35, boost));
                 updateActiveRecipe();
             }
             break;
@@ -35,10 +35,10 @@ async function rollAbilities() {
             }
             break;
         case 6:
-            if (Math.round(Math.random() * 45) == 30) {
+            if (Math.round(Math.random() * 60) == 30) {
                 canMine = await(pickaxeAbility6(curX, curY, boost));
                 updateActiveRecipe();
-            } else if (Math.round(Math.random() * 20) == 15) {
+            } else if (Math.round(Math.random() * 40) == 20) {
                 canMine = await(pickaxeAbility7(curX, curY, boost));
                 updateActiveRecipe();
             }
@@ -90,7 +90,7 @@ function pickaxeAbility1(x, y, size, customLuck, boost) {
 }
 function pickaxeAbility2(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 2 * boost;
+        let thisLuck = 1.8 * boost;
         let constraints = getParams(6, 6);
         canMine = false;
         let origin = [y, x];
@@ -165,11 +165,11 @@ function pickaxeAbility3(x, y, boost) {
 }
 function pickaxeAbility4(x, y, boost) {
     return new Promise((resolve) => {
-        let thisLuck = 1.75 * boost;
+        let thisLuck = 2 * boost;
         let constraints = getParams(7, 7);
         let area1 = Math.round((Math.random() * (-(constraints[0]) - 7)) + 7);
         let area2 = Math.round((Math.random() * (-(constraints[1]) - 7)) + 7);
-        pickaxeAbility1((x + area1), (y + area2), 3, thisLuck, 1);
+        pickaxeAbility1((x + area1), (y + area2), 4, thisLuck, 1);
         displayArea();
     setTimeout(() => {
         resolve(true);
