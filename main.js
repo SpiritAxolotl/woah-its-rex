@@ -1023,7 +1023,7 @@ function collectOres(temp) {
         }
         setTimeout(() => {
         resolve(true);
-        }, 1000);
+        }, 125);
         });
 }
 function mineResetAid() {
@@ -1042,10 +1042,10 @@ function mineResetAid() {
                 }
             }    
             checkAllAround(curX, curY, 1);
-        }, 500);
+        }, 125);
         setTimeout(() => {
         resolve(true);
-        }, 1500);
+        }, 250);
         });
 }
 let latestFinds = [];
