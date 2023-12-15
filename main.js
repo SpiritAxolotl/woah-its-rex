@@ -1,3 +1,14 @@
+class antiCheat {
+    constructor() {
+        let lastMove = Date.now();
+        this.thisNewTime = () => { 
+            lastMove = Date.now(); 
+        }; 
+        this.getThisTime = () => { 
+            return lastMove; 
+        }; 
+    }
+}
 let mine = [];
 let curX = 1000000000;
 let curY = 0;
@@ -477,6 +488,14 @@ function createMine() {
 
 function movePlayer(dir) {
     if (canMine) {
+        let currentMove = Date.now();
+        if (currentMove - moveTimes.getThisTime() < 3) {
+            saveAllData();
+            setTimeout(() => {
+                location.reload();
+            }, 100);
+        }
+        moveTimes.thisNewTime();
         switch (dir) {
             case "s":
                     mineBlock(curX, curY + 1, "mining", 1);
@@ -552,7 +571,9 @@ document.addEventListener('keydown', (event) => {
     if (name == "a" || name == "s" || name == "d" || name == "w") {
         clearInterval(loopTimer);
         curDirection = "";
-        movePlayer(name);
+        setTimeout(() => {
+            movePlayer(name);
+        }, 15);
     }
   }, false);
 
@@ -943,10 +964,16 @@ function spawnMessage(block, location) {
         mineCapacity += 2000;
     }
 }
-function moveOne(dir) {
+function moveOne(dir, button) {
+    button.disabled = true;
     clearInterval(loopTimer);
+    setTimeout(() => {
     movePlayer(dir);
+    }, 15);
     curDirection = "";
+    setTimeout(() => {
+    button.disabled = false;
+    }, 100);
 }
 
 async function mineReset() {
@@ -1152,3 +1179,5 @@ function toggleMusic() {
         document.getElementById("musicButton").innerHTML = "Unmute Music";
     }
 }
+
+let moveTimes = new antiCheat();
