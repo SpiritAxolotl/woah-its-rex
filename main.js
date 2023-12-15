@@ -489,7 +489,7 @@ function createMine() {
 function movePlayer(dir) {
     if (canMine) {
         let currentMove = Date.now();
-        if (currentMove - moveTimes.getThisTime() < 3) {
+        if (currentMove - moveTimes.getThisTime() < 2) {
             saveAllData();
             setTimeout(() => {
                 location.reload();
