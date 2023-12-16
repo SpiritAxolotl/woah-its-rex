@@ -485,11 +485,17 @@ function createMine() {
     checkAllAround(curX, curY, 1);
     displayArea();
 }
-
+let inRow = 0;
 function movePlayer(dir) {
     if (canMine) {
         let currentMove = Date.now();
-        if (currentMove - moveTimes.getThisTime() <= 0) {
+        if (currentMove - moveTimes.getThisTime() <= 5) {
+            inRow++;
+            console.log(inRow);
+        } else {
+            inRow = 0;
+        }
+        if (inRow > 10) {
             saveAllData();
             setTimeout(() => {
                 location.reload();
