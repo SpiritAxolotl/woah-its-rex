@@ -491,7 +491,6 @@ function movePlayer(dir) {
         let currentMove = Date.now();
         if (currentMove - moveTimes.getThisTime() <= 5) {
             inRow++;
-            console.log(inRow);
         } else {
             inRow = 0;
         }
@@ -556,7 +555,7 @@ function movePlayer(dir) {
 }
 
 function mineBlock(x, y, cause, luck) {
-    if (mine[y][x] != "⚪" && mine[y][x] != "⛏️")  {
+    if (mine[y][x] != "⚪" && mine[y][x] != "⛏️" && mine[y][x] != "⬜")  {
         if (cause == "reset") {
             giveBlock(mine[y][x], x, y, true);
             mine[y][x] = "⚪"
