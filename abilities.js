@@ -417,15 +417,3 @@ function pickaxeAbility9(x, y, reps, boost) {
     }, 5);
         });
 }
-/*
-PICKAXE 8
- 
-
-       
-
-        PICKAXE 6
-        
-
-    PICKAXE 5
-    
-*/

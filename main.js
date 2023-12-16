@@ -22,17 +22,17 @@ let mineCapacity = 40000; // in case this ever needs to be raised
 let canMine = false;
 let lastDirection = "";
 let pickaxes = [
-    ["Basic Pickaxe", true],
-    ["Advanced Pickaxe", false],
-    ["DynAxe", false],
-    ["X-Axe", false],
-    ["RandAxe", false],
-    ["Name5", false],
-    ["Name6", false],
-    ["Name7", false],
-    ["Name8", false]
+    ["is anyone gonna read these lol", true],
+    ["hi!!! hii!!", false],
+    ["wait no get out of here", false],
+    ["stop it get out", false],
+    ["leave!!!!!!!!", false],
+    ["i have your ip", false],
+    ["grrrrr leave!!", false],
+    [":pouting-cat:", false],
+    [">:C", false]
 ];
-let gears = [false, false, false];
+let gears = [false, false, false, false];
 let currentPickaxe = 0;
 let oreList = {
     "🐱" : [1/Infinity, [0,0,0,0]],
@@ -937,6 +937,7 @@ function showIndex() {
     }
 }
 let spawnOre;
+let loggedFinds = [];
 let latestSpawns = [];
 function spawnMessage(block, location) {
     let output = "";
@@ -944,6 +945,9 @@ function spawnMessage(block, location) {
         latestSpawns.push([block, location[1], location[0]]);
     } else {
         latestSpawns.push([block, undefined, undefined]);
+    }
+    if (gears[3]) {
+        loggedFinds.push([location[0], location[1]]);
     }
     if (latestSpawns.length > 10) {
         latestSpawns.splice(0, 1);
@@ -986,7 +990,14 @@ async function mineReset() {
     mineCapacity = 40000;
     let temp = curDirection;
     curDirection = "";
-    let temp2 = await collectOres(temp);
+    if (gears[3]) {
+        for (let i = 0; i < loggedFinds.length; i++) {
+            mineBlock(loggedFinds[i][1], loggedFinds[i][0], "reset", 1);
+        }
+        loggedFinds = [];
+    } else {
+        let temp2 = await collectOres(temp);
+    }
     canMine = await mineResetAid();
     checkAllAround(curX, curY, 1);
     mine[curY][curX] = "⛏️"
