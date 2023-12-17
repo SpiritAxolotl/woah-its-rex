@@ -727,7 +727,15 @@ function giveBlock(type, x, y, fromReset) {
                 type = "🟫";
         }   
             if (Math.round(1/oreList[type][0]) >= 750000) {
-                logFind(type, x, y, names[inv - 1], totalMined, fromReset);
+                if (currentPickaxe >= 7) {
+                    if (Math.round(1/oreList[type][0]) > 2000000) {
+                        logFind(type, x, y, names[inv - 1], totalMined, fromReset);
+                    } 
+                } else {
+                    logFind(type, x, y, names[inv - 1], totalMined, fromReset);
+                }
+                   
+                
             }
             oreList[type][1][inv - 1]++;
             updateInventory(type, inv);
@@ -762,8 +770,8 @@ function generateBlock(luck, location) {
             spawnMessage(blockToGive, location);
             playSound("transcendent");
         } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
-            spawnMessage(blockToGive, location);
             if (currentPickaxe < 7) {
+                spawnMessage(blockToGive, location);
                 playSound("exotic");
             }
         }
@@ -942,10 +950,21 @@ let loggedFinds = [];
 let latestSpawns = [];
 function spawnMessage(block, location) {
     let output = "";
-    if (currentPickaxe == 5 || gears[0]) {
+    
+    if (currentPickaxe == 5) {
         latestSpawns.push([block, location[1], location[0]]);
-    } else {
-        latestSpawns.push([block, undefined, undefined]);
+    } else if (currentPickaxe < 7) {
+        if (gears[0]) {
+            latestSpawns.push([block, location[1], location[0]]);
+        } else {
+            latestSpawns.push([block, undefined, undefined]);
+        }  
+    } else if (Math.round(1 / (oreList[block][0])) > 2000000) {
+        if (gears[0]) {
+            latestSpawns.push([block, location[1], location[0]]);
+        } else {
+            latestSpawns.push([block, undefined, undefined]);
+        } 
     }
     if (gears[3]) {
         loggedFinds.push([location[0], location[1]]);
