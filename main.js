@@ -652,7 +652,7 @@ function displayArea() {
     }
     document.getElementById("blockDisplay").innerHTML = output;
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
-    document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
+    document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
     document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: " + (-curY);
   }
   function getParams(distanceX, distanceY, x, y) {
