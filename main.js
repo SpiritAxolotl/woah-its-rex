@@ -972,7 +972,7 @@ function spawnMessage(block, location) {
         document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here!"
       }, 20000);
     if (blocksRevealedThisReset > mineCapacity - 5000) {
-        mineCapacity += 2000;
+        mineCapacity += 5000;
     }
 }
 function moveOne(dir, button) {
@@ -991,14 +991,8 @@ async function mineReset() {
     mineCapacity = 40000;
     let temp = curDirection;
     curDirection = "";
-    if (gears[3]) {
-        for (let i = 0; i < loggedFinds.length; i++) {
-            mineBlock(loggedFinds[i][1], loggedFinds[i][0], "reset", 1);
-        }
-        loggedFinds = [];
-    } else {
-        let temp2 = await collectOres(temp);
-    }
+    let temp2 = await collectOres(temp);
+    loggedFinds = [];
     canMine = await mineResetAid();
     checkAllAround(curX, curY, 1);
     mine[curY][curX] = "⛏️"
@@ -1007,59 +1001,67 @@ async function mineReset() {
 }
 function collectOres(temp) {
     return new Promise((resolve) => {
-        let direction = "";
-        if (temp != "") {
-            direction = temp;
-        } else if (lastDirection != "") {
-            direction = lastDirection;
-        }
-        if (direction == "s") {
-            let constraints = getParams(30, 250);
-            for (let r = curY - constraints[1]; r < curY + 30; r++) {
-                for (let c = curX - constraints[0]; c < curX + 30; c++) {
-                    if (mine[r] != undefined) {
-                        if (oreList[mine[r][c]] != undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                mineBlock(c, r, "reset", 1);
+        if (gears[3]) {
+            for (let i = 0; i < loggedFinds.length; i++) {
+                if (mine[loggedFinds[i][0]] != undefined && mine[loggedFinds[i][0]][loggedFinds[i][1]] != undefined) {
+                    mineBlock(loggedFinds[i][1], loggedFinds[i][0], "reset", 1);
+                }
+            }
+        } else {
+            let direction = "";
+            if (temp != "") {
+                direction = temp;
+            } else if (lastDirection != "") {
+                direction = lastDirection;
+            }
+            if (direction == "s") {
+                let constraints = getParams(30, 250);
+                for (let r = curY - constraints[1]; r < curY + 30; r++) {
+                    for (let c = curX - constraints[0]; c < curX + 30; c++) {
+                        if (mine[r] != undefined) {
+                            if (oreList[mine[r][c]] != undefined) {
+                                if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
+                                    mineBlock(c, r, "reset", 1);
+                                }
                             }
                         }
                     }
                 }
-            }
-        } else if (direction == "w") {
-            let constraints = getParams(30, 30);
-            for (let r = curY - constraints[1]; r < curY + 250; r++) {
-                for (let c = curX - constraints[0]; c < curX + 30; c++) {
-                    if (mine[r] != undefined) {
-                        if (oreList[mine[r][c]] != undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                mineBlock(c, r, "reset", 1);
+            } else if (direction == "w") {
+                let constraints = getParams(30, 30);
+                for (let r = curY - constraints[1]; r < curY + 250; r++) {
+                    for (let c = curX - constraints[0]; c < curX + 30; c++) {
+                        if (mine[r] != undefined) {
+                            if (oreList[mine[r][c]] != undefined) {
+                                if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
+                                    mineBlock(c, r, "reset", 1);
+                                }
                             }
                         }
                     }
                 }
-            }
-        } else if (direction == "a") {
-            let constraints = getParams(30, 30);
-            for (let r = curY - constraints[1]; r < curY + 30; r++) {
-                for (let c = curX - constraints[0]; c < curX + 250; c++) {
-                    if (mine[r] != undefined) {
-                        if (oreList[mine[r][c]] != undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                mineBlock(c, r, "reset", 1);
+            } else if (direction == "a") {
+                let constraints = getParams(30, 30);
+                for (let r = curY - constraints[1]; r < curY + 30; r++) {
+                    for (let c = curX - constraints[0]; c < curX + 250; c++) {
+                        if (mine[r] != undefined) {
+                            if (oreList[mine[r][c]] != undefined) {
+                                if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
+                                    mineBlock(c, r, "reset", 1);
+                                }
                             }
                         }
                     }
                 }
-            }
-        } else if (direction == "d") {
-            let constraints = getParams(250, 30);
-            for (let r = curY - constraints[1]; r < curY + 30; r++) {
-                for (let c = curX - constraints[0]; c < curX + 30; c++) {
-                    if (mine[r] != undefined) {
-                        if (oreList[mine[r][c]] != undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
-                                mineBlock(c, r, "reset", 1);
+            } else if (direction == "d") {
+                let constraints = getParams(250, 30);
+                for (let r = curY - constraints[1]; r < curY + 30; r++) {
+                    for (let c = curX - constraints[0]; c < curX + 30; c++) {
+                        if (mine[r] != undefined) {
+                            if (oreList[mine[r][c]] != undefined) {
+                                if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000) {
+                                    mineBlock(c, r, "reset", 1);
+                                }
                             }
                         }
                     }
