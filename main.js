@@ -770,8 +770,8 @@ function generateBlock(luck, location) {
             spawnMessage(blockToGive, location);
             playSound("transcendent");
         } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
+            spawnMessage(blockToGive, location);
             if (currentPickaxe < 7) {
-                spawnMessage(blockToGive, location);
                 playSound("exotic");
             }
         }
@@ -950,7 +950,6 @@ let loggedFinds = [];
 let latestSpawns = [];
 function spawnMessage(block, location) {
     let output = "";
-    
     if (currentPickaxe == 5) {
         latestSpawns.push([block, location[1], location[0]]);
     } else if (currentPickaxe < 7) {
