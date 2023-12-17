@@ -39,7 +39,7 @@ function loadAllData() {
         currentPickaxe = data[1][0][1];
     
         totalMined = data[2]
-        document.getElementById("blocksMined").innerHTML = totalMined + " Blocks Mined";
+        document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
         
         for (var propertyName in oreList) {
                 if (document.getElementById(propertyName + "1") != null) {
