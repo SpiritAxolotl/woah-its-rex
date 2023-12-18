@@ -111,7 +111,11 @@
         <input type="text" id="dataText" style="width:50vw;">
         <button onclick="exportData()">Export Data</button>
         <button onclick="importData(document.getElementById('dataText').value)">Import Data</button>
-        <button onclick="hideData()">Back to Game</button>
+        <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
+        <br>
+        <br>
+        <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
+        <p id="generatedLogs"></p>
     </div>
    
 </div>

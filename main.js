@@ -1,13 +1,71 @@
 class antiCheat {
+        #lastMove;
+        #inRow;
     constructor() {
-        let lastMove = Date.now();
-        this.thisNewTime = () => { 
-            lastMove = Date.now(); 
-        }; 
-        this.getThisTime = () => { 
-            return lastMove; 
-        }; 
+        this.#lastMove = Date.now();
+        this.#inRow = 0;
+        }
+        #getNewTime() {
+            this.#lastMove = Date.now();
+        }
+        checkTimes() {
+            if (Date.now() - this.#lastMove <= 5) {
+                this.#inRow++;
+            } else {
+                this.#inRow = 0;
+            }
+            this.#getNewTime();
+            return (this.#inRow > 10);
+        }
+}
+class secureLogs {
+    #spawnLogs;
+    #verifiedLogs;
+    #logsTimer;
+    constructor() {
+        this.#spawnLogs = [];
+        this.#verifiedLogs = [];
+        this.#logsTimer = null;
     }
+    createLog(r, c, intended, obj, luck) {
+        if (obj.stack.includes("main.js") && luck < 50) {
+            if (mine[r][c] == "⬜") {
+                this.#spawnLogs.push([r, c, intended]);
+            }
+        } 
+    }
+    verifyLog(r, c) {
+        for (let i = 0; i < this.#spawnLogs.length; i++) {
+            if (this.#spawnLogs[i][0] == r && this.#spawnLogs[i][1] == c) {
+                if (mine[r][c] == this.#spawnLogs[i][2]) {
+                    this.#verifiedLogs.push([mine[r][c], new Date()]);
+                }
+            }
+        }
+        
+    }
+    showLogs() {
+        if (document.getElementById("dataExport").style.display == "block") {
+            if (this.#logsTimer != null) {
+                clearInterval(this.#logsTimer);
+                this.#logsTimer = null;
+            } else {
+                let output = "";
+                for (let i = 0; i < this.#verifiedLogs.length; i++) {
+                    output += this.#verifiedLogs[i] + "<br>";
+                }
+                this.#logsTimer = setInterval(this.#reloadLogs, 50, output);
+            }
+        } else {
+            clearInterval(this.#logsTimer);
+            this.#logsTimer = null;
+        }
+        
+    }
+    #reloadLogs(output) {
+        document.getElementById("generatedLogs").innerHTML = output;
+    }
+
 }
 let mine = [];
 let curX = 1000000000;
@@ -485,22 +543,14 @@ function createMine() {
     checkAllAround(curX, curY, 1);
     displayArea();
 }
-let inRow = 0;
 function movePlayer(dir) {
     if (canMine) {
-        let currentMove = Date.now();
-        if (currentMove - moveTimes.getThisTime() <= 5) {
-            inRow++;
-        } else {
-            inRow = 0;
-        }
-        if (inRow > 10) {
+        if (moveTimes.checkTimes()) {
             saveAllData();
             setTimeout(() => {
-                location.reload();
-            }, 100);
+            location.reload();
+            }, 250);
         }
-        moveTimes.thisNewTime();
         switch (dir) {
             case "s":
                     mineBlock(curX, curY + 1, "mining", 1);
@@ -679,24 +729,41 @@ function displayArea() {
 
 
   function checkAllAround(x, y, luck) {
+        let generated;
         if (x - 1 >= 0) {
             if (mine[y][x - 1] == "⬜") {
-                mine[y][x - 1] = generateBlock(luck, [y, x-1]);
+                generated = generateBlock(luck, [y, x-1]);
+                mine[y][x - 1] = generated[0];
+                if (generated[1]) {
+                    verifiedOres.verifyLog(y, x-1);
+                }
                 blocksRevealedThisReset++;
             }
         }
         if (mine[y][x + 1] == "⬜") {
-                mine[y][x + 1] = generateBlock(luck, [y, x+1]);
+            generated = generateBlock(luck, [y, x+1]);
+                mine[y][x + 1] = generated[0];
+                if (generated[1]) {
+                    verifiedOres.verifyLog(y, x+1);
+                }
                 blocksRevealedThisReset++;
             }
         if (mine[y + 1][x] == "⬜") {
-                mine[y + 1][x] = generateBlock(luck, [y+1, x]);
+            generated = generateBlock(luck, [y+1, x]);
+                mine[y + 1][x] = generated[0];
+                if (generated[1]) {
+                    verifiedOres.verifyLog(y+1, x);
+                }
                 blocksRevealedThisReset++;
             }
         
         if (y - 1 >= 0) {
             if (mine[y - 1][x] == "⬜") {
-                mine[y - 1][x] = generateBlock(luck, [y-1, x]);
+                generated = generateBlock(luck, [y-1, x]);
+                mine[y - 1][x] = generated[0];
+                if (generated[1]) {
+                    verifiedOres.verifyLog(y-1, x);
+                }
                 blocksRevealedThisReset++;
             }
         }
@@ -742,6 +809,7 @@ function giveBlock(type, x, y, fromReset) {
     }
 }
 function generateBlock(luck, location) {
+    let hasLog = false
       let probabilityTable = currentLayer;
       let blockToGive = "";
       let summedProbability = 0;
@@ -755,12 +823,18 @@ function generateBlock(luck, location) {
         }
         }
         if (Math.round(1 / (probabilityTable[blockToGive])) > 5000000000) {
+            verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
+            hasLog = true;
             spawnMessage(blockToGive, location);
             playSound("zenith");
         } else if (Math.round(1 / (probabilityTable[blockToGive])) > 750000000) {
+            verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
+            hasLog = true;
             spawnMessage(blockToGive, location);
             playSound("otherworldly");
         } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 160000000){
+            verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
+            hasLog = true;
             spawnMessage(blockToGive, location);
             playSound("unfathomable");
         } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 25000000) {
@@ -775,7 +849,7 @@ function generateBlock(luck, location) {
                 playSound("exotic");
             }
         }
-        return blockToGive;
+        return [blockToGive, hasLog];
 }
 let variant = 1;
 function updateInventory(type, inv) {
@@ -950,6 +1024,7 @@ let loggedFinds = [];
 let latestSpawns = [];
 function spawnMessage(block, location) {
     let output = "";
+    let addToLatest = true;
     if (currentPickaxe == 5) {
         latestSpawns.push([block, location[1], location[0]]);
     } else if (currentPickaxe < 7) {
@@ -964,6 +1039,8 @@ function spawnMessage(block, location) {
         } else {
             latestSpawns.push([block, undefined, undefined]);
         } 
+    } else {
+        addToLatest = false;
     }
     if (gears[3]) {
         loggedFinds.push([location[0], location[1]]);
@@ -971,19 +1048,21 @@ function spawnMessage(block, location) {
     if (latestSpawns.length > 10) {
         latestSpawns.splice(0, 1);
     }
-    for (let i = latestSpawns.length - 1; i >= 0; i--) {
-        output += latestSpawns[i][0] + " 1/" + (Math.round(1 / (oreList[latestSpawns[i][0]][0]))).toLocaleString();
-        if (latestSpawns[i][1] != undefined) {
-            output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
-        } else {
-            output += "<br>";
+    if (addToLatest) {
+        for (let i = latestSpawns.length - 1; i >= 0; i--) {
+            output += latestSpawns[i][0] + " 1/" + (Math.round(1 / (oreList[latestSpawns[i][0]][0]))).toLocaleString();
+            if (latestSpawns[i][1] != undefined) {
+                output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
+            } else {
+                output += "<br>";
+            }
         }
-    }
-    document.getElementById("latestSpawns").innerHTML = output;
-    if (currentPickaxe == 5 || gears[0]) {
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + "<br>X: " + (location[1] - 1000000000) + " | Y: " + -(location[0]);
-    } else {
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString();
+        document.getElementById("latestSpawns").innerHTML = output;
+        if (currentPickaxe == 5 || gears[0]) {
+            document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + "<br>X: " + (location[1] - 1000000000) + " | Y: " + -(location[0]);
+        } else {
+            document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString();
+        }
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
@@ -1219,3 +1298,7 @@ function toggleMusic() {
 }
 
 let moveTimes = new antiCheat();
+let verifiedOres = new secureLogs();
+
+
+
