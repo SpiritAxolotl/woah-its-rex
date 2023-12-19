@@ -38,17 +38,21 @@ class secureLogs {
         for (let i = 0; i < this.#spawnLogs.length; i++) {
             if (this.#spawnLogs[i][0] == r && this.#spawnLogs[i][1] == c) {
                 if (mine[r][c] == this.#spawnLogs[i][2]) {
-                    this.#verifiedLogs.push([mine[r][c], [r, c], new Date(), false]);
+                    this.#spawnLogs.splice(i, 1);
+                    this.#verifiedLogs.push([mine[r][c], [r, c], new Date(), false, "Normal"]);
+                    break;
                 }
             }
         }
         
     }
-    verifyFind(block, r, c) {
+    verifyFind(block, r, c, variant) {
         for (let i = 0; i < this.#verifiedLogs.length; i++) {
             if (this.#verifiedLogs[i][1][0] == r && this.#verifiedLogs[i][1][1] == c) {
                 if (block == this.#verifiedLogs[i][0]) {
                     this.#verifiedLogs[i][3] = true;
+                    this.#verifiedLogs[i][4] = variant;
+                    break;
                 }
             }
         }
@@ -62,7 +66,7 @@ class secureLogs {
                 document.getElementById("logHolder").appendChild(element);
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
-                    output += this.#verifiedLogs[i][0] + this.#verifiedLogs[i][2] + this.#verifiedLogs[i][3] + "<br>";
+                    output += this.#verifiedLogs[i][0] + this.#verifiedLogs[i][2] + this.#verifiedLogs[i][3] + ", " + this.#verifiedLogs[i][4] +"<br>";
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output);
         } else {
@@ -615,25 +619,15 @@ function movePlayer(dir) {
 }
 
 function mineBlock(x, y, cause, luck) {
-    let logFound = false;
     if (mine[y][x] != "⚪" && mine[y][x] != "⛏️" && mine[y][x] != "⬜")  {
         let ore = mine[y][x];
         if (ore == "🟩") {
             ore = "🟫";
         }
-        if (Math.round(1 / (oreList[ore][0])) >= 160000000) {
-            logFound = true;
-        }
         if (cause == "reset") {
-            if (logFound) {
-                verifiedOres.verifyFind(mine[y][x], y, x);
-            }
             giveBlock(mine[y][x], x, y, true);
             mine[y][x] = "⚪"
         } else {
-            if (logFound) {
-                verifiedOres.verifyFind(mine[y][x], y, x);
-            }
             giveBlock(mine[y][x], x, y);
             mine[y][x] = "⚪"
             checkAllAround(x, y, luck);
@@ -807,6 +801,9 @@ let inv;
 function giveBlock(type, x, y, fromReset) {
     if (type != "⛏️") {
         inv = 1;
+        if (type == "🟩") {
+            type = "🟫";
+        }   
         if (Math.floor(Math.random() * 50) == 25) {
                 inv = 2;
             } else if (Math.floor(Math.random() * 250) == 125) {
@@ -814,9 +811,9 @@ function giveBlock(type, x, y, fromReset) {
             }   else if (Math.floor(Math.random() * 500) == 250) {
                 inv = 4;
             }
-        if (type == "🟩") {
-                type = "🟫";
-        }   
+            if (Math.round(1 / (oreList[type][0])) >= 160000000) {
+                verifiedOres.verifyFind(mine[y][x], y, x, names[inv - 1]);
+            }
             if (Math.round(1/oreList[type][0]) >= 750000) {
                 if (currentPickaxe >= 7) {
                     if (Math.round(1/oreList[type][0]) > 2000000) {
@@ -825,8 +822,6 @@ function giveBlock(type, x, y, fromReset) {
                 } else {
                     logFind(type, x, y, names[inv - 1], totalMined, fromReset);
                 }
-                   
-                
             }
             oreList[type][1][inv - 1]++;
             updateInventory(type, inv);
