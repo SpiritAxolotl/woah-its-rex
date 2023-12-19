@@ -55,19 +55,17 @@ class secureLogs {
     }
     showLogs() {
         if (document.getElementById("dataExport").style.display == "block") {
-            if (this.#logsTimer != null) {
                 clearInterval(this.#logsTimer);
                 this.#logsTimer = null;
-            } else {
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
                     output += this.#verifiedLogs[i][0] + this.#verifiedLogs[i][2] + this.#verifiedLogs[i][3] + "<br>";
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output);
-            }
         } else {
             clearInterval(this.#logsTimer);
             this.#logsTimer = null;
+            document.getElementById("generatedLogs").innerHTML = "";
         }
         
     }
