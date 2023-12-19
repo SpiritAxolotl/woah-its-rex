@@ -28,7 +28,7 @@ class secureLogs {
         this.#logsTimer = null;
     }
     createLog(r, c, intended, obj, luck) {
-        if (obj.stack.includes("main.js") && luck < 50) {
+        if (obj.stack.includes("main.js") && luck < 12) {
             if (mine[r][c] == "⬜") {
                 this.#spawnLogs.push([r, c, intended]);
             }
