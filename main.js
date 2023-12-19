@@ -38,11 +38,20 @@ class secureLogs {
         for (let i = 0; i < this.#spawnLogs.length; i++) {
             if (this.#spawnLogs[i][0] == r && this.#spawnLogs[i][1] == c) {
                 if (mine[r][c] == this.#spawnLogs[i][2]) {
-                    this.#verifiedLogs.push([mine[r][c], new Date()]);
+                    this.#verifiedLogs.push([mine[r][c], [r, c], new Date(), false]);
                 }
             }
         }
         
+    }
+    verifyFind(block, r, c) {
+        for (let i = 0; i < this.#verifiedLogs.length; i++) {
+            if (this.#verifiedLogs[i][1][0] == r && this.#verifiedLogs[i][1][1] == c) {
+                if (block == this.#verifiedLogs[i][0]) {
+                    this.#verifiedLogs[i][3] = true;
+                }
+            }
+        }
     }
     showLogs() {
         if (document.getElementById("dataExport").style.display == "block") {
@@ -52,7 +61,7 @@ class secureLogs {
             } else {
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
-                    output += this.#verifiedLogs[i] + "<br>";
+                    output += this.#verifiedLogs[i][0] + this.#verifiedLogs[i][2] + this.#verifiedLogs[i][3] + "<br>";
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output);
             }
@@ -605,11 +614,25 @@ function movePlayer(dir) {
 }
 
 function mineBlock(x, y, cause, luck) {
+    let logFound = false;
     if (mine[y][x] != "⚪" && mine[y][x] != "⛏️" && mine[y][x] != "⬜")  {
+        let ore = mine[y][x];
+        if (ore == "🟩") {
+            ore = "🟫";
+        }
+        if (Math.round(1 / (oreList[ore][0])) >= 160000000) {
+            logFound = true;
+        }
         if (cause == "reset") {
+            if (logFound) {
+                verifiedOres.verifyFind(mine[y][x], y, x);
+            }
             giveBlock(mine[y][x], x, y, true);
             mine[y][x] = "⚪"
         } else {
+            if (logFound) {
+                verifiedOres.verifyFind(mine[y][x], y, x);
+            }
             giveBlock(mine[y][x], x, y);
             mine[y][x] = "⚪"
             checkAllAround(x, y, luck);
