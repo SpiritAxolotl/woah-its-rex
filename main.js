@@ -57,6 +57,9 @@ class secureLogs {
         if (document.getElementById("dataExport").style.display == "block") {
                 clearInterval(this.#logsTimer);
                 this.#logsTimer = null;
+                let element = document.createElement("p");
+                element.id = "generatedLogs";
+                document.getElementById("logHolder").appendChild(element);
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
                     output += this.#verifiedLogs[i][0] + this.#verifiedLogs[i][2] + this.#verifiedLogs[i][3] + "<br>";
@@ -65,7 +68,7 @@ class secureLogs {
         } else {
             clearInterval(this.#logsTimer);
             this.#logsTimer = null;
-            document.getElementById("generatedLogs").innerHTML = "";
+            document.getElementById("generatedLogs").remove();
         }
         
     }
