@@ -28,7 +28,7 @@ class secureLogs {
         this.#logsTimer = null;
     }
     createLog(r, c, intended, obj, luck) {
-        if (obj.stack.includes("main.js") && luck < 12) {
+        if (obj.stack.includes("main.js") && luck < 23) {
             if (mine[r][c] == "⬜") {
                 this.#spawnLogs.push([r, c, intended]);
             }
@@ -72,7 +72,9 @@ class secureLogs {
         } else {
             clearInterval(this.#logsTimer);
             this.#logsTimer = null;
-            document.getElementById("generatedLogs").remove();
+            if (document.getElementById("generatedLogs") != null) {
+                document.getElementById("generatedLogs").remove();
+            }
         }
         
     }
@@ -102,9 +104,10 @@ let pickaxes = [
     ["i have your ip", false],
     ["grrrrr leave!!", false],
     [":pouting-cat:", false],
-    [">:C", false]
+    [">:C", false],
+    ["IM HERE NOW TOO", false]
 ];
-let gears = [false, false, false, false];
+let gears = [false, false, false, false, false];
 let currentPickaxe = 0;
 let oreList = {
     "🐱" : [1/Infinity, [0,0,0,0]],
@@ -140,6 +143,7 @@ let oreList = {
     "🌪️" : [1/247010000, [0,0,0,0]], //ADDED
     "🌏" : [1/213200000, [0,0,0,0]], //ADDED
     "📝" : [1/200000000, [0,0,0,0]], //ADDED
+    "⛄" : [1/183640000, [0,0,0,0]], //ADDED
     "💎" : [1/170000000, [0,0,0,0]], //ADDED
     "🔥" : [1/160000000, [0,0,0,0]], //ADDED
     "🔆" : [1/75000000, [0,0,0,0]], //
@@ -235,6 +239,7 @@ let dirtLayer = {
     "🥗" : 1/800000000,
     "🌪️" : 1/247010000,
     "🌏" : 1/213200000,
+    "⛄" : 1/183640000,
     "🌲" : 1/71000000,
     "🎃" : 1/69000000,
     "🎍" : 1/35000000,
@@ -270,6 +275,7 @@ let brickLayer = {
     "🥉" : 1/444444444, 
     "🪞" : 1/426800050,
     "🔩" : 1/420836000,
+    "⛄" : 1/183640000,
     "🧲" : 1/43500000,
     "🪬" : 1/37000000,
     "🧨" : 1/31500000,
@@ -306,6 +312,7 @@ let foggyLayer = {
     "👁️" : 1/1920000000,
     "💸" : 1/754000000,
     "⌛" : 1/750000000,
+    "⛄" : 1/183640000,
     "🕯️" : 1/62500000,
     "🕋" : 1/55000000,
     "🎨" : 1/44000000,
@@ -341,6 +348,7 @@ let waterLayer = {
     "🪩" : 1/999999999,
     "👿" : 1/750000000,
     "🌀" : 1/618000000,
+    "⛄" : 1/183640000,
     "🔱" : 1/70000000,
     "👑" : 1/65000000,
     "🐟" : 1/26000000,
@@ -375,6 +383,7 @@ let rockLayer = {
     "🏔️" : 1/5500000000,
     "🧊" : 1/583000000,
     "❄️" : 1/386500000,
+    "⛄" : 1/183640000,
     "💎" : 1/170000000,
     "☄️" : 1/72500000,
     "🔮" : 1/60000000,
@@ -411,6 +420,7 @@ let radioactiveLayer = {
     "🧀" : 1/618000001,
     "🌌" : 1/550000000,
     "🥀" : 1/538000000,
+    "⛄" : 1/183640000,
     "🎇" : 1/67500000,
     "🔳" : 1/46000000,
     "⏹️" : 1/29000000,
@@ -445,6 +455,7 @@ let cactusLayer = {
     "🐪" : 1/7800000000,
     "🪐" : 1/709000750,
     "💥" : 1/375000000,
+    "⛄" : 1/183640000,
     "🔥" : 1/160000000,
     "🔆" : 1/75000000,
     "⭐" : 1/70600600,
@@ -481,6 +492,7 @@ let paperLayer = {
     "👀" : 1/955200890,
     "🌟" : 1/257280000,
     "📝" : 1/200000000,
+    "⛄" : 1/183640000,
     "⌚" : 1/52000000,
     "🗜️" : 1/42000000,
     "🏆" : 1/38000000,
@@ -516,6 +528,7 @@ let sillyLayer = {
     "✈️" : 1/9110000000,
     "🪢" : 1/8181818181, 
     "🫃" : 1/6600000000,
+    "⛄" : 1/183640000,
     "🎂" : 1/1
 }
 let allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer, sillyLayer];
@@ -799,6 +812,13 @@ function displayArea() {
 let multis = [1, 50, 250, 500];
 let inv;
 function giveBlock(type, x, y, fromReset) {
+    if (gears[4]) {
+        let block = Object.keys(currentLayer);
+        block = block[block.length - 1];
+        oreList[block][1][0]++;
+        updateInventory(block, 1);
+    }
+    
     if (type != "⛏️") {
         inv = 1;
         if (type == "🟩") {

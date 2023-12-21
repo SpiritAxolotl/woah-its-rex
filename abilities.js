@@ -56,6 +56,12 @@ async function rollAbilities() {
                 updateActiveRecipe();
             }
             break;
+        case 9:
+            if (Math.round(Math.random() * 30) == 15) {
+                canMine = await(pickaxeAbility10(curX, curY, boost));
+                updateActiveRecipe();
+            }
+            break;
     }
 }
 
@@ -436,6 +442,73 @@ function pickaxeAbility9(x, y, reps, boost) {
         displayArea();
         resolve(true);
     }
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
+function pickaxeAbility10(x, y, boost) {
+    return new Promise((resolve) => {
+    let thisLuck = 20 * boost;
+    let generated;
+    let skips = [
+        [0, 4, 12, 16],
+        [5, 11],
+        [6, 10],
+        [0, 16],
+        [0, 1, 15, 16],
+        [0, 16],
+        [6, 10],
+        [5, 11],
+        [0, 4, 12, 16]
+    ];
+    let i = 0;
+    let reps = 0;
+    for (let c = x - 4; c < x + 5; c++) {
+        for (let r = y - 8; r < y + 9; r++) {
+            if (mine[r] != undefined && mine[r][c] != undefined) {
+                if (!(skips[reps].includes(i))) {
+                    if (mine[r][c] == "⬜") {
+                        generated = generateBlock(thisLuck, [r, c]);
+                        mine[r][c] = generated[0];
+                        if (generated[1]) {
+                            verifiedOres.verifyLog(r, c);
+                        }
+                    }
+                    if (mine[r][c] != "⛏️") {
+                        mineBlock(c, r, "ability", thisLuck);
+                    }
+                }
+            }
+            i++;
+        }
+        i = 0;
+        reps++;
+    }
+    i = 0;
+    reps = 0;
+    for (let r = y - 4; r < y + 5; r++) {
+        for (let c = x - 8; c < x + 9; c++) {
+            if (mine[r] != undefined && mine[r][c] != undefined) {
+                if (!(skips[reps].includes(i))) {
+                    if (mine[r][c] == "⬜") {
+                        generated = generateBlock(thisLuck, [r, c]);
+                        mine[r][c] = generated[0];
+                        if (generated[1]) {
+                            verifiedOres.verifyLog(r, c);
+                        }
+                    }
+                    if (mine[r][c] != "⛏️") {
+                        mineBlock(c, r, "ability", thisLuck);
+                    }
+                }
+            }
+            i++;
+        }
+        i = 0;
+        reps++;
+    }
+    displayArea();
     setTimeout(() => {
         resolve(true);
     }, 5);
