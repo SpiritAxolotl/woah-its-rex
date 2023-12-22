@@ -62,11 +62,17 @@ class secureLogs {
                 clearInterval(this.#logsTimer);
                 this.#logsTimer = null;
                 let element = document.createElement("p");
+                if (document.getElementById("generatedLogs") != null) {
+                    document.getElementById("generatedLogs").remove();
+                }
                 element.id = "generatedLogs";
                 document.getElementById("logHolder").appendChild(element);
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
                     output += this.#verifiedLogs[i][0] + this.#verifiedLogs[i][2] + this.#verifiedLogs[i][3] + ", " + this.#verifiedLogs[i][4] +"<br>";
+                }
+                if (output == "") {
+                    output = "none";
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output);
         } else {
@@ -1105,13 +1111,13 @@ function spawnMessage(block, location) {
             document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString();
         }
     }
+    if (blocksRevealedThisReset > mineCapacity - 5000) {
+        mineCapacity += 5000;
+    }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
         document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here!"
       }, 20000);
-    if (blocksRevealedThisReset > mineCapacity - 5000) {
-        mineCapacity += 5000;
-    }
 }
 function moveOne(dir, button) {
     button.disabled = true;
