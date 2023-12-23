@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
 <head>
+    <title>Woah It's Rex!</title>
+    <link rel="icon" type="image/x-icon" href="game icon.png">
     <script src="main.js"></script>
     <script src="abilities.js"></script>
     <script src="crafting.js"></script>
@@ -13,7 +15,24 @@
 </head>
 <body>
     <div id="pressPlay">
-        <button onclick="loadContent()">Play</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-5" id="credits">
+                    <p style="text-align: center;">
+                        Game made by @thecatofalltime on Discord!<br>
+                        Background music made by @x2corp on Discord!<br>
+                        Spawn sounds come fron REx:R on Roblox, some made by @tevv_ on Discord!
+                    </p>
+                </div>
+                <div class="col-2" id="playButton">
+                    <button onclick="loadContent()">Play</button>
+                </div>
+                <div class="col-5">
+                    
+                </div>
+            </div>
+            
+        </div> 
     </div>
     <div id="mainContent" style="display: none;">
         <div class="container-fluid" style="height:100%">

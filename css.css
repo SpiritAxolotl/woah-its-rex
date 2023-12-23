@@ -30,7 +30,15 @@
     font-size:1vw;
     width:100%;
 }
-#pressPlay {
+#credits {
+    height:100%;
+    width: 50%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#playButton {
     height:100%;
     width: 100%;
     position: absolute;
