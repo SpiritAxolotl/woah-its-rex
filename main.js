@@ -1111,8 +1111,10 @@ function spawnMessage(block, location) {
             document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString();
         }
     }
-    if (blocksRevealedThisReset > mineCapacity - 5000) {
-        mineCapacity += 5000;
+    if (!(gears[3])) {
+        if (blocksRevealedThisReset > mineCapacity - 5000) {
+            mineCapacity += 5000;
+        }
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
