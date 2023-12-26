@@ -329,7 +329,7 @@ function pickaxeAbility8(x, y, reps, boost) {
             x++;
             mineBlock(x, y, "ability", thisLuck);
         }
-        if (Math.random() <= 0.8) {
+        if (Math.random() <= 0.75) {
             procs[0] = [x, y, true]
         }
         x = origin[1];
@@ -337,7 +337,7 @@ function pickaxeAbility8(x, y, reps, boost) {
             x--;
             mineBlock(x, y, "ability", thisLuck);
         }
-        if (Math.random() <= 0.8) {
+        if (Math.random() <= 0.75) {
             procs[1] = [x, y, true]
         }
         x = origin[1];
@@ -345,7 +345,7 @@ function pickaxeAbility8(x, y, reps, boost) {
             y++;
             mineBlock(x, y, "ability", thisLuck);
         }
-        if (Math.random() <= 0.8) {
+        if (Math.random() <= 0.75) {
             procs[2] = [x, y, true]
         }
         y = origin[0];
@@ -353,7 +353,7 @@ function pickaxeAbility8(x, y, reps, boost) {
             y--;
             mineBlock(x, y, "ability", thisLuck);
         }
-        if (Math.random() <= 0.8) {
+        if (Math.random() <= 0.75) {
             procs[3] = [x, y, true]
         }
         reps++;
@@ -392,7 +392,7 @@ function pickaxeAbility9(x, y, reps, boost) {
         y++;
         mineBlock(x, y, "ability", thisLuck);
     }
-    if (Math.random() <= 0.8) {
+    if (Math.random() <= 0.75) {
         procs[0] = [x, y, true]
     }
     x = origin[1]
@@ -403,7 +403,7 @@ function pickaxeAbility9(x, y, reps, boost) {
         y++;
         mineBlock(x, y, "ability", thisLuck);
     }
-    if (Math.random() <= 0.8) {
+    if (Math.random() <= 0.75) {
         procs[1] = [x, y, true]
     }
     x = origin[1]
@@ -414,7 +414,7 @@ function pickaxeAbility9(x, y, reps, boost) {
         y--;
         mineBlock(x, y, "ability", thisLuck);
     }
-    if (Math.random() <= 0.8) {
+    if (Math.random() <= 0.75) {
         procs[2] = [x, y, true]
     }
     x = origin[1]
@@ -428,7 +428,7 @@ function pickaxeAbility9(x, y, reps, boost) {
         y--;
         mineBlock(x, y, "ability", thisLuck);
     }
-    if (Math.random() <= 0.8) {
+    if (Math.random() <= 0.75) {
         procs[3] = [x, y, true]
     }
     reps++;
