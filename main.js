@@ -136,6 +136,7 @@ let oreList = {
     "🌟" : [1/257280000, [0,0,0,0]], //ADDED
     "🌪️" : [1/247010000, [0,0,0,0]], //ADDED
     "🌏" : [1/213200000, [0,0,0,0]], //ADDED
+    "🧵" : [1/201061929, [0,0,0,0]], //ADDED
     "📝" : [1/200000000, [0,0,0,0]], //ADDED
     "⛄" : [1/183640000, [0,0,0,0]], //ADDED
     "💎" : [1/170000000, [0,0,0,0]], //ADDED
@@ -312,6 +313,7 @@ let foggyLayer = {
     "👁️" : 1/1920000000,
     "💸" : 1/754000000,
     "⌛" : 1/750000000,
+    "🧵" : 1/201061929,
     "⛄" : 1/183640000,
     "🕯️" : 1/62500000,
     "🕋" : 1/55000000,
@@ -1056,7 +1058,7 @@ function createInventory() {
 function createIndex() {
     let num = 0;
     let output = "";
-    for (let i = 0; i < allLayers.length - 1; i++) {
+    for (let i = 0; i < allLayers.length - 2; i++) {
         for (var propertyName in allLayers[i]) {
             num = (Math.round(1/(oreList[propertyName][0])));
             if (num > 2000000 && num < 5000000000) {
