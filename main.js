@@ -8,7 +8,7 @@ class secureLogs {
         this.#logsTimer = null;
     }
     createLog(r, c, intended, obj, luck) {
-        if (obj.stack.includes("main.js") && luck < 23) {
+        if (obj.stack.includes("main.js") && luck < 40) {
             if (mine[r][c] == "⬜") {
                 this.#spawnLogs.push([r, c, intended]);
             }
@@ -225,7 +225,8 @@ let oreList = {
     "☢️" : [1/1, [0,0,0,0]],
     "🌵" : [1/1, [0,0,0,0]],
     "📰" : [1/1, [0,0,0,0]],
-    "🎂" : [1/1, [0,0,0,0]]
+    "🎂" : [1/1, [0,0,0,0]],
+    "🪈" : [1/1, [0,0,0,0]]
 }
 //ALL LAYERS
 let dirtLayer = {
@@ -540,7 +541,11 @@ let sillyLayer = {
     "⛄" : 1/183640000,
     "🎂" : 1/1
 }
-let allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer, sillyLayer];
+
+let fluteLayer = {
+    "🪈" : 1/1
+}
+let allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer, sillyLayer, fluteLayer];
 function init () {
     let canContinue = false;
     createInventory();
@@ -1286,6 +1291,8 @@ function setLayer(y) {
         lastLayerChange += 10000;
         if (Math.round(Math.random() * 77) == 33) {
             currentLayer = sillyLayer;
+        } else if (Math.round(Math.random() * 40) == 20) {
+            currentLayer = fluteLayer;
         } else {
             currentLayer = allLayers[Math.floor(Math.random() * 8)];
         }
