@@ -1,23 +1,3 @@
-class antiCheat {
-        #lastMove;
-        #inRow;
-    constructor() {
-        this.#lastMove = Date.now();
-        this.#inRow = 0;
-        }
-        #getNewTime() {
-            this.#lastMove = Date.now();
-        }
-        checkTimes() {
-            if (Date.now() - this.#lastMove <= 5) {
-                this.#inRow++;
-            } else {
-                this.#inRow = 0;
-            }
-            this.#getNewTime();
-            return (this.#inRow > 10);
-        }
-}
 class secureLogs {
     #spawnLogs;
     #verifiedLogs;
@@ -113,7 +93,7 @@ let pickaxes = [
     [">:C", false],
     ["IM HERE NOW TOO", false]
 ];
-let gears = [false, false, false, false, false];
+let gears = [false, false, false, false, false, false, false];
 let currentPickaxe = 0;
 let oreList = {
     "🐱" : [1/Infinity, [0,0,0,0]],
@@ -128,6 +108,13 @@ let oreList = {
     "🚿" : [1/6000000000, [0,0,0,0]],
     "🏔️" : [1/5500000000, [0,0,0,0]],
     "😻" : [1/5000000005, [0,0,0,0]],
+    "🌇" : [1/4300000000, [0,0,0,0]], //ADDED
+    "💐" : [1/3750000000, [0,0,0,0]], //ADDED
+    "🪅" : [1/3250000000, [0,0,0,0]], //ADDED
+    "🎆" : [1/3000000000, [0,0,0,0]], //ADDED
+    "🌈" : [1/2750000000, [0,0,0,0]],
+    "🏵️" : [1/2600000000, [0,0,0,0]],
+    "💫" : [1/2000000000, [0,0,0,0]], //ADDED
     "👁️" : [1/1920000000, [0,0,0,0]], //ADDED
     "🪩" : [1/999999999, [0,0,0,0]], //ADDED
     "👀" : [1/955200890, [0,0,0,0]], //ADDED
@@ -244,6 +231,7 @@ let oreList = {
 let dirtLayer = {
     "🌳" : 1/9250000000,
     "😻" : 1/5000000005,
+    "💐" : 1/3750000000,
     "🥗" : 1/800000000,
     "🌪️" : 1/247010000,
     "🌏" : 1/213200000,
@@ -281,6 +269,7 @@ let dirtLayer = {
 let brickLayer = {
     "🏰" : 1/8888888888, 
     "😻" : 1/5000000005,
+    "🌇" : 1/4300000000,
     "🥉" : 1/444444444, 
     "🪞" : 1/426800050,
     "🔩" : 1/420836000,
@@ -356,6 +345,7 @@ let foggyLayer = {
 let waterLayer = {
     "🐋" : 1/8000000000,
     "😻" : 1/5000000005,
+    "💫" : 1/2000000000,
     "🪩" : 1/999999999,
     "👿" : 1/750000000,
     "🌀" : 1/618000000,
@@ -393,6 +383,7 @@ let waterLayer = {
 let rockLayer = {
     "🏔️" : 1/5500000000,
     "😻" : 1/5000000005,
+    "🌈" : 1/2750000000,
     "🧊" : 1/583000000,
     "❄️" : 1/386500000,
     "⛄" : 1/183640000,
@@ -430,6 +421,7 @@ let rockLayer = {
 let radioactiveLayer = {
     "⚠️" : 1/6666666666,
     "😻" : 1/5000000005,
+    "🎆" : 1/3000000000,
     "🧀" : 1/618000001,
     "🌌" : 1/550000000,
     "🥀" : 1/538000000,
@@ -467,6 +459,7 @@ let radioactiveLayer = {
 let cactusLayer = {
     "🐪" : 1/7800000000,
     "😻" : 1/5000000005,
+    "🏵️" : 1/2600000000,
     "🪐" : 1/709000750,
     "💥" : 1/375000000,
     "⛄" : 1/183640000,
@@ -504,6 +497,7 @@ let cactusLayer = {
 let paperLayer = {
     "💵" : 1/8900000000,
     "😻" : 1/5000000005,
+    "🪅" : 1/3250000000,
     "👀" : 1/955200890,
     "🌟" : 1/257280000,
     "📝" : 1/200000000,
@@ -587,12 +581,6 @@ function createMine() {
 }
 function movePlayer(dir) {
     if (canMine) {
-        if (moveTimes.checkTimes()) {
-            saveAllData();
-            setTimeout(() => {
-            location.reload();
-            }, 250);
-        }
         switch (dir) {
             case "s":
                     mineBlock(curX, curY + 1, "mining", 1);
@@ -876,35 +864,43 @@ function generateBlock(luck, location) {
           break;
         }
         }
-        if (Math.round(1 / (probabilityTable[blockToGive])) > 5000000000) {
-            verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
-            hasLog = true;
-            spawnMessage(blockToGive, location);
-            playSound("zenith");
-        } else if (Math.round(1 / (probabilityTable[blockToGive])) > 750000000) {
-            verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
-            hasLog = true;
-            spawnMessage(blockToGive, location);
-            playSound("otherworldly");
-        } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 160000000){
-            verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
-            hasLog = true;
-            spawnMessage(blockToGive, location);
-            playSound("unfathomable");
-        } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 25000000) {
-            spawnMessage(blockToGive, location);
-            playSound("enigmatic");
-        } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 5000000) {
-            spawnMessage(blockToGive, location);
-            if (currentPickaxe < 8 && !(gears[3])) {
-                playSound("transcendent");
-            }
-        } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
-            spawnMessage(blockToGive, location);
-            if (currentPickaxe < 7) {
-                playSound("exotic");
+        if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
+            if (Math.round(1 / (probabilityTable[blockToGive])) > 5000000000) {
+                verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
+                hasLog = true;
+                spawnMessage(blockToGive, location);
+                playSound("zenith");
+            } else if(Math.round(1 / (probabilityTable[blockToGive])) > 1500000000) {
+                verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
+                hasLog = true;
+                spawnMessage(blockToGive, location);
+                playSound("magnificent");
+            } else if (Math.round(1 / (probabilityTable[blockToGive])) > 750000000) {
+                verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
+                hasLog = true;
+                spawnMessage(blockToGive, location);
+                playSound("otherworldly");
+            } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 160000000){
+                verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
+                hasLog = true;
+                spawnMessage(blockToGive, location);
+                playSound("unfathomable");
+            } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 25000000) {
+                spawnMessage(blockToGive, location);
+                playSound("enigmatic");
+            } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 5000000) {
+                spawnMessage(blockToGive, location);
+                if (currentPickaxe < 8 && !(gears[3])) {
+                    playSound("transcendent");
+                }
+            } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
+                spawnMessage(blockToGive, location);
+                if (currentPickaxe < 7) {
+                    playSound("exotic");
+                }
             }
         }
+        
         return [blockToGive, hasLog];
 }
 let variant = 1;
@@ -978,6 +974,11 @@ function playSound(type) {
             zenith.currentTime = 0;
             zenith.play();
             break;
+        case "magnificent":
+            magnificent.volume = 1;
+            magnificent.currentTime = 0;
+            magnificent.play();
+            break;
         }
   }
   let visionblur;
@@ -985,6 +986,7 @@ function playSound(type) {
   let ow;
   let ringing;
   let chill;
+  let magnificent;
   let keepRunningAudio;
 function loadContent() {
     allAudios = [];
@@ -996,6 +998,7 @@ function loadContent() {
     unfath = new Audio("Unfathsound.mp3");
     ow = new Audio("Otherworldly.mp3");
     zenith = new Audio("Zenithsound.mp3");
+    magnificent = new Audio("magnificent.mp3")
     allAudios.push(chill);
     allAudios.push(ringing);
     allAudios.push(visionblur);
@@ -1024,6 +1027,9 @@ function loadContent() {
         clearInterval(loopTimer);
         if (gears[2]) {
             miningSpeed = 15;
+        }
+        if (gears[6]) {
+            miningSpeed = 10;
         }
         loopTimer = setInterval(movePlayer, miningSpeed, direction);
         curDirection = direction;
@@ -1354,8 +1360,6 @@ function toggleMusic() {
         document.getElementById("musicButton").innerHTML = "Unmute Music";
     }
 }
-
-let moveTimes = new antiCheat();
 let verifiedOres = new secureLogs();
 
 
