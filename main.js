@@ -949,51 +949,59 @@ function resetMine() {
 }
 
 function playSound(type) {
-    let audio;
     switch (type) {
         case "exotic":
-            chill.volume = 1;
-            chill.currentTime = 0;
-            chill.play();
+            if (canPlay[0]) {
+                chill.currentTime = 0;
+                chill.play();
+            }
             break;
         case "transcendent":
-            ringing.volume = 0.6;
+            if (canPlay[1]) {
             ringing.currentTime = 0;
             ringing.play();
+            }
             break;
         case "enigmatic":
-            visionblur.volume = 0.6;
+            if (canPlay[2]) {
             visionblur.currentTime = 0;
             visionblur.play();
+            }
             break;
         case "unfathomable":
-            unfath.volume = 0.6;
+            if (canPlay[3]) { 
             unfath.currentTime = 0;
             unfath.play();
+            }
             break;
         case "otherworldly":
-            ow.volume = 0.6;
-            ow.currentTime = 0;
-            ow.play();
+            if (canPlay[4]) {
+                ow.currentTime = 0;
+                ow.play();
+            }
             break;
         case "zenith":
-            zenith.volume = 0.6;
+            if (canPlay[6]) {
             zenith.currentTime = 0;
             zenith.play();
+            }
             break;
         case "magnificent":
-            magnificent.volume = 1;
-            magnificent.currentTime = 0;
-            magnificent.play();
+            if (canPlay[5]) {
+                magnificent.currentTime = 0;
+                magnificent.play(); 
+            }
             break;
         }
   }
+  let chill;
+  let ringing;
   let visionblur;
   let unfath;
   let ow;
-  let ringing;
-  let chill;
   let magnificent;
+  let zenith;
+  let canPlay = [true, true, true, true, true, true, true]
   let keepRunningAudio;
 function loadContent() {
     allAudios = [];
@@ -1011,7 +1019,15 @@ function loadContent() {
     allAudios.push(visionblur);
     allAudios.push(unfath);
     allAudios.push(ow);
+    allAudios.push(magnificent);
     allAudios.push(zenith);
+    chill.volume = 1;
+    ringing.volume = 0.4;
+    visionblur.volume = 0.6;
+    unfath.volume = 0.6;
+    ow.volume = 0.6;
+    magnificent.volume = 1;
+    zenith.volume = 0.6;
     
     for (let i = 0; i < allAudios.length; i++) {
         allAudios[i].load();
@@ -1368,6 +1384,16 @@ function toggleMusic() {
         keepRunningAudio.pause();
         document.getElementById("musicButton").innerHTML = "Unmute Music";
     }
+}
+function changeCanPlay(num, button) {
+    let text = button.innerHTML;
+    text = text.substring(text.indexOf(" "));
+    if (canPlay[num]) {
+        button.innerHTML = "Unmute" + text;
+    } else {
+        button.innerHTML = "Mute" + text;
+    }
+    canPlay[num] = !(canPlay[num]);
 }
 let verifiedOres = new secureLogs();
 

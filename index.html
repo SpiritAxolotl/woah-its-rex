@@ -63,7 +63,7 @@
         </div>
         <div class="col-2 text-center"  style="border-style: solid; height:100%;">
             <button id="resetMine" onclick="resetMine()">Reset Mine</button>
-            <button onclick="showData()">Data</button>
+            <button onclick="showData()">Settings</button>
             <br><br>
             <p id="mineResetProgress"></p>
             <p id="blocksMined">0 Blocks Mined</p>
@@ -139,8 +139,17 @@
         <br>
         <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
         <div id="logHolder">
-
         </div>
+        <br>
+            <br>
+            <button onclick="changeCanPlay(0, this)">Mute Chills</button>
+            <button onclick="changeCanPlay(1, this)">Mute Ringings</button>
+            <button onclick="changeCanPlay(2, this)">Mute Blurs</button>
+            <button onclick="changeCanPlay(3, this)">Mute Unfaths</button>
+            <button onclick="changeCanPlay(4, this)">Mute Otherworldlies</button>
+            <button onclick="changeCanPlay(5, this)">Mute Metaversals</button>
+            <button onclick="changeCanPlay(6, this)">Mute Zeniths</button>
+            <p>im never doing html again after this</p>
     </div>
    
 </div>
