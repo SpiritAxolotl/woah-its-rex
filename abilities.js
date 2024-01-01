@@ -65,6 +65,12 @@ async function rollAbilities() {
                 updateActiveRecipe();
             }
             break;
+        case 10:
+            if (Math.round(Math.random() * 50) == 50) {
+                canMine = await(pickaxeAbility11(curX, curY, boost));
+                updateActiveRecipe();
+            }
+            break;
     }
 }
 
@@ -512,6 +518,39 @@ function pickaxeAbility10(x, y, boost) {
         reps++;
     }
     displayArea();
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
+function pickaxeAbility11(x, y, boost) {
+    let thisLuck = 17.5 * boost;
+    return new Promise((resolve) => {
+        for (let i = -3; i < 4; i++) {
+            for (let j = -3; j < 4; j++) {
+                if (!(i == 0 && j == 0) && Math.random() <= 0.5) {
+                    if (mine[y + 7 * i] != undefined) {
+                        for (let r = 7 * j; r < (7 * j + 7); r++) {
+                            for (let c = 7 * i; c < (7 * i + 7); c++) {
+                                if (mine[y + r] != undefined) {
+                                    if (mine[y + r][x + c] == "⬜") {
+                                        generated = generateBlock(thisLuck, [y + r, x + c]);
+                                        mine[y + r][x + c] = generated[0];
+                                        if (generated[1]) {
+                                            verifiedOres.verifyLog(r, c);
+                                        }
+                                    }
+                                    if (mine[y + r][x + c] != "⛏️") {
+                                        mineBlock(x + c, y + r, "ability", thisLuck);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        displayArea();
     setTimeout(() => {
         resolve(true);
     }, 5);

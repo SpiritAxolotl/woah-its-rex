@@ -91,7 +91,8 @@ let pickaxes = [
     ["grrrrr leave!!", false],
     [":pouting-cat:", false],
     [">:C", false],
-    ["IM HERE NOW TOO", false]
+    ["IM HERE NOW TOO", false],
+    ["mrrp meow meow!", false]
 ];
 let gears = [false, false, false, false, false, false, false];
 let currentPickaxe = 0;
@@ -133,8 +134,10 @@ let oreList = {
     "🔩" : [1/420836000, [0,0,0,0]], //ADDED
     "❄️" : [1/386500000, [0,0,0,0]], //ADDED
     "💥" : [1/375000000, [0,0,0,0]], //ADDED
+    "🏝️" : [1/275320000, [0,0,0,0]],
     "🌟" : [1/257280000, [0,0,0,0]], //ADDED
     "🌪️" : [1/247010000, [0,0,0,0]], //ADDED
+    "✨" : [1/240800000, [0,0,0,0]],
     "🌏" : [1/213200000, [0,0,0,0]], //ADDED
     "🧵" : [1/201061929, [0,0,0,0]], //ADDED
     "📝" : [1/200000000, [0,0,0,0]], //ADDED
@@ -232,12 +235,12 @@ let oreList = {
 //ALL LAYERS
 let dirtLayer = {
     "🌳" : 1/9250000000,
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "💐" : 1/3750000000,
     "🥗" : 1/800000000,
     "🌪️" : 1/247010000,
     "🌏" : 1/213200000,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "🌲" : 1/71000000,
     "🎃" : 1/69000000,
     "🎍" : 1/35000000,
@@ -270,12 +273,12 @@ let dirtLayer = {
 
 let brickLayer = {
     "🏰" : 1/8888888888, 
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "🌇" : 1/4300000000,
     "🥉" : 1/444444444, 
     "🪞" : 1/426800050,
     "🔩" : 1/420836000,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "🧲" : 1/43500000,
     "🪬" : 1/37000000,
     "🧨" : 1/31500000,
@@ -309,12 +312,12 @@ let brickLayer = {
 
 let foggyLayer = {
     "🚿" : 1/6000000000,
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "👁️" : 1/1920000000,
     "💸" : 1/754000000,
     "⌛" : 1/750000000,
     "🧵" : 1/201061929,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "🕯️" : 1/62500000,
     "🕋" : 1/55000000,
     "🎨" : 1/44000000,
@@ -347,12 +350,12 @@ let foggyLayer = {
 
 let waterLayer = {
     "🐋" : 1/8000000000,
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "💫" : 1/2000000000,
     "🪩" : 1/999999999,
     "👿" : 1/750000000,
     "🌀" : 1/618000000,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "🔱" : 1/70000000,
     "👑" : 1/65000000,
     "🐟" : 1/26000000,
@@ -385,10 +388,12 @@ let waterLayer = {
 
 let rockLayer = {
     "🏔️" : 1/5500000000,
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "🌈" : 1/2750000000,
     "🧊" : 1/583000000,
     "❄️" : 1/386500000,
+    "🏝️" : 1/275320000,
+    "✨" : 1/240800000,
     "⛄" : 1/183640000,
     "💎" : 1/170000000,
     "☄️" : 1/72500000,
@@ -423,12 +428,12 @@ let rockLayer = {
 
 let radioactiveLayer = {
     "⚠️" : 1/6666666666,
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "🎆" : 1/3000000000,
     "🧀" : 1/618000001,
     "🌌" : 1/550000000,
     "🥀" : 1/538000000,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "🎇" : 1/67500000,
     "🔳" : 1/46000000,
     "⏹️" : 1/29000000,
@@ -461,11 +466,11 @@ let radioactiveLayer = {
 
 let cactusLayer = {
     "🐪" : 1/7800000000,
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "🏵️" : 1/2600000000,
     "🪐" : 1/709000750,
     "💥" : 1/375000000,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "🔥" : 1/160000000,
     "🔆" : 1/75000000,
     "⭐" : 1/70600600,
@@ -499,12 +504,12 @@ let cactusLayer = {
 
 let paperLayer = {
     "💵" : 1/8900000000,
-    "😻" : 1/5000000005,
+    //"😻" : 1/5000000005,
     "🪅" : 1/3250000000,
     "👀" : 1/955200890,
     "🌟" : 1/257280000,
     "📝" : 1/200000000,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "⌚" : 1/52000000,
     "🗜️" : 1/42000000,
     "🏆" : 1/38000000,
@@ -540,7 +545,7 @@ let sillyLayer = {
     "✈️" : 1/9110000000,
     "🪢" : 1/8181818181, 
     "🫃" : 1/6600000000,
-    "⛄" : 1/183640000,
+    //"⛄" : 1/183640000,
     "🎂" : 1/1
 }
 
@@ -663,13 +668,50 @@ function mineBlock(x, y, cause, luck) {
     }
 }
 document.addEventListener('keydown', (event) => {
-    var name = event.key;
-    if (name == "a" || name == "s" || name == "d" || name == "w") {
+    let name = event.key;
+    let validInput = false;
+    name = name.toLowerCase();
+    switch(name) {
+        case "w":
+            validInput = true;
+            break;
+        case "a":
+            validInput = true;
+            break;
+        case "s":
+            validInput = true;
+            break;
+        case "d":
+            validInput = true;
+            break;
+        case "arrowup":
+            event.preventDefault();
+            validInput = true;
+            name = "w";
+            break;
+        case "arrowleft":
+            event.preventDefault();
+            validInput = true;
+            name = "a";
+            break;
+        case "arrowdown":
+            event.preventDefault();
+            validInput = true;
+            name = "s";
+            break;
+        case "arrowright":
+            event.preventDefault();
+            validInput = true;
+            name = "d";
+            break;
+        default:
+            console.log("wrong key!");
+            break;
+    }
+    if (validInput) {
         clearInterval(loopTimer);
         curDirection = "";
-        setTimeout(() => {
-            movePlayer(name);
-        }, 15);
+        movePlayer(name)
     }
   }, false);
 
@@ -1108,6 +1150,11 @@ let spawnOre;
 let loggedFinds = [];
 let latestSpawns = [];
 function spawnMessage(block, location) {
+    if (!(gears[3])) {
+        if (blocksRevealedThisReset > mineCapacity - 5000) {
+            mineCapacity += 5000;
+        }
+    }
     let output = "";
     let addToLatest = true;
     if (currentPickaxe == 5) {
@@ -1147,11 +1194,6 @@ function spawnMessage(block, location) {
             document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + "<br>X: " + (location[1] - 1000000000) + " | Y: " + -(location[0]);
         } else {
             document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString();
-        }
-    }
-    if (!(gears[3])) {
-        if (blocksRevealedThisReset > mineCapacity - 5000) {
-            mineCapacity += 5000;
         }
     }
     clearTimeout(spawnOre);
