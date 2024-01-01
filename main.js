@@ -2,15 +2,25 @@ class secureLogs {
     #spawnLogs;
     #verifiedLogs;
     #logsTimer;
+    #maxLuck = [1, 1.2, 1.35, 1.8, 2, 5, 10, 3, 4, 20, 17.5]
     constructor() {
         this.#spawnLogs = [];
         this.#verifiedLogs = [];
         this.#logsTimer = null;
     }
     createLog(r, c, intended, obj, luck) {
-        if (obj.stack.includes("main.js") && luck < 40) {
+        let luckModifier = 1;
+        if (gears[1]) {
+            luckModifier *= 1.1;
+        }
+        if (gears[5]) {
+            luckModifier *= 1.6;
+        }
+        let maxLuck = (this.#maxLuck[currentPickaxe] * luckModifier) + 1;
+        console.log(luck, maxLuck)
+        if (obj.stack.includes("main.js") && luck <= maxLuck) {
             if (mine[r][c] == "⬜") {
-                this.#spawnLogs.push([r, c, intended]);
+                this.#spawnLogs.push([r, c, intended, luck]);
             }
         } 
     }
@@ -18,8 +28,9 @@ class secureLogs {
         for (let i = 0; i < this.#spawnLogs.length; i++) {
             if (this.#spawnLogs[i][0] == r && this.#spawnLogs[i][1] == c) {
                 if (mine[r][c] == this.#spawnLogs[i][2]) {
+                    let num = this.#spawnLogs[i][3];
                     this.#spawnLogs.splice(i, 1);
-                    this.#verifiedLogs.push([mine[r][c], [r, c], new Date(), false, "Normal"]);
+                    this.#verifiedLogs.push([mine[r][c], [r, c], new Date(), false, "Normal", num]);
                     break;
                 }
             }
@@ -49,7 +60,11 @@ class secureLogs {
                 document.getElementById("logHolder").appendChild(element);
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
-                    output += this.#verifiedLogs[i][0] + this.#verifiedLogs[i][2] + this.#verifiedLogs[i][3] + ", " + this.#verifiedLogs[i][4] +"<br>";
+                    let multi = multis[names.indexOf(this.#verifiedLogs[i][4])];
+                    output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + ", " + this.#verifiedLogs[i][4] + ", "; 
+                    output += (this.#verifiedLogs[i][1][0] / 50) * (this.#verifiedLogs[i][1][1] / 50) + ", ";
+                    output += this.#verifiedLogs[i][1][0] + ", " + this.#verifiedLogs[i][1][1] + ", ";
+                    output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + Math.floor(this.#verifiedLogs[i][5]) + "<br>";
                 }
                 if (output == "") {
                     output = "none";

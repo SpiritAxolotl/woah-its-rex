@@ -66,7 +66,7 @@ async function rollAbilities() {
             }
             break;
         case 10:
-            if (Math.round(Math.random() * 50) == 50) {
+            if (Math.round(Math.random() * 50) == 25) {
                 canMine = await(pickaxeAbility11(curX, curY, boost));
                 updateActiveRecipe();
             }
