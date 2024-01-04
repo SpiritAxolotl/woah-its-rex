@@ -17,7 +17,6 @@ class secureLogs {
             luckModifier *= 1.6;
         }
         let maxLuck = (this.#maxLuck[currentPickaxe] * luckModifier) + 1;
-        console.log(luck, maxLuck)
         if (obj.stack.includes("main.js") && luck <= maxLuck) {
             if (mine[r][c] == "⬜") {
                 this.#spawnLogs.push([r, c, intended, luck]);
@@ -64,7 +63,7 @@ class secureLogs {
                     output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + ", " + this.#verifiedLogs[i][4] + ", "; 
                     output += (this.#verifiedLogs[i][1][0] / 50) * (this.#verifiedLogs[i][1][1] / 50) + ", ";
                     output += this.#verifiedLogs[i][1][0] + ", " + this.#verifiedLogs[i][1][1] + ", ";
-                    output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + Math.floor(this.#verifiedLogs[i][5]) + "<br>";
+                    output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + this.#verifiedLogs[i][5] + "." + Math.log10(this.#verifiedLogs[i][5]) + "<br>"; 
                 }
                 if (output == "") {
                     output = "none";
