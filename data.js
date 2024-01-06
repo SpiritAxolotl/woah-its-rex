@@ -1,4 +1,4 @@
-const debug = true;
+const debug = false;
 function saveAllData() {
     localStorage.setItem("game2DataChanges", true);
     let dataStorage = [

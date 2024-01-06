@@ -75,9 +75,9 @@ async function rollAbilities() {
 function pickaxeAbility1(x, y, size, customLuck, boost) {
     return new Promise((resolve) => {
     let generated;
-    let thisLuck = customLuck * boost;
+    const thisLuck  = customLuck * boost;
     canMine = false;
-    let constraints = getParams(size, size);
+    const constraints = getParams(size, size);
     for (let r = y - constraints[1]; r <= y + size; r++) {
         for (let c = x - constraints[0]; c <= x + size; c++) {
             if (mine[r][c] === "⬜") {
@@ -99,10 +99,10 @@ function pickaxeAbility1(x, y, size, customLuck, boost) {
 
 function pickaxeAbility2(x, y, boost) {
     return new Promise((resolve) => {
-    let thisLuck = 1.8 * boost;
-    let constraints = getParams(6, 6);
+    const thisLuck  = 1.8 * boost;
+    const constraints  = getParams(6, 6);
     canMine = false;
-    let origin = [y, x];
+    const origin = [y, x];
     for (let i = 0; i < constraints[0]; i++) {
         x--;
         mineBlock(x, y, "ability", thisLuck);
@@ -144,10 +144,10 @@ function pickaxeAbility2(x, y, boost) {
 
 function pickaxeAbility3(x, y, boost) {
     return new Promise((resolve) => {
-    let thisLuck = 1.2 * boost;
-    let constraints = getParams(6, 6, x, y);
+    const thisLuck  = 1.2 * boost;
+    const constraints  = getParams(6, 6, x, y);
     canMine = false;
-    let origin = [y, x];
+    const origin = [y, x];
     for (let i = 0; i < 6; i++) {
         x++;
         mineBlock(x, y, "ability", thisLuck);
@@ -175,10 +175,10 @@ function pickaxeAbility3(x, y, boost) {
 
 function pickaxeAbility4(x, y, boost) {
     return new Promise((resolve) => {
-    let thisLuck = 2 * boost;
-    let constraints = getParams(7, 7);
-    let area1 = Math.round((Math.random() * (-(constraints[0]) - 7)) + 7);
-    let area2 = Math.round((Math.random() * (-(constraints[1]) - 7)) + 7);
+    const thisLuck  = 2 * boost;
+    const constraints  = getParams(7, 7);
+    const area1 = Math.round((Math.random() * (-(constraints[0]) - 7)) + 7);
+    const area2 = Math.round((Math.random() * (-(constraints[1]) - 7)) + 7);
     pickaxeAbility1((x + area1), (y + area2), 4, thisLuck, 1);
     displayArea();
     setTimeout(() => {
@@ -190,10 +190,10 @@ function pickaxeAbility4(x, y, boost) {
 function pickaxeAbility5(x, y, boost) {
     return new Promise((resolve) => {
     let generated;
-    let thisLuck = 5 * boost;
-    let constraints = getParams(40, 40);
-    let area1 = Math.round((Math.random() * (-(constraints[0]) - 40)) + 40);
-    let area2 = Math.round((Math.random() * (-(constraints[1]) - 20)) + 40);
+    const thisLuck  = 5 * boost;
+    const constraints  = getParams(40, 40);
+    const area1 = Math.round((Math.random() * (-(constraints[0]) - 40)) + 40);
+    const area2 = Math.round((Math.random() * (-(constraints[1]) - 20)) + 40);
     let r = y + area2;
     let c = x + area1 + 1;
     for (let i = c; i < c + 5; i++) {
@@ -240,8 +240,8 @@ function pickaxeAbility5(x, y, boost) {
 function pickaxeAbility6(x, y, boost) {
     return new Promise((resolve) => {
     let generated;
-    let thisLuck = 10 * boost;
-    let constraints = getParams(9, 9);
+    const thisLuck  = 10 * boost;
+    const constraints  = getParams(9, 9);
     let dist = 9;
     for (let r = y + 6; r >= y - constraints[1]; r--) {
         for (let c = x - dist; c <= x + dist; c++) {
@@ -268,8 +268,8 @@ function pickaxeAbility6(x, y, boost) {
 function pickaxeAbility7(x, y, boost) {
     return new Promise((resolve) => {
     let generated;
-    let thisLuck = 10 * boost;
-    let constraints = getParams(4, 3);
+    const thisLuck  = 10 * boost;
+    const constraints = getParams(4, 3);
     let reps = 1;
     for (let r = y - constraints[1]; r < y; r++) {
         for (let c = x - constraints[0]; c < x + 5; c++) {
@@ -320,9 +320,9 @@ function pickaxeAbility8(x, y, reps, boost) {
             [],
             []
         ];
-        let thisLuck = 3 * boost;
-        let constraints = getParams(8, 8, x, y);
-        let origin = [y, x];
+        const thisLuck  = 3 * boost;
+        const constraints  = getParams(8, 8, x, y);
+        const origin = [y, x];
         for (let i = 0; i < 8; i++) {
             x++;
             mineBlock(x, y, "ability", thisLuck);
@@ -377,9 +377,9 @@ function pickaxeAbility9(x, y, reps, boost) {
             [],
             []
         ];
-        let thisLuck = 4 * boost;
-        let constraints = getParams(6, 6, x, y);
-        let origin = [y, x];
+        const thisLuck  = 4 * boost;
+        const constraints  = getParams(6, 6, x, y);
+        const origin = [y, x];
         for (let i = 0; i < constraints[0]; i++) {
             x--;
             mineBlock(x, y, "ability", thisLuck);
@@ -438,7 +438,7 @@ function pickaxeAbility9(x, y, reps, boost) {
 
 function pickaxeAbility10(x, y, boost) {
     return new Promise((resolve) => {
-    let thisLuck = 20 * boost;
+    const thisLuck  = 20 * boost;
     let generated;
     let skips = [
         [0, 4, 12, 16],
@@ -501,7 +501,7 @@ function pickaxeAbility10(x, y, boost) {
 }
 
 function pickaxeAbility11(x, y, boost) {
-    let thisLuck = 17.5 * boost;
+    const thisLuck = 17.5 * boost;
     return new Promise((resolve) => {
     for (let i = -3; i < 4; i++) {
         for (let j = -3; j < 4; j++) {
