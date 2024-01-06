@@ -1,4 +1,4 @@
-let pickaxeRecipes = [
+const pickaxeRecipes = [
     [
         //PICKAXE 1
         ["🟫", 10000],
@@ -122,8 +122,8 @@ let pickaxeRecipes = [
         ["🌻", 100],
         ["🍁", 100]
     ]
-]
-let gearRecipes = [
+],
+gearRecipes = [
     //ORE TRACKER
     [
         ["🪨", 300000],
@@ -197,7 +197,7 @@ let gearRecipes = [
         ["💥", 2],
         ["🪐", 1]
     ]
-]
+];
 
 let recipeElements = [[], []];
 function displayRecipe(num) {
