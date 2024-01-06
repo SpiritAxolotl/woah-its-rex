@@ -2,7 +2,7 @@ class secureLogs {
     #spawnLogs;
     #verifiedLogs;
     #logsTimer;
-    #maxLuck = [1, 1.2, 1.35, 1.8, 2, 5, 10, 3, 4, 20, 17.5]
+    #maxLuck = [1, 1.2, 1.35, 1.8, 2, 5, 10, 3, 4, 20, 17.5];
     constructor() {
         this.#spawnLogs = [];
         this.#verifiedLogs = [];
@@ -64,9 +64,8 @@ class secureLogs {
         } else {
             clearInterval(this.#logsTimer);
             this.#logsTimer = null;
-            if (document.getElementById("generatedLogs") !== null) {
+            if (document.getElementById("generatedLogs") !== null)
                 document.getElementById("generatedLogs").remove();
-            }
         }
     }
     #reloadLogs(output) {
@@ -1022,7 +1021,7 @@ let zenith;
 let canPlay = [true, true, true, true, true, true, true];
 let keepRunningAudio;
 function loadContent() {
-    allAudios = [];
+    let allAudios = [];
     keepRunningAudio = new Audio("ambiencebyx2corp.mp3")
     keepRunningAudio.load();
     chill = new Audio("spinechill.mp3");
