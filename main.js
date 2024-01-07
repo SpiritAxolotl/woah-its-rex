@@ -75,10 +75,7 @@ class secureLogs {
 let mine = [];
 let curX = 1000000000;
 let curY = 0;
-let furthestLeft = 1000000000
-let furthestRight = 1000000000;
 let currentDisplay = ""
-let facing = "down";
 let totalMined = 0;
 let blocksRevealedThisReset = 0;
 let mineCapacity = 40000; // in case this ever needs to be raised
@@ -624,8 +621,6 @@ function movePlayer(dir) {
                     prepareArea("a");
                     curX--;
                     mine[curY][curX] = "⛏️";
-                    if (curX < furthestLeft)
-                        furthestLeft = curX;
                     lastDirection = "a";
                 }
                 break;
@@ -635,8 +630,6 @@ function movePlayer(dir) {
                 prepareArea("d");
                 curX++;
                 mine[curY][curX] = "⛏️";
-                if (curX > furthestRight)
-                    furthestRight = curX;
                 lastDirection = "s";
                 break;
             default:
@@ -1154,7 +1147,7 @@ function spawnMessage(block, location) {
                 output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + (currentPickaxe === 5 || gears[0]?"<br>X: " + (location[1] - 1000000000) + " | Y: " + -(location[0]):"");
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + (currentPickaxe === 5 || gears[0]?"<br>X: " + (location[1] - 1000000000) + "<br>Y: " + -(location[0]):"");
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
@@ -1300,7 +1293,7 @@ let lastLayerChange = 6000;
 let currentLayer = dirtLayer;
 function setLayer(y) {
     let tempNum = y;
-    if (tempNum <= 14000) {
+    if (tempNum < 16000) {
     tempNum = Math.floor(tempNum / 2000);
     currentLayer = allLayers[tempNum];
     } else if (y > (lastLayerChange + 10000)) {
