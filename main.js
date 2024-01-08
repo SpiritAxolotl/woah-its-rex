@@ -80,7 +80,7 @@ let blocksRevealedThisReset = 0;
 let mineCapacity = 40000; // in case this ever needs to be raised
 let canMine = false;
 let lastDirection = "";
-const pickaxes = [
+let pickaxes = [
     ["is anyone gonna read these lol", true],
     ["hi!!! hii!!", false],
     ["wait no get out of here", false],
