@@ -1017,11 +1017,11 @@ function loadContent() {
     keepRunningAudio = new Audio("ambiencebyx2corp.mp3")
     keepRunningAudio.load();
     chill = new Audio("spinechill.mp3");
-    ringing = new Audio("transcendent.mp3");
+    ringing = new Audio("Transcendent.mp3");
     visionblur = new Audio("visionblur.mp3");
-    unfath = new Audio("unfathsound.mp3");
-    ow = new Audio("otherworldly.mp3");
-    zenith = new Audio("zenithsound.mp3");
+    unfath = new Audio("Unfathsound.mp3");
+    ow = new Audio("Otherworldly.mp3");
+    zenith = new Audio("Zenithsound.mp3");
     magnificent = new Audio("magnificent.mp3")
     allAudios.push(chill);
     allAudios.push(ringing);
@@ -1278,8 +1278,7 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     if (latestFinds.length > 10)
         latestFinds.splice(0, 1);
     for (let i = latestFinds.length - 1; i >= 0; i--) {
-        /*if (latestFinds[i][3] !== "Normal")
-            output += latestFinds[i][3] + " ";*/
+        output += latestFinds[i][3] + " ";
         if (latestFinds[i][5])
             output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | FROM RESET<br>"
         else
@@ -1349,7 +1348,7 @@ function switchDistance() {
         y = 2000 * distanceMulti + 1000;
         distanceMulti++;
     } else {
-        y = 0;
+        y = 1000;
         distanceMulti = 1;
     }
     document.getElementById("meterDisplay").innerHTML = (y) + "m";
