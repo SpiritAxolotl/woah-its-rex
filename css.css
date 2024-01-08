@@ -1,70 +1,288 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
 .emoji {
-    font-family: 'Noto Color Emoji', sans-serif;
-  }
-
-
-.inventoryDisplay {
-    border-style: solid;
-    border-color: black;
-    font-size:1vw;
-    margin:5px;
-    height:10%;
-    overflow-y: scroll;
-    text-align: center;
+  font-family: 'Noto Color Emoji', sans-serif;
 }
+
+#mainContent {
+  display: none;
+}
+
+#inventoryDisplay {
+  overflow-y: scroll;
+  min-height: 75vh;
+  max-height: 75vh;
+  border-style: solid;
+  border-color: rgb(49, 49, 49);
+  border-left: none;
+  border-right: none;
+  margin-top: 0.35em;
+}
+
+#inventoryDisplay > * {
+  font-size: 1vw;
+  height: 10%;
+  text-align: center;
+}
+
 .oreDisplay {
-    margin:0.1vh;
+  margin: 0;
 }
+
 .movementButton {
-    width:6vw;
+  width: 6vw;
 }
+
 .craftingAmountsDisplay {
-    font-size: 1vw;
-    border-style: solid;
+  font-size: 1vw;
 }
+#displayRecipe > div > p {
+  margin-bottom: 0.1rem;
+}
+
 .latestDisplay {
-    text-align: left;
-    border-style: solid;
-    float: left;
-    width: 50%;
-    font-size: 1vw;
+  text-align: left !important;
+  border-style: solid;
+  border-color: rgb(149, 149, 149);
+  border-radius: 1px;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  float: left;
+  width: 50%;
+  font-size: 1vw;
+  min-height: 15em;
+  max-height: 15em;
 }
+
+.gearCrafts {
+  display: none;
+}
+
+.pickaxeCrafts {
+  display: block;
+}
+
 .inventoryButtons {
-    border-style: solid;
-    border-color: black;
-    font-size:1vw;
-    width:100%;
+  border-style: solid;
+  border-color: black;
+  font-size: 1vw;
+  width: 100%;
 }
-#credits {
-    height:100%;
-    width: 50%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+#mineResetProgress {
+  font-size: 1vw;
+  padding-top: 0.75em;
 }
-#playButton {
-    height:100%;
-    width: 100%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.col-5 {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  position: absolute;
 }
+
 #dataExport {
-    height:100%;
-    width: 100%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  padding: 3em;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: none;
+}
+
+#dataText {
+  width: 50vw;
+}
+
+body {
+  overscroll-behavior: none;
+  background-color: black;
+  max-height: 100%;
+  font-family: 'Courier';
+}
+
+.row {
+  display: flex;
+  height: 100%;
+  /*padding-top: 0.5em;*/
+}
+
+.row > * > *:first-child {
+  margin-top: 0.25em;
+}
+
+.row * {
+  text-align: center;
+}
+
+.row > div {
+  overflow-y: scroll;
 }
 
 #blockDisplay {
-    font-size: 2vw;
+  padding: 0.5em;
+  margin: 0;
+  line-height: 1.8vw;
+  font-size: 1.8vw;
+  user-select: none;
+  text-wrap: nowrap;
+  text-align: center;
 }
-#resetMine {
-    width:50%
+
+#spawnMessage {
+  font-size: 30px;
+}
+
+p {
+  color: white;
+}
+
+.mobile {
+  padding-bottom: 0.25em;
+  display: block;
+}
+
+.mobile > button {
+  width: 6vw;
+  text-wrap: nowrap;
+}
+
+#crafting, #craftingClick {
+  margin-bottom: 0.5rem;
+}
+
+#craftingClick > div:first-of-type {
+  margin-bottom: 0.25rem;
+}
+
+/*.col-3 > br {
+  display: none;
+}*/
+
+button, .col-3 > div > button {
+  font-size: 1vw;
+  background-color: #494949;
+  border-style: solid;
+  border-color: white;
+  border-width: 1px;
+  border-radius: 2px;
+  color: white;
+  font-family: 'Arial';
+  text-align: center;
+}
+
+#musicButton {
+  width: auto;
+}
+
+.slidecontainer {
+  display: inherit;
+  padding: 0.5em;
+}
+
+.slidecontainer > input {
+  width: 100%;
+}
+
+.col-7 {
+  height: 100vh;
+  max-height: 100vh;
+  width: 50%;
+}
+
+.col-2 {
+  width: 25%;
+  height: 100vh;
+  max-height: 100vh;
+  /*overflow-x: none;*/
+  border-style: solid;
+  border-color: rgb(49, 49, 49);
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.col-3 {
+  width: 25%;
+  height: 100%;
+  max-height: 100vh;
+}
+
+#musicStuff > label {
+  padding: 0;
+  padding-bottom: 0.5em;
+}
+
+#musicStuff > p {
+  text-wrap: nowrap;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+
+#discord {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  /*border: 2px dashed;*/
+}
+
+#discord > img {
+  width: 3em;
+  height: 3em;
+  aspect-ratio: 1;
+}
+
+#discord > p {
+  width: 100%;
+  font-size: 100%;
+  margin: 0;
+  text-wrap: nowrap;
+}
+
+/*.col-3 > p:first-of-type {
+  margin-bottom: 0.5rem;
+}*/
+
+#displayRecipe > div {
+  border: none;
+}
+
+#latestSpawns, #latestFinds {
+  height: 100%;
+  overflow-y: scroll;
+  font-size: 0.8vw;
+}
+
+/*.col-3 > a {
+  display: none;
+}
+
+.col-3 > p {
+  display: none;
+}
+
+.col-3 > hr {
+  display: none;
+}
+
+.col-2 > hr {
+  display: none;
+}*/
+
+.container-fluid {
+  height: 100%;
+}
+
+#noscript {
+  user-select: none;
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10vw;
+  text-align: center;
+  text-wrap: wrap;
 }
