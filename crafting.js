@@ -217,6 +217,10 @@ gearRecipes = [
 
 let recipeElements = [[], []];
 function displayRecipe(num) {
+    let craftableChildren = document.getElementById("craftableDescriptions").children;
+    for (let i = 0; i < craftableChildren.length; i++) {
+        craftableChildren[i].style.display = "none";
+    }
     if (document.getElementById("pickaxeCrafts").style.display === "block") {
         let parent = document.getElementById("displayRecipe")
         while (parent.firstChild)
@@ -233,6 +237,7 @@ function displayRecipe(num) {
         else if (pickaxes[num + 1][1])
             temp.innerHTML = "Equip!";
         updateActiveRecipe();
+        document.getElementById("pickaxe" + num + "Description").style.display = "block";
     } else {
         let parent = document.getElementById("displayRecipe")
         while (parent.firstChild)
@@ -242,6 +247,7 @@ function displayRecipe(num) {
         parent.appendChild(recipeElements[1][num]);
         recipeElements[1][num].style.display = "block";
         updateActiveRecipe();
+        document.getElementById("gear" + num + "Description").style.display = "block";
     }
 }
 

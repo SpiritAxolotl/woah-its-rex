@@ -53,7 +53,9 @@
   min-height: 15em;
   max-height: 15em;
 }
-
+.itemDescription {
+  font-size:1vw;
+}
 .gearCrafts {
   display: none;
 }
@@ -270,7 +272,12 @@ button, .col-3 > div > button {
 .container-fluid {
   height: 100%;
 }
-
+#masterVolume {
+  text-align: center;
+  border-style: solid;
+  border-color: white;
+  max-width: 10vw;
+}
 #noscript {
   user-select: none;
   position: absolute;
