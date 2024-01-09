@@ -69,6 +69,7 @@
             <div>
                 <button id="resetMine" onclick="resetMine()">Reset Mine</button>
                 <button id="settings" onclick="showData()">Settings</button>
+                <button onclick="changeCanDisplay(this)">Disable Display</button>
             </div>
             <p id="mineResetProgress"></p>
             <p id="blocksMined">0 Blocks Mined</p>
@@ -96,10 +97,14 @@
                     <button onclick="displayRecipe(0)">Ore Tracker</button>
                     <button onclick="displayRecipe(1)">Real Candilium</button>
                     <button onclick="displayRecipe(2)">Real Vitriol</button>
+                    <button onclick="displayRecipe(7)">Energy Siphoner</button>
                     <button onclick="displayRecipe(3)">Infinity Collector</button>
+                    <button onclick="displayRecipe(8)">Sugar Rush</button>
                     <button onclick="displayRecipe(4)">Layer Materializer</button>
                     <button onclick="displayRecipe(5)">Fortune III Book</button>
                     <button onclick="displayRecipe(6)">Haste II Beacon</button>
+                    
+                    
                 </div>
             </div>
             <div id="displayRecipe"></div>
