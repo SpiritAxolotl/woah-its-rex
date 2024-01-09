@@ -8,7 +8,7 @@ function saveAllData() {
         [],
         //STATS, 2
         [],
-        //UPDATES, 3
+        //SETTINGS, 3
         [],
         //GEARS, 4
         []
@@ -18,6 +18,7 @@ function saveAllData() {
         dataStorage[0].push([propertyName, [oreList[propertyName][1]]]);
     dataStorage[1].push([pickaxes, currentPickaxe]);
     dataStorage[2].push(totalMined)
+    dataStorage[3].push(canPlay, document.getElementById("musicVolume").value, document.getElementById("spawnVolume").value, document.getElementById("musicButton").innerHTML);
     dataStorage[4].push(gears);
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
@@ -42,6 +43,29 @@ function loadAllData() {
                     if (oreList[propertyName][1][i - 1] > 0)
                         document.getElementById(propertyName + i).style.display = "block";
                 }
+            }
+        }
+        if (data[3][0] != undefined) {
+            for (let i = 0; i < data[3][0].length; i++) {
+                if (data[3][0][i] === false) {
+                    document.getElementById("mute" + i).click();
+                }
+            }
+        }
+        if (data[3][1] != undefined) {
+            document.getElementById("musicVolume").value = data[3][1];
+            changeMusicVolume(data[3][1]);
+        }
+        if (data[3][2] != undefined) {
+            document.getElementById("spawnVolume").value = data[3][1];
+            changeAllVolume(data[3][2]);
+        }
+        let canContinue = false;
+        if (data[3][3] != undefined) {
+            if (data[3][3] === "Unmute Music") {
+                setTimeout(() => {
+                    document.getElementById("musicButton").click();
+                }, 100);
             }
         }
         if (data[4] !== undefined || data[4] !== null) {
