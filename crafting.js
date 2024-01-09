@@ -196,6 +196,22 @@ gearRecipes = [
         ["⭐", 15],
         ["💥", 2],
         ["🪐", 1]
+    ],
+    //ENERGY SIPHONER
+    [
+        ["🌫️", 3000000],
+        ["🕋", 1],
+        ["🎨", 2],
+        ["🎴", 5],
+        ["🎭", 10]
+    ],
+    //SUGAR RUSH
+    [
+        ["☢️", 4000000],
+        ["🔳", 5],
+        ["⏹️", 3],
+        ["⚗️", 20],
+        ["🧪", 15]
     ]
 ];
 
@@ -239,7 +255,7 @@ function createPickaxeRecipes() {
             let element = document.createElement('p');
             element.id = (pickaxeRecipes[i][j][0] + ("pickaxeRecipe" + (i+1) + "Display"));
             element.innerHTML = pickaxeRecipes[i][j][0] + " " + oreList[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
-            if (oreList[pickaxeRecipes[i][i][0]][1][0] >= pickaxeRecipes[i][j][1])
+            if (oreList[pickaxeRecipes[i][j][0]][1][0] >= pickaxeRecipes[i][j][1])
                 element.style.color = "green";
             else
                 element.style.color = "red";
@@ -266,7 +282,7 @@ function createGearRecipes() {
             let element = document.createElement('p');
             element.id = (gearRecipes[i][j][0] + ("gearRecipe" + (i+1) + "Display"));
             element.innerHTML = gearRecipes[i][j][0] + " " + oreList[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
-            if (oreList[gearRecipes[i][i][0]][1][0] >= gearRecipes[i][j][1]) {
+            if (oreList[gearRecipes[i][j][0]][1][0] >= gearRecipes[i][j][1]) {
                 element.style.color = "green";
             } else {
                 element.style.color = "red";

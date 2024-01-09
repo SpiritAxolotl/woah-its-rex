@@ -55,9 +55,9 @@ class secureLogs {
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
                     let multi = multis[names.indexOf(this.#verifiedLogs[i][4])];
-                    output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + ", " + this.#verifiedLogs[i][4] + ", ";
+                    output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + " " + this.#verifiedLogs[i][4] + ", ";
                     output += this.#verifiedLogs[i][1][0] + ", ";
-                    output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + this.#verifiedLogs[i][5] + "." + Math.log10(this.#verifiedLogs[i][5] * this.#verifiedLogs[i][1][0]) + "<br>";
+                    output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + Math.log10(this.#verifiedLogs[i][5] * this.#verifiedLogs[i][1][0]) + "." + Math.log10(this.#verifiedLogs[i][5] * this.#verifiedLogs[i][1][0]) + "<br>";
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output!==""?output:"none");
         } else {
@@ -93,10 +93,22 @@ let pickaxes = [
     ["IM HERE NOW TOO", false],
     ["mrrp meow meow!", false]
 ];
-let gears = [false, false, false, false, false, false, false];
+let gears = [
+    false, //ORE TRACKER 0
+    false, //REAL CANDILIUM 1
+    false, //REAL VITRIOL 2
+    false, //INFINITY COLLECTOR 3
+    false, //LAYER MATERIALIZER 4
+    false, //FORTUNE III BOOK 5
+    false, //HASTE II BEACON 6
+    false, //ENERGY SIPHONER 7
+    false, //SUGAR RUSH 8
+];
 let currentPickaxe = 0;
 let oreList = {
     "🐱": [1/Infinity, [0,0,0,0]],
+    "🧌": [1/696969696969, [0,0,0,0]],
+    "♾️": [1/75000000000, [0,0,0,0]],
     "💅": [1/11201200200, [0,0,0,0]],
     "🌳": [1/9250000000, [0,0,0,0]],
     "✈️": [1/9110000000, [0,0,0,0]],
@@ -543,6 +555,7 @@ paperLayer = {
 
 sillyLayer = {
     "🧌": 1/696969696969,
+    "♾️": 1/75000000000,
     "💅": 1/11201200200,
     "✈️": 1/9110000000,
     "🪢": 1/8181818181,
@@ -704,6 +717,10 @@ document.addEventListener('keydown', (event) => {
         clearInterval(loopTimer);
         curDirection = "";
         movePlayer(name);
+        if (ability1Active) {
+            clearTimeout(ability1Timeout);
+            ability1Active = false;
+        }
     }
 }, false);
 
@@ -757,16 +774,30 @@ function prepareArea(facing) {
             break;
     }
 }
-
-function displayArea() {
-    let output ="";
-    let constraints = getParams(9, 9);
-    for (let r = curY - constraints[1]; r <= curY + 9 + (9-constraints[1]); r++) {
-        for (let c = curX - constraints[0]; c <= curX + 9 + (9-constraints[0]); c++)
-            output += mine[r][c];
-        output += "<br>";
+let canDisplay = true;
+function changeCanDisplay(button) {
+    if (button.innerHTML.includes("Disable")) {
+        button.innerHTML = "Enable Display";
+        canDisplay = false;
+    } else {
+        button.innerHTML = "Disable Display";
+        canDisplay = true;
+        displayArea();
     }
-    document.getElementById("blockDisplay").innerHTML = output;
+}
+function displayArea() {
+    if (canDisplay) {
+        let output ="";
+        let constraints = getParams(9, 9);
+        for (let r = curY - constraints[1]; r <= curY + 9 + (9-constraints[1]); r++) {
+            for (let c = curX - constraints[0]; c <= curX + 9 + (9-constraints[0]); c++)
+                output += mine[r][c];
+            output += "<br>";
+        }
+        document.getElementById("blockDisplay").innerHTML = output;
+    } else {
+        document.getElementById("blockDisplay").innerHTML = "DISABLED";
+    }
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
     document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: " + (-curY);
@@ -825,10 +856,15 @@ function checkAllAround(x, y, luck) {
         }
     }
     if (blocksRevealedThisReset >= mineCapacity) {
+        
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
         setTimeout(() => {
+            if (ability1Active) {
+                clearTimeout(ability1Timeout);
+                ability1Active = false;
+            }
             mineReset();
         }, 250);
     }
@@ -857,6 +893,8 @@ function giveBlock(type, x, y, fromReset) {
         if (Math.round(1 / (oreList[type][0])) >= 160000000)
             verifiedOres.verifyFind(mine[y][x], y, x, names[inv - 1]);
         if (Math.round(1/oreList[type][0]) >= 750000) {
+            if (gears[7])
+                gearAbility1();
             if (currentPickaxe >= 7) {
                 if (Math.round(1/oreList[type][0]) > 2000000)
                     logFind(type, x, y, namesemojis[inv - 1], totalMined, fromReset);
@@ -884,6 +922,9 @@ function generateBlock(luck, location) {
     }
     if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
         if (Math.round(1 / (probabilityTable[blockToGive])) > 5000000000) {
+            if (blockToGive === "🧌") {
+                blockToGive = "♾️"
+            }
             verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
             hasLog = true;
             spawnMessage(blockToGive, location);
@@ -1049,16 +1090,24 @@ function loadContent() {
 let loopTimer = null;
 let curDirection = "";
 let miningSpeed = 25;
-function goDirection(direction) {
+function goDirection(direction, speed) {
     if (curDirection === direction) {
         clearInterval(loopTimer);
-        curDirection = ""
+        curDirection = "";
+        if (ability1Active) {
+            clearTimeout(ability1Timeout);
+            ability1Active = false;
+        }
     } else {
         clearInterval(loopTimer);
-        if (gears[2])
+        if (speed === undefined) {
+            if (gears[2])
             miningSpeed = 15;
         if (gears[6])
             miningSpeed = 10;
+        } else {
+            miningSpeed = speed;
+        }
         loopTimer = setInterval(movePlayer, miningSpeed, direction);
         curDirection = direction;
     }
@@ -1165,8 +1214,9 @@ function moveOne(dir, button) {
         button.disabled = false;
     }, 100);
 }
-
+let resetting = false;
 async function mineReset() {
+    resetting = true;
     mineCapacity = 40000;
     const temp = curDirection;
     curDirection = "";
@@ -1177,6 +1227,7 @@ async function mineReset() {
     mine[curY][curX] = "⛏️";
     displayArea();
     goDirection(temp);
+    resetting = false;
 }
 
 function collectOres(temp) {
