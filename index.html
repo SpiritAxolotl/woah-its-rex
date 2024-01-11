@@ -100,15 +100,16 @@
                     <button onclick="displayRecipe(9)">Pickaxe 10</button>
                 </div>
                 <div id="gearCrafts" style="display:none;">
-                    <button onclick="displayRecipe(0)">Ore Tracker</button>
-                    <button onclick="displayRecipe(1)">Real Candilium</button>
-                    <button onclick="displayRecipe(2)">Real Vitriol</button>
-                    <button onclick="displayRecipe(7)">Energy Siphoner</button>
-                    <button onclick="displayRecipe(8)">Sugar Rush</button>
-                    <button onclick="displayRecipe(3)">Infinity Collector</button>
-                    <button onclick="displayRecipe(4)">Layer Materializer</button>
-                    <button onclick="displayRecipe(5)">Fortune III Book</button>
-                    <button onclick="displayRecipe(6)">Haste II Beacon</button>
+                    <button onclick="displayRecipe(0)">Ore Tracker</button><br>
+                    <button onclick="displayRecipe(1)">Real Candilium</button><br>
+                    <button onclick="displayRecipe(2)">Real Vitriol</button><br>
+                    <button onclick="displayRecipe(7)">Energy Siphoner</button><br>
+                    <button onclick="displayRecipe(8)">Sugar Rush</button><br>
+                    <button onclick="displayRecipe(3)">Infinity Collector</button><br>
+                    <button onclick="displayRecipe(4)">Layer Materializer</button><br>
+                    <button onclick="displayRecipe(5)">Fortune III Book</button><br>
+                    <button onclick="displayRecipe(6)">Haste II Beacon</button><br>
+                    <button onclick="displayRecipe(9)" id="sillyRecipe" style="display: none;">SILLYYYY</button>
                     
                     
                 </div>
@@ -124,10 +125,10 @@
                 <p class="itemDescription" id="pickaxe1Description" style="display: none;">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
                 <p class="itemDescription" id="pickaxe2Description" style="display: none;">Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.</p>
                 <p class="itemDescription" id="pickaxe3Description" style="display: none;">Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.</p>
-                <p class="itemDescription" id="pickaxe4Description" style="display: none;">Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.</p>
+                <p class="itemDescription" id="pickaxe4Description" style="display: none;">Mines a circle randomly around the player.<br>Tracks ores.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.</p>
                 <p class="itemDescription" id="pickaxe5Description" style="display: none;">Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.</p>
-                <p class="itemDescription" id="pickaxe6Description" style="display: none;">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
-                <p class="itemDescription" id="pickaxe7Description" style="display: none;">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
+                <p class="itemDescription" id="pickaxe6Description" style="display: none;">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Disables Chills.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
+                <p class="itemDescription" id="pickaxe7Description" style="display: none;">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Disables Ringings.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
                 <p class="itemDescription" id="pickaxe8Description" style="display: none;">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck. </p>
                 <p class="itemDescription" id="pickaxe9Description" style="display: none;">Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.</p>
                 <!--
@@ -137,12 +138,13 @@
                 <p class="itemDescription" id="gear0Description" style="display: none;">Tracks the location of new ore spawns.</p>
                 <p class="itemDescription" id="gear1Description" style="display: none;">Boosts ability luck by 1.1x.</p>
                 <p class="itemDescription" id="gear2Description" style="display: none;">Sets mining speed delay to 15ms from 25ms.</p>
-                <p class="itemDescription" id="gear7Description" style="display: none;">Boosts mining speed slightly upon mining any exotic+ ore (1/750k+).</p>
-                <p class="itemDescription" id="gear3Description" style="display: none;">Mines all rare ores in the mine upon mine reset.</p>
+                <p class="itemDescription" id="gear7Description" style="display: none;">Mining speed -3ms for 5 seconds upon mining any exotic+ ore (1/750k+).</p>
+                <p class="itemDescription" id="gear3Description" style="display: none;">Mines all rare ores in the mine upon mine reset.<br>Disables Ringings.</p>
                 <p class="itemDescription" id="gear8Description" style="display: none;">Increases ability proc rates by 20%.</p>
                 <p class="itemDescription" id="gear4Description" style="display: none;">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
                 <p class="itemDescription" id="gear5Description" style="display: none;">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
                 <p class="itemDescription" id="gear6Description" style="display: none;">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
+                <p class="itemDescription" id="gear9Description" style="display: none;">When crafted, clicking on the Owned! button will set the current layer to the SILLY LAYER!!! :P<br>Moving up or down or teleporting will reset the layer back to its original layer.</p>
             </div>
             
         </div>

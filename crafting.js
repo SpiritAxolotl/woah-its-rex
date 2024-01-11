@@ -212,7 +212,13 @@ gearRecipes = [
         ["⏹️", 3],
         ["⚗️", 20],
         ["🧪", 15]
-    ]
+    ],
+    //SILLY TP
+    [
+        ["🎂", 1],
+        ["🔮", 1],
+        ["🪄", 1]
+    ],
 ];
 
 let recipeElements = [[], []];
@@ -381,11 +387,12 @@ function craftGear(num) {
             }
             let temp = document.getElementById("gearRecipe" + num).children;
             temp[temp.length - 1].innerHTML = "Owned!";
-            console.log(temp);
             updateActiveRecipe();
             gears[num - 1] = true;
         }
     }
+    if (num === 10)
+        gearAbility2();
 }
 
 function showPickaxes() {
