@@ -30,6 +30,7 @@ let gears = [
     false, //HASTE II BEACON 6
     false, //ENERGY SIPHONER 7
     false, //SUGAR RUSH 8
+    false, //SILLY TP
 ];
 let currentPickaxe = 0;
 
@@ -102,51 +103,51 @@ function loadContent() {
 //MOVEMENT
 
 function movePlayer(dir) {
-    if (canMine) {
-        switch (dir) {
-            case "s":
-                mineBlock(curX, curY + 1, "mining", 1);
-                mine[curY][curX] = "⚪";
-                prepareArea("s");
-                curY++;
-                mine[curY][curX] = "⛏️";
-                setLayer(curY);
-                lastDirection = "s";
-                break;
-            case "w":
-                if (curY > 0) {
-                    mineBlock(curX, curY - 1, "mining", 1);
+        if (canMine) {
+            switch (dir) {
+                case "s":
+                    mineBlock(curX, curY + 1, "mining", 1);
                     mine[curY][curX] = "⚪";
-                    prepareArea("w");
-                    curY--;
+                    prepareArea("s");
+                    curY++;
                     mine[curY][curX] = "⛏️";
-                    lastDirection = "w";
                     setLayer(curY);
-                }
-                break;
-            case "a":
-                if (curX > 0) {
-                    mineBlock(curX - 1, curY, "mining", 1);
+                    lastDirection = "s";
+                    break;
+                case "w":
+                    if (curY > 0) {
+                        mineBlock(curX, curY - 1, "mining", 1);
+                        mine[curY][curX] = "⚪";
+                        prepareArea("w");
+                        curY--;
+                        mine[curY][curX] = "⛏️";
+                        lastDirection = "w";
+                        setLayer(curY);
+                    }
+                    break;
+                case "a":
+                    if (curX > 0) {
+                        mineBlock(curX - 1, curY, "mining", 1);
+                        mine[curY][curX] = "⚪";
+                        prepareArea("a");
+                        curX--;
+                        mine[curY][curX] = "⛏️";
+                        lastDirection = "a";
+                    }
+                    break;
+                case "d":
+                    mineBlock(curX + 1, curY, "mining", 1);
                     mine[curY][curX] = "⚪";
-                    prepareArea("a");
-                    curX--;
+                    prepareArea("d");
+                    curX++;
                     mine[curY][curX] = "⛏️";
-                    lastDirection = "a";
-                }
-                break;
-            case "d":
-                mineBlock(curX + 1, curY, "mining", 1);
-                mine[curY][curX] = "⚪";
-                prepareArea("d");
-                curX++;
-                mine[curY][curX] = "⛏️";
-                lastDirection = "s";
-                break;
-            default:
-                console.log("wrong key!!");
+                    lastDirection = "s";
+                    break;
+                default:
+                    console.log("wrong key!!");
+            }
+            displayArea();
         }
-        displayArea();
-    }
 }
 
 document.addEventListener('keydown', (event) => {
@@ -348,8 +349,8 @@ let spawnOre;
 let loggedFinds = [];
 let latestSpawns = [];
 function spawnMessage(block, location) {
-    if (!(gears[3]) && blocksRevealedThisReset > mineCapacity - 5000)
-        mineCapacity += 5000;
+    if (!(gears[3]) && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
+        mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
     if (currentPickaxe === 5)

@@ -72,6 +72,8 @@ function loadAllData() {
             for (let i = 0; i < data[4][0].length; i++)
                 gears[i] = data[4][0][i];
         }
+        if (oreList["🎂"][1][0] > 0 || gears[9])
+            document.getElementById("sillyRecipe").style.display = "block";
         localStorage.removeItem("dataBackup");
         warnBeforeClosing();
         return true;
