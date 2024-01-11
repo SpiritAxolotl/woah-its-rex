@@ -190,6 +190,7 @@ function generateBlock(luck, location) {
     if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
         if (Math.round(1 / (probabilityTable[blockToGive])) > 5000000000) {
             if (blockToGive === "🧌") {
+                localStorage.setItem("nyehehehehehe", true);
                 blockToGive = "♾️"
             }
             verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);

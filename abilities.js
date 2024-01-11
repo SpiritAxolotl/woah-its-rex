@@ -95,6 +95,11 @@ function gearAbility1() {
     }
 }
 
+function gearAbility2() {
+    if (gears[9]) {
+        currentLayer = sillyLayer;
+    }
+}
 function pickaxeAbility1(x, y, size, customLuck, boost) {
     return new Promise((resolve) => {
     let generated;

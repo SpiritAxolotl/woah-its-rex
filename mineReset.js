@@ -40,7 +40,7 @@ function collectOres(temp) {
         else if (lastDirection !== "")
             direction = lastDirection;
         if (direction === "s") {
-            let constraints = getParams(30, 250);
+            let constraints = getParams(30, 500);
             for (let r = curY - constraints[1]; r < curY + 30; r++) {
                 for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] !== undefined) {
@@ -53,7 +53,7 @@ function collectOres(temp) {
             }
         } else if (direction === "w") {
             let constraints = getParams(30, 30);
-            for (let r = curY - constraints[1]; r < curY + 250; r++) {
+            for (let r = curY - constraints[1]; r < curY + 500; r++) {
                 for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] !== undefined) {
                         if (oreList[mine[r][c]] !== undefined) {
@@ -66,7 +66,7 @@ function collectOres(temp) {
         } else if (direction === "a") {
             let constraints = getParams(30, 30);
             for (let r = curY - constraints[1]; r < curY + 30; r++) {
-                for (let c = curX - constraints[0]; c < curX + 250; c++) {
+                for (let c = curX - constraints[0]; c < curX + 500; c++) {
                     if (mine[r] !== undefined) {
                         if (oreList[mine[r][c]] !== undefined) {
                             if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000)
@@ -76,7 +76,7 @@ function collectOres(temp) {
                 }
             }
         } else if (direction === "d") {
-            let constraints = getParams(250, 30);
+            let constraints = getParams(500, 30);
             for (let r = curY - constraints[1]; r < curY + 30; r++) {
                 for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] !== undefined) {
@@ -91,7 +91,7 @@ function collectOres(temp) {
     }
     setTimeout(() => {
         resolve(true);
-    }, 125);
+    }, 200);
     });
 }
 
