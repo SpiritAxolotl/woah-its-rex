@@ -222,19 +222,21 @@ gearRecipes = [
 ];
 
 let recipeElements = [[], []];
-function displayRecipe(num) {
-    let craftableChildren = document.getElementById("craftableDescriptions").children;
-    for (let i = 0; i < craftableChildren.length; i++) {
-        craftableChildren[i].style.display = "none";
-    }
-    if (document.getElementById("pickaxeCrafts").style.display === "block") {
-        let parent = document.getElementById("displayRecipe")
-        while (parent.firstChild)
-            parent.removeChild(parent.firstChild);
+function displayRecipe(input) {
+    if (typeof input === "string") {//gear
+        
+    } else if (typeof input === "number") {//pickaxe
+    let craftableChildren = $("#craftableDescriptions")[0].children;
+    for (let i = 0; i < craftableChildren.length; i++)
+        invisible(craftableChildren[i]);
+    if (isVisible($("#pickaxeCrafts"))) {
+        let parent = $("#displayRecipe")[0];
+        /*while (parent.firstChild)
+            parent.removeChild(parent.firstChild);*/
         for (let i = 0; i < recipeElements[0].length; i++)
-            recipeElements[0][i].style.display = "none";
+            invisible(recipeElements[0][i]);
         parent.appendChild(recipeElements[0][num]);
-        recipeElements[0][num].style.display = "block";
+        visible(recipeElements[0][num]);
         let temp = parent.children;
         temp = temp[0].children;
         temp = temp[temp.length - 1];
@@ -243,9 +245,14 @@ function displayRecipe(num) {
         else if (pickaxes[num + 1][1])
             temp.innerHTML = "Equip!";
         updateActiveRecipe();
-        document.getElementById("pickaxe" + num + "Description").style.display = "block";
+        let desc = "";
+        switch (num) {
+            case 0:
+                desc = "";
+        }
+        $("#itemDescription").html();
     } else {
-        let parent = document.getElementById("displayRecipe")
+        let parent = $("#displayRecipe")[0]
         while (parent.firstChild)
             parent.removeChild(parent.firstChild);
         for (let i = 0; i < recipeElements[1].length; i++)
@@ -254,6 +261,7 @@ function displayRecipe(num) {
         recipeElements[1][num].style.display = "block";
         updateActiveRecipe();
         document.getElementById("gear" + num + "Description").style.display = "block";
+    }
     }
 }
 
@@ -314,7 +322,7 @@ function createGearRecipes() {
 }
 
 function updateActiveRecipe() {
-    if (document.getElementById("pickaxeCrafts").style.display === "block") {
+    if ($("#pickaxeCrafts")[0].style.display === "block") {
         for (let i = 0; i < recipeElements[0].length; i++) {
             if (recipeElements[0][i].style.display === "block") {
                 let parent = recipeElements[0][i];
@@ -396,10 +404,10 @@ function craftGear(num) {
 }
 
 function showPickaxes() {
-    document.getElementById("pickaxeCrafts").style.display = "block";
-    document.getElementById("gearCrafts").style.display = "none";
+    $("#pickaxeCrafts")[0].style.display = "block";
+    $("#gearCrafts")[0].style.display = "none";
 }
 function showGears() {
-    document.getElementById("pickaxeCrafts").style.display = "none";
-    document.getElementById("gearCrafts").style.display = "block";
+    $("#pickaxeCrafts")[0].style.display = "none";
+    $("#gearCrafts")[0].style.display = "block";
 }

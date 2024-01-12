@@ -44,14 +44,14 @@ class secureLogs {
         }
     }
     showLogs() {
-        if (document.getElementById("dataExport").style.display === "block") {
+        if ($("#dataExport")[0].style.display === "block") {
                 clearInterval(this.#logsTimer);
                 this.#logsTimer = null;
                 let element = document.createElement("p");
-                if (document.getElementById("generatedLogs") !== null)
-                    document.getElementById("generatedLogs").remove();
+                if ($("#generatedLogs")[0] !== null)
+                    $("#generatedLogs")[0].remove();
                 element.id = "generatedLogs";
-                document.getElementById("logHolder").appendChild(element);
+                $("#logHolder")[0].appendChild(element);
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
                     let multi = multis[names.indexOf(this.#verifiedLogs[i][4])];
@@ -59,16 +59,16 @@ class secureLogs {
                     output += this.#verifiedLogs[i][1][0] + ", ";
                     output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + Math.log10(this.#verifiedLogs[i][5] * this.#verifiedLogs[i][1][0]) + "<br>";
                 }
-                this.#logsTimer = setInterval(this.#reloadLogs, 50, output!==""?output:"none");
+                this.#logsTimer = setInterval(this.#reloadLogs, 50, output !== "" ? output : "none");
         } else {
             clearInterval(this.#logsTimer);
             this.#logsTimer = null;
-            if (document.getElementById("generatedLogs") !== null)
-                document.getElementById("generatedLogs").remove();
+            if ($("#generatedLogs")[0] !== null)
+                $("#generatedLogs")[0].remove();
         }
     }
     #reloadLogs(output) {
-        document.getElementById("generatedLogs").innerHTML = output;
+        $("#generatedLogs")[0].innerHTML = output;
     }
 }
 let verifiedOres = new secureLogs();

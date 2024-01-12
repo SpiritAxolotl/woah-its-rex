@@ -30,25 +30,19 @@
         </div>
     </noscript>
     <div id="pressPlay">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-5">
-                    <p id="credits">
-                        Game made by <code>@thecatofalltime</code> on Discord!<br>
-                        Background music made by <code>@x2corp</code> on Discord!<br>
-                        Spawn sounds come fron REx:R on Roblox<br>
-                        Some sounds made by <code>@tevv_</code> on Discord!<br>
-                        UI by <code>@Spaxolotl</code> on Discord!
-                    </p>
-                    <button id="playButton" onclick="loadContent()">Play</button>
-                </div>
-            </div>
-        </div> 
+        <p id="credits">
+            Game made by <code>@thecatofalltime</code> on Discord!<br>
+            Background music made by <code>@x2corp</code> on Discord!<br>
+            Spawn sounds come fron REx:R on Roblox<br>
+            Some sounds made by <code>@tevv_</code> on Discord!<br>
+            UI by <code>@Spaxolotl</code> on Discord!
+        </p>
+        <button id="playButton" onclick="loadContent()">Play!</button>
     </div>
-    <div id="mainContent">
+    <div id="mainContent" class="invisible">
     <div class="container-fluid">
     <div class="row">
-        <div class="col-7">
+        <div class="col" id="col-1">
             <div class="mobile">
                 <button onclick="goDirection('a')" class="movementButton">Left</button>
                 <button onclick="goDirection('s')" class="movementButton">Down</button>
@@ -63,7 +57,7 @@
                 <button onclick="moveOne('d', this)" class="movementButton">Right 1</button>
                 <button onclick="switchDistance()" class="movementButton" id="meterDisplay">1000m</button>
             </div>
-            <p id="blockDisplay"></p>
+            <p id="blockDisplay" class="emoji"></p>
             <div>
                 <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
             </div>
@@ -71,7 +65,7 @@
                 <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col" id="col-2">
             <div>
                 <button id="resetMine" onclick="resetMine()">Reset Mine</button>
                 <button id="settings" onclick="showData()">Settings</button>
@@ -87,68 +81,57 @@
                     <button onclick="showPickaxes()">Pickaxes</button>
                     <button onclick="showGears()">Gears</button>
                 </div>
-                <div id="pickaxeCrafts" style="display:block;">
-                    <button onclick="displayRecipe(0)">Pickaxe 1</button>
-                    <button onclick="displayRecipe(1)">Pickaxe 2</button>
-                    <button onclick="displayRecipe(2)">Pickaxe 3</button>
-                    <button onclick="displayRecipe(3)">Pickaxe 4</button>
-                    <button onclick="displayRecipe(4)">Pickaxe 5</button>
-                    <button onclick="displayRecipe(5)">Pickaxe 6</button>
-                    <button onclick="displayRecipe(6)">Pickaxe 7</button>
-                    <button onclick="displayRecipe(7)">Pickaxe 8</button>
-                    <button onclick="displayRecipe(8)">Pickaxe 9</button>
-                    <button onclick="displayRecipe(9)">Pickaxe 10</button>
+                <div id="pickaxeCrafts">
+                    <button onclick="displayRecipe(1)">Pickaxe 1</button>
+                    <button onclick="displayRecipe(2)">Pickaxe 2</button>
+                    <button onclick="displayRecipe(3)">Pickaxe 3</button>
+                    <button onclick="displayRecipe(4)">Pickaxe 4</button>
+                    <button onclick="displayRecipe(5)">Pickaxe 5</button>
+                    <button onclick="displayRecipe(6)">Pickaxe 6</button>
+                    <button onclick="displayRecipe(7)">Pickaxe 7</button>
+                    <button onclick="displayRecipe(8)">Pickaxe 8</button>
+                    <button onclick="displayRecipe(9)">Pickaxe 9</button>
+                    <button onclick="displayRecipe(10)">Pickaxe 10</button>
                 </div>
-                <div id="gearCrafts" style="display:none;">
-                    <button onclick="displayRecipe(0)">Ore Tracker</button><br>
-                    <button onclick="displayRecipe(1)">Real Candilium</button><br>
-                    <button onclick="displayRecipe(2)">Real Vitriol</button><br>
-                    <button onclick="displayRecipe(7)">Energy Siphoner</button><br>
-                    <button onclick="displayRecipe(8)">Sugar Rush</button><br>
-                    <button onclick="displayRecipe(3)">Infinity Collector</button><br>
-                    <button onclick="displayRecipe(4)">Layer Materializer</button><br>
-                    <button onclick="displayRecipe(5)">Fortune III Book</button><br>
-                    <button onclick="displayRecipe(6)">Haste II Beacon</button><br>
-                    <button onclick="displayRecipe(9)" id="sillyRecipe" style="display: none;">SILLYYYY</button>
-                    
-                    
+                <div id="gearCrafts" class="invisible">
+                    <button onclick="displayRecipe('ore-tracker')">Ore Tracker</button>
+                    <button onclick="displayRecipe('real-candilium')">Real Candilium</button>
+                    <button onclick="displayRecipe('real-vitriol')">Real Vitriol</button>
+                    <button onclick="displayRecipe('energy-siphoner')">Energy Siphoner</button>
+                    <button onclick="displayRecipe('sugar-rush')">Sugar Rush</button>
+                    <button onclick="displayRecipe('infinity-collector')">Infinity Collector</button>
+                    <button onclick="displayRecipe('layer-materializer')">Layer Materializer</button>
+                    <button onclick="displayRecipe('fortune-3-book')">Fortune III Book</button>
+                    <button onclick="displayRecipe('haste-2-beacon')">Haste II Beacon</button>
                 </div>
             </div>
-            <hr>
-            <div id="displayRecipe">
-
-                
-            </div>
-            <hr>
-            <div id="craftableDescriptions">
-                <p class="itemDescription" id="pickaxe0Description" style="display: none;">Mines a few blocks in every direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.</p>
-                <p class="itemDescription" id="pickaxe1Description" style="display: none;">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
-                <p class="itemDescription" id="pickaxe2Description" style="display: none;">Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.</p>
-                <p class="itemDescription" id="pickaxe3Description" style="display: none;">Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.</p>
-                <p class="itemDescription" id="pickaxe4Description" style="display: none;">Mines a circle randomly around the player.<br>Tracks ores.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.</p>
-                <p class="itemDescription" id="pickaxe5Description" style="display: none;">Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.</p>
-                <p class="itemDescription" id="pickaxe6Description" style="display: none;">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Disables Chills.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
-                <p class="itemDescription" id="pickaxe7Description" style="display: none;">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Disables Ringings.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
-                <p class="itemDescription" id="pickaxe8Description" style="display: none;">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck. </p>
-                <p class="itemDescription" id="pickaxe9Description" style="display: none;">Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.</p>
+            <div id="displayRecipe"></div>
+            <div>
+                <p id="itemDescription" class="invisible"></p>
                 <!--
-                    Pickaxes above
-                    Gears below
+                <p class="itemDescription" id="pickaxeDescription">Mines a few blocks in every direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.</p>
+                <p class="itemDescription" id="pickaxe1Description">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
+                <p class="itemDescription" id="pickaxe2Description">Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.</p>
+                <p class="itemDescription" id="pickaxe3Description">Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.</p>
+                <p class="itemDescription" id="pickaxe4Description">Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.</p>
+                <p class="itemDescription" id="pickaxe5Description">Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.</p>
+                <p class="itemDescription" id="pickaxe6Description">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
+                <p class="itemDescription" id="pickaxe7Description">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
+                <p class="itemDescription" id="pickaxe8Description">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck. </p>
+                <p class="itemDescription" id="pickaxe9Description">Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.</p>
+                <p class="itemDescription" id="gear0Description">Tracks the location of new ore spawns.</p>
+                <p class="itemDescription" id="gear1Description">Boosts ability luck by 1.1x.</p>
+                <p class="itemDescription" id="gear2Description">Sets mining speed delay to 15ms from 25ms.</p>
+                <p class="itemDescription" id="gear7Description">Boosts mining speed slightly upon mining any exotic+ ore (1/750k+).</p>
+                <p class="itemDescription" id="gear3Description">Mines all rare ores in the mine upon mine reset.</p>
+                <p class="itemDescription" id="gear8Description">Increases ability proc rates by 20%.</p>
+                <p class="itemDescription" id="gear4Description">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
+                <p class="itemDescription" id="gear5Description">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
+                <p class="itemDescription" id="gear6Description">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
                 -->
-                <p class="itemDescription" id="gear0Description" style="display: none;">Tracks the location of new ore spawns.</p>
-                <p class="itemDescription" id="gear1Description" style="display: none;">Boosts ability luck by 1.1x.</p>
-                <p class="itemDescription" id="gear2Description" style="display: none;">Sets mining speed delay to 15ms from 25ms.</p>
-                <p class="itemDescription" id="gear7Description" style="display: none;">Mining speed -3ms for 5 seconds upon mining any exotic+ ore (1/750k+).</p>
-                <p class="itemDescription" id="gear3Description" style="display: none;">Mines all rare ores in the mine upon mine reset.<br>Disables Ringings.</p>
-                <p class="itemDescription" id="gear8Description" style="display: none;">Increases ability proc rates by 20%.</p>
-                <p class="itemDescription" id="gear4Description" style="display: none;">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
-                <p class="itemDescription" id="gear5Description" style="display: none;">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
-                <p class="itemDescription" id="gear6Description" style="display: none;">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
-                <p class="itemDescription" id="gear9Description" style="display: none;">When crafted, clicking on the Owned! button will set the current layer to the SILLY LAYER!!! :P<br>Moving up or down or teleporting will reset the layer back to its original layer.</p>
             </div>
-            
         </div>
-        <div class="col-3">
+        <div class="col" id="col-3">
             <div id="musicStuff">
                 <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
                 <p>Music Volume</p>
@@ -161,11 +144,11 @@
                 <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
             </div>
             <div id="inventoryDisplay">
-                <p id="inventory1"   style="display:block;"></p>
-                <p id="inventory2"   style="display:none;"></p>
-                <p id="inventory3"   style="display:none;"></p>
-                <p id="inventory4"   style="display:none;"></p>
-                <p id="indexDisplay" style="display:none;"></p>
+                <p id="inventory1"></p>
+                <p id="inventory2" class="invisible"></p>
+                <p id="inventory3" class="invisible"></p>
+                <p id="inventory4" class="invisible"></p>
+                <p id="indexDisplay" class="invisible"></p>
             </div>
             <a href="https://discord.gg/aVXkHB7Y4w" id="discord" target="_blank">
                 <img src="discord-logo.png" alt="Discord">
@@ -201,8 +184,6 @@
         <div id="logHolder"></div>
         <br>
         <br>
-        
-        
         <p>im never doing html again after this</p>
     </div>
 </div>

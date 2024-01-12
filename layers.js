@@ -461,7 +461,18 @@ fluteLayer = {
     "🪈": 1/1
 },
 
-allLayers = [dirtLayer, brickLayer, foggyLayer, waterLayer, rockLayer, radioactiveLayer, cactusLayer, paperLayer, sillyLayer, fluteLayer];
+allLayers = [
+    dirtLayer,
+    brickLayer,
+    foggyLayer,
+    waterLayer,
+    rockLayer,
+    radioactiveLayer,
+    cactusLayer,
+    paperLayer,
+    sillyLayer,
+    fluteLayer
+];
 
 //SETTING LAYERS
 
@@ -470,8 +481,8 @@ let currentLayer = dirtLayer;
 function setLayer(y) {
     let tempNum = y;
     if (tempNum < 16000) {
-    tempNum = Math.floor(tempNum / 2000);
-    currentLayer = allLayers[tempNum];
+        tempNum = Math.floor(tempNum / 2000);
+        currentLayer = allLayers[tempNum];
     } else if (y > (lastLayerChange + 10000)) {
         lastLayerChange += 10000;
         if (Math.round(Math.random() * 77) === 33)

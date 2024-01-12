@@ -1,11 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap");
 
-.emoji {
-  font-family: "Noto Color Emoji", sans-serif!important; 
+/*.emoji {
+  font-family: "Noto Color Emoji", sans-serif !important; 
+}*/
+
+.invisible {
+  display: none;
 }
 
-#mainContent {
-  display: none;
+*, *::before, *::after {
+  image-rendering: pixelated;
+  box-sizing: border-box;
+  font-family: "Courier", "Noto Color Emoji", monospace;
 }
 
 #inventoryDisplay {
@@ -13,7 +19,7 @@
   min-height: 75vh;
   max-height: 75vh;
   border-style: solid;
-  border-color: rgb(49, 49, 49);
+  border-color: #313131;
   border-left: none;
   border-right: none;
   margin-top: 0.35em;
@@ -36,6 +42,7 @@
 .craftingAmountsDisplay {
   font-size: 1vw;
 }
+
 #displayRecipe > div > p {
   margin-bottom: 0.1rem;
 }
@@ -43,7 +50,7 @@
 .latestDisplay {
   text-align: left !important;
   border-style: solid;
-  border-color: rgb(149, 149, 149);
+  border-color: #959595;
   border-radius: 1px;
   padding-left: 0.1em;
   padding-right: 0.1em;
@@ -53,9 +60,11 @@
   min-height: 15em;
   max-height: 15em;
 }
+
 .itemDescription {
-  font-size:1vw;
+  font-size: 1vw;
 }
+
 .gearCrafts {
   display: none;
 }
@@ -65,8 +74,8 @@
 }
 
 .inventoryButtons {
-  border-style: solid;
-  border-color: black;
+  /*border-style: solid;
+  border-color: black;*/
   font-size: 1vw;
   width: 100%;
 }
@@ -74,14 +83,6 @@
 #mineResetProgress {
   font-size: 1vw;
   padding-top: 0.75em;
-}
-
-.col-5 {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  position: absolute;
 }
 
 #dataExport {
@@ -100,6 +101,11 @@ body {
   overscroll-behavior: none;
   background-color: black;
   max-height: 100%;
+  font-family: "Courier";
+}
+
+*::-webkit-scrollbar {
+  width: 0;
 }
 
 .row {
@@ -124,6 +130,7 @@ body {
   padding: 0.5em;
   margin: 0;
   line-height: 1.8vw;
+  letter-spacing: -0.173em;
   font-size: 1.8vw;
   user-select: none;
   text-wrap: nowrap;
@@ -156,11 +163,7 @@ p {
   margin-bottom: 0.25rem;
 }
 
-/*.col-3 > br {
-  display: none;
-}*/
-
-button, .col-3 > div > button {
+button {
   font-size: 1vw;
   background-color: #494949;
   border-style: solid;
@@ -168,7 +171,7 @@ button, .col-3 > div > button {
   border-width: 1px;
   border-radius: 2px;
   color: white;
-  font-family: 'Arial';
+  font-family: "Arial";
   text-align: center;
 }
 
@@ -185,27 +188,23 @@ button, .col-3 > div > button {
   width: 100%;
 }
 
-.col-7 {
+.col {
   height: 100vh;
   max-height: 100vh;
   width: 50%;
+  flex: auto;
 }
 
-.col-2 {
-  width: 25%;
-  height: 100vh;
-  max-height: 100vh;
-  /*overflow-x: none;*/
-  border-style: solid;
-  border-color: rgb(49, 49, 49);
-  border-top: 0;
-  border-bottom: 0;
+#col-1 {
+  width: 50%;
 }
-
-.col-3 {
+#col-2 {
   width: 25%;
-  height: 100%;
-  max-height: 100vh;
+  border-style: none solid;
+  border-color: #313131;
+}
+#col-3 {
+  width: 25%;
 }
 
 #musicStuff > label {
@@ -222,26 +221,20 @@ button, .col-3 > div > button {
 #discord {
   display: flex;
   align-items: center;
+  justify-content: center;
   text-decoration: none;
-  /*border: 2px dashed;*/
+  & > img {
+    width: 3em;
+    height: 3em;
+    aspect-ratio: 1;
+  }
+  & > p {
+    /*width: 100%;*/
+    font-size: 100%;
+    margin: 0;
+    text-wrap: nowrap;
+  }
 }
-
-#discord > img {
-  width: 3em;
-  height: 3em;
-  aspect-ratio: 1;
-}
-
-#discord > p {
-  width: 100%;
-  font-size: 100%;
-  margin: 0;
-  text-wrap: nowrap;
-}
-
-/*.col-3 > p:first-of-type {
-  margin-bottom: 0.5rem;
-}*/
 
 #displayRecipe > div {
   border: none;
@@ -249,35 +242,52 @@ button, .col-3 > div > button {
 
 #latestSpawns, #latestFinds {
   height: 100%;
-  overflow-y: scroll;
   font-size: 0.8vw;
+  /*overflow-y: scroll;*/
 }
 
-/*.col-3 > a {
+/*
+.col-5 {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  position: absolute;
+}
+
+.col-3 > br {
   display: none;
 }
 
-.col-3 > p {
-  display: none;
+.col-3 > p:first-of-type {
+  margin-bottom: 0.5rem;
 }
-
-.col-3 > hr {
-  display: none;
-}
-
-.col-2 > hr {
-  display: none;
-}*/
 
 .container-fluid {
   height: 100%;
 }
+*/
+
+#pressPlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: black;
+  z-index: 4;
+}
+
 #masterVolume {
   text-align: center;
   border-style: solid;
   border-color: white;
   max-width: 10vw;
 }
+
 #noscript {
   user-select: none;
   position: absolute;
