@@ -8,7 +8,9 @@ function resetMine() {
     currentLayer = allLayers[0];
     createMine();
     mineCapacity = 40000;
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
+    $("#mineResetProgress")[0].html(
+        blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset"
+    );
 }
 let resetting = false;
 async function mineReset() {
@@ -45,7 +47,7 @@ function collectOres(temp) {
                 for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] !== undefined) {
                         if (oreList[mine[r][c]] !== undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000)
+                            if (reciprocal(oreList[mine[r][c]][0]) >= 750000)
                                 mineBlock(c, r, "reset", 1);
                         }
                     }
@@ -57,7 +59,7 @@ function collectOres(temp) {
                 for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] !== undefined) {
                         if (oreList[mine[r][c]] !== undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000)
+                            if (reciprocal(oreList[mine[r][c]][0]) >= 750000)
                                 mineBlock(c, r, "reset", 1);
                         }
                     }
@@ -69,7 +71,7 @@ function collectOres(temp) {
                 for (let c = curX - constraints[0]; c < curX + 500; c++) {
                     if (mine[r] !== undefined) {
                         if (oreList[mine[r][c]] !== undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000)
+                            if (reciprocal(oreList[mine[r][c]][0]) >= 750000)
                                 mineBlock(c, r, "reset", 1);
                         }
                     }
@@ -81,7 +83,7 @@ function collectOres(temp) {
                 for (let c = curX - constraints[0]; c < curX + 30; c++) {
                     if (mine[r] !== undefined) {
                         if (oreList[mine[r][c]] !== undefined) {
-                            if (Math.round(1 / (oreList[mine[r][c]][0])) >= 750000)
+                            if (reciprocal(oreList[mine[r][c]][0]) >= 750000)
                                 mineBlock(c, r, "reset", 1);
                         }
                     }

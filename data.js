@@ -18,7 +18,7 @@ function saveAllData() {
         dataStorage[0].push([propertyName, [oreList[propertyName][1]]]);
     dataStorage[1].push([pickaxes, currentPickaxe]);
     dataStorage[2].push(totalMined)
-    dataStorage[3].push(canPlay, document.getElementById("musicVolume").value, document.getElementById("spawnVolume").value, document.getElementById("musicButton").innerHTML);
+    dataStorage[3].push(canPlay, $("#musicVolume")[0].value, $("#spawnVolume")[0].value, $("#musicButton")[0].innerHTML);
     dataStorage[4].push(gears);
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
@@ -35,7 +35,7 @@ function loadAllData() {
             pickaxes[i][1] = data[1][0][0][i][1];
         currentPickaxe = data[1][0][1];
         totalMined = data[2];
-        document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
+        $("#blocksMined")[0].innerHTML = totalMined.toLocaleString() + " Blocks Mined";
         for (let propertyName in oreList) {
             if (document.getElementById(propertyName + "1") !== null) {
                 for (let i = 1; i < 5; i++) {
@@ -45,26 +45,25 @@ function loadAllData() {
                 }
             }
         }
-        if (data[3][0] != undefined) {
+        if (data[3][0] !== undefined) {
             for (let i = 0; i < data[3][0].length; i++) {
-                if (data[3][0][i] === false) {
+                if (!data[3][0][i])
                     document.getElementById("mute" + i).click();
-                }
             }
         }
-        if (data[3][1] != undefined) {
-            document.getElementById("musicVolume").value = data[3][1];
+        if (data[3][1] !== undefined) {
+            $("#musicVolume")[0].value = data[3][1];
             changeMusicVolume(data[3][1]);
         }
-        if (data[3][2] != undefined) {
-            document.getElementById("spawnVolume").value = data[3][1];
+        if (data[3][2] !== undefined) {
+            $("#spawnVolume")[0].value = data[3][1];
             changeAllVolume(data[3][2]);
         }
         let canContinue = false;
-        if (data[3][3] != undefined) {
+        if (data[3][3] !== undefined) {
             if (data[3][3] === "Unmute Music") {
                 setTimeout(() => {
-                    document.getElementById("musicButton").click();
+                    $("#musicButton")[0].click();
                 }, 100);
             }
         }
@@ -108,7 +107,7 @@ function fromBinary(encoded) {
 
 function exportData() {
     const data = toBinary(JSON.stringify(JSON.parse(localStorage.getItem("playerData"))));
-    let textField = document.getElementById("dataText");
+    let textField = $("#dataText")[0];
     textField.value = data;
     if (confirm("Download save data as file?"))
         exportDataAsFile(data, "data.txt", "text/plain");
@@ -153,7 +152,7 @@ function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
         downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
     else {
         downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        downloadLink.style.display = 'none';
+        downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
     }
     downloadLink.click();
@@ -161,14 +160,14 @@ function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
 
 function showData() {
     canMine = false;
-    document.getElementById("mainContent").style.display = "none";
-    document.getElementById("dataExport").style.display = "block";
+    $("#mainContent")[0].style.display = "none";
+    $("#dataExport")[0].style.display = "block";
 }
 
 function hideData() {
     canMine = true;
-    document.getElementById("dataExport").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
+    $("#dataExport")[0].style.display = "none";
+    $("#mainContent")[0].style.display = "block";
 }
 
 async function warnBeforeClosing() {
