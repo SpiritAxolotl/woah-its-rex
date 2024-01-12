@@ -18,6 +18,8 @@ class secureLogs {
         if (obj.stack.includes("main.js") && luck <= maxLuck) {
             if (mine[r][c] === "⬜")
                 this.#spawnLogs.push([r, c, intended, luck]);
+        } else {
+            console.log("failed to create, ", obj.stack, luck, maxLuck);
         }
     }
     verifyLog(r, c) {
@@ -28,6 +30,8 @@ class secureLogs {
                     this.#spawnLogs.splice(i, 1);
                     this.#verifiedLogs.push([mine[r][c], [r, c], new Date(), false, "Normal", num]);
                     break;
+                } else {
+                    console.log('failed to verify', r, c);
                 }
             }
         }
