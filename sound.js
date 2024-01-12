@@ -21,10 +21,10 @@ function changeAllVolume(percent) {
 function toggleMusic() {
     if (keepRunningAudio.paused) {
         keepRunningAudio.play();
-        document.getElementById("musicButton").innerHTML = "Mute Music";
+        $("#musicButton")[0].innerHTML = "Mute Music";
     } else {
         keepRunningAudio.pause();
-        document.getElementById("musicButton").innerHTML = "Unmute Music";
+        $("#musicButton")[0].innerHTML = "Unmute Music";
     }
 }
 
@@ -43,6 +43,7 @@ function changeCanPlay(num, button) {
 //SOUND PLAYING
 
 function playSound(type) {
+    if (typeof type === "string") {
     switch (type) {
         case "exotic":
             if (canPlay[0]) {
@@ -86,5 +87,25 @@ function playSound(type) {
                 magnificent.play();
             }
             break;
+    }
+    } else if (typeof type === "number") {
+        let prob = type;
+        if (prob > 5000000000) {
+            playSound("zenith");
+        } else if (prob > 1500000000) {
+            playSound("magnificent");
+        } else if (prob > 750000000) {
+            playSound("otherworldly");
+        } else if (prob >= 160000000) {
+            playSound("unfathomable");
+        } else if (prob >= 25000000) {
+            playSound("enigmatic");
+        } else if (prob >= 5000000) {
+            if (currentPickaxe < 8 && !(gears[3]))
+                playSound("transcendent");
+        } else if (prob >= 750000) {
+            if (currentPickaxe < 7)
+                playSound("exotic");
+        }
     }
 }
