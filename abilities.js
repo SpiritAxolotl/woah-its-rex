@@ -542,7 +542,7 @@ function pickaxeAbility11(x, y, boost) {
                                     if (generated[1])
                                         verifiedOres.verifyLog(r, c);
                                 }
-                                if (mine[y + r][x + c] !== "⛏️")
+                                if (mine[y + r] !== undefined && mine[y + r][ x + c] !== undefined)
                                     mineBlock(x + c, y + r, "ability", thisLuck);
                             }
                         }

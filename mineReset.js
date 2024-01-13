@@ -12,18 +12,20 @@ function resetMine() {
 }
 let resetting = false;
 async function mineReset() {
-    resetting = true;
-    mineCapacity = 40000;
-    const temp = curDirection;
-    curDirection = "";
-    const temp2 = await collectOres(temp);
-    loggedFinds = [];
-    canMine = await mineResetAid();
-    checkAllAround(curX, curY, 1);
-    mine[curY][curX] = "⛏️";
-    displayArea();
-    goDirection(temp);
-    resetting = false;
+    if (!resetting) {
+        resetting = true;
+        mineCapacity = 40000;
+        const temp = curDirection;
+        curDirection = "";
+        const temp2 = await collectOres(temp);
+        loggedFinds = [];
+        canMine = await mineResetAid();
+        checkAllAround(curX, curY, 1);
+        mine[curY][curX] = "⛏️";
+        displayArea();
+        goDirection(temp);
+        resetting = false;
+    }
 }
 
 function collectOres(temp) {
