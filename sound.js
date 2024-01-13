@@ -5,9 +5,13 @@ function keepRunning() {
 }
 
 function changeMusicVolume(percent) {
+    if (percent > 100)
+        percent = 100;
     keepRunningAudio.volume = 0.05 * (percent / 100);
 }
 function changeAllVolume(percent) {
+    if (percent > 100)
+        percent = 100;
     vol = (percent / 100);
     chill.volume = 1*vol;
     ringing.volume = 0.4*vol;
