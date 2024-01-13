@@ -180,6 +180,8 @@ function generateBlock(luck, location) {
     let summedProbability = 0;
     let chosenValue = Math.random();
     chosenValue /= luck;
+    if (location[0] === 0)
+        return ["🟩", false];
     if (location[0] === 1 && chosenValue < 1/2000000000) {
         blockToGive = "🥬"
         verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
