@@ -16,8 +16,7 @@
 
 #inventoryDisplay {
   overflow-y: scroll;
-  min-height: 75vh;
-  max-height: 75vh;
+  height: 77.5%;
   border-style: solid;
   border-color: #313131;
   border-left: none;
@@ -129,7 +128,7 @@ body {
 #blockDisplay {
   padding: 0.5em;
   margin: 0;
-  line-height: 1.8vw;
+  line-height: 1.9vw;
   letter-spacing: -0.173em;
   font-size: 1.8vw;
   user-select: none;

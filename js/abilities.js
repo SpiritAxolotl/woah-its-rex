@@ -1,11 +1,11 @@
 async function rollAbilities() {
     let boost = 1;
     let m = 1;
-    if (gears[1])
+    if (gears["real-candilium"])
         boost *= 1.1;
-    if (gears[5])
+    if (gears["fortune-3-book"])
         boost *= 1.6;
-    if (gears[8])
+    if (gears["sugar-rush"])
         m = 1.2;
     switch (currentPickaxe) {
         case 1:
@@ -81,14 +81,14 @@ function gearAbility1() {
     if (!ability1Active && !resetting) {
         ability1Active = true;
         let tempSpeed = miningSpeed;
-        let tempDirection = curDirection;
-        curDirection = "";
+        let tempDirection = currDirection;
+        currDirection = "";
         clearInterval(loopTimer);
         goDirection(tempDirection, tempSpeed - 3);
         ability1Timeout = setTimeout(() => {
             miningSpeed = tempSpeed;
             clearInterval(loopTimer);
-            curDirection = "";
+            currDirection = "";
             goDirection(tempDirection);
             ability1Active = false;
         }, 5000);
@@ -96,10 +96,10 @@ function gearAbility1() {
 }
 
 function gearAbility2() {
-    if (gears[9]) {
+    if (gears["silly-tp"])
         currentLayer = sillyLayer;
-    }
 }
+
 function pickaxeAbility1(x, y, size, customLuck, boost) {
     return new Promise((resolve) => {
     let generated;
