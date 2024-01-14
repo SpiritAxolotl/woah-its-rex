@@ -227,12 +227,10 @@ function generateBlock(luck, location) {
                 playSound("enigmatic");
             } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 5000000) {
                 spawnMessage(blockToGive, location);
-                if (currentPickaxe < 8 && !(gears[3]))
-                    playSound("transcendent");
+                playSound("transcendent");
             } else if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
                 spawnMessage(blockToGive, location);
-                if (currentPickaxe < 7)
-                    playSound("exotic");
+                playSound("exotic");
             }
         }
     }

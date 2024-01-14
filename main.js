@@ -18,7 +18,8 @@ let pickaxes = [
     [":pouting-cat:", false],
     [">:C", false],
     ["IM HERE NOW TOO", false],
-    ["mrrp meow meow!", false]
+    ["mrrp meow meow!", false],
+    ["cataxe", false]
 ];
 let gears = [
     false, //ORE TRACKER 0
@@ -195,10 +196,7 @@ document.addEventListener('keydown', (event) => {
         clearInterval(loopTimer);
         curDirection = "";
         movePlayer(name);
-        if (ability1Active) {
-            clearTimeout(ability1Timeout);
-            ability1Active = false;
-        }
+        energySiphonerDirection = "";
     }
 }, false);
 
@@ -225,6 +223,7 @@ function goDirection(direction, speed) {
         }
         loopTimer = setInterval(movePlayer, miningSpeed, direction);
         curDirection = direction;
+        energySiphonerDirection = direction;
     }
 }
 
@@ -238,6 +237,7 @@ function moveOne(dir, button) {
     setTimeout(() => {
         button.disabled = false;
     }, 100);
+    energySiphonerDirection = "";
 }
 
 //DISPLAY
