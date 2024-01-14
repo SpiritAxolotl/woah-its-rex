@@ -2,7 +2,7 @@
 
 <head>
     <title>Woah It's Rex!</title>
-    <link rel="icon" type="image/x-icon" href="game-icon.png">
+    <link rel="icon" type="image/x-icon" href="images/game-icon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
@@ -12,15 +12,15 @@
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--Importing JS Files-->
-    <script src="layers.js"></script>
-    <script src="logs.js"></script>
-    <script src="mine.js"></script>
-    <script src="sound.js"></script>
-    <script src="mineReset.js"></script>
-    <script src="main.js"></script>
-    <script src="abilities.js"></script>
-    <script src="crafting.js"></script>
-    <script src="data.js"></script>
+    <script src="js/layers.js"></script>
+    <script src="js/logs.js"></script>
+    <script src="js/mine.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/mineReset.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/abilities.js"></script>
+    <script src="js/crafting.js"></script>
+    <script src="js/data.js"></script>
     <link rel="stylesheet" href="css.css">
 </head>
 <body>
@@ -81,6 +81,7 @@
                     <button onclick="showPickaxes()">Pickaxes</button>
                     <button onclick="showGears()">Gears</button>
                 </div>
+                <!--TODO: generate these with js-->
                 <div id="pickaxeCrafts">
                     <button onclick="displayRecipe(1)">Pickaxe 1</button>
                     <button onclick="displayRecipe(2)">Pickaxe 2</button>
@@ -94,21 +95,21 @@
                     <button onclick="displayRecipe(10)">Pickaxe 10</button>
                 </div>
                 <div id="gearCrafts" class="invisible">
-                    <button onclick="displayRecipe('ore-tracker')">Ore Tracker</button>
-                    <button onclick="displayRecipe('real-candilium')">Real Candilium</button>
-                    <button onclick="displayRecipe('real-vitriol')">Real Vitriol</button>
-                    <button onclick="displayRecipe('energy-siphoner')">Energy Siphoner</button>
-                    <button onclick="displayRecipe('sugar-rush')">Sugar Rush</button>
-                    <button onclick="displayRecipe('infinity-collector')">Infinity Collector</button>
-                    <button onclick="displayRecipe('layer-materializer')">Layer Materializer</button>
-                    <button onclick="displayRecipe('fortune-3-book')">Fortune III Book</button>
-                    <button onclick="displayRecipe('haste-2-beacon')">Haste II Beacon</button>
+                    <button onclick="displayRecipe(1)">Ore Tracker</button>
+                    <button onclick="displayRecipe(2)">Real Candilium</button>
+                    <button onclick="displayRecipe(3)">Real Vitriol</button>
+                    <button onclick="displayRecipe(4)">Energy Siphoner</button>
+                    <button onclick="displayRecipe(5)">Sugar Rush</button>
+                    <button onclick="displayRecipe(6)">Infinity Collector</button>
+                    <button onclick="displayRecipe(7)">Layer Materializer</button>
+                    <button onclick="displayRecipe(8)">Fortune III Book</button>
+                    <button onclick="displayRecipe(9)">Haste II Beacon</button>
                 </div>
             </div>
             <div id="displayRecipe"></div>
-            <div>
-                <p id="itemDescription" class="invisible"></p>
-                <!--
+            <div id="craftableDescriptions">
+                <!--<p id="itemDescription" class="invisible"></p>-->
+                <!---->
                 <p class="itemDescription" id="pickaxeDescription">Mines a few blocks in every direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.</p>
                 <p class="itemDescription" id="pickaxe1Description">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
                 <p class="itemDescription" id="pickaxe2Description">Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.</p>
@@ -128,7 +129,7 @@
                 <p class="itemDescription" id="gear4Description">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
                 <p class="itemDescription" id="gear5Description">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
                 <p class="itemDescription" id="gear6Description">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
-                -->
+                <!---->
             </div>
         </div>
         <div class="col" id="col-3">
@@ -144,14 +145,14 @@
                 <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
             </div>
             <div id="inventoryDisplay">
-                <p id="inventory1"></p>
-                <p id="inventory2" class="invisible"></p>
-                <p id="inventory3" class="invisible"></p>
-                <p id="inventory4" class="invisible"></p>
+                <p id="inventoryNormal"></p>
+                <p id="inventoryElectrified" class="invisible"></p>
+                <p id="inventoryRadioactive" class="invisible"></p>
+                <p id="inventoryExplosive" class="invisible"></p>
                 <p id="indexDisplay" class="invisible"></p>
             </div>
             <a href="https://discord.gg/aVXkHB7Y4w" id="discord" target="_blank">
-                <img src="discord-logo.png" alt="Discord">
+                <img src="images/discord-logo.png" alt="Discord">
                 <p>Join the Discord!</p>
             </a>
         </div>
@@ -166,13 +167,13 @@
         <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
         <br>
         <br>
-        <button onclick="changeCanPlay(0, this)"id="mute0">Mute Chills</button>
-        <button onclick="changeCanPlay(1, this)"id="mute1">Mute Ringings</button>
-        <button onclick="changeCanPlay(2, this)"id="mute2">Mute Blurs</button>
-        <button onclick="changeCanPlay(3, this)"id="mute3">Mute Unfaths</button>
-        <button onclick="changeCanPlay(4, this)"id="mute4">Mute Otherworldlies</button>
-        <button onclick="changeCanPlay(5, this)"id="mute5">Mute Metaversals</button>
-        <button onclick="changeCanPlay(6, this)"id="mute6">Mute Zeniths</button>
+        <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
+        <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
+        <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
+        <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
+        <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
+        <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
+        <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
         <div id="masterVolume">
             <p>Spawn Volumes</p>
             <label class="slidecontainer" style="max-width: 10vw;">
@@ -182,9 +183,6 @@
         <br>
         <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
         <div id="logHolder"></div>
-        <br>
-        <br>
-        <p>im never doing html again after this</p>
     </div>
 </div>
 </body>
