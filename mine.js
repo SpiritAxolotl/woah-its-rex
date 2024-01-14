@@ -71,7 +71,7 @@ function checkAllAround(x, y, luck) {
             mine[y][x - 1] = generated[0];
             if (generated[1])
                 verifiedOres.verifyLog(y, x-1);
-            blocksRevealedThisReset++;
+            //blocksRevealedThisReset++;
         }
     }
     if (mine[y][x + 1] === "⬜") {
@@ -79,14 +79,14 @@ function checkAllAround(x, y, luck) {
             mine[y][x + 1] = generated[0];
             if (generated[1])
                 verifiedOres.verifyLog(y, x+1);
-            blocksRevealedThisReset++;
+            //blocksRevealedThisReset++;
         }
     if (mine[y + 1][x] === "⬜") {
         generated = generateBlock(luck, [y+1, x]);
             mine[y + 1][x] = generated[0];
             if (generated[1])
                 verifiedOres.verifyLog(y+1, x);
-            blocksRevealedThisReset++;
+            //blocksRevealedThisReset++;
         }
     if (y - 1 >= 0) {
         if (mine[y - 1][x] === "⬜") {
@@ -94,7 +94,7 @@ function checkAllAround(x, y, luck) {
             mine[y - 1][x] = generated[0];
             if (generated[1])
                 verifiedOres.verifyLog(y-1, x);
-            blocksRevealedThisReset++;
+            //blocksRevealedThisReset++;
         }
     }
     if (blocksRevealedThisReset >= mineCapacity) {
@@ -174,6 +174,7 @@ function giveBlock(type, x, y, fromReset) {
 }
 
 function generateBlock(luck, location) {
+    blocksRevealedThisReset++;
     let hasLog = false;
     let probabilityTable = currentLayer;
     let blockToGive = "";
