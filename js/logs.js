@@ -10,9 +10,9 @@ class secureLogs {
     }
     createLog(r, c, intended, obj, luck) {
         let luckModifier = 1;
-        if (gears[1])
+        if (gears["real-candilium"])
             luckModifier *= 1.1;
-        if (gears[5])
+        if (gears["fortune-3-book"])
             luckModifier *= 1.6;
         const maxLuck = (this.#maxLuck[currentPickaxe] * luckModifier) + 1;
         if (obj.stack.includes("main.js") && luck <= maxLuck) {
@@ -44,17 +44,17 @@ class secureLogs {
         }
     }
     showLogs() {
-        if ($("#dataExport")[0].style.display === "block") {
+        if (isVisible(document.getElementById("dataExport"))) {
                 clearInterval(this.#logsTimer);
                 this.#logsTimer = null;
                 let element = document.createElement("p");
-                if ($("#generatedLogs")[0] !== null)
-                    $("#generatedLogs")[0].remove();
+                if (document.getElementById("generatedLogs") !== null)
+                    document.getElementById("generatedLogs").remove();
                 element.id = "generatedLogs";
-                $("#logHolder")[0].appendChild(element);
+                document.getElementById("logHolder").appendChild(element);
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
-                    let multi = multis[names.indexOf(this.#verifiedLogs[i][4])];
+                    let multi = variantMultis[variantNames.indexOf(this.#verifiedLogs[i][4])];
                     output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + " " + this.#verifiedLogs[i][4] + ", ";
                     output += this.#verifiedLogs[i][1][0] + ", ";
                     output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + Math.log10(this.#verifiedLogs[i][5] * this.#verifiedLogs[i][1][0]) + "<br>";
@@ -63,12 +63,12 @@ class secureLogs {
         } else {
             clearInterval(this.#logsTimer);
             this.#logsTimer = null;
-            if ($("#generatedLogs")[0] !== null)
-                $("#generatedLogs")[0].remove();
+            if (document.getElementById("generatedLogs") !== null)
+                document.getElementById("generatedLogs").remove();
         }
     }
     #reloadLogs(output) {
-        $("#generatedLogs")[0].innerHTML = output;
+        document.getElementById("generatedLogs").innerHTML = output;
     }
 }
 let verifiedOres = new secureLogs();
