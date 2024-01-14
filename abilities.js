@@ -72,24 +72,34 @@ async function rollAbilities() {
                 updateActiveRecipe();
             }
             break;
+        case 11:
+            if (Math.random() <= (1/100 * m)) {
+                canMine = await(pickaxeAbility12(curX, curY, boost, 0, 0));
+                updateActiveRecipe();
+            }
+            break;
     }
 }
 
 let ability1Active = false;
 let ability1Timeout;
+let energySiphonerSpeed;
+let energySiphonerDirection;
 function gearAbility1() {
     if (!ability1Active && !resetting) {
         ability1Active = true;
-        let tempSpeed = miningSpeed;
-        let tempDirection = curDirection;
+        energySiphonerSpeed = miningSpeed;
+        energySiphonerDirection = curDirection;
         curDirection = "";
         clearInterval(loopTimer);
-        goDirection(tempDirection, tempSpeed - 3);
+        goDirection(energySiphonerDirection, energySiphonerSpeed - 3);
         ability1Timeout = setTimeout(() => {
-            miningSpeed = tempSpeed;
+            miningSpeed = energySiphonerSpeed;
             clearInterval(loopTimer);
             curDirection = "";
-            goDirection(tempDirection);
+            if (energySiphonerDirection != "") {
+                goDirection(energySiphonerDirection);
+            }
             ability1Active = false;
         }, 5000);
     }
@@ -550,6 +560,94 @@ function pickaxeAbility11(x, y, boost) {
             }
         }
     }
+    displayArea();
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+    });
+}
+
+function pickaxeAbility12(x, y, boost, index, dirNum) {
+    return new Promise((resolve) => {
+    let newY = y;
+    let newX = x;
+    if (dirNum > 3)
+        dirNum = 0;
+    const thisLuck = 30 * boost;
+    const nums = [3, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 21, 23, 24, 26, 27, 29, 30, 32, 33, 35, 36, 38, 39, 41, 42, 44, 45, 47, 48, 50, 51, 53, 54];
+    const dirs = ["down", "left", "up", "right"];
+    const direction = dirs[dirNum];
+        switch(direction) {
+            case "down":
+                for (let r = y; r <= y + nums[index]; r++) {
+                    if (mine[r] != undefined) {
+                        if (mine[r][x] === "⬜") {
+                            generated = generateBlock(thisLuck, [r, x]);
+                            mine[r][x] = generated[0];
+                            if (generated[1])
+                                verifiedOres.verifyLog(r, x);
+                        }
+                        if (mine[r][x] != undefined) {
+                            mineBlock(x, r, "ability", thisLuck);
+                    }   
+                    } 
+            }
+            newY = y + nums[index];
+            break;
+            case "left":
+                for (let c = x; c >= x - nums[index]; c--) {
+                    if (mine[y] != undefined && mine[y][c] != undefined) {
+                        if (mine[y][c] === "⬜") {
+                            generated = generateBlock(thisLuck, [y, c]);
+                            mine[y][c] = generated[0];
+                            if (generated[1])
+                                verifiedOres.verifyLog(y, c);
+                        }
+                        mineBlock(c, y, "ability", thisLuck);
+                        
+                    }
+                }
+                newX = x - nums[index];
+                break;
+            case "up":
+                for (let r = y; r >= y - nums[index]; r--) {
+                    if (mine[r] != undefined) {
+                        if (mine[r][x] === "⬜") {
+                            generated = generateBlock(thisLuck, [r, x]);
+                            mine[r][x] = generated[0];
+                            if (generated[1])
+                                verifiedOres.verifyLog(r, x);
+                        }
+                        if (mine[r][x] != undefined) {
+                            mineBlock(x, r, "ability", thisLuck);
+                        }
+                    }
+                }
+                newY = y - nums[index];
+                break;
+            case "right":
+                for (let c = x; c <= x + nums[index]; c++) {
+                    if (mine[y] != undefined && mine[y][c] != undefined) {
+                        if (mine[y][c] === "⬜") {
+                            generated = generateBlock(thisLuck, [y, c]);
+                            mine[y][c] = generated[0];
+                            if (generated[1])
+                                verifiedOres.verifyLog(y, c);
+                        }
+                        mineBlock(c, y, "ability", thisLuck); 
+                    }
+                }
+                newX = x + nums[index];
+                break;
+        }
+        index++;
+        dirNum++;
+        if (index < nums.length) {
+            pickaxeAbility12(newX, newY, boost, index, dirNum);
+        } else {
+            displayArea();
+        }
+        resolve(true);
     displayArea();
     setTimeout(() => {
         resolve(true);
