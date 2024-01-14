@@ -335,7 +335,7 @@ function updateActiveRecipe() {
                 let parent = recipeElements[0][i];
                 let elements = parent.children;
                 for (let j = 0; j < elements.length - 1; j++) {
-                    elements[j].innerHTML = pickaxeRecipes[i][j][0] + " " + oreList[pickaxeRecipes[i][j][0]][1][0] + "/" + pickaxeRecipes[i][j][1];
+                    elements[j].innerHTML = pickaxeRecipes[i][j][0] + " " + oreList[pickaxeRecipes[i][j][0]][1][0].toLocaleString() + "/" + pickaxeRecipes[i][j][1].toLocaleString();
                     if (oreList[pickaxeRecipes[i][j][0]][1][0] >= pickaxeRecipes[i][j][1])
                         elements[j].style.color = "green";
                     else
@@ -349,7 +349,7 @@ function updateActiveRecipe() {
                 let parent = recipeElements[1][i];
                 let elements = parent.children;
                 for (let j = 0; j < elements.length - 1; j++) {
-                    elements[j].innerHTML = gearRecipes[i][j][0] + " " + oreList[gearRecipes[i][j][0]][1][0] + "/" + gearRecipes[i][j][1];
+                    elements[j].innerHTML = gearRecipes[i][j][0] + " " + oreList[gearRecipes[i][j][0]][1][0].toLocaleString() + "/" + gearRecipes[i][j][1].toLocaleString();
                     if (oreList[gearRecipes[i][j][0]][1][0] >= gearRecipes[i][j][1])
                         elements[j].style.color = "green";
                     else
