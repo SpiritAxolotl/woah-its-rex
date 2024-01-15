@@ -74,5 +74,8 @@ class secureLogs {
     #reloadLogs(output) {
         document.getElementById("generatedLogs").innerHTML = output;
     }
+    getLuckBoosts() {
+        return this.#maxLuck;
+    }
 }
 let verifiedOres = new secureLogs();
