@@ -40,7 +40,6 @@ let currentPickaxe = 0;
 function init() {
     let canContinue = false;
     createInventory();
-    createIndex();
     createMine();
     let playedBefore = localStorage.getItem("playedBefore");
     if (playedBefore)
@@ -54,7 +53,7 @@ function init() {
         createPickaxeRecipes();
         createGearRecipes();
         document.getElementById('dataText').value = "";
-        
+        createIndex();
     }
 }
 
@@ -258,8 +257,14 @@ function displayArea() {
         let output ="";
         let constraints = getParams(9, 9);
         for (let r = curY - constraints[1]; r <= curY + 9 + (9-constraints[1]); r++) {
-            for (let c = curX - constraints[0]; c <= curX + 9 + (9-constraints[0]); c++)
+            for (let c = curX - constraints[0]; c <= curX + 9 + (9-constraints[0]); c++) {
+                /*if (mine[r][c] === "⚪") {
+                    output += "<span style='opacity:0;'>" + mine[r][c] + "</span>"
+                } else {
+                    output += mine[r][c];
+                }*/
                 output += mine[r][c];
+            }  
             output += "<br>";
         }
         document.getElementById("blockDisplay").innerHTML = output;
@@ -302,19 +307,25 @@ function createInventory() {
 }
 
 function createIndex() {
+    document.getElementById("indexDisplay").innerHTML = "";
     let num = 0;
     let output = "";
+    let multi = verifiedOres.getLuckBoosts()[currentPickaxe];
+    if (gears[1])
+        multi *= 1.1;
+    if (gears[5]) 
+        multi *= 1.6;
     for (let i = 0; i < allLayers.length - 2; i++) {
         for (let propertyName in allLayers[i]) {
             num = (Math.round(1/(oreList[propertyName][0])));
             if (num > 2000000 && num < 5000000000)
-                output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0]))).toLocaleString() + " | " + (i * 2000) + "-" + ((i+1) * 2000) + "m<br>";
+                output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0] * multi))).toLocaleString() + " | " + (i * 2000) + "-" + ((i+1) * 2000) + "m<br>";
         }
         output += "--------------<br>";
     }
     for (let propertyName in oreList) {
         if (Math.round(1/(oreList[propertyName][0]) <= 2000000 && Math.round(1/(oreList[propertyName][0]) > 1)))
-            output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0]))).toLocaleString() + " | Everywhere<br>";
+            output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0] * multi))).toLocaleString() + " | Everywhere<br>";
     }
     document.getElementById("indexDisplay").innerHTML = output;
 }
