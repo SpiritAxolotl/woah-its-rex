@@ -105,7 +105,7 @@ function mineResetAid() {
         let x = 1000000000;
         let y = curY;
         for (let r = y - 50; r < y + 50; r++) {
-            if(mine[r] === undefined) {
+            if(r > -1 && mine[r] === undefined) {
                 mine[r] = [];
             }
             for (let c = x - 50; c < x + 50; c++) {

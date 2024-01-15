@@ -385,6 +385,7 @@ function craftPickaxe(num) {
         temp[temp.length - 1].innerHTML = "Equipped!";
         currentPickaxe = num;
     }
+    createIndex();
 }
 function craftGear(num) {
     canCraft = true;
@@ -406,6 +407,7 @@ function craftGear(num) {
             gears[num - 1] = true;
         }
     }
+    createIndex();
     if (num === 10)
         gearAbility2();
 }
