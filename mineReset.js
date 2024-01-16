@@ -109,7 +109,8 @@ function mineResetAid() {
                 mine[r] = [];
             }
             for (let c = x - 50; c < x + 50; c++) {
-                mine[r][c] = "⬜";
+                if (mine[r] != undefined)
+                    mine[r][c] = "⬜";
             }
         }
         checkAllAround(curX, curY, 1);

@@ -130,7 +130,7 @@ function pickaxeAbility1(x, y, size, customLuck, boost) {
         displayArea();
         setTimeout(() => {
             resolve(true);
-        }, 5);
+        }, 1);
     }
     });
 }
@@ -176,7 +176,7 @@ function pickaxeAbility2(x, y, boost) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -207,7 +207,7 @@ function pickaxeAbility3(x, y, boost) {
     }
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -221,7 +221,7 @@ function pickaxeAbility4(x, y, boost) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -270,7 +270,7 @@ function pickaxeAbility5(x, y, boost) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -298,7 +298,7 @@ function pickaxeAbility6(x, y, boost) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -343,7 +343,7 @@ function pickaxeAbility7(x, y, boost) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -400,7 +400,7 @@ function pickaxeAbility8(x, y, reps, boost) {
     }
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -469,7 +469,7 @@ function pickaxeAbility9(x, y, reps, boost) {
     }
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -533,7 +533,7 @@ function pickaxeAbility10(x, y, boost) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -563,7 +563,7 @@ function pickaxeAbility11(x, y, boost) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
 
@@ -651,6 +651,6 @@ function pickaxeAbility12(x, y, boost, index, dirNum) {
     displayArea();
     setTimeout(() => {
         resolve(true);
-    }, 5);
+    }, 1);
     });
 }
