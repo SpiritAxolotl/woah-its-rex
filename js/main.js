@@ -1,3 +1,6 @@
+const debug = window.location.href.match(/^https?:\/\/127\.0\.0\.1:\d{4}/)[0] !== null;
+let debugLuck = "";
+let currLuck = 1;
 let mine = []; //[y, x]
 let curX = 1000000000; //large for a reason
 let curY = 0;
@@ -426,9 +429,9 @@ function spawnMessage(block, location) {
     let output = "";
     let addToLatest = true;
     if (currentPickaxe === 5) latestSpawns.push({"block": block, "y": location["y"], "x": location["x"]});
-    else if (currentPickaxe < 7) {
+    else if (currentPickaxe < 6) {
         if (gears["ore-tracker"]) latestSpawns.push({"block": block, "y": location["y"], "x": location["x"]});
-        else latestSpawns.push([block, undefined, undefined]);
+        else latestSpawns.push({"block": block, "y": undefined, "x": undefined});
     } else if (oreList[block]["prob"] > 2000000) {
         if (gears["ore-tracker"]) latestSpawns.push({"block": block, "y": location["y"], "x": location["x"]});
         else latestSpawns.push({"block": block, "y": undefined, "x": undefined});
@@ -437,7 +440,7 @@ function spawnMessage(block, location) {
     if (latestSpawns.length > 10) latestSpawns.splice(0, 1);
     if (addToLatest) {
         for (let i = latestSpawns.length - 1; i >= 0; i--) {
-            output += "<span class='emoji'>" + latestSpawns[i][0] + "</span> 1/" + oreList[latestSpawns[i]]["prob"].toLocaleString();
+            output += "<span class='emoji'>" + latestSpawns[i]["block"] + "</span> 1/" + oreList[latestSpawns[i]["block"]]["prob"].toLocaleString();
             if (latestSpawns[i]["y"] !== undefined && latestSpawns[i]["x"] !== undefined)
                 output += " | X: " + (latestSpawns[i]["x"] - 1000000000) + ", Y: " + (-latestSpawns[i]["y"]) + "<br>";
             else output += "<br>";

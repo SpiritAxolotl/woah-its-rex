@@ -307,7 +307,7 @@ function updateActiveRecipe() {
             if (isVisible(recipeElements["pickaxes"][pick])) {
                 for (let ingredient in pickaxeRecipes[pick]) {
                     let pickaxeDisplay = document.getElementById(ingredient + "pickaxeRecipe" + pick + "Display");
-                    pickaxeDisplay.innerHTML = ingredient + " " + oreList[ingredient]["inv"]["normal"] + "/" + pickaxeRecipes[pick][ingredient];
+                    pickaxeDisplay.innerHTML = "<span class='emoji'>" + ingredient + "</span> " + oreList[ingredient]["inv"]["normal"] + "/" + pickaxeRecipes[pick][ingredient];
                     if (oreList[ingredient]["inv"]["normal"] >= pickaxeRecipes[pick][ingredient])
                         pickaxeDisplay.style.color = "green";
                     else
@@ -320,7 +320,7 @@ function updateActiveRecipe() {
             if (isVisible(recipeElements["gears"][gear])) {
                 for (let ingredient in gearRecipes[gear]) {
                     let gearDisplay = document.getElementById(ingredient + "gearRecipe" + snakeToCamel(gear, true) + "Display");
-                    gearDisplay.innerHTML = ingredient + " " + oreList[ingredient]["inv"]["normal"] + "/" + gearRecipes[gear][ingredient];
+                    gearDisplay.innerHTML = "<span class='emoji'>" + ingredient + "</span> " + oreList[ingredient]["inv"]["normal"] + "/" + gearRecipes[gear][ingredient];
                     if (oreList[ingredient]["inv"]["normal"] >= gearRecipes[gear][ingredient])
                         gearDisplay.style.color = "green";
                     else
