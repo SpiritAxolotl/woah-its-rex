@@ -4,6 +4,7 @@ let curY = 0;
 let currentDisplay = ""
 let totalMined = 0;
 let blocksRevealedThisReset = 0;
+let baseMineCapacity = 40000;
 let mineCapacity = 40000; // in case this ever needs to be raised
 let canMine = false;
 let lastDirection = "";
@@ -379,8 +380,13 @@ function spawnMessage(block, location) {
         }
     else
         addToLatest = false;
-    if (gears[3])
-        loggedFinds.push([location[0], location[1]]);
+    if (gears[3]) {
+        if (currentPickaxe < 10) {
+            loggedFinds.push([location[0], location[1]]);
+        } else if (1 / (oreList[block][0]) > 2000001) {
+            loggedFinds.push([location[0], location[1]]);
+        }
+    }
     if (latestSpawns.length > 10)
         latestSpawns.splice(0, 1);
     if (addToLatest) {
