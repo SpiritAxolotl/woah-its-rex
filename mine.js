@@ -298,3 +298,10 @@ function getParams(distanceX, distanceY, x, y) {
         displayUp = y;
     return [displayLeft, displayUp];
 }
+
+function updateCapacity(value) {
+    if (!(isNaN(value)) && value > 0) {
+        baseMineCapacity = value;
+        mineCapacity = value;
+    }        
+}

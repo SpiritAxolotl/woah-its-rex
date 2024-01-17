@@ -7,21 +7,21 @@ function resetMine() {
     blocksRevealedThisReset = 0;
     currentLayer = allLayers[0];
     createMine();
-    mineCapacity = 40000;
+    mineCapacity = baseMineCapacity;
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
 }
 let resetting = false;
 async function mineReset() {
     if (!resetting) {
         resetting = true;
-        mineCapacity = 40000;
+        mineCapacity = baseMineCapacity;
         const temp = curDirection;
         curDirection = "";
         const temp2 = await collectOres(temp);
-        loggedFinds = [];
         canMine = await mineResetAid();
         checkAllAround(curX, curY, 1);
         mine[curY][curX] = "⛏️";
+        loggedFinds = [];
         displayArea();
         goDirection(temp);
         resetting = false;
@@ -93,7 +93,7 @@ function collectOres(temp) {
     }
     setTimeout(() => {
         resolve(true);
-    }, 200);
+    }, 1000);
     });
 }
 

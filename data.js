@@ -18,7 +18,7 @@ function saveAllData() {
         dataStorage[0].push([propertyName, [oreList[propertyName][1]]]);
     dataStorage[1].push([pickaxes, currentPickaxe]);
     dataStorage[2].push(totalMined)
-    dataStorage[3].push(canPlay, document.getElementById("musicVolume").value, document.getElementById("spawnVolume").value, document.getElementById("musicButton").innerHTML);
+    dataStorage[3].push(canPlay, document.getElementById("musicVolume").value, document.getElementById("spawnVolume").value, document.getElementById("musicButton").innerHTML, baseMineCapacity);
     dataStorage[4].push(gears);
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
@@ -68,6 +68,10 @@ function loadAllData() {
                 }, 100);
             }
         }
+        if (data[3][4] != undefined && !(isNaN(data[3][4]) && data[3][4] > 0)) {
+            baseMineCapacity = data[3][4];
+            mineCapacity = data[3][4];
+        }
         if (data[4] !== undefined || data[4] !== null) {
             for (let i = 0; i < data[4][0].length; i++)
                 gears[i] = data[4][0][i];
@@ -75,7 +79,6 @@ function loadAllData() {
         if (oreList["🎂"][1][0] > 0 || gears[9])
             document.getElementById("sillyRecipe").style.display = "block";
         localStorage.removeItem("dataBackup");
-        warnBeforeClosing();
         return true;
     } catch(error) {
         console.log(error);
@@ -169,12 +172,4 @@ function hideData() {
     canMine = true;
     document.getElementById("dataExport").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
-}
-
-async function warnBeforeClosing() {
-    window.onbeforeunload = null;
-    if (debug) return;
-    setTimeout(() => {
-        window.onbeforeunload = () => '';
-    }, "60000");
 }
