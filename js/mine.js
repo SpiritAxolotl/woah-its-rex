@@ -96,7 +96,7 @@ function prepareArea(facing) {
 
 //MINING
 
- function mineBlock(x, y, cause, luck) {
+function mineBlock(x, y, cause, luck) {
     if (mine[y][x] !== "⚪" && mine[y][x] !== "⛏️" && mine[y][x] !== "⬜") {
         let ore = mine[y][x];
         if (ore === "🟩") ore = "🟫";
@@ -153,6 +153,7 @@ const variantMultis = {
 }
 
 function generateBlock(luck, location) {
+    if (debug && typeof debugLuck === "number") luck = debugLuck;
     let hasLog = false;
     const probabilityTable = currentLayer;
     let blockToGive = "";

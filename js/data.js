@@ -1,4 +1,3 @@
-const debug = window.location.href.match(/^https?:\/\/127\.0\.0\.1:\d{4}/)[0] !== null;
 function saveAllData() {
     localStorage.setItem("game2DataChanges", true);
     let dataStorage = {
