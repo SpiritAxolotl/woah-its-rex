@@ -140,7 +140,7 @@ let oreList = {
 }
 
 //sets the inventory to 0
-for (let ore of Object.keys(oreList))
+for (let ore in oreList)
     oreList[ore]["inv"] = {"normal": 0, "electrified": 0, "radioactive": 0, "explosive": 0};
 
 //SPAWNS ON ALL LAYERS
