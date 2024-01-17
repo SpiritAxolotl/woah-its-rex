@@ -16,18 +16,23 @@
 
 #inventoryDisplay {
   overflow-y: scroll;
-  height: 77.5%;
+  justify-self: stretch;
   border-style: solid;
   border-color: #313131;
   border-left: none;
   border-right: none;
   margin-top: 0.35em;
+  flex-grow: 1;
 }
 
 #inventoryDisplay > * {
-  font-size: 1vw;
+  font-size: 0.85em;
   height: 10%;
   text-align: center;
+}
+
+#displayedRecipe {
+  margin-bottom: 0;
 }
 
 .oreDisplay {
@@ -38,9 +43,9 @@
   width: 6vw;
 }
 
-.craftingAmountsDisplay {
+/*.craftingAmountsDisplay {
   font-size: 1vw;
-}
+}*/
 
 #displayRecipe > div > p {
   margin-bottom: 0.1rem;
@@ -50,18 +55,17 @@
   text-align: left !important;
   border-style: solid;
   border-color: #959595;
-  border-radius: 1px;
-  padding-left: 0.1em;
-  padding-right: 0.1em;
+  border-radius: 0.2em;
+  padding: 0 0.25em;
   float: left;
   width: 50%;
-  font-size: 1vw;
-  min-height: 15em;
-  max-height: 15em;
+  font-size: 0.5em;
+  /*min-height: 15em;
+  max-height: 15em;*/
 }
 
 .itemDescription {
-  font-size: 1vw;
+  font-size: 0.75em;
 }
 
 .gearCrafts {
@@ -73,14 +77,11 @@
 }
 
 .inventoryButtons {
-  /*border-style: solid;
-  border-color: black;*/
-  font-size: 1vw;
   width: 100%;
 }
 
 #mineResetProgress {
-  font-size: 1vw;
+  /* font-size: 1vw; */
   padding-top: 0.75em;
 }
 
@@ -163,12 +164,12 @@ p {
 }
 
 button {
-  font-size: 1vw;
+  font-size: 0.75em;
   background-color: #494949;
   border-style: solid;
   border-color: white;
   border-width: 1px;
-  border-radius: 2px;
+  border-radius: 0.25em;
   color: white;
   font-family: "Arial";
   text-align: center;
@@ -204,6 +205,9 @@ button {
 }
 #col-3 {
   width: 25%;
+  /*display: flex;
+  flex-direction: column;
+  align-items: center;*/
 }
 
 #musicStuff > label {
@@ -219,20 +223,22 @@ button {
 
 #discord {
   display: flex;
+  /*align-self: flex-end;*/
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  & > img {
-    width: 3em;
-    height: 3em;
-    aspect-ratio: 1;
-  }
-  & > p {
-    /*width: 100%;*/
-    font-size: 100%;
-    margin: 0;
-    text-wrap: nowrap;
-  }
+  justify-self: end;
+}
+#discord > img {
+  width: 3em;
+  height: 3em;
+  aspect-ratio: 1;
+}
+#discord > p {
+  /*width: 100%;*/
+  font-size: 100%;
+  margin: 0;
+  text-wrap: nowrap;
 }
 
 #displayRecipe > div {
@@ -241,7 +247,7 @@ button {
 
 #latestSpawns, #latestFinds {
   height: 100%;
-  font-size: 0.8vw;
+  /*font-size: 0.8vw;*/
   /*overflow-y: scroll;*/
 }
 

@@ -33,7 +33,7 @@ function prepareArea(facing) {
             break;
         case "d":
             for (let r = curY - constraints[1]; r < curY + 50; r++) {
-                if (mine[r] === undefined) 
+                if (mine[r] === undefined)
                     mine[r] = [];
                 if (mine[r][curX + 50] === undefined)
                     mine[r][curX + 50] = r === 0 ? "🟩" : "⬜";
@@ -54,29 +54,29 @@ function prepareArea(facing) {
     let generated;
     if (x - 1 >= 0 && mine[y][x - 1] === "⬜") {
         generated = generateBlock(luck, {"y": y, "x": x-1});
-        mine[y][x - 1] = generated[0];
-        if (generated[1])
+        mine[y][x - 1] = generated["ore"];
+        if (generated["hasLog"])
             verifiedOres.verifyLog(y, x-1);
         blocksRevealedThisReset++;
     }
     if (mine[y][x + 1] === "⬜") {
         generated = generateBlock(luck, {"y": y, "x": x+1});
-        mine[y][x + 1] = generated[0];
-        if (generated[1])
+        mine[y][x + 1] = generated["ore"];
+        if (generated["hasLog"])
             verifiedOres.verifyLog(y, x+1);
         blocksRevealedThisReset++;
     }
     if (mine[y + 1][x] === "⬜") {
         generated = generateBlock(luck, {"y": y+1, "x": x});
-        mine[y + 1][x] = generated[0];
-        if (generated[1])
+        mine[y + 1][x] = generated["ore"];
+        if (generated["hasLog"])
             verifiedOres.verifyLog(y+1, x);
         blocksRevealedThisReset++;
     }
     if (y - 1 >= 0 && mine[y - 1][x] === "⬜") {
         generated = generateBlock(luck, {"y": y-1, "x": x});
-        mine[y - 1][x] = generated[0];
-        if (generated[1])
+        mine[y - 1][x] = generated["ore"];
+        if (generated["hasLog"])
             verifiedOres.verifyLog(y-1, x);
         blocksRevealedThisReset++;
     }
@@ -125,7 +125,7 @@ const variantMultis = {
     "explosive": 500
 };
 
- function giveBlock(type, x, y, fromReset) {
+ function giveBlock(ore, x, y, fromReset) {
     if (gears["layer-materializer"]) {
         const blocks = Object.keys(...currentLayer);
         const block = blocks[blocks.length-1];
@@ -133,33 +133,33 @@ const variantMultis = {
         updateInventory(block, "normal");
     }
     
-    if (type !== "⛏️") {
+    if (ore !== "⛏️") {
         let variant = 1;
-        if (type === "🟩") type = "🟫";
+        if (ore === "🟩") ore = "🟫";
         let rand = random(1, 500);
         if (rand % 50 === 0) variant = 2;
         if (rand % 250 === 0) variant = 3;
         if (rand % 500 === 0) variant = 4;
-        if (oreList[type]["prob"] >= 160000000)
+        if (oreList[ore]["prob"] >= 160000000)
             verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant-1]);
-        if (oreList[type]["prob"] >= 750000) {
+        if (oreList[ore]["prob"] >= 750000) {
             if (gears["energy-siphoner"]) gearAbility1();
-            if (currentPickaxe < 6 || oreList[type]["prob"] > 2000000)
-                logFind(type, x, y, variantNamesEmojis[variant-1], totalMined, fromReset);
+            if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
+                logFind(ore, x, y, variantNamesEmojis[variant-1], totalMined, fromReset);
         }
-        oreList[type]["inv"][variantNames[variant-1].toLowerCase()]++;
-        updateInventory(type, variantNames[variant-1]);
+        oreList[ore]["inv"][variantNames[variant-1].toLowerCase()]++;
+        updateInventory(ore, variantNames[variant-1]);
     }
 }
 
 function generateBlock(luck, location) {
     let hasLog = false;
-    let probabilityTable = currentLayer;
+    const probabilityTable = currentLayer;
     let blockToGive = "";
     let summedProbability = 0;
-    let chosenValue = Math.random();
-    chosenValue /= luck;
-    for (let ore of Object.keys(probabilityTable)) {
+    const chosenValue = Math.random()/luck;
+    const probTable = sortObj(probabilityTable).reverse();
+    for (let ore of probTable) {
         summedProbability += 1/probabilityTable[ore];
         if (chosenValue < summedProbability) {
             blockToGive = ore;
@@ -170,8 +170,8 @@ function generateBlock(luck, location) {
     if (probability >= 750000) {
         //TODO: make a better less hardcoded system for replacing blocks
         if (blockToGive === "🧌")
-                localStorage.setItem("nyehehehehehe", true);
-                blockToGive = "♾️";
+            localStorage.setItem("nyehehehehehe", true);
+            blockToGive = "♾️";
         if (probability > 160000000) {
             verifiedOres.createLog(location["y"], location["x"], blockToGive, new Error(), luck);
             hasLog = true;
@@ -185,10 +185,10 @@ function generateBlock(luck, location) {
         else if (probability >= 5000000) {
             if (currentPickaxe < 8 && !gears["infinity-collector"]) playSound("transcendent");
         } else if (probability >= 750000) {
-            if (currentPickaxe < 7) playSound("exotic");
+            if (currentPickaxe < 6) playSound("exotic");
         }
     }
-    return [blockToGive, hasLog];
+    return {"ore": blockToGive, "hasLog": hasLog};
 }
 
 //TELEPORTING
@@ -220,9 +220,8 @@ function toLocation() {
     y = Number(y.substring(0, y.length - 1));
     for (let r = y - 50; r < y + 50; r++) {
         if(mine[r] === undefined) mine[r] = [];
-        for (let c = x - 50; c < x + 50; c++) {
+        for (let c = x - 50; c < x + 50; c++)
             if (mine[r][c] === undefined) mine[r][c] = "⬜";
-        }
     }
     setLayer(y - 50);
     mine[curY][curX] = "⚪";

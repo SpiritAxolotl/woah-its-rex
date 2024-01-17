@@ -1,7 +1,7 @@
 let mine = []; //[y, x]
-let curX = 1000000000;
+let curX = 1000000000; //large for a reason
 let curY = 0;
-let currentDisplay = ""
+let currentDisplay = "";
 let totalMined = 0;
 let blocksRevealedThisReset = 0;
 let mineCapacity = 40000; // in case this ever needs to be raised
@@ -65,8 +65,26 @@ function snakeToCamel(str, startUpper) {
     return camel;
 }
 function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    return str.replace(/(?:^|\s)\S/g, function (match) {
+        return match.toUpperCase();
+    });
 }
+function normalize(str, cap) {
+    const space = str.replace(/[-_]/g, " ").replace(/\d+/, function(match) {
+        return romanize(match);
+    });
+    return cap ? capitalize(space) : space;
+}
+function romanize(num) {
+    const roman = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
+    var str = "";
+    for (let i of Object.keys(roman)) {
+        const q = Math.floor(num / roman[i]);
+        num -= q * roman[i];
+        str += i.repeat(q);
+    }
+    return str;
+  }
 
 //IMPORTANT
 
@@ -85,6 +103,8 @@ function init() {
         createGearRecipes();
         document.getElementById("dataText").value = "";
     }
+    for (let element of document.getElementsByClassName("itemDescription"))
+        invisible(element)
 }
 
 let chill;
@@ -188,6 +208,27 @@ function random(upper) {
 }
 function random(lower, upper) {
     return Math.floor(Math.random()*(upper-lower+1)+lower);
+}
+
+function searchObj(arr, x, start, end) {
+    let mid = Math.floor((start + end) * 0.5);
+    if (start > end || arr[mid] === x)
+        return mid + 1;
+    else if (arr[mid] > x)
+        return searchObj(arr, x, start, mid - 1);
+    else
+        return searchObj(arr, x, mid + 1, end);
+}
+
+function sortObj(obj) {
+    let sortedkeys = [];
+    let sortedvals = [];
+    for (let thing in obj) {
+        const index = searchObj(sortedvals, obj[thing], 0, sortedvals.length-1);
+        sortedvals.splice(index, 0, obj[thing]);
+        sortedkeys.splice(index, 0, thing);
+    }
+    return sortedkeys;
 }
 
 document.addEventListener("keydown", (event) => {
@@ -321,7 +362,7 @@ function switchInventory() {
 }
 
 function createInventory() {
-    for (let ore of Object.keys(oreList)) {
+    for (let ore in oreList) {
         for (let variant of variantNames) {
             let element = document.createElement("p");
             element.id = ore + variant;
@@ -337,14 +378,14 @@ function createIndex() {
     let prob = 0;
     let output = "";
     for (let i = 0; i < allLayers.length - 2; i++) {
-        for (let ore of Object.keys({...allLayers[i], ...spawnsEverywhere})) {
+        for (let ore in {...allLayers[i], ...spawnsEverywhere}) {
             prob = oreList[ore]["prob"];
             if (prob > 2000000 && prob < 5000000000)
                 output += "<span class='emoji'>" + ore + "</span> | 1/" + prob.toLocaleString() + " | " + (i * 2000) + "-" + ((i+1) * 2000) + "m<br>";
         }
         output += "--------------<br>";
     }
-    for (let ore of Object.keys(oreList)) {
+    for (let ore in oreList) {
         if (oreList[ore]["prob"] <= 2000000 && oreList[ore]["prob"] > 1)
             output += "<span class='emoji'>" + ore + "</span> | 1/" + oreList[ore]["prob"].toLocaleString() + " | Everywhere<br>";
     }
@@ -368,8 +409,10 @@ function showIndex() {
 
 function updateInventory(ore, variant) {
     document.getElementById(ore + capitalize(variant)).innerHTML = "<span class='emoji'>" + ore + "</span> | 1/" + (oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString() + " | x" + oreList[ore]["inv"][variant.toLowerCase()];
-    if (oreList[ore]["inv"][variant.toLowerCase()] > 0) visible(document.getElementById(ore + capitalize(variant)));
-    else invisible(document.getElementById(ore + capitalize(variant)));
+    if (oreList[ore]["inv"][variant.toLowerCase()] > 0)
+        visible(document.getElementById(ore + capitalize(variant)));
+    else
+        invisible(document.getElementById(ore + capitalize(variant)));
 }
 
 //SPAWNS AND FINDS
@@ -388,7 +431,7 @@ function spawnMessage(block, location) {
         else latestSpawns.push([block, undefined, undefined]);
     } else if (oreList[block]["prob"] > 2000000) {
         if (gears["ore-tracker"]) latestSpawns.push({"block": block, "y": location["y"], "x": location["x"]});
-        else latestSpawns.push([block, undefined, undefined]);
+        else latestSpawns.push({"block": block, "y": undefined, "x": undefined});
     } else addToLatest = false;
     if (gears["real-vitriol"]) loggedFinds.push({"y": location["y"], "x": location["x"]});
     if (latestSpawns.length > 10) latestSpawns.splice(0, 1);
