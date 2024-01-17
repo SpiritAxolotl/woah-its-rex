@@ -37,15 +37,18 @@ class secureLogs {
         }
     }
     verifyFind(block, r, c, variant) {
+        let verified = false;
         for (let i = 0; i < this.#verifiedLogs.length; i++) {
             if (this.#verifiedLogs[i][1][0] === r && this.#verifiedLogs[i][1][1] === c) {
                 if (block === this.#verifiedLogs[i][0]) {
                     this.#verifiedLogs[i][3] = true;
                     this.#verifiedLogs[i][4] = variant;
+                    verified = true;
                     break;
                 }
             }
         }
+        console.log(verified);
     }
     showLogs() {
         if (document.getElementById("dataExport").style.display === "block") {
@@ -59,7 +62,7 @@ class secureLogs {
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
                     let multi = multis[names.indexOf(this.#verifiedLogs[i][4])];
-                    output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + " " + this.#verifiedLogs[i][4] + ", ";
+                    output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + ", " + this.#verifiedLogs[i][4] + ", ";
                     output += this.#verifiedLogs[i][1][0] + ", ";
                     output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + Math.log10(this.#verifiedLogs[i][5] * this.#verifiedLogs[i][1][0]) + "<br>";
                 }
