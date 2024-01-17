@@ -2,11 +2,11 @@ const debug = window.location.href.match(/^https?:\/\/127\.0\.0\.1:\d{4}/)[0] !=
 function saveAllData() {
     localStorage.setItem("game2DataChanges", true);
     let dataStorage = {
-        "ores": [],
-        "pickaxes": [],
-        "stats": [],
-        "settings": [],
-        "gears": []
+        "ores": {},
+        "pickaxes": {},
+        "stats": {},
+        "settings": {},
+        "gears": {}
     };
     
     for (let ore in oreList)
@@ -27,21 +27,23 @@ function loadAllData() {
     try {
         const data = JSON.parse(localStorage.getItem("playerData"));
         //if (data["ores"] !== undefined) {
-        for (let ore of Object.keys(data["ores"])) {
-            if (oreList[data["ores"][ore]] !== undefined)
-                oreList[data["ores"][ore]]["inv"] = data["ores"][ore]["inv"];
+        for (let ore in data["ores"]) {
+            if (oreList[data["ores"][ore]] !== undefined) {
+                for (let variant of variantNames)
+                    oreList[ore]["inv"][variant.toLowerCase()] = data["ores"][ore]["inv"][variant.toLowerCase()];
+            }
         }
         if (data["pickaxes"]["inv"] !== undefined) {
-            for (let pick of Object.keys(data["pickaxes"]["inv"]))
-                pickaxes["inv"][pick] = data["pickaxes"]["inv"][pick];
+            for (let pick in data["pickaxes"]["inv"])
+                pickaxes[pick] = data["pickaxes"]["inv"][pick];
         }
         if (data["pickaxes"]["curr"] !== undefined)
             currentPickaxe = data["pickaxes"]["curr"];
         totalMined = data["stats"]["totalMined"] || 0;
         document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
-        for (let ore of Object.keys(oreList)) {
+        for (let ore in oreList) {
             if (document.getElementById(ore + "Normal") !== null) {
-                for (let variant of Object.keys(oreList[ore]["inv"])) {
+                for (let variant in oreList[ore]["inv"]) {
                     updateInventory(ore, variant);
                     if (oreList[ore]["inv"][variant] > 0)
                         visible(document.getElementById(ore+capitalize(variant)));
@@ -49,7 +51,7 @@ function loadAllData() {
             }
         }
         if (data["settings"]["mutedSounds"] !== undefined) {
-            for (let sound of Object.keys(data["settings"]["mutedSounds"])) {
+            for (let sound in data["settings"]["mutedSounds"]) {
                 if (!data["settings"]["mutedSounds"][sound])
                     document.getElementById("mute" + capitalize(sound)).click();
             }
