@@ -272,9 +272,9 @@ function displayArea() {
     } else {
         document.getElementById("blockDisplay").innerHTML = "DISABLED";
     }
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset.toLocaleString() + "/" + mineCapacity.toLocaleString() + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
-    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: " + (-curY);
+    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000).toLocaleString() + " | Y: " + (-curY).toLocaleString();
 }
 
 //HTML EDITING
@@ -297,11 +297,12 @@ function switchInventory() {
 function createInventory() {
     for (let propertyName in oreList) {
         for (let i = 1; i < 5; i++) {
+            let oreNum = oreList[propertyName][1][i - 1];
             let tempElement = document.createElement('p');
             tempElement.id = (propertyName + i);
             tempElement.classList = "oreDisplay";
             tempElement.style.display = "none";
-            tempElement.innerHTML = propertyName + " | 1/" + ((Math.round( 1 / oreList[propertyName][0])).toLocaleString() * multis[i - 1]).toLocaleString() + " | x" + oreList[propertyName][1][i - 1];
+            tempElement.innerHTML = propertyName + " | 1/" + ((Math.round( 1 / oreList[propertyName][0])).toLocaleString() * multis[i - 1]).toLocaleString() + " | x" + oreNum.toLocaleString();
             document.getElementById(("inventory") + i).appendChild(tempElement);
         }
     }
@@ -348,7 +349,7 @@ function showIndex() {
 
 let variant = 1;
 function updateInventory(type, inv) {
-    document.getElementById(type + inv).innerHTML = type + " | 1/" + ((Math.round( 1 / oreList[type][0])) * multis[inv - 1]).toLocaleString() + " | x" + oreList[type][1][inv - 1];
+    document.getElementById(type + inv).innerHTML = type + " | 1/" + ((Math.round( 1 / oreList[type][0])) * multis[inv - 1]).toLocaleString() + " | x" + oreList[type][1][inv - 1].toLocaleString();
     if (oreList[type][1][inv - 1] > 0)
         document.getElementById(type + inv).style.display = "block";
     else
@@ -393,12 +394,12 @@ function spawnMessage(block, location) {
         for (let i = latestSpawns.length - 1; i >= 0; i--) {
             output += latestSpawns[i][0] + " 1/" + (Math.round(1 / (oreList[latestSpawns[i][0]][0]))).toLocaleString();
             if (latestSpawns[i][1] !== undefined)
-                output += " | X: " + (latestSpawns[i][1] - 1000000000) + ", Y: " + -(latestSpawns[i][2]) + "<br>";
+                output += " | X: " + (latestSpawns[i][1] - 1000000000).toLocaleString() + ", Y: " + (-(latestSpawns[i][2])).toLocaleString() + "<br>";
             else
                 output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
-        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + (currentPickaxe === 5 || gears[0]?"<br>X: " + (location[1] - 1000000000) + "<br>Y: " + -(location[0]):"");
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + (currentPickaxe === 5 || gears[0]?"<br>X: " + (location[1] - 1000000000).toLocaleString() + "<br>Y: " + (-(location[0])).toLocaleString():"");
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
@@ -415,9 +416,9 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     for (let i = latestFinds.length - 1; i >= 0; i--) {
         output += latestFinds[i][3] + " ";
         if (latestFinds[i][5])
-            output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | FROM RESET<br>"
+            output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000).toLocaleString() + ", Y: " + (-(latestFinds[i][2])).toLocaleString() + " | FROM RESET<br>"
         else
-            output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000) + ", Y: " + -(latestFinds[i][2]) + " | At " + latestFinds[i][4].toLocaleString() +  " Mined.<br>";
+            output += latestFinds[i][0] + " | X: " + (latestFinds[i][1] - 1000000000).toLocaleString() + ", Y: " + (-(latestFinds[i][2])).toLocaleString() + " | At " + latestFinds[i][4].toLocaleString() +  " Mined.<br>";
     }
     document.getElementById("latestFinds").innerHTML = output;
 }
