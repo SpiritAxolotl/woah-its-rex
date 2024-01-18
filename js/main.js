@@ -373,9 +373,10 @@ function createInventory() {
             let element = document.createElement("p");
             element.id = ore + variant;
             element.classList.add("oreDisplay");
-            if (variant !== "Normal") invisible(element);
+            /*if (variant !== "Normal")*/
+            invisible(element);
             element.innerHTML = "<span class='emoji'>" + ore + "</span> | 1/" + (oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString() + " | x" + oreList[ore]["inv"][variant.toLowerCase()];
-            document.getElementById("inventory"+variant).appendChild(element);
+            document.getElementById("inventory" + variant).appendChild(element);
         }
     }
 }

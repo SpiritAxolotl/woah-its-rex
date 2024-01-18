@@ -40,11 +40,11 @@ function prepareArea(facing) {
             }
             break;
         case "w":
-            if (mine[curY - constraints[1]] === undefined)
-                mine[curY - constraints[1]] = [];
-            for (let x = curX - constraints[0]; x < curX + 50; x++) {
-                if (mine[curY - constraints[1]][x] === undefined)
-                    mine[curY - constraints[1]][x] = curY - constraints[1] === 0 ? "🟩" : "⬜";
+            if (mine[curY - constraints["up"]] === undefined)
+                mine[curY - constraints["up"]] = [];
+            for (let x = curX - constraints["left"]; x < curX + 50; x++) {
+                if (mine[curY - constraints["up"]][x] === undefined)
+                    mine[curY - constraints["up"]][x] = curY - constraints["up"] === 0 ? "🟩" : "⬜";
             }
             break;
     }
