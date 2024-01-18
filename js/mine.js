@@ -170,9 +170,10 @@ function generateBlock(luck, location) {
     const probability = probabilityTable[blockToGive];
     if (probability >= 750000) {
         //TODO: make a better less hardcoded system for replacing blocks
-        if (blockToGive === "🧌")
+        if (blockToGive === "🧌") {
             localStorage.setItem("nyehehehehehe", true);
             blockToGive = "♾️";
+        }
         if (probability > 160000000) {
             verifiedOres.createLog(location["y"], location["x"], blockToGive, new Error(), luck);
             hasLog = true;
@@ -185,9 +186,7 @@ function generateBlock(luck, location) {
         else if (probability >= 25000000) playSound("enigmatic");
         else if (probability >= 5000000) {
             if (currentPickaxe < 8 && !gears["infinity-collector"]) playSound("transcendent");
-        } else if (probability >= 750000) {
-            if (currentPickaxe < 6) playSound("exotic");
-        }
+        } else if (currentPickaxe < 6) playSound("exotic");
     }
     return {"ore": blockToGive, "hasLog": hasLog};
 }
