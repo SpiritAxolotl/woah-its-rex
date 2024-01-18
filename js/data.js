@@ -27,9 +27,9 @@ function loadAllData() {
         const data = JSON.parse(localStorage.getItem("playerData"));
         //if (data["ores"] !== undefined) {
         for (let ore in data["ores"]) {
-            if (oreList[data["ores"][ore]] !== undefined) {
+            if (oreList[ore] !== undefined) {
                 for (let variant of variantNames)
-                    oreList[ore]["inv"][variant.toLowerCase()] = data["ores"][ore]["inv"][variant.toLowerCase()];
+                    oreList[ore]["inv"][variant.toLowerCase()] = data["ores"][ore][variant.toLowerCase()];
             }
         }
         if (data["pickaxes"]["inv"] !== undefined) {
