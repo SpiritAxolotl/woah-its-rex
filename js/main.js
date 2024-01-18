@@ -326,13 +326,16 @@ function moveOne(dir, button) {
 
 let canDisplay = true;
 function changeCanDisplay(button) {
+    let blockDisplay = document.getElementById("blockDisplay");
     if (button.innerHTML.includes("Disable")) {
         button.innerHTML = "Enable Display";
         canDisplay = false;
-        document.getElementById("blockDisplay").innerHTML = "DISABLED";
+        blockDisplay.innerHTML = "DISABLED";
+        blockDisplay.style.letterSpacing = 0;
     } else {
         button.innerHTML = "Disable Display";
         canDisplay = true;
+        blockDisplay.style.letterSpacing = "";
         displayArea();
     }
 }
