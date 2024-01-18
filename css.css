@@ -126,7 +126,7 @@ body {
 }
 
 #blockDisplay {
-  padding: 0.5em;
+  padding: 0.5em 0;
   margin: 0;
   line-height: 1.9vw;
   letter-spacing: -0.173em;
