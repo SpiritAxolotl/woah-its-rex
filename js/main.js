@@ -1,4 +1,4 @@
-const debug = window.location.href.match(/^https?:\/\/127\.0\.0\.1:\d{4}/)[0] !== null;
+const debug = window.location.href.match(/^https?:\/\/127\.0\.0\.1:\d{4}/) !== null;
 let debugLuck = "";
 let currLuck = 1;
 let mine = []; //[y, x]
