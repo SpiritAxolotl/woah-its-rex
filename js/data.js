@@ -45,7 +45,7 @@ function loadAllData() {
                 for (let variant in oreList[ore]["inv"]) {
                     updateInventory(ore, variant);
                     if (oreList[ore]["inv"][variant] > 0)
-                        visible(document.getElementById(ore+capitalize(variant)));
+                        visible(document.getElementById(ore + capitalize(variant)));
                 }
             }
         }
@@ -80,7 +80,7 @@ function loadAllData() {
         localStorage.removeItem("dataBackup");
         warnBeforeClosing();
         return true;
-    } catch(error) {
+    } catch (error) {
         console.error(error);
         localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
         window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
@@ -124,7 +124,7 @@ function exportData() {
 
 function importData(data) {
     if (data === "") {
-        if (confirm("You are importing nothing, this will perform a hard reset on your save file. Are you sure you want to do this?")) {
+        if (confirm("You are importing nothing. This will perform a hard reset on your save file. Are you sure you want to do this?")) {
             localStorage.clear();
             location.reload();
         }
@@ -138,7 +138,7 @@ function importData(data) {
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
-            } catch(error) {
+            } catch (error) {
                 console.error(error);
                 localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
                 window.alert("DATA CORRUPTION DETECTED, CONTACT A MODERATOR IN THE DISCORD");
@@ -152,9 +152,9 @@ function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
     let downloadLink = document.createElement("a");
     downloadLink.download = fileNameToSaveAs;
     downloadLink.innerHTML = "Download File";
-    if (window.webkitURL !== null)
+    if (window.webkitURL !== null) {
         downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-    else {
+    } else {
         downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
         invisible(downloadLink);
         document.body.appendChild(downloadLink);
