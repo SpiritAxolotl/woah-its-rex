@@ -24,167 +24,167 @@
     <link rel="stylesheet" href="css.css">
 </head>
 <body>
-    <noscript>
-        <div id="noscript">
-            <p>Enable javascript dumbass</p>
-        </div>
-    </noscript>
-    <div id="pressPlay">
-        <p id="credits">
-            Game made by <code>@thecatofalltime</code> on Discord!<br>
-            Background music made by <code>@x2corp</code> on Discord!<br>
-            Spawn sounds come fron REx:R on Roblox<br>
-            Some sounds made by <code>@tevv_</code> on Discord!<br>
-            UI by <code>@Spaxolotl</code> on Discord!
-        </p>
-        <button id="playButton" onclick="loadContent()">Play!</button>
+<noscript>
+    <div id="noscript">
+        <p>Enable javascript dumbass</p>
     </div>
-    <div id="mainContent" class="invisible">
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col" id="col-1">
-            <div class="mobile">
-                <button onclick="goDirection('a')" class="movementButton">Left</button>
-                <button onclick="goDirection('s')" class="movementButton">Down</button>
-                <button onclick="goDirection('w')" class="movementButton">Up</button>
-                <button onclick="goDirection('d')" class="movementButton">Right</button>
-                <button onclick="teleport()" class="movementButton">Teleport!</button>
-            </div>
-            <div class="mobile">
-                <button onclick="moveOne('a', this)" class="movementButton">Left 1</button>
-                <button onclick="moveOne('s', this)" class="movementButton">Down 1</button>
-                <button onclick="moveOne('w', this)" class="movementButton">Up 1</button>
-                <button onclick="moveOne('d', this)" class="movementButton">Right 1</button>
-                <button onclick="switchDistance()" class="movementButton" id="meterDisplay">1000m</button>
-            </div>
-            <p id="blockDisplay" class="emoji"></p>
-            <div>
-                <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
-            </div>
-            <div>
-                <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
-            </div>
+</noscript>
+<div id="pressPlay">
+    <p id="credits">
+        Game made by <code>@thecatofalltime</code> on Discord!<br>
+        Background music made by <code>@x2corp</code> on Discord!<br>
+        Spawn sounds come fron REx:R on Roblox<br>
+        Some sounds made by <code>@tevv_</code> on Discord!<br>
+        UI by <code>@Spaxolotl</code> on Discord!
+    </p>
+    <button id="playButton" onclick="loadContent()">Play!</button>
+</div>
+<div id="mainContent" class="invisible">
+<div class="container-fluid">
+<div class="row">
+    <div class="col" id="col-1">
+        <div class="mobile">
+            <button onclick="goDirection('a')" class="movementButton">Left</button>
+            <button onclick="goDirection('s')" class="movementButton">Down</button>
+            <button onclick="goDirection('w')" class="movementButton">Up</button>
+            <button onclick="goDirection('d')" class="movementButton">Right</button>
+            <button onclick="teleport()" class="movementButton">Teleport!</button>
         </div>
-        <div class="col" id="col-2">
-            <div>
-                <button id="resetMine" onclick="resetMine()">Reset Mine</button>
-                <button id="settings" onclick="showData()">Settings</button>
-                <button onclick="changeCanDisplay(this)">Disable Display</button>
-            </div>
-            <p id="mineResetProgress"></p>
-            <p id="blocksMined">0 Blocks Mined</p>
-            <p id="location">X: 0 | Y: 0</p>
-            <p id="spawnMessage">Spawn Messages Appear Here!</p>
-            <p id="crafting">Crafting</p>
-            <div id="craftingClick">
-                <div>
-                    <button onclick="showPickaxes()">Pickaxes</button>
-                    <button onclick="showGears()">Gears</button>
-                </div>
-                <!--TODO: generate these with js-->
-                <div id="pickaxeCrafts">
-                    <button onclick="displayRecipe(1)">Pickaxe 1</button>
-                    <button onclick="displayRecipe(2)">Pickaxe 2</button>
-                    <button onclick="displayRecipe(3)">Pickaxe 3</button>
-                    <button onclick="displayRecipe(4)">Pickaxe 4</button>
-                    <button onclick="displayRecipe(5)">Pickaxe 5</button>
-                    <button onclick="displayRecipe(6)">Pickaxe 6</button>
-                    <button onclick="displayRecipe(7)">Pickaxe 7</button>
-                    <button onclick="displayRecipe(8)">Pickaxe 8</button>
-                    <button onclick="displayRecipe(9)">Pickaxe 9</button>
-                    <button onclick="displayRecipe(10)">Pickaxe 10</button>
-                </div>
-                <div id="gearCrafts" class="invisible">
-                    <button onclick="displayRecipe('ore-tracker')">Ore Tracker</button>
-                    <button onclick="displayRecipe('real-candilium')">Real Candilium</button>
-                    <button onclick="displayRecipe('real-vitriol')">Real Vitriol</button>
-                    <button onclick="displayRecipe('energy-siphoner')">Energy Siphoner</button>
-                    <button onclick="displayRecipe('sugar-rush')">Sugar Rush</button>
-                    <button onclick="displayRecipe('infinity-collector')">Infinity Collector</button>
-                    <button onclick="displayRecipe('layer-materializer')">Layer Materializer</button>
-                    <button onclick="displayRecipe('fortune-3-book')">Fortune III Book</button>
-                    <button onclick="displayRecipe('haste-2-beacon')">Haste II Beacon</button>
-                </div>
-            </div>
-            <div id="displayRecipe">
-                <p id="displayedRecipe"></p>
-            </div>
-            <div id="craftableDescriptions">
-                <!--<p id="itemDescription" class="invisible"></p>-->
-                <!---->
-                <p class="itemDescription" id="pickaxe1Description">Mines a few blocks in every direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.</p>
-                <p class="itemDescription" id="pickaxe2Description">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
-                <p class="itemDescription" id="pickaxe3Description">Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.</p>
-                <p class="itemDescription" id="pickaxe4Description">Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.</p>
-                <p class="itemDescription" id="pickaxe5Description">Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.</p>
-                <p class="itemDescription" id="pickaxe6Description">Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.</p>
-                <p class="itemDescription" id="pickaxe7Description">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
-                <p class="itemDescription" id="pickaxe8Description">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
-                <p class="itemDescription" id="pickaxe9Description">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck. </p>
-                <p class="itemDescription" id="pickaxe10Description">Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.</p>
-                <p class="itemDescription" id="gearOreTrackerDescription">Tracks the location of new ore spawns.</p>
-                <p class="itemDescription" id="gearRealCandiliumDescription">Boosts ability luck by 1.1x.</p>
-                <p class="itemDescription" id="gearRealVitriolDescription">Sets mining speed delay to 15ms from 25ms.</p>
-                <p class="itemDescription" id="gearEnergySiphonerDescription">Boosts mining speed slightly upon mining any exotic+ ore (1/750k+).</p>
-                <p class="itemDescription" id="gearSugarRushDescription">Mines all rare ores in the mine upon mine reset.</p>
-                <p class="itemDescription" id="gearInfinityCollectorDescription">Increases ability proc rates by 20%.</p>
-                <p class="itemDescription" id="gearLayerMaterializerDescription">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
-                <p class="itemDescription" id="gearFortune3BookDescription">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
-                <p class="itemDescription" id="gearHaste2BeaconDescription">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
-                <!---->
-            </div>
+        <div class="mobile">
+            <button onclick="moveOne('a', this)" class="movementButton">Left 1</button>
+            <button onclick="moveOne('s', this)" class="movementButton">Down 1</button>
+            <button onclick="moveOne('w', this)" class="movementButton">Up 1</button>
+            <button onclick="moveOne('d', this)" class="movementButton">Right 1</button>
+            <button onclick="switchDistance()" class="movementButton" id="meterDisplay">1000m</button>
         </div>
-        <div class="col" id="col-3">
-            <div id="musicStuff">
-                <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
-                <p>Music Volume</p>
-                <label class="slidecontainer">
-                    <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
-                </label>
-            </div>
-            <div>
-                <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
-                <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
-            </div>
-            <div id="inventoryDisplay">
-                <div id="inventoryNormal"></div>
-                <div id="inventoryElectrified" class="invisible"></div>
-                <div id="inventoryRadioactive" class="invisible"></div>
-                <div id="inventoryExplosive" class="invisible"></div>
-                <div id="indexDisplay" class="invisible"></div>
-            </div>
-            <a href="https://discord.gg/aVXkHB7Y4w" id="discord" target="_blank">
-                <img src="images/discord-logo.png" alt="Discord">
-                <p>Join the Discord!</p>
-            </a>
+        <p id="blockDisplay" class="emoji"></p>
+        <div>
+            <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
+        </div>
+        <div>
+            <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
         </div>
     </div>
-</div>
-</div>
-<div id="dataExport">
-    <div>
-        <input type="text" id="dataText">
-        <button onclick="exportData()">Export Data</button>
-        <button onclick="importData(document.getElementById('dataText').value)">Import Data</button>
-        <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
-        <br>
-        <br>
-        <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
-        <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
-        <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
-        <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
-        <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
-        <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
-        <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
-        <div id="masterVolume">
-            <p>Spawn Volumes</p>
-            <label class="slidecontainer" style="max-width: 10vw;">
-                <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
+    <div class="col" id="col-2">
+        <div>
+            <button id="resetMine" onclick="resetMine()">Reset Mine</button>
+            <button id="settings" onclick="showData()">Settings</button>
+            <button onclick="changeCanDisplay(this)">Disable Display</button>
+        </div>
+        <p id="mineResetProgress"></p>
+        <p id="blocksMined">0 Blocks Mined</p>
+        <p id="location">X: 0 | Y: 0</p>
+        <p id="spawnMessage">Spawn Messages Appear Here!</p>
+        <p id="crafting">Crafting</p>
+        <div id="craftingClick">
+            <div>
+                <button onclick="showPickaxes()">Pickaxes</button>
+                <button onclick="showGears()">Gears</button>
+            </div>
+            <!--TODO: generate these with js-->
+            <div id="pickaxeCrafts">
+                <button onclick="displayRecipe(1)">Pickaxe 1</button>
+                <button onclick="displayRecipe(2)">Pickaxe 2</button>
+                <button onclick="displayRecipe(3)">Pickaxe 3</button>
+                <button onclick="displayRecipe(4)">Pickaxe 4</button>
+                <button onclick="displayRecipe(5)">Pickaxe 5</button>
+                <button onclick="displayRecipe(6)">Pickaxe 6</button>
+                <button onclick="displayRecipe(7)">Pickaxe 7</button>
+                <button onclick="displayRecipe(8)">Pickaxe 8</button>
+                <button onclick="displayRecipe(9)">Pickaxe 9</button>
+                <button onclick="displayRecipe(10)">Pickaxe 10</button>
+            </div>
+            <div id="gearCrafts" class="invisible">
+                <button onclick="displayRecipe('ore-tracker')">Ore Tracker</button>
+                <button onclick="displayRecipe('real-candilium')">Real Candilium</button>
+                <button onclick="displayRecipe('real-vitriol')">Real Vitriol</button>
+                <button onclick="displayRecipe('energy-siphoner')">Energy Siphoner</button>
+                <button onclick="displayRecipe('sugar-rush')">Sugar Rush</button>
+                <button onclick="displayRecipe('infinity-collector')">Infinity Collector</button>
+                <button onclick="displayRecipe('layer-materializer')">Layer Materializer</button>
+                <button onclick="displayRecipe('fortune-3-book')">Fortune III Book</button>
+                <button onclick="displayRecipe('haste-2-beacon')">Haste II Beacon</button>
+            </div>
+        </div>
+        <div id="displayRecipe">
+            <p id="displayedRecipe"></p>
+        </div>
+        <div id="craftableDescriptions">
+            <!--<p id="itemDescription" class="invisible"></p>-->
+            <!---->
+            <p class="itemDescription" id="pickaxe1Description">Mines a few blocks in every direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.</p>
+            <p class="itemDescription" id="pickaxe2Description">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
+            <p class="itemDescription" id="pickaxe3Description">Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.</p>
+            <p class="itemDescription" id="pickaxe4Description">Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.</p>
+            <p class="itemDescription" id="pickaxe5Description">Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.</p>
+            <p class="itemDescription" id="pickaxe6Description">Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.</p>
+            <p class="itemDescription" id="pickaxe7Description">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
+            <p class="itemDescription" id="pickaxe8Description">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
+            <p class="itemDescription" id="pickaxe9Description">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck. </p>
+            <p class="itemDescription" id="pickaxe10Description">Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.</p>
+            <p class="itemDescription" id="gearOreTrackerDescription">Tracks the location of new ore spawns.</p>
+            <p class="itemDescription" id="gearRealCandiliumDescription">Boosts ability luck by 1.1x.</p>
+            <p class="itemDescription" id="gearRealVitriolDescription">Sets mining speed delay to 15ms from 25ms.</p>
+            <p class="itemDescription" id="gearEnergySiphonerDescription">Boosts mining speed slightly upon mining any exotic+ ore (1/750k+).</p>
+            <p class="itemDescription" id="gearSugarRushDescription">Mines all rare ores in the mine upon mine reset.</p>
+            <p class="itemDescription" id="gearInfinityCollectorDescription">Increases ability proc rates by 20%.</p>
+            <p class="itemDescription" id="gearLayerMaterializerDescription">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
+            <p class="itemDescription" id="gearFortune3BookDescription">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
+            <p class="itemDescription" id="gearHaste2BeaconDescription">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
+            <!---->
+        </div>
+    </div>
+    <div class="col" id="col-3">
+        <div id="musicStuff">
+            <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
+            <p>Music Volume</p>
+            <label class="slidecontainer">
+                <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
             </label>
         </div>
-        <br>
-        <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
-        <div id="logHolder"></div>
+        <div>
+            <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
+            <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
+        </div>
+        <div id="inventoryDisplay">
+            <div id="inventoryNormal"></div>
+            <div id="inventoryElectrified" class="invisible"></div>
+            <div id="inventoryRadioactive" class="invisible"></div>
+            <div id="inventoryExplosive" class="invisible"></div>
+            <div id="indexDisplay" class="invisible"></div>
+        </div>
+        <a href="https://discord.gg/aVXkHB7Y4w" id="discord" target="_blank">
+            <img src="images/discord-logo.png" alt="Discord">
+            <p>Join the Discord!</p>
+        </a>
     </div>
+</div>
+</div>
+</div>
+<div id="dataExport" class="invisible">
+<div class="container-fluid">
+    <input type="text" id="dataText">
+    <button onclick="exportData()">Export Data</button>
+    <button onclick="importData(document.getElementById('dataText').value)">Import Data</button>
+    <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
+    <br>
+    <br>
+    <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
+    <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
+    <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
+    <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
+    <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
+    <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
+    <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
+    <div id="masterVolume">
+        <p>Spawn Volumes</p>
+        <label class="slidecontainer" style="max-width: 10vw;">
+            <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
+        </label>
+    </div>
+    <br>
+    <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
+    <div id="logHolder"></div>
+</div>
 </div>
 </body>
