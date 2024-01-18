@@ -39,9 +39,9 @@ function loadAllData() {
         if (data["pickaxes"]["curr"] !== undefined)
             currentPickaxe = data["pickaxes"]["curr"];
         totalMined = data["stats"]["totalMined"] || 0;
-        document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
+        document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
         for (let ore in oreList) {
-            if (document.getElementById(ore + "Normal") !== null) {
+            if (document.getElementById(`${ore}Normal`) !== null) {
                 for (let variant in oreList[ore]["inv"]) {
                     updateInventory(ore, variant);
                     if (oreList[ore]["inv"][variant] > 0)
@@ -52,7 +52,7 @@ function loadAllData() {
         if (data["settings"]["mutedSounds"] !== undefined) {
             for (let sound in data["settings"]["mutedSounds"]) {
                 if (!data["settings"]["mutedSounds"][sound])
-                    document.getElementById("mute" + capitalize(sound)).click();
+                    document.getElementById(`mute${capitalize(sound)}`).click();
             }
         }
         if (data["settings"]["musicVolume"] !== undefined) {

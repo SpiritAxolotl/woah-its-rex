@@ -36,6 +36,18 @@ let gears = {
     "silly-tp": false
 };
 let gearNames = Object.keys(gears);
+let gearNamesNormalized = {
+    "ore-tracker": "Ore Tracker",
+    "real-candilium": "Real Candilium",
+    "real-vitriol": "Real Vitriol",
+    "infinity-collector": "Infinity Collector",
+    "layer-materializer": "Layer Materializer",
+    "fortune-3-book": "Fortune III Book",
+    "haste-2-beacon": "Haste II Beacon",
+    "energy-siphoner": "Energy Siphoner",
+    "sugar-rush": "Sugar Rush",
+    "silly-tp": "Silly TP"
+};
 let currentPickaxe = 0;
 
 function visible(element) {
@@ -350,9 +362,9 @@ function displayArea() {
         }
         document.getElementById("blockDisplay").innerHTML = output;
     }
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
-    document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
-    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + "<br>Y: " + (-curY);
+    document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
+    document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
+    document.getElementById("location").innerHTML = `X: ${curX - 1000000000}<br>Y: ${-curY}`;
 }
 
 //HTML EDITING
@@ -361,10 +373,10 @@ let currVariant = 1;
 const variantNames = ["Normal", "Electrified", "Radioactive", "Explosive"];
 const variantNamesEmojis = ["", "⚡️", "☢️", "💥"];
 function switchInventory() {
-    invisible(document.getElementById("inventory" + variantNames[currVariant-1]));
+    invisible(document.getElementById(`inventory${variantNames[currVariant-1]}`));
     currVariant = currVariant >= 4 ? 1 : ++currVariant;
-    visible(document.getElementById("inventory" + variantNames[currVariant-1]));
-    document.getElementById("switchInventory").innerHTML = variantNames[currVariant-1] + " Inventory";
+    visible(document.getElementById(`inventory${variantNames[currVariant-1]}`));
+    document.getElementById("switchInventory").innerHTML = `${variantNames[currVariant-1]} Inventory`;
     invisible(document.getElementById("indexDisplay"));
     document.getElementById("showIndex").innerHTML = "Show Index";
     showing = false;
@@ -378,8 +390,8 @@ function createInventory() {
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
-            element.innerHTML = "<span class='emoji'>" + ore + "</span> | 1/" + (oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString() + " | x" + oreList[ore]["inv"][variant.toLowerCase()];
-            document.getElementById("inventory" + variant).appendChild(element);
+            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${oreList[ore]["inv"][variant.toLowerCase()]}`;
+            document.getElementById(`inventory${variant}`).appendChild(element);
         }
     }
 }
@@ -388,17 +400,16 @@ function createIndex() {
     let prob = 0;
     let output = "";
     for (let i = 0; i < allLayers.length - 2; i++) {
-        for (let ore in {...allLayers[i], ...spawnsEverywhere}) {
+        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">${allLayersNames[i]} Layer (${i * 2000}-${(i+1) * 2000}m)</p>`;
+        for (let ore in allLayers[i]) {
             prob = oreList[ore]["prob"];
             if (prob > 2000000 && prob < 5000000000)
-                output += "<span class='emoji'>" + ore + "</span> | 1/" + prob.toLocaleString() + " | " + (i * 2000) + "-" + ((i+1) * 2000) + "m<br>";
+                output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${prob.toLocaleString()}</p>`;
         }
-        output += "--------------<br>";
+        output += `</div>`;
     }
-    for (let ore in oreList) {
-        if (oreList[ore]["prob"] <= 2000000 && oreList[ore]["prob"] > 1)
-            output += "<span class='emoji'>" + ore + "</span> | 1/" + oreList[ore]["prob"].toLocaleString() + " | Everywhere<br>";
-    }
+    for (let ore in spawnsEverywhere)
+        output += `<p class="oreDisplay invisible"><span class="emoji">${ore}</span> | 1/${oreList[ore]["prob"].toLocaleString()} | Everywhere</p>`;
     document.getElementById("indexDisplay").innerHTML = output;
 }
 
@@ -418,7 +429,7 @@ function showIndex() {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + capitalize(variant)).innerHTML = "<span class='emoji'>" + ore + "</span> | 1/" + (oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString() + " | x" + oreList[ore]["inv"][variant.toLowerCase()];
+    document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${oreList[ore]["inv"][variant.toLowerCase()]}`;
     if (oreList[ore]["inv"][variant.toLowerCase()] > 0)
         visible(document.getElementById(ore + capitalize(variant)));
     else
@@ -447,14 +458,14 @@ function spawnMessage(block, location) {
     if (latestSpawns.length > 10) latestSpawns.splice(0, 1);
     if (addToLatest) {
         for (let i of latestSpawns) {
-            output += "<span class='emoji'>" + latestSpawns[i]["block"] + "</span> 1/" + oreList[latestSpawns[i]["block"]]["prob"].toLocaleString();
+            output += `<span class="emoji">${latestSpawns[i]["block"]}</span> 1/${oreList[latestSpawns[i]["block"]]["prob"].toLocaleString()}`;
             if (latestSpawns[i]["y"] !== undefined && latestSpawns[i]["x"] !== undefined)
-                output += " | X: " + (latestSpawns[i]["x"] - 1000000000) + ", Y: " + (-latestSpawns[i]["y"]) + "<br>";
+                output += ` | X: ${latestSpawns[i]["x"] - 1000000000}, Y: ${-latestSpawns[i]["y"]}<br>`;
             else output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
         if (currentPickaxe === 5 || gears["ore-tracker"])
-            document.getElementById("spawnMessage").innerHTML = "<span class='emoji'>" + block + "</span> Has Spawned!<br>" + "1/" + oreList[block]["prob"].toLocaleString() + "<br>X: " + (location["x"] - 1000000000) + "<br>Y: " + (-location["y"]);
+            document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${block}</span> Has Spawned!<br> 1/${oreList[block]["prob"].toLocaleString()}<br>X: ${location["x"] - 1000000000}<br>Y: ${-location["y"]}`;
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
@@ -475,9 +486,9 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     });
     if (latestFinds.length > 10) latestFinds.shift();
     for (let i = latestFinds.length - 1; i >= 0; i--) {
-        output += latestFinds[i]["variant"] + latestFinds[i]["type"] + " | X: " + (latestFinds[i]["x"] - 1000000000) + ", Y: " + -(latestFinds[i]["y"]) + " | ";
+        output += `${latestFinds[i]["variant"]}${latestFinds[i]["type"]} | X: ${latestFinds[i]["x"] - 1000000000}, Y: ${-latestFinds[i]["y"]} | `;
         if (latestFinds[i]["fromReset"]) output += "FROM RESET<br>";
-        else output += "At " + latestFinds[i]["atMined"].toLocaleString() +  " Mined.<br>";
+        else output += `At ${latestFinds[i]["atMined"].toLocaleString()} Mined<br>`;
     }
     document.getElementById("latestFinds").innerHTML = output;
 }

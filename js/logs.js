@@ -57,9 +57,9 @@ class secureLogs {
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
                     const log = this.#verifiedLogs[i];
                     const multi = variantMultis[variantNames.indexOf(log["variant"])];
-                    output += log["ore"] + ", " + log["date"] + ", " + log["something"] + ", " + log["variant"] + ", ";
-                    output += log["y"] + ", ";
-                    output += Math.floor(((1 / oreList[log["ore"]]["prob"]) * multi) / log["luck"]) + ", " + Math.log10(log["luck"] * log["y"]) + "<br>";
+                    output += `${log["ore"]}, ${log["date"]}, ${log["something"]}, ${log["variant"]}, `;
+                    output += `${log["y"]}, `;
+                    output +=`${Math.floor(1/oreList[log["ore"]]["prob"] * multi / log["luck"])}, ${Math.log10(log["luck"] * log["y"])}<br>`;
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output !== "" ? output : "none");
         } else {

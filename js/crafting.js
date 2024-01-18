@@ -225,7 +225,7 @@ function displayRecipe(n) {
         displayedRecipe.innerHTML = `Pickaxe ${n}:`;
         recipes.insertBefore(displayedRecipe, recipes.children[0]);
         updateActiveRecipe();
-        visible(document.getElementById("pickaxe" + n + "Description"));
+        visible(document.getElementById(`pickaxe${n}Description`));
     } else {
         if (typeof n !== "string") console.error("displayRecipe takes in a string for gear recipes");
         let recipes = document.getElementById("displayRecipe");
@@ -237,24 +237,25 @@ function displayRecipe(n) {
         visible(recipeElements["gears"][n]);
         let displayedRecipe = document.createElement("p");
         displayedRecipe.id = "displayedRecipe";
-        displayedRecipe.innerHTML = normalize(n, true) + ":";
+        displayedRecipe.innerHTML = `${gearNamesNormalized[n]}:`;
         recipes.insertBefore(displayedRecipe, recipes.children[0]);
         updateActiveRecipe();
-        visible(document.getElementById("gear" + snakeToCamel(n, true) + "Description"));
+        visible(document.getElementById(`gear${snakeToCamel(n, true)}Description`));
     }
 }
 
 //TODO: combine these methods
 function createPickaxeRecipes() {
+    let pickaxeCrafts = document.getElementById("pickaxeCrafts");
     for (let pick in pickaxeRecipes) {
         let pickaxeDisplay = document.createElement("div");
-        pickaxeDisplay.id = "pickaxeRecipe" + pick;
+        pickaxeDisplay.id = `pickaxeRecipe"${pick}`;
         invisible(pickaxeDisplay);
         pickaxeDisplay.classList.add("craftingAmountsDisplay");
         for (let ingredient in pickaxeRecipes[pick]) {
             let ingredientDisplay = document.createElement("p");
-            ingredientDisplay.id = (ingredient + "pickaxeRecipe" + pick + "Display");
-            ingredientDisplay.innerHTML = ingredient + " " + oreList[ingredient]["inv"]["normal"] + "/" + pickaxeRecipes[pick][ingredient];
+            ingredientDisplay.id = (`${ingredient}pickaxeRecipe${pick}Display`);
+            ingredientDisplay.innerHTML = `${ingredient} ${oreList[ingredient]["inv"]["normal"]}/${pickaxeRecipes[pick][ingredient]}`;
             if (oreList[ingredient]["inv"]["normal"] >= pickaxeRecipes[pick][ingredient])
                 ingredientDisplay.style.color = "green";
             else
@@ -262,27 +263,33 @@ function createPickaxeRecipes() {
             pickaxeDisplay.appendChild(ingredientDisplay);
         }
         let button = document.createElement("button");
-        button.id = "craftPickaxe" + pick;
-        button.setAttribute("onclick", "craftPickaxe(" + pick + ")");
+        button.id = `craftPickaxe${pick}`;
+        button.setAttribute("onclick", `craftPickaxe(${pick}, this)`);
         if (pickaxes[pick])
             button.innerHTML = "Equip!";
         else
             button.innerHTML = "Craft!";
         pickaxeDisplay.appendChild(button);
         recipeElements["pickaxes"][pick] = pickaxeDisplay;
+        
+        let craftPickaxeButton = document.createElement("button");
+        craftPickaxeButton.setAttribute("onclick", `displayRecipe(${pick}, this)`);
+        craftPickaxeButton.innerHTML = `Pickaxe ${pick}`;
+        pickaxeCrafts.appendChild(craftPickaxeButton);
     }
 }
 
 function createGearRecipes() {
+    let gearCrafts = document.getElementById("gearCrafts");
     for (let gear in gearRecipes) {
         let gearDisplay = document.createElement("div");
-        gearDisplay.id = "gearRecipe" + snakeToCamel(gear, true);
+        gearDisplay.id = `gearRecipe${snakeToCamel(gear, true)}`;
         invisible(gearDisplay);
         gearDisplay.classList.add("craftingAmountsDisplay");
         for (let ingredient in gearRecipes[gear]) {
             let ingredientDisplay = document.createElement("p");
-            ingredientDisplay.id = (ingredient + "gearRecipe" + snakeToCamel(gear, true) + "Display");
-            ingredientDisplay.innerHTML = ingredient + " " + oreList[ingredient]["inv"]["normal"] + "/" + gearRecipes[gear][ingredient];
+            ingredientDisplay.id = (`${ingredient}gearRecipe${snakeToCamel(gear, true)}Display`);
+            ingredientDisplay.innerHTML = `${ingredient} ${oreList[ingredient]["inv"]["normal"]}/${gearRecipes[gear][ingredient]}`;
             if (oreList[ingredient]["inv"]["normal"] >= gearRecipes[gear][ingredient])
                 ingredientDisplay.style.color = "green";
             else
@@ -290,14 +297,19 @@ function createGearRecipes() {
             gearDisplay.appendChild(ingredientDisplay);
         }
         let button = document.createElement("button");
-        button.id = "craftGear" + gear;
-        button.setAttribute("onclick", "craftGear(" + gear + ")");
+        button.id = `craftGear${gear}`;
+        button.setAttribute("onclick", `craftGear(${gear}, this)`);
         if (gears[gear])
             button.innerHTML = "Owned!";
         else
             button.innerHTML = "Craft!";
         gearDisplay.appendChild(button);
         recipeElements["gears"][gear] = gearDisplay;
+        
+        let craftGearButton = document.createElement("button");
+        craftGearButton.setAttribute("onclick", `displayRecipe("${gear}", this)`);
+        craftGearButton.innerHTML = gearNamesNormalized[gear];
+        gearCrafts.appendChild(craftGearButton);
     }
 }
 
@@ -306,8 +318,8 @@ function updateActiveRecipe() {
         for (let pick in recipeElements["pickaxes"]) {
             if (isVisible(recipeElements["pickaxes"][pick])) {
                 for (let ingredient in pickaxeRecipes[pick]) {
-                    let pickaxeDisplay = document.getElementById(ingredient + "pickaxeRecipe" + pick + "Display");
-                    pickaxeDisplay.innerHTML = "<span class='emoji'>" + ingredient + "</span> " + oreList[ingredient]["inv"]["normal"] + "/" + pickaxeRecipes[pick][ingredient];
+                    let pickaxeDisplay = document.getElementById(`${ingredient}pickaxeRecipe${pick}Display`);
+                    pickaxeDisplay.innerHTML = `<span class="emoji">${ingredient}</span> ${oreList[ingredient]["inv"]["normal"]}/${pickaxeRecipes[pick][ingredient]}`;
                     if (oreList[ingredient]["inv"]["normal"] >= pickaxeRecipes[pick][ingredient])
                         pickaxeDisplay.style.color = "green";
                     else
@@ -319,8 +331,8 @@ function updateActiveRecipe() {
         for (let gear in recipeElements["gears"]) {
             if (isVisible(recipeElements["gears"][gear])) {
                 for (let ingredient in gearRecipes[gear]) {
-                    let gearDisplay = document.getElementById(ingredient + "gearRecipe" + snakeToCamel(gear, true) + "Display");
-                    gearDisplay.innerHTML = "<span class='emoji'>" + ingredient + "</span> " + oreList[ingredient]["inv"]["normal"] + "/" + gearRecipes[gear][ingredient];
+                    let gearDisplay = document.getElementById(`${ingredient}gearRecipe${snakeToCamel(gear, true)}Display`);
+                    gearDisplay.innerHTML = `<span class="emoji">${ingredient}</span> ${oreList[ingredient]["inv"]["normal"]}/${gearRecipes[gear][ingredient]}`;
                     if (oreList[ingredient]["inv"]["normal"] >= gearRecipes[gear][ingredient])
                         gearDisplay.style.color = "green";
                     else
@@ -347,12 +359,12 @@ function craftPickaxe(pick) {
                 oreList[ingredient]["inv"]["normal"] -= pickaxeRecipes[pick][ingredient];
                 updateInventory(ingredient, "normal");
             }
-            let pickaxeDisplay = document.getElementById("pickaxeRecipe" + pick);
+            let pickaxeDisplay = document.getElementById(`pickaxeRecipe${pick}`);
             pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
             updateActiveRecipe();
         }
     } else {
-        let pickaxeDisplay = document.getElementById("pickaxeRecipe" + pick);
+        let pickaxeDisplay = document.getElementById(`pickaxeRecipe${pick}`);
         pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
         currentPickaxe = pick;
     }
@@ -372,7 +384,7 @@ function craftGear(gear) {
                 oreList[ingredient]["inv"]["normal"] -= gearRecipes[gear][ingredient];
                 updateInventory(ingredient, "normal");
             }
-            let gearDisplay = document.getElementById("gearRecipe" + snakeToCamel(gear, true));
+            let gearDisplay = document.getElementById(`gearRecipe${snakeToCamel(gear, true)}`);
             gearDisplay.lastElementChild.innerHTML = "Owned!";
             updateActiveRecipe();
         }

@@ -8,7 +8,7 @@ function resetMine() {
     currentLayer = allLayers[0];
     createMine();
     mineCapacity = 40000;
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}`;
 }
 
 let resetting = false;
