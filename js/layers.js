@@ -332,19 +332,19 @@ allLayers = [
 //SETTING LAYERS
 
 let lastLayerChange = 6000;
-let currentLayer = {...dirtLayer, ...spawnsEverywhere};
+let currentLayer = dirtLayer;
 function setLayer(y) {
     let regY = y;
     if (regY < 16000) {
         regY = Math.floor(regY / 2000);
-        currentLayer = {...allLayers[regY], ...spawnsEverywhere};
+        currentLayer = allLayers[regY];
     } else if (y > (lastLayerChange + 10000)) {
         lastLayerChange += 10000;
         if (Math.round(Math.random() * 77) === 33)
-            currentLayer = {...sillyLayer, ...spawnsEverywhere};
+            currentLayer = sillyLayer;
         else if (Math.round(Math.random() * 40) === 20)
-            currentLayer = {...fluteLayer, ...spawnsEverywhere};
+            currentLayer = fluteLayer;
         else
-            currentLayer = {...allLayers[Math.floor(Math.random() * 8)], ...spawnsEverywhere};
+            currentLayer = allLayers[Math.floor(Math.random() * 8)];
     }
 }

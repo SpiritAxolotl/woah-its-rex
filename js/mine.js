@@ -155,7 +155,7 @@ function giveBlock(ore, x, y, fromReset) {
 function generateBlock(luck, location) {
     if (debug && typeof debugLuck === "number") luck = debugLuck;
     let hasLog = false;
-    const probabilityTable = currentLayer;
+    const probabilityTable = {...currentLayer, ...spawnsEverywhere};
     let blockToGive = "";
     let summedProbability = 0;
     const chosenValue = Math.random()/luck;
