@@ -341,18 +341,18 @@ function craftPickaxe(pick) {
             }
         }
         if (canCraft) {
+            pickaxes[pick] = true;
+            currentPickaxe = pick;
             for (let ingredient in pickaxeRecipes[pick]) {
                 oreList[ingredient]["inv"]["normal"] -= pickaxeRecipes[pick][ingredient];
                 updateInventory(ingredient, "normal");
             }
-            let pickaxeDisplay = document.getElementById("pickaxeRecipe" + num).children;
+            let pickaxeDisplay = document.getElementById("pickaxeRecipe" + pick);
             pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
             updateActiveRecipe();
-            pickaxes[pick] = true;
-            currentPickaxe = num;
         }
     } else {
-        let pickaxeDisplay = document.getElementById("pickaxeRecipe" + pick).children;
+        let pickaxeDisplay = document.getElementById("pickaxeRecipe" + pick);
         pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
         currentPickaxe = pick;
     }
@@ -367,14 +367,14 @@ function craftGear(gear) {
             }
         }
         if (canCraft) {
+            gears[gear] = true;
             for (let ingredient in gearRecipes[gear]) {
                 oreList[ingredient]["inv"]["normal"] -= gearRecipes[gear][ingredient];
                 updateInventory(ingredient, "normal");
             }
-            let gearDisplay = document.getElementById("gearRecipe" + snakeToCamel(gear, true)).children;
+            let gearDisplay = document.getElementById("gearRecipe" + snakeToCamel(gear, true));
             gearDisplay.lastElementChild.innerHTML = "Owned!";
             updateActiveRecipe();
-            gears[gear] = true;
         }
     }
     if (gear === "silly-tp")
