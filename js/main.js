@@ -96,7 +96,7 @@ function init() {
     createInventory();
     createIndex();
     createMine();
-    let playedBefore = localStorage.getItem("playedBefore");
+    const playedBefore = localStorage.getItem("playedBefore");
     canContinue = playedBefore ? loadAllData() : true;
     if (canContinue) {
         repeatDataSave();
@@ -346,7 +346,7 @@ function displayArea() {
     } else document.getElementById("blockDisplay").innerHTML = "DISABLED";
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
-    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + " | Y: " + (-curY);
+    document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + "<br>Y: " + (-curY);
 }
 
 //HTML EDITING
