@@ -7,6 +7,7 @@ async function rollAbilities() {
         boost *= 1.6;
     if (gears[8])
         m = 1.2;
+    let temp;
     switch (currentPickaxe) {
         case 1:
             if (Math.random() < (1/30 * m)) {
@@ -74,7 +75,9 @@ async function rollAbilities() {
             break;
         case 11:
             if (Math.random() <= (1/100 * m)) {
-                canMine = await(pickaxeAbility12(curX, curY, boost, 0, 0));
+                temp = await(pickaxeAbility12(curX, curY, boost, 0, 0));
+                if (!resetting)
+                    canMine = temp;
                 updateActiveRecipe();
             }
             break;

@@ -53,11 +53,13 @@ function loadAllData() {
             }
         }
         if (data[3][1] != undefined) {
+            data[3][1] = JSON.parse(data[3][1]);
             document.getElementById("musicVolume").value = data[3][1];
             changeMusicVolume(data[3][1]);
         }
         if (data[3][2] != undefined) {
-            document.getElementById("spawnVolume").value = data[3][1];
+            data[3][2] = JSON.parse(data[3][2]);
+            document.getElementById("spawnVolume").value = data[3][2];
             changeAllVolume(data[3][2]);
         }
         let canContinue = false;
@@ -67,8 +69,9 @@ function loadAllData() {
                     document.getElementById("musicButton").click();
                 }, 100);
             }
-        }
+        } 
         if (data[3][4] != undefined && !(isNaN(data[3][4]) && data[3][4] > 0)) {
+            data[3][4] = JSON.parse(data[3][4]);
             baseMineCapacity = data[3][4];
             mineCapacity = data[3][4];
         }
@@ -91,7 +94,7 @@ function loadAllData() {
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-    dataTimer = setInterval(saveAllData, 2000);
+    dataTimer = setInterval(saveAllData, 3000);
 }
 
 function toBinary(string) {
