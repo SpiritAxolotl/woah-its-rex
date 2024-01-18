@@ -30,12 +30,13 @@
     </div>
 </noscript>
 <div id="pressPlay">
+    <p id="gameTitle">Re:REx</p>
     <p id="credits">
         Game made by <code>@thecatofalltime</code> on Discord!<br>
         Background music made by <code>@x2corp</code> on Discord!<br>
         Spawn sounds come fron REx:R on Roblox<br>
         Some sounds made by <code>@tevv_</code> on Discord!<br>
-        UI by <code>@Spaxolotl</code> on Discord!
+        UI and code refactor by <code>@Spaxolotl</code> on Discord!
     </p>
     <button id="playButton" onclick="loadContent()">Play!</button>
 </div>
@@ -73,7 +74,7 @@
         </div>
         <p id="mineResetProgress"></p>
         <p id="blocksMined">0 Blocks Mined</p>
-        <p id="location">X: 0 | Y: 0</p>
+        <p id="location">X: 0<br>Y: 0</p>
         <p id="spawnMessage">Spawn Messages Appear Here!</p>
         <p id="crafting">Crafting</p>
         <div id="craftingClick">
@@ -81,30 +82,8 @@
                 <button onclick="showPickaxes()">Pickaxes</button>
                 <button onclick="showGears()">Gears</button>
             </div>
-            <!--TODO: generate these with js-->
-            <div id="pickaxeCrafts">
-                <button onclick="displayRecipe(1)">Pickaxe 1</button>
-                <button onclick="displayRecipe(2)">Pickaxe 2</button>
-                <button onclick="displayRecipe(3)">Pickaxe 3</button>
-                <button onclick="displayRecipe(4)">Pickaxe 4</button>
-                <button onclick="displayRecipe(5)">Pickaxe 5</button>
-                <button onclick="displayRecipe(6)">Pickaxe 6</button>
-                <button onclick="displayRecipe(7)">Pickaxe 7</button>
-                <button onclick="displayRecipe(8)">Pickaxe 8</button>
-                <button onclick="displayRecipe(9)">Pickaxe 9</button>
-                <button onclick="displayRecipe(10)">Pickaxe 10</button>
-            </div>
-            <div id="gearCrafts" class="invisible">
-                <button onclick="displayRecipe('ore-tracker')">Ore Tracker</button>
-                <button onclick="displayRecipe('real-candilium')">Real Candilium</button>
-                <button onclick="displayRecipe('real-vitriol')">Real Vitriol</button>
-                <button onclick="displayRecipe('energy-siphoner')">Energy Siphoner</button>
-                <button onclick="displayRecipe('sugar-rush')">Sugar Rush</button>
-                <button onclick="displayRecipe('infinity-collector')">Infinity Collector</button>
-                <button onclick="displayRecipe('layer-materializer')">Layer Materializer</button>
-                <button onclick="displayRecipe('fortune-3-book')">Fortune III Book</button>
-                <button onclick="displayRecipe('haste-2-beacon')">Haste II Beacon</button>
-            </div>
+            <div id="pickaxeCrafts"></div>
+            <div id="gearCrafts" class="invisible"></div>
         </div>
         <div id="displayRecipe">
             <p id="displayedRecipe"></p>

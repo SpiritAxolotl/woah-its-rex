@@ -38,14 +38,23 @@
 .oreDisplay {
   margin: 0;
 }
+.oreTitle {
+  /*margin-top: 1em;*/
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.layerDisplay {
+  margin-bottom: 1em;
+}
 
 .movementButton {
   width: 6vw;
 }
 
-/*.craftingAmountsDisplay {
-  font-size: 1vw;
-}*/
+.craftingAmountsDisplay {
+  margin-bottom: 0.5em;
+}
 
 #displayRecipe > div > p {
   margin-bottom: 0.1rem;
@@ -73,7 +82,7 @@
 }
 
 .pickaxeCrafts {
-  display: block;
+  display: unset;
 }
 
 .inventoryButtons {
@@ -128,7 +137,7 @@ body {
 #blockDisplay {
   padding: 0.5em 0;
   margin: 0;
-  line-height: 1.9vw;
+  line-height: 1.95vw;
   letter-spacing: -0.173em;
   font-size: 1.8vw;
   user-select: none;
@@ -163,15 +172,15 @@ p {
 }
 
 button {
-  font-size: 0.75em;
+  font-size: 0.9em;
   background-color: #494949;
   border-style: solid;
   border-color: white;
-  border-width: 1px;
+  border-width: 0.1em;
   border-radius: 0.25em;
   color: white;
   font-family: "Arial";
-  text-align: center;
+  /* text-align: center; */
 }
 
 #musicButton {
@@ -286,6 +295,12 @@ button {
   text-align: center;
   background-color: black;
   z-index: 4;
+}
+
+#gameTitle {
+  font-size: 8em;
+  margin: 0;
+  line-height: 1.1em;
 }
 
 #masterVolume {
