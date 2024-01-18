@@ -328,6 +328,18 @@ allLayers = [
     sillyLayer,
     fluteLayer
 ];
+allLayersNames = [
+    "Dirt",
+    "Brick",
+    "Foggy",
+    "Water",
+    "Rock",
+    "Radioactive",
+    "Cactus",
+    "Paper",
+    "Silly",
+    "Flute"
+];
 
 //SETTING LAYERS
 

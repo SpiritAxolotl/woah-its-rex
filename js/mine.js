@@ -202,7 +202,7 @@ function switchDistance() {
         y = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = y + "m";
+    document.getElementById("meterDisplay").innerHTML = `${y}m`;
 }
 
 async function teleport() {
