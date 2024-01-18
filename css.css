@@ -16,7 +16,7 @@
 
 #inventoryDisplay {
   overflow-y: scroll;
-  justify-self: stretch;
+  /* justify-self: stretch; */
   border-style: solid;
   border-color: #313131;
   border-left: none;
@@ -204,9 +204,12 @@ button {
 }
 #col-3 {
   width: 25%;
-  /*display: flex;
+  display: flex;
   flex-direction: column;
-  align-items: center;*/
+  align-items: center;
+}
+#col-3 > * {
+  width: 100%;
 }
 
 #musicStuff > label {
