@@ -234,17 +234,19 @@ function generateBlock(luck, location) {
 //TELEPORTING
 
 let distanceMulti = 1;
+let y = 1000;
 function switchDistance() {
-    let y = document.getElementById("meterDisplay").innerHTML;
-    y = Number(y.substring(0, y.length - 1));
     if (y < 14000) {
         y = 2000 * distanceMulti + 1000;
         distanceMulti++;
+    } else if (y > 14000) {
+        y = 1000;
+        distanceMulti = 1;
     } else {
         y = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = (y) + "m";
+    document.getElementById("meterDisplay").innerHTML = y.toLocaleString() + "m";
 }
 
 async function teleport() {
@@ -258,8 +260,6 @@ async function teleport() {
 function toLocation() {
     return new Promise((resolve) => {
     let x = curX;
-    let y = document.getElementById("meterDisplay").innerHTML;
-    y = Number(y.substring(0, y.length - 1));
     for (let r = y - 50; r < y + 50; r++) {
         if(mine[r] === undefined)
             mine[r] = [];
