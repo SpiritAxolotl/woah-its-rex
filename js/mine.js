@@ -1,10 +1,10 @@
 //MINE CREATION
 
 function createMine() {
-    for (let r = curY; r < curY + 51; r++) {
+    for (let y = curY; y < curY + 51; y++) {
         mine.push([]);
         for (let c = curX - 51; c < curX + 51; c++)
-            mine[r][c] = r === 0 ? "🟩" : "⬜";
+            mine[y][c] = y === 0 ? "🟩" : "⬜";
     }
     mine[0][1000000000] = "⛏️"; //trusty pickaxe
     displayArea();
@@ -16,41 +16,41 @@ function prepareArea(facing) {
     const constraints = getParams(50, 50);
     switch(facing) {
         case "a":
-            for (let r = curY - constraints[1]; r < curY + 50; r++) {
-                if (mine[r] === undefined)
-                    mine[r] = [];
-                if (mine[r][curX - constraints[0]] === undefined)
-                    mine[r][curX - constraints[0]] = r === 0 ? "🟩" : "⬜";
+            for (let y = curY - constraints["up"]; y < curY + 50; y++) {
+                if (mine[y] === undefined)
+                    mine[y] = [];
+                if (mine[y][curX - constraints["left"]] === undefined)
+                    mine[y][curX - constraints["left"]] = y === 0 ? "🟩" : "⬜";
             }
             break;
         case "s":
             if (mine[curY + 50] === undefined)
                 mine[curY + 50] = [];
-            for (let c = curX - constraints[0]; c < curX + 50; c++) {
-                if (mine[curY + 50][c] === undefined)
-                    mine[curY + 50][c] = "⬜";
+            for (let x = curX - constraints["left"]; x < curX + 50; x++) {
+                if (mine[curY + 50][x] === undefined)
+                    mine[curY + 50][x] = "⬜";
             }
             break;
         case "d":
-            for (let r = curY - constraints[1]; r < curY + 50; r++) {
-                if (mine[r] === undefined)
-                    mine[r] = [];
-                if (mine[r][curX + 50] === undefined)
-                    mine[r][curX + 50] = r === 0 ? "🟩" : "⬜";
+            for (let y = curY - constraints["up"]; y < curY + 50; y++) {
+                if (mine[y] === undefined)
+                    mine[y] = [];
+                if (mine[y][curX + 50] === undefined)
+                    mine[y][curX + 50] = y === 0 ? "🟩" : "⬜";
             }
             break;
         case "w":
             if (mine[curY - constraints[1]] === undefined)
                 mine[curY - constraints[1]] = [];
-            for (let c = curX - constraints[0]; c < curX + 50; c++) {
-                if (mine[curY - constraints[1]][c] === undefined)
-                    mine[curY - constraints[1]][c] = curY - constraints[1] === 0 ? "🟩" : "⬜";
+            for (let x = curX - constraints[0]; x < curX + 50; x++) {
+                if (mine[curY - constraints[1]][x] === undefined)
+                    mine[curY - constraints[1]][x] = curY - constraints[1] === 0 ? "🟩" : "⬜";
             }
             break;
     }
 }
 
- function checkAllAround(x, y, luck) {
+function checkAllAround(x, y, luck) {
     let generated;
     if (x - 1 >= 0 && mine[y][x - 1] === "⬜") {
         generated = generateBlock(luck, {"y": y, "x": x-1});
@@ -125,7 +125,7 @@ const variantMultis = {
     "explosive": 500
 };
 
- function giveBlock(ore, x, y, fromReset) {
+function giveBlock(ore, x, y, fromReset) {
     if (gears["layer-materializer"]) {
         const blocks = Object.keys(...currentLayer);
         const block = blocks[blocks.length-1];
@@ -245,5 +245,5 @@ function getParams(distanceX, distanceY, x, y) {
     else displayLeft = x;
     if (y > distanceY) displayUp = distanceY;
     else displayUp = y;
-    return [displayLeft, displayUp];
+    return {left: displayLeft, up: displayUp};
 }

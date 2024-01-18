@@ -79,15 +79,17 @@ function normalize(str, cap) {
     return cap ? capitalize(space) : space;
 }
 function romanize(num) {
+    if (num >= 4000) return;
+    if (num % 1 !== 0) num = Math.round(num);
     const roman = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
-    var str = "";
+    let str = "";
     for (let i of Object.keys(roman)) {
         const q = Math.floor(num / roman[i]);
         num -= q * roman[i];
         str += i.repeat(q);
     }
     return str;
-  }
+}
 
 //IMPORTANT
 
@@ -327,6 +329,7 @@ function changeCanDisplay(button) {
     if (button.innerHTML.includes("Disable")) {
         button.innerHTML = "Enable Display";
         canDisplay = false;
+        document.getElementById("blockDisplay").innerHTML = "DISABLED";
     } else {
         button.innerHTML = "Disable Display";
         canDisplay = true;
@@ -336,14 +339,14 @@ function changeCanDisplay(button) {
 function displayArea() {
     if (canDisplay) {
         let output = "";
-        let constraints = getParams(9, 9);
-        for (let r = curY - constraints[1]; r <= curY + 9 + (9-constraints[1]); r++) {
-            for (let c = curX - constraints[0]; c <= curX + 9 + (9-constraints[0]); c++)
-                output += mine[r][c];
+        const constraints = getParams(9, 9);
+        for (let y = curY - constraints["up"]; y <= curY + 9 + (9-constraints["up"]); y++) {
+            for (let x = curX - constraints["left"]; x <= curX + 9 + (9-constraints["left"]); x++)
+                output += mine[y][x];
             output += "<br>";
         }
         document.getElementById("blockDisplay").innerHTML = output;
-    } else document.getElementById("blockDisplay").innerHTML = "DISABLED";
+    }
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
     document.getElementById("location").innerHTML = "X: " + (curX - 1000000000) + "<br>Y: " + (-curY);
@@ -439,7 +442,7 @@ function spawnMessage(block, location) {
     if (gears["real-vitriol"]) loggedFinds.push({"y": location["y"], "x": location["x"]});
     if (latestSpawns.length > 10) latestSpawns.splice(0, 1);
     if (addToLatest) {
-        for (let i = latestSpawns.length - 1; i >= 0; i--) {
+        for (let i of latestSpawns) {
             output += "<span class='emoji'>" + latestSpawns[i]["block"] + "</span> 1/" + oreList[latestSpawns[i]["block"]]["prob"].toLocaleString();
             if (latestSpawns[i]["y"] !== undefined && latestSpawns[i]["x"] !== undefined)
                 output += " | X: " + (latestSpawns[i]["x"] - 1000000000) + ", Y: " + (-latestSpawns[i]["y"]) + "<br>";

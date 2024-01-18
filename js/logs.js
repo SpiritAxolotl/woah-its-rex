@@ -8,7 +8,7 @@ class secureLogs {
         this.#verifiedLogs = [];
         this.#logsTimer = null;
     }
-    createLog(r, c, intended, obj, luck) {
+    createLog(y, x, intended, obj, luck) {
         let luckModifier = 1;
         if (gears["real-candilium"])
             luckModifier *= 1.1;
@@ -16,28 +16,29 @@ class secureLogs {
             luckModifier *= 1.6;
         const maxLuck = (this.#maxLuck[currentPickaxe] * luckModifier) + 1;
         if (obj.stack.includes("main.js") && luck <= maxLuck) {
-            if (mine[r][c] === "⬜")
-                this.#spawnLogs.push([r, c, intended, luck]);
+            if (mine[y][x] === "⬜")
+                this.#spawnLogs.push({y: y, x: x, intended: intended, luck: luck});
         }
     }
-    verifyLog(r, c) {
+    verifyLog(y, x) {
         for (let i = 0; i < this.#spawnLogs.length; i++) {
-            if (this.#spawnLogs[i][0] === r && this.#spawnLogs[i][1] === c) {
-                if (mine[r][c] === this.#spawnLogs[i][2]) {
-                    const num = this.#spawnLogs[i][3];
+            const log = this.#spawnLogs[i];
+            if (log["y"] === y && log["x"] === x) {
+                if (mine[y][x] === log["intended"]) {
                     this.#spawnLogs.splice(i, 1);
-                    this.#verifiedLogs.push([mine[r][c], [r, c], new Date(), false, "Normal", num]);
+                    this.#verifiedLogs.push({ore: mine[y][x], y: y, x: x, date: new Date(), something: false, variant: "Normal", luck: log["luck"]});
                     break;
                 }
             }
         }
     }
-    verifyFind(block, r, c, variant) {
+    verifyFind(block, y, x, variant) {
         for (let i = 0; i < this.#verifiedLogs.length; i++) {
-            if (this.#verifiedLogs[i][1][0] === r && this.#verifiedLogs[i][1][1] === c) {
-                if (block === this.#verifiedLogs[i][0]) {
-                    this.#verifiedLogs[i][3] = true;
-                    this.#verifiedLogs[i][4] = variant;
+            const log = this.#verifiedLogs[i];
+            if (log["y"] === y && log["x"] === x) {
+                if (block === log["ore"]) {
+                    log["something"] = true;
+                    log["variant"] = variant;
                     break;
                 }
             }
@@ -54,10 +55,11 @@ class secureLogs {
                 document.getElementById("logHolder").appendChild(element);
                 let output = "";
                 for (let i = 0; i < this.#verifiedLogs.length; i++) {
-                    let multi = variantMultis[variantNames.indexOf(this.#verifiedLogs[i][4])];
-                    output += this.#verifiedLogs[i][0] + ", " + this.#verifiedLogs[i][2] + ", " + this.#verifiedLogs[i][3] + " " + this.#verifiedLogs[i][4] + ", ";
-                    output += this.#verifiedLogs[i][1][0] + ", ";
-                    output += Math.floor(((1 / oreList[this.#verifiedLogs[i][0]][0]) * multi) / this.#verifiedLogs[i][5]) + ", " + Math.log10(this.#verifiedLogs[i][5] * this.#verifiedLogs[i][1][0]) + "<br>";
+                    const log = this.#verifiedLogs[i];
+                    const multi = variantMultis[variantNames.indexOf(log["variant"])];
+                    output += log["ore"] + ", " + log["date"] + ", " + log["something"] + ", " + log["variant"] + ", ";
+                    output += log["y"] + ", ";
+                    output += Math.floor(((1 / oreList[log["ore"]]["prob"]) * multi) / log["luck"]) + ", " + Math.log10(log["luck"] * log["y"]) + "<br>";
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output !== "" ? output : "none");
         } else {
