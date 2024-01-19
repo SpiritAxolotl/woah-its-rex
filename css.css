@@ -227,6 +227,10 @@ button {
   flex: auto;
 }
 
+.col > * {
+  overscroll-behavior: none;
+}
+
 #col-1 {
   width: 50%;
 }
