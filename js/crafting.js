@@ -344,7 +344,7 @@ function updateActiveRecipe(ore) {
                 if (typeof ore === "string") {
                     let pickaxeDisplay = document.getElementById(`${ore}pickaxeRecipe${pick}Display`);
                     if (pickaxeDisplay === null) break;
-                        pickaxeDisplay.innerHTML = `<span class="emoji">${ore}</span> ${inventory[ore]["normal"]}/${pickaxeRecipes[pick][ore]}`;
+                        pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${inventory[ore]["normal"].toLocaleString()}/${pickaxeRecipes[pick][ore].toLocaleString()}`;
                     if (inventory[ore]["normal"] >= pickaxeRecipes[pick][ore]) {
                         pickaxeDisplay.classList.add("recipeGreen");
                         pickaxeDisplay.classList.remove("recipeRed");
@@ -355,7 +355,7 @@ function updateActiveRecipe(ore) {
                 } else {
                     for (let ingredient in pickaxeRecipes[pick]) {
                         let pickaxeDisplay = document.getElementById(`${ingredient}pickaxeRecipe${pick}Display`);
-                        pickaxeDisplay.innerHTML = `<span class="emoji">${ingredient}</span> ${inventory[ingredient]["normal"]}/${pickaxeRecipes[pick][ingredient]}`;
+                        pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ingredient]["prob"].toLocaleString()}">${ingredient}</span> ${inventory[ingredient]["normal"].toLocaleString()}/${pickaxeRecipes[pick][ingredient].toLocaleString()}`;
                         if (inventory[ingredient]["normal"] >= pickaxeRecipes[pick][ingredient]) {
                             pickaxeDisplay.classList.add("recipeGreen");
                             pickaxeDisplay.classList.remove("recipeRed");
@@ -373,7 +373,7 @@ function updateActiveRecipe(ore) {
                 if (typeof ore === "string") {
                     let gearDisplay = document.getElementById(`${ore}gearRecipe${snakeToCamel(gear, true)}Display`);
                     if (gearDisplay === null) break;
-                        gearDisplay.innerHTML = `<span class="emoji">${ore}</span> ${inventory[ore]["normal"]}/${gearRecipes[gear][ore]}`;
+                        gearDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${inventory[ore]["normal"].toLocaleString()}/${gearRecipes[gear][ore].toLocaleString()}`;
                     if (inventory[ore]["normal"] >= gearRecipes[gear][ore]) {
                         gearDisplay.classList.add("recipeGreen");
                         gearDisplay.classList.remove("recipeRed");
@@ -384,7 +384,7 @@ function updateActiveRecipe(ore) {
                 } else {
                     for (let ingredient in gearRecipes[gear]) {
                         let gearDisplay = document.getElementById(`${ingredient}gearRecipe${snakeToCamel(gear, true)}Display`);
-                        gearDisplay.innerHTML = `<span class="emoji">${ingredient}</span> ${inventory[ingredient]["normal"]}/${gearRecipes[gear][ingredient]}`;
+                        gearDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ingredient]["prob"].toLocaleString()}">${ingredient}</span> ${inventory[ingredient]["normal"].toLocaleString()}/${gearRecipes[gear][ingredient].toLocaleString()}`;
                         if (inventory[ingredient]["normal"] >= gearRecipes[gear][ingredient]) {
                             gearDisplay.classList.add("recipeGreen");
                             gearDisplay.classList.remove("recipeRed");
