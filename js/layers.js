@@ -201,6 +201,7 @@ let currentLayer = undefined;
 let overrideLayer = undefined;
 function setLayer(y) {
     regY = Math.floor(y / 2000);
+    const lastCurrentLayer = allLayers[allLayersNames.indexOf(layersChanged[`${regY}`])]; //might be undefined
     if (Object.keys(layersChanged).indexOf(`${regY}`) === -1) {
         if (overrideLayer !== undefined) {
             currentLayer = overrideLayer;
@@ -214,5 +215,5 @@ function setLayer(y) {
             currentLayer = allLayers[random(7)];
         
         layersChanged[`${regY}`] = allLayersNames[allLayers.indexOf(currentLayer)];
-    }
+    } else if (currentLayer !== lastCurrentLayer) currentLayer = lastCurrentLayer;
 }
