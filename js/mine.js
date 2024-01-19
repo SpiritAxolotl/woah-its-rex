@@ -53,28 +53,28 @@ function prepareArea(facing) {
 function checkAllAround(x, y, luck) {
     let generated;
     if (x - 1 >= 0 && mine[y][x - 1] === "⬜") {
-        generated = generateBlock(luck, {"y": y, "x": x-1});
+        generated = generateBlock(luck, {y: y, x: x-1});
         mine[y][x - 1] = generated["ore"];
         if (generated["hasLog"])
             verifiedOres.verifyLog(y, x-1);
         blocksRevealedThisReset++;
     }
     if (mine[y][x + 1] === "⬜") {
-        generated = generateBlock(luck, {"y": y, "x": x+1});
+        generated = generateBlock(luck, {y: y, x: x+1});
         mine[y][x + 1] = generated["ore"];
         if (generated["hasLog"])
             verifiedOres.verifyLog(y, x+1);
         blocksRevealedThisReset++;
     }
     if (mine[y + 1][x] === "⬜") {
-        generated = generateBlock(luck, {"y": y+1, "x": x});
+        generated = generateBlock(luck, {y: y+1, x: x});
         mine[y + 1][x] = generated["ore"];
         if (generated["hasLog"])
             verifiedOres.verifyLog(y+1, x);
         blocksRevealedThisReset++;
     }
     if (y - 1 >= 0 && mine[y - 1][x] === "⬜") {
-        generated = generateBlock(luck, {"y": y-1, "x": x});
+        generated = generateBlock(luck, {y: y-1, x: x});
         mine[y - 1][x] = generated["ore"];
         if (generated["hasLog"])
             verifiedOres.verifyLog(y-1, x);
@@ -173,7 +173,7 @@ function generateBlock(luck, location) {
             blockToGive = "♾️";
         }
         if (probability > 160000000) {
-            verifiedOres.createLog(location["y"], location["x"], blockToGive, new Error(), luck);
+            verifiedOres.createLog(location[y], location[x], blockToGive, new Error(), luck);
             hasLog = true;
         }
         spawnMessage(blockToGive, location);
