@@ -14,9 +14,9 @@ function saveAllData() {
     dataStorage["pickaxes"]["curr"] = currentPickaxe;
     dataStorage["stats"]["totalMined"] = totalMined;
     dataStorage["settings"]["mutedSounds"] = canPlay;
-    dataStorage["settings"]["musicVolume"] = document.getElementById("musicVolume").value;
-    dataStorage["settings"]["spawnVolume"] = document.getElementById("spawnVolume").value;
-    dataStorage["settings"]["musicButton"] = document.getElementById("musicButton").innerHTML;
+    dataStorage["settings"]["musicVolume"] = Number(document.getElementById("musicVolume").value);
+    dataStorage["settings"]["spawnVolume"] = Number(document.getElementById("spawnVolume").value);
+    dataStorage["settings"]["musicButton"] = Number(document.getElementById("musicButton").innerHTML);
     dataStorage["settings"]["baseMineCapacity"] = baseMineCapacity;
     dataStorage["settings"]["warnBeforeClosing"] = warnClose;
     dataStorage["gears"] = gears;
@@ -57,12 +57,10 @@ function loadAllData() {
             }
         }
         if (data["settings"]["musicVolume"] !== undefined) {
-            //data["settings"]["musicVolume"] = JSON.parse(data["settings"]["musicVolume"]);
             document.getElementById("musicVolume").value = data["settings"]["musicVolume"];
             changeMusicVolume(data["settings"]["musicVolume"]);
         }
         if (data["settings"]["spawnVolume"] !== undefined) {
-            //data["settings"]["spawnVolume"] = JSON.parse(data["settings"]["spawnVolume"]);
             document.getElementById("spawnVolume").value = data["settings"]["spawnVolume"];
             changeAllVolume(data["settings"]["spawnVolume"]);
         }
