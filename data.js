@@ -18,7 +18,7 @@ function saveAllData() {
         dataStorage[0].push([propertyName, [oreList[propertyName][1]]]);
     dataStorage[1].push([pickaxes, currentPickaxe]);
     dataStorage[2].push(totalMined)
-    dataStorage[3].push(canPlay, document.getElementById("musicVolume").value, document.getElementById("spawnVolume").value, document.getElementById("musicButton").innerHTML, baseMineCapacity);
+    dataStorage[3].push(canPlay, Number(document.getElementById("musicVolume").value), Number(document.getElementById("spawnVolume").value), document.getElementById("musicButton").innerHTML, baseMineCapacity);
     dataStorage[4].push(gears);
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
@@ -53,12 +53,10 @@ function loadAllData() {
             }
         }
         if (data[3][1] != undefined) {
-            data[3][1] = JSON.parse(data[3][1]);
             document.getElementById("musicVolume").value = data[3][1];
             changeMusicVolume(data[3][1]);
         }
         if (data[3][2] != undefined) {
-            data[3][2] = JSON.parse(data[3][2]);
             document.getElementById("spawnVolume").value = data[3][2];
             changeAllVolume(data[3][2]);
         }
@@ -71,7 +69,6 @@ function loadAllData() {
             }
         } 
         if (data[3][4] != undefined && !(isNaN(data[3][4]) && data[3][4] > 0)) {
-            data[3][4] = JSON.parse(data[3][4]);
             baseMineCapacity = data[3][4];
             mineCapacity = data[3][4];
         }
