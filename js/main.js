@@ -1,15 +1,16 @@
 const debug = window.location.href.match(/^https?:\/\/127\.0\.0\.1:\d{4}/) !== null;
-let debugLuck = "";
-let currLuck = 1;
-let mine = []; //[y, x]
-let curX = 1000000000; //large for a reason
-let curY = 0;
-let currentDisplay = "";
-let totalMined = 0;
-let blocksRevealedThisReset = 0;
-let mineCapacity = 40000; // in case this ever needs to be raised
-let canMine = false;
-let lastDirection = "";
+let debugLuck = "",
+    currLuck = 1,
+    mine = [], //[y, x]
+    curX = 1000000000, //large for a reason
+    curY = 0,
+    currentDisplay = "",
+    totalMined = 0,
+    blocksRevealedThisReset = 0,
+    mineCapacity = 40000, // in case this ever needs to be raised
+    canMine = false,
+    lastDirection = "";
+
 let pickaxes = {
     0: true,
     1: false,
@@ -149,14 +150,18 @@ function init() {
         invisible(element)
 }
 
-let chill;
-let ringing;
-let visionblur;
-let unfath;
-let ow;
-let magnificent;
-let zenith;
-let keepRunningAudio;
+document.addEventListener('DOMContentLoaded', () => {
+    visible(document.getElementById("playButton"));
+});
+
+let chill,
+    ringing,
+    visionblur,
+    unfath,
+    ow,
+    magnificent,
+    zenith,
+    keepRunningAudio;
 function loadContent() {
     let allAudios = [];
     keepRunningAudio = new Audio("sounds/ambience.mp3")
@@ -325,9 +330,9 @@ document.addEventListener("keydown", (event) => {
     }
 }, false);
 
-let loopTimer = null;
-let currDirection = "";
-let miningSpeed = 25;
+let loopTimer = null,
+    currDirection = "",
+    miningSpeed = 25;
 function goDirection(direction, speed) {
     if (currDirection === direction) {
         clearInterval(loopTimer);
@@ -440,6 +445,7 @@ function createIndex() {
     for (let ore of spawnsEverywhere)
         output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${oreList[ore]["prob"].toLocaleString()}</p>`;
     document.getElementById("indexDisplay").innerHTML = output;
+    //don't hardcode this in future when other hidden layers get added
     if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
         visible(document.getElementById("layerDisplaySilly"));
     else
