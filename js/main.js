@@ -432,7 +432,7 @@ function createInventory() {
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
-            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()]}`;
+            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
             document.getElementById(`inventory${variant}`).appendChild(element);
         }
     }
@@ -484,7 +484,7 @@ function showIndex() {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()]}`;
+    document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
     if (inventory[ore][variant.toLowerCase()] > 0)
         visible(document.getElementById(ore + capitalize(variant)));
     else
