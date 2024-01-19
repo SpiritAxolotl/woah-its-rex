@@ -56,8 +56,20 @@
   margin-bottom: 0.5em;
 }
 
+.actualCraftButton {
+  margin-top: 0.5em;
+}
+
 #displayRecipe > div > p {
-  margin-bottom: 0.1rem;
+  margin-bottom: 0;
+}
+
+.recipeRed {
+  color: red;
+}
+
+.recipeGreen {
+  color: green;
 }
 
 .latestDisplay {
@@ -85,6 +97,10 @@
   display: unset;
 }
 
+.craftPickaxeButton, .craftGearButton {
+  margin: 0.1em;
+}
+
 .inventoryButtons {
   width: 100%;
 }
@@ -99,6 +115,10 @@
   height: 100%;
   width: 100%;
   position: absolute;
+}
+#dataExport button {
+  text-wrap: nowrap;
+  margin: 0.3em 0;
 }
 
 #dataText {
@@ -180,7 +200,11 @@ button {
   border-radius: 0.25em;
   color: white;
   font-family: "Arial";
-  /* text-align: center; */
+  text-align: center;
+}
+
+.darkButton {
+  background-color: #383838;
 }
 
 #musicButton {
@@ -188,7 +212,7 @@ button {
 }
 
 .slidecontainer {
-  display: inherit;
+  display: block;
   padding: 0.5em;
 }
 
@@ -199,7 +223,7 @@ button {
 .col {
   height: 100vh;
   max-height: 100vh;
-  width: 50%;
+  /*width: 50%;*/
   flex: auto;
 }
 
@@ -280,7 +304,7 @@ button {
 }
 
 .container-fluid {
-  height: 100%;
+  display: flex;
 }
 */
 
@@ -305,9 +329,15 @@ button {
 
 #masterVolume {
   text-align: center;
+  max-width: 10em;
+  /*position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   border-style: solid;
-  border-color: white;
-  max-width: 10vw;
+  border-color: white;*/
+}
+#masterVolume > p {
+  margin: 0;
 }
 
 #noscript {

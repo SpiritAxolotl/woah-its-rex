@@ -79,8 +79,8 @@
         <p id="crafting">Crafting</p>
         <div id="craftingClick">
             <div>
-                <button onclick="showPickaxes()">Pickaxes</button>
-                <button onclick="showGears()">Gears</button>
+                <button onclick="showPickaxes()" id="showPickaxes" class="darkButton">Pickaxes</button>
+                <button onclick="showGears()" id="showGears">Gears</button>
             </div>
             <div id="pickaxeCrafts"></div>
             <div id="gearCrafts" class="invisible"></div>
@@ -89,28 +89,7 @@
             <p id="displayedRecipe"></p>
         </div>
         <div id="craftableDescriptions">
-            <!--<p id="itemDescription" class="invisible"></p>-->
-            <!---->
-            <p class="itemDescription" id="pickaxe1Description">Mines a few blocks in every direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.</p>
-            <p class="itemDescription" id="pickaxe2Description">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
-            <p class="itemDescription" id="pickaxe3Description">Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.</p>
-            <p class="itemDescription" id="pickaxe4Description">Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.</p>
-            <p class="itemDescription" id="pickaxe5Description">Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.</p>
-            <p class="itemDescription" id="pickaxe6Description">Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.</p>
-            <p class="itemDescription" id="pickaxe7Description">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
-            <p class="itemDescription" id="pickaxe8Description">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
-            <p class="itemDescription" id="pickaxe9Description">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck. </p>
-            <p class="itemDescription" id="pickaxe10Description">Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.</p>
-            <p class="itemDescription" id="gearOreTrackerDescription">Tracks the location of new ore spawns.</p>
-            <p class="itemDescription" id="gearRealCandiliumDescription">Boosts ability luck by 1.1x.</p>
-            <p class="itemDescription" id="gearRealVitriolDescription">Sets mining speed delay to 15ms from 25ms.</p>
-            <p class="itemDescription" id="gearEnergySiphonerDescription">Boosts mining speed slightly upon mining any exotic+ ore (1/750k+).</p>
-            <p class="itemDescription" id="gearSugarRushDescription">Mines all rare ores in the mine upon mine reset.</p>
-            <p class="itemDescription" id="gearInfinityCollectorDescription">Increases ability proc rates by 20%.</p>
-            <p class="itemDescription" id="gearLayerMaterializerDescription">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
-            <p class="itemDescription" id="gearFortune3BookDescription">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
-            <p class="itemDescription" id="gearHaste2BeaconDescription">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
-            <!---->
+            <p id="itemDescription"></p>
         </div>
     </div>
     <div class="col" id="col-3">
@@ -155,15 +134,15 @@
     <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
     <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
     <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
+    <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
+    <div id="logHolder"></div>
     <div id="masterVolume">
         <p>Spawn Volumes</p>
-        <label class="slidecontainer" style="max-width: 10vw;">
+        <label class="slidecontainer">
             <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
         </label>
     </div>
     <br>
-    <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
-    <div id="logHolder"></div>
 </div>
 </div>
 </body>

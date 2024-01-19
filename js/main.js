@@ -23,6 +23,19 @@ let pickaxes = {
     9: false,
     10: false
 };
+const pickaxeDescriptions = {
+    0: "how are you even reading this",
+    1: "Mines a few blocks in every cardinal direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.",
+    2: "Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.",
+    3: "Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.",
+    4: "Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.",
+    5: "Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.",
+    6: "Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.",
+    7: "Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.",
+    8: "Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.",
+    9: "Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck.",
+    10: "Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck."
+};
 let gears = {
     "ore-tracker": false,
     "real-candilium": false,
@@ -34,6 +47,18 @@ let gears = {
     "energy-siphoner": false,
     "sugar-rush": false,
     "silly-tp": false
+};
+const gearDescriptions = {
+    "ore-tracker": "Tracks the location of new ore spawns.",
+    "real-candilium": "Boosts ability luck by 1.1x.",
+    "real-vitriol": "Sets mining speed delay to 15ms from 25ms.",
+    "infinity-collector": "Increases ability proc rates by 20%.",
+    "layer-materializer": "For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.",
+    "fortune-3-book": "Increases ability luck by 1.6x. Stacks with Real Candilium.",
+    "haste-2-beacon": "Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.",
+    "energy-siphoner": "Boosts mining speed slightly upon mining any exotic+ ore (1/750k+).",
+    "sugar-rush": "Mines all rare ores in the mine upon mine reset.",
+    "silly-tp": ":3<br>Instantly teleports you to the silly layer."
 };
 let gearNames = Object.keys(gears);
 let gearNamesNormalized = {
@@ -237,15 +262,15 @@ function searchObj(arr, x, start, end) {
         return searchObj(arr, x, mid + 1, end);
 }
 
-function sortObj(obj) {
-    let sortedkeys = [];
-    let sortedvals = [];
-    for (let thing in obj) {
-        const index = searchObj(sortedvals, obj[thing], 0, sortedvals.length-1);
-        sortedvals.splice(index, 0, obj[thing]);
-        sortedkeys.splice(index, 0, thing);
+function sortOres(layer) {
+    let sortedores = [];
+    let sortedprobs = [];
+    for (let ore of layer) {
+        const index = searchObj(sortedprobs, oreList[ore]["prob"], 0, sortedprobs.length-1);
+        sortedprobs.splice(index, 0, oreList[ore]["prob"]);
+        sortedores.splice(index, 0, ore);
     }
-    return sortedkeys;
+    return sortedores.reverse();
 }
 
 document.addEventListener("keydown", (event) => {
@@ -390,7 +415,7 @@ function createInventory() {
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
-            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${oreList[ore]["inv"][variant.toLowerCase()]}`;
+            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()]}`;
             document.getElementById(`inventory${variant}`).appendChild(element);
         }
     }
@@ -399,18 +424,30 @@ function createInventory() {
 function createIndex() {
     let prob = 0;
     let output = "";
-    for (let i = 0; i < allLayers.length - 2; i++) {
-        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">${allLayersNames[i]} Layer (${i * 2000}-${(i+1) * 2000}m)</p>`;
-        for (let ore in allLayers[i]) {
+    for (let i = 0; i < allLayers.length; i++) {
+        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">${allLayersNames[i]} Layer`;
+        if (i < allLayers.length - 2)
+            output += ` (${i * 2000}-${(i+1) * 2000}m)`;
+        output += "</p>";
+        for (let ore of allLayers[i]) {
             prob = oreList[ore]["prob"];
-            if (prob > 2000000 && prob < 5000000000)
-                output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${prob.toLocaleString()}</p>`;
+            //if (prob > 2000000 && prob < 5000000000)
+            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${prob.toLocaleString()}</p>`;
         }
         output += `</div>`;
     }
-    for (let ore in spawnsEverywhere)
-        output += `<p class="oreDisplay invisible"><span class="emoji">${ore}</span> | 1/${oreList[ore]["prob"].toLocaleString()} | Everywhere</p>`;
+    output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle">Everywhere</p>`;
+    for (let ore of spawnsEverywhere)
+        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${oreList[ore]["prob"].toLocaleString()}</p>`;
     document.getElementById("indexDisplay").innerHTML = output;
+    if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
+        visible(document.getElementById("layerDisplaySilly"));
+    else
+        invisible(document.getElementById("layerDisplaySilly"));
+    if (inventory["🪈"]["normal"] > 0)
+        visible(document.getElementById("layerDisplayFlute"));
+    else
+        invisible(document.getElementById("layerDisplayFlute"));
 }
 
 let showing = false;
@@ -429,8 +466,8 @@ function showIndex() {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${oreList[ore]["inv"][variant.toLowerCase()]}`;
-    if (oreList[ore]["inv"][variant.toLowerCase()] > 0)
+    document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()]}`;
+    if (inventory[ore][variant.toLowerCase()] > 0)
         visible(document.getElementById(ore + capitalize(variant)));
     else
         invisible(document.getElementById(ore + capitalize(variant)));
@@ -441,31 +478,28 @@ function updateInventory(ore, variant) {
 let spawnOre;
 let loggedFinds = [];
 let latestSpawns = [];
-function spawnMessage(block, location) {
+function spawnMessage(ore, location) {
     if (!gears["real-vitriol"] && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
         mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
-    if (currentPickaxe === 5) latestSpawns.push({"block": block, "y": location["y"], "x": location["x"]});
-    else if (currentPickaxe < 6) {
-        if (gears["ore-tracker"]) latestSpawns.push({"block": block, "y": location["y"], "x": location["x"]});
-        else latestSpawns.push({"block": block, "y": undefined, "x": undefined});
-    } else if (oreList[block]["prob"] > 2000000) {
-        if (gears["ore-tracker"]) latestSpawns.push({"block": block, "y": location["y"], "x": location["x"]});
-        else latestSpawns.push({"block": block, "y": undefined, "x": undefined});
-    } else addToLatest = false;
-    if (gears["real-vitriol"]) loggedFinds.push({"y": location["y"], "x": location["x"]});
+    if (currentPickaxe === 5 || gears["ore-tracker"])
+        latestSpawns.push({ore: ore, y: location["y"], x: location["x"]});
+    else if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
+        latestSpawns.push({ore: ore, y: undefined, x: undefined});
+    else addToLatest = false;
+    if (gears["real-vitriol"]) loggedFinds.push({y: location["y"], x: location["x"]});
     if (latestSpawns.length > 10) latestSpawns.splice(0, 1);
     if (addToLatest) {
-        for (let i of latestSpawns) {
-            output += `<span class="emoji">${latestSpawns[i]["block"]}</span> 1/${oreList[latestSpawns[i]["block"]]["prob"].toLocaleString()}`;
+        for (let i in latestSpawns) {
+            output += `<span class="emoji">${latestSpawns[i]["ore"]}</span> 1/${oreList[latestSpawns[i]["ore"]]["prob"].toLocaleString()}`;
             if (latestSpawns[i]["y"] !== undefined && latestSpawns[i]["x"] !== undefined)
                 output += ` | X: ${latestSpawns[i]["x"] - 1000000000}, Y: ${-latestSpawns[i]["y"]}<br>`;
             else output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
         if (currentPickaxe === 5 || gears["ore-tracker"])
-            document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${block}</span> Has Spawned!<br> 1/${oreList[block]["prob"].toLocaleString()}<br>X: ${location["x"] - 1000000000}<br>Y: ${-location["y"]}`;
+            document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!<br> 1/${oreList[ore]["prob"].toLocaleString()}<br>X: ${location["x"] - 1000000000}<br>Y: ${-location["y"]}`;
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
@@ -476,14 +510,7 @@ function spawnMessage(block, location) {
 let latestFinds = [];
 function logFind(type, x, y, variant, atMined, fromReset) {
     let output = "";
-    latestFinds.push({
-        "type": type,
-        "x": x,
-        "y": y,
-        "variant": variant,
-        "atMined": atMined,
-        "fromReset": fromReset
-    });
+    latestFinds.push({type: type, x: x, y: y, variant: variant, atMined: atMined, fromReset: fromReset});
     if (latestFinds.length > 10) latestFinds.shift();
     for (let i = latestFinds.length - 1; i >= 0; i--) {
         output += `${latestFinds[i]["variant"]}${latestFinds[i]["type"]} | X: ${latestFinds[i]["x"] - 1000000000}, Y: ${-latestFinds[i]["y"]} | `;
