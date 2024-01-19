@@ -252,6 +252,7 @@ function getParams(distanceX, distanceY, x, y) {
 }
 
 function updateCapacity(value) {
+    value = Number(value);
     if (!isNaN(value) && value > 0) {
         baseMineCapacity = value;
         mineCapacity = value;
