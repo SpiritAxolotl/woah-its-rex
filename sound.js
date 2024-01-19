@@ -5,12 +5,18 @@ function keepRunning() {
 }
 
 function changeMusicVolume(percent) {
-    if (percent > 100)
-        percent = 100;
-    keepRunningAudio.volume = 0.05 * (percent / 100);
+    percent = Number(percent);
+    if (!(isNaN(percent))) {
+        if (percent > 100)
+            percent = 100;
+        keepRunningAudio.volume = 0.05 * (percent / 100);
+    }
+    
 }
 function changeAllVolume(percent) {
-    if (percent > 100)
+    percent = Number(percent);
+    if (!(isNaN(percent))) {
+        if (percent > 100)
         percent = 100;
     vol = (percent / 100);
     chill.volume = 1*vol;
@@ -20,6 +26,7 @@ function changeAllVolume(percent) {
     ow.volume = 0.6*vol;
     magnificent.volume = 1*vol;
     zenith.volume = 0.6*vol;
+    }
 }
 
 function toggleMusic() {
