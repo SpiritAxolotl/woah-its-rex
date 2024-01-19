@@ -9,7 +9,7 @@ function saveAllData() {
     };
     
     for (let ore in oreList)
-        dataStorage["ores"][ore] = oreList[ore]["inv"];
+        dataStorage["ores"][ore] = inventory[ore];
     dataStorage["pickaxes"]["inv"] = pickaxes;
     dataStorage["pickaxes"]["curr"] = currentPickaxe;
     dataStorage["stats"]["totalMined"] = totalMined;
@@ -29,7 +29,7 @@ function loadAllData() {
         for (let ore in data["ores"]) {
             if (oreList[ore] !== undefined) {
                 for (let variant of variantNames)
-                    oreList[ore]["inv"][variant.toLowerCase()] = data["ores"][ore][variant.toLowerCase()];
+                    inventory[ore][variant.toLowerCase()] = data["ores"][ore][variant.toLowerCase()];
             }
         }
         if (data["pickaxes"]["inv"] !== undefined) {
@@ -42,9 +42,9 @@ function loadAllData() {
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
         for (let ore in oreList) {
             if (document.getElementById(`${ore}Normal`) !== null) {
-                for (let variant in oreList[ore]["inv"]) {
+                for (let variant in inventory[ore]) {
                     updateInventory(ore, variant);
-                    if (oreList[ore]["inv"][variant] > 0)
+                    if (inventory[ore][variant] > 0)
                         visible(document.getElementById(ore + capitalize(variant)));
                 }
             }
@@ -75,8 +75,14 @@ function loadAllData() {
             for (let gear in Object.keys(data["gears"]))
                 gears[gear] = data["gears"][gear];
         }
-        if (oreList["🎂"]["inv"]["normal"] > 0 || gears["silly-tp"])
-            visible(document.getElementById("sillyRecipe"));
+        if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
+            visible(document.getElementById("layerDisplaySilly"));
+        else
+            invisible(document.getElementById("layerDisplaySilly"));
+        if (inventory["🪈"]["normal"] > 0)
+            visible(document.getElementById("layerDisplayFlute"));
+        else
+            invisible(document.getElementById("layerDisplayFlute"));
         localStorage.removeItem("dataBackup");
         warnBeforeClosing();
         return true;
