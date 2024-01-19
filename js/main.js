@@ -8,8 +8,10 @@ let debugLuck = "",
     totalMined = 0,
     blocksRevealedThisReset = 0,
     mineCapacity = 40000, // in case this ever needs to be raised
+    baseMineCapacity = 40000,
     canMine = false,
-    lastDirection = "";
+    lastDirection = "",
+    warnClose = true;
 
 let pickaxes = {
     0: true,
@@ -22,7 +24,8 @@ let pickaxes = {
     7: false,
     8: false,
     9: false,
-    10: false
+    10: false,
+    11: false
 };
 const pickaxeDescriptions = {
     0: "how are you even reading this",
@@ -35,7 +38,23 @@ const pickaxeDescriptions = {
     7: "Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.",
     8: "Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.",
     9: "Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck.",
-    10: "Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck."
+    10: "Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.",
+    11: "Mines an extremely large spiral around the player.<br>Has an ability proc rate of 1/100.<br>Has 30x luck."
+};
+const pickaxeSillyDescriptions = {
+    0: "again, how are you reading this",
+    1: "is anyone gonna read these lol",
+    2: "hi!!! hii!!",
+    3: "wait no get out of here",
+    4: "stop it get out",
+    5: "leave!!!!!!!!",
+    6: "i have your ip",
+    7: "grrrrr leave!!",
+    8: ":pouting-cat:",
+    9: ">:C",
+    10: "IM HERE NOW TOO",
+    11: "mrrp meow meow!",
+    12: "cataxe"
 };
 let gears = {
     "ore-tracker": false,
@@ -128,6 +147,13 @@ function romanize(num) {
     }
     return str;
 }
+function clamp(num, min, max) {
+    return num <= min 
+      ? min 
+      : num >= max 
+        ? max 
+        : num
+  }
 
 //IMPORTANT
 
@@ -145,6 +171,7 @@ function init() {
         createPickaxeRecipes();
         createGearRecipes();
         document.getElementById("dataText").value = "";
+        createIndex();
     }
     for (let element of document.getElementsByClassName("itemDescription"))
         invisible(element)
@@ -250,11 +277,18 @@ function movePlayer(dir) {
 function random() {
     return Math.random();
 }
-function random(upper) {
-    return Math.floor(Math.random()*(upper+1));
-}
 function random(lower, upper) {
-    return Math.floor(Math.random()*(upper-lower+1)+lower);
+    if (typeof lower !== "number" && typeof upper !== "number") {
+        //[0-1)
+        return Math.random()
+    } else if (typeof lower === "number" && typeof upper !== "number") {
+        upper = lower;
+        //[0-upper]
+        return Math.floor(Math.random()*(upper+1));
+    } else if (typeof lower === "number" && typeof upper === "number") {
+        //[lower-upper]
+        return Math.floor(Math.random()*(upper-lower+1)+lower);
+    }
 }
 
 function searchObj(arr, x, start, end) {
@@ -321,13 +355,14 @@ document.addEventListener("keydown", (event) => {
     if (validInput) {
         clearInterval(loopTimer);
         currDirection = "";
+        energySiphonerDirection = "";
         if (event.shiftKey)
             goDirection(name);
         else
             movePlayer(name);
-        if (ability1Active) {
-            clearTimeout(ability1Timeout);
-            ability1Active = false;
+        if (realVitriolActive) {
+            clearTimeout(realVitriolTimeout);
+            realVitriolActive = false;
         }
     }
 }, false);
@@ -339,9 +374,9 @@ function goDirection(direction, speed) {
     if (currDirection === direction) {
         clearInterval(loopTimer);
         currDirection = "";
-        if (ability1Active) {
-            clearTimeout(ability1Timeout);
-            ability1Active = false;
+        if (realVitriolActive) {
+            clearTimeout(realVitriolTimeout);
+            realVitriolActive = false;
         }
     } else {
         clearInterval(loopTimer);
@@ -351,6 +386,7 @@ function goDirection(direction, speed) {
         } else miningSpeed = speed;
         loopTimer = setInterval(movePlayer, miningSpeed, direction);
         currDirection = direction;
+        energySiphonerDirection = direction;
     }
 }
 
@@ -361,6 +397,7 @@ function moveOne(dir, button) {
         movePlayer(dir);
     }, 15);
     currDirection = "";
+    energySiphonerDirection = "";
     setTimeout(() => {
         button.disabled = false;
     }, 100);
@@ -388,8 +425,14 @@ function displayArea() {
         let output = "";
         const constraints = getParams(9, 9);
         for (let y = curY - constraints["up"]; y <= curY + 9 + (9-constraints["up"]); y++) {
-            for (let x = curX - constraints["left"]; x <= curX + 9 + (9-constraints["left"]); x++)
+            for (let x = curX - constraints["left"]; x <= curX + 9 + (9-constraints["left"]); x++) {
+                /*if (mine[r][c] === "⚪") {
+                    output += "<span style='opacity:0;'>" + mine[r][c] + "</span>"
+                } else {
+                    output += mine[r][c];
+                }*/
                 output += mine[y][x];
+            }
             output += "<br>";
         }
         document.getElementById("blockDisplay").innerHTML = output;
@@ -429,8 +472,14 @@ function createInventory() {
 }
 
 function createIndex() {
+    document.getElementById("indexDisplay").innerHTML = "";
     let prob = 0;
     let output = "";
+    let multi = verifiedOres.getLuckBoosts()[currentPickaxe];
+    if (gears["real-candilium"])
+        multi *= 1.1;
+    if (gears["fortune-3-book"]) 
+        multi *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
         output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">${allLayersNames[i]} Layer`;
         if (i < allLayers.length - 2)
@@ -439,13 +488,13 @@ function createIndex() {
         for (let ore of allLayers[i]) {
             prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
-            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${prob.toLocaleString()}</p>`;
+            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${(prob * multi).toLocaleString()}</p>`;
         }
         output += `</div>`;
     }
     output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle">Everywhere</p>`;
     for (let ore of spawnsEverywhere)
-        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${oreList[ore]["prob"].toLocaleString()}</p>`;
+        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * multi).toLocaleString()}</p>`;
     document.getElementById("indexDisplay").innerHTML = output;
     //don't hardcode this in future when other hidden layers get added
     if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
@@ -496,7 +545,11 @@ function spawnMessage(ore, location) {
     else if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
         latestSpawns.push({ore: ore, y: undefined, x: undefined});
     else addToLatest = false;
-    if (gears["real-vitriol"]) loggedFinds.push({y: location["y"], x: location["x"]});
+    if (gears["real-vitriol"] || gears["infinity-collector"]) {
+        if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000) {
+            loggedFinds.push({y: location["y"], x: location["x"]});
+        }
+    }
     if (latestSpawns.length > 10) latestSpawns.splice(0, 1);
     if (addToLatest) {
         for (let i in latestSpawns) {

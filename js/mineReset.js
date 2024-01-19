@@ -1,43 +1,50 @@
+//for the button on the UI
 function resetMine() {
     clearInterval(loopTimer);
     currDirection = "";
     mine = [[]];
+    layersChanged = {};
     curX = 1000000000;
     curY = 0;
     blocksRevealedThisReset = 0;
     currentLayer = allLayers[0];
     createMine();
-    mineCapacity = 40000;
+    mineCapacity = baseMineCapacity;
     document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}`;
 }
 
+//for the automatic reset to reduce memory
 let resetting = false;
 async function mineReset() {
-    resetting = true;
-    mineCapacity = 40000;
-    const currDirectionBeforeReset = currDirection;
-    currDirection = "";
-    //const temp2 = await collectOres(temp);
-    loggedFinds = [];
-    canMine = await mineResetAid();
-    checkAllAround(curX, curY, 1);
-    mine[curY][curX] = "⛏️";
-    displayArea();
-    goDirection(currDirectionBeforeReset);
-    resetting = false;
+    if (!resetting) {
+        resetting = true;
+        mineCapacity = baseMineCapacity;
+        layersChanged = {};
+        layersChanged[`${Math.floor(curY/2000)}`] = allLayersNames[allLayers.indexOf(currentLayer)]
+        const currDirectionBeforeReset = currDirection;
+        currDirection = "";
+        const temp = await collectOres(currDirectionBeforeReset);
+        canMine = await mineResetAid();
+        checkAllAround(curX, curY, 1);
+        mine[curY][curX] = "⛏️";
+        loggedFinds = [];
+        displayArea();
+        goDirection(currDirectionBeforeReset);
+        resetting = false;
+    }
 }
 
-function collectOres(temp) {
+function collectOres(inDirection) {
     return new Promise((resolve) => {
     if (gears["infinity-collector"]) {
         for (let i = 0; i < loggedFinds.length; i++) {
             if (mine[loggedFinds[i][0]] !== undefined &&
               mine[loggedFinds[i][0]][loggedFinds[i][1]] !== undefined)
-                mineBlock(loggedFinds[i][1], loggedFinds[i][0], "reset", 1);
+                mineBlock(loggedFinds[i]["x"], loggedFinds[i]["t"], "reset", 1);
         }
     } else {
         let direction = "";
-        if (temp !== "") direction = temp;
+        if (inDirection !== "") direction = inDirection;
         else if (lastDirection !== "") direction = lastDirection;
         if (direction === "s") {
             let constraints = getParams(30, 500);
@@ -84,7 +91,7 @@ function collectOres(temp) {
     }
     setTimeout(() => {
         resolve(true);
-    }, 200);
+    }, 1000);
     });
 }
 
@@ -96,8 +103,10 @@ function mineResetAid() {
         let x = 1000000000;
         let y = curY;
         for (let r = y - 50; r < y + 50; r++) {
-            if (mine[r] === undefined) mine[r] = [];
-            for (let c = x - 50; c < x + 50; c++) mine[r][c] = "⬜";
+            if (r > -1 && mine[r] === undefined) mine[r] = [];
+            for (let c = x - 50; c < x + 50; c++)
+                if (mine[r] !== undefined)
+                    mine[r][c] = "⬜";
         }
         checkAllAround(curX, curY, 1);
     }, 125);
