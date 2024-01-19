@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap");
 
+:root {
+  --bgcolor: #030304;
+}
 /*.emoji {
   font-family: "Noto Color Emoji", sans-serif !important; 
 }*/
@@ -127,7 +130,7 @@
 
 body {
   overscroll-behavior: none;
-  background-color: black;
+  background-color: var(--bgcolor);
   max-height: 100%;
   font-family: "Courier";
 }
@@ -178,10 +181,9 @@ p {
   display: block;
 }
 
-.mobile > button {
+/*.mobile > button {
   width: 6vw;
-  text-wrap: nowrap;
-}
+}*/
 
 #crafting, #craftingClick {
   margin-bottom: 0.5rem;
@@ -193,6 +195,7 @@ p {
 
 button {
   font-size: 0.9em;
+  user-select: none;
   background-color: #494949;
   border-style: solid;
   border-color: white;
@@ -201,10 +204,12 @@ button {
   color: white;
   font-family: "Arial";
   text-align: center;
+  min-width: 5em;
+  text-wrap: nowrap;
 }
 
 .darkButton {
-  background-color: #383838;
+  background-color: #2a2a2a;
 }
 
 #musicButton {
@@ -321,7 +326,7 @@ button {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  background-color: black;
+  background-color: var(--bgcolor);
   z-index: 4;
 }
 
@@ -347,7 +352,7 @@ button {
 #noscript {
   user-select: none;
   position: absolute;
-  background-color: black;
+  background-color: var(--bgcolor);
   width: 100%;
   height: 100%;
   z-index: 1;

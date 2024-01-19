@@ -278,11 +278,14 @@ function sortOres(layer) {
     return sortedores.reverse();
 }
 
+let holdingShift = true;
 document.addEventListener("keydown", (event) => {
-    let name = event.key;
+    const name = event.key.toLowerCase();
     let validInput = false;
-    name = name.toLowerCase();
     switch(name) {
+        case "shift":
+            holdingShift = true;
+            break;
         case "w":
             validInput = true;
             break;
@@ -327,6 +330,15 @@ document.addEventListener("keydown", (event) => {
             clearTimeout(ability1Timeout);
             ability1Active = false;
         }
+    }
+}, false);
+document.addEventListener("keyup", (event) => {
+    const name = event.key.toLowerCase();
+    console.log(name);
+    switch(name) {
+        case "shift":
+            holdingShift = false;
+            break;
     }
 }, false);
 
