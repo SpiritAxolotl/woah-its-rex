@@ -75,29 +75,39 @@ async function rollAbilities() {
     }
 }
 
-let ability1Active = false;
-let ability1Timeout;
-function gearAbility1() {
-    if (!ability1Active && !resetting) {
-        ability1Active = true;
+//investigate this in future. seems like you need real vitriol for faster mining speed even with other items
+let realVitriolActive = false,
+    realVitriolTimeout,
+    energySiphonerSpeed,
+    energySiphonerDirection;
+function gearAbilityRealVitriol() {
+    if (!realVitriolActive && !resetting) {
+        realVitriolActive = true;
         let tempSpeed = miningSpeed;
         let tempDirection = currDirection;
         currDirection = "";
         clearInterval(loopTimer);
         goDirection(tempDirection, tempSpeed - 3);
-        ability1Timeout = setTimeout(() => {
+        realVitriolTimeout = setTimeout(() => {
             miningSpeed = tempSpeed;
             clearInterval(loopTimer);
             currDirection = "";
             goDirection(tempDirection);
-            ability1Active = false;
+            realVitriolActive = false;
         }, 5000);
     }
 }
 
-function gearAbility2() {
-    if (gears["silly-tp"])
-        currentLayer = sillyLayer;
+function gearAbilitySillyTp() {
+    if (gears["silly-tp"]) {
+        if (Object.values(layersChanged).indexOf("Silly") === -1) {
+            overrideLayer = sillyLayer;
+            teleport(Math.max(Math.floor(curY/2000)*2000, 16000)+7000);
+        } else {
+            teleport(Number(Object.keys(layersChanged)[Object.values(layersChanged).indexOf("Silly")])*2000+1000);
+        }
+        setLayer(curY);
+    }
 }
 
 function pickaxeAbility1(x, y, size, customLuck, boost) {

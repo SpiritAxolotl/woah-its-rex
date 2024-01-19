@@ -100,7 +100,7 @@ const pickaxeRecipes = {
         "✂️": 50
     },
     10: {
-        "🟫": 125000000,
+        "🟫": 75000000,
         "🥗": 2,
         "🌪️": 5,
         "🌏": 10,
@@ -111,6 +111,20 @@ const pickaxeRecipes = {
         "🪵": 100,
         "🌻": 100,
         "🍁": 100
+    },
+    11: {
+        "🌊": 250000000,
+        "💫": 1,
+        "🪩": 5,
+        "👿": 10,
+        "🌀": 10,
+        "🔱": 100,
+        "👑": 100,
+        "🐟": 250,
+        "🫧": 500,
+        "🤿": 500,
+        "🎣": 500,
+        "⛵": 500
     }
 },
 gearRecipes = {
@@ -231,6 +245,7 @@ function displayRecipe(n, button) {
         let displayedRecipe = document.createElement("p");
         displayedRecipe.id = "displayedRecipe";
         displayedRecipe.innerHTML = `Pickaxe ${n}:`;
+        displayedRecipe.title = pickaxeSillyDescriptions[n];
         recipes.insertBefore(displayedRecipe, recipes.children[0]);
         updateActiveRecipe();
     } else {
@@ -320,7 +335,7 @@ function createGearRecipes() {
         button.classList.add("actualCraftButton");
         button.setAttribute("onclick", `craftGear('${gear}', this)`);
         if (gears[gear])
-            button.innerHTML = "Owned!";
+            button.innerHTML = gear !== "silly-tp" ? "Owned!" : "Teleport!";
         else
             button.innerHTML = "Craft!";
         gearDisplay.appendChild(button);
@@ -418,12 +433,14 @@ function craftPickaxe(pick) {
             let pickaxeDisplay = document.getElementById(`pickaxeRecipe${pick}`);
             pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
             updateActiveRecipe();
+            currentPickaxe = pick;
         }
     } else {
         let pickaxeDisplay = document.getElementById(`pickaxeRecipe${pick}`);
         pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
         currentPickaxe = pick;
     }
+    createIndex();
 }
 function craftGear(gear) {
     canCraft = true;
@@ -441,11 +458,12 @@ function craftGear(gear) {
                 updateInventory(ingredient, "normal");
             }
             let gearDisplay = document.getElementById(`gearRecipe${snakeToCamel(gear, true)}`);
-            gearDisplay.lastElementChild.innerHTML = "Owned!";
+            gearDisplay.lastElementChild.innerHTML = gear !== "silly-tp" ? "Owned!" : "Teleport!";
             updateActiveRecipe();
         }
     }
-    if (gear === "silly-tp") gearAbility2();
+    createIndex();
+    if (gear === "silly-tp" && gears["silly-tp"]) gearAbilitySillyTp();
 }
 
 function showPickaxes() {
