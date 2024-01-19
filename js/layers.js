@@ -21,6 +21,7 @@ const oreList = {
     "🎆": { prob: 3000000000 }, //ADDED
     "🌈": { prob: 2750000000 },
     "🏵️": { prob: 2600000000 },
+    "🥬": { prob: 2000000000 },
     "💫": { prob: 2000000000 }, //ADDED
     "👁️": { prob: 1920000000 }, //ADDED
     "🪩": { prob: 999999999 }, //ADDED
@@ -186,22 +187,32 @@ allLayersNames = [
     "Flute"
 ];
 
+/*function searchDepth(y) {
+    for (let depth in layersChanged)
+        if (depth === `${y}`) return true;
+    return false;
+}*/
+
 //SETTING LAYERS
 
-let lastLayerChange = 6000;
-let currentLayer = dirtLayer;
+//let lastLayerChange = 6000;
+let layersChanged = {};
+let currentLayer = undefined;
+let overrideLayer = undefined;
 function setLayer(y) {
-    let regY = y;
-    if (regY < 16000) {
-        regY = Math.floor(regY / 2000);
-        currentLayer = allLayers[regY];
-    } else if (y > (lastLayerChange + 10000)) {
-        lastLayerChange += 10000;
-        if (Math.round(Math.random() * 77) === 33)
+    regY = Math.floor(y / 2000);
+    if (Object.keys(layersChanged).indexOf(`${regY}`) === -1) {
+        if (overrideLayer !== undefined) {
+            currentLayer = overrideLayer;
+            overrideLayer = undefined;
+        } else if (regY <= 7) currentLayer = allLayers[regY];
+        else if (random(1,77) === 33)
             currentLayer = sillyLayer;
-        else if (Math.round(Math.random() * 40) === 20)
+        else if (random(1,40) === 20)
             currentLayer = fluteLayer;
         else
-            currentLayer = allLayers[Math.floor(Math.random() * 8)];
+            currentLayer = allLayers[random(7)];
+        
+        layersChanged[`${regY}`] = allLayersNames[allLayers.indexOf(currentLayer)];
     }
 }

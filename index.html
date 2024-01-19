@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html>
 <head>
     <title>Re:REx</title>
     <meta charset="utf-8">
@@ -149,6 +149,10 @@
         </label>
     </div>
     <br>
+    <input autocomplete = "off" type="text" id="mineCapacitySetter">
+    <button onclick="updateCapacity(document.getElementById('mineCapacitySetter').value)" id="updateCapacityButton">Update Capacity</button>
+    <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: </button>
 </div>
 </div>
 </body>
+</html>

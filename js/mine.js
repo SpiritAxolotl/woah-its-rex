@@ -8,6 +8,7 @@ function createMine() {
     }
     mine[0][1000000000] = "⛏️"; //trusty pickaxe
     displayArea();
+    setLayer(0);
     checkAllAround(curX, curY, 1);
     displayArea();
 }
@@ -85,9 +86,9 @@ function checkAllAround(x, y, luck) {
         blocksRevealedThisReset = 0;
         canMine = false;
         setTimeout(() => {
-            if (ability1Active) {
-                clearTimeout(ability1Timeout);
-                ability1Active = false;
+            if (realVitriolActive) {
+                clearTimeout(realVitriolTimeout);
+                realVitriolActive = false;
             }
             mineReset();
         }, 250);
@@ -142,7 +143,7 @@ function giveBlock(ore, x, y, fromReset) {
         if (oreList[ore]["prob"] >= 160000000)
             verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant-1]);
         if (oreList[ore]["prob"] >= 750000) {
-            if (gears["energy-siphoner"]) gearAbility1();
+            if (gears["energy-siphoner"]) gearAbilityRealVitriol();
             if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
                 logFind(ore, x, y, variantNamesEmojis[variant-1], totalMined, fromReset);
         }
@@ -155,9 +156,13 @@ function generateBlock(luck, location) {
     if (debug && typeof debugLuck === "number") luck = debugLuck;
     let hasLog = false;
     const layer = currentLayer.concat(spawnsEverywhere);
+    if (location["y"] === 1)
+        layer.push("🥬");
     let blockToGive = "";
     let summedProbability = 0;
     const chosenValue = Math.random()/luck;
+    if (location["y"] === 0)
+        return {ore: "🟩", hasLog: false};
     for (let ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
         if (chosenValue < summedProbability) {
@@ -168,54 +173,54 @@ function generateBlock(luck, location) {
     const probability = oreList[blockToGive]["prob"];
     if (probability >= 750000) {
         //TODO: make a better less hardcoded system for replacing blocks
-        if (blockToGive === "🧌") {
+        /*if (blockToGive === "🧌") {
             localStorage.setItem("nyehehehehehe", true);
             blockToGive = "♾️";
-        }
+        }*/
         if (probability > 160000000) {
-            verifiedOres.createLog(location[y], location[x], blockToGive, new Error(), luck);
+            verifiedOres.createLog(location["y"], location["x"], blockToGive, new Error(), luck);
             hasLog = true;
         }
         spawnMessage(blockToGive, location);
-        if (probability > 5000000000) playSound("zenith");
-        else if (probability > 1500000000) playSound("magnificent");
-        else if (probability > 750000000) playSound("otherworldly");
-        else if (probability >= 160000000) playSound("unfathomable");
-        else if (probability >= 25000000) playSound("enigmatic");
-        else if (probability >= 5000000) {
-            if (currentPickaxe < 8 && !gears["infinity-collector"]) playSound("transcendent");
-        } else if (currentPickaxe < 6) playSound("exotic");
+        attemptToPlaySound(probability);
     }
-    return {"ore": blockToGive, "hasLog": hasLog};
+    return {ore: blockToGive, hasLog: hasLog};
 }
 
 //TELEPORTING
 
 let distanceMulti = 1;
+let teleportY = 1000;
 function switchDistance() {
-    let y = document.getElementById("meterDisplay").innerHTML;
-    y = Number(y.substring(0, y.length - 1));
-    if (y < 14000) y = 2000 * distanceMulti++ + 1000;
-    else {
-        y = 1000;
+    if (teleportY < 14000) {
+        teleportY = 2000 * distanceMulti + 1000;
+        distanceMulti++;
+    } else if (teleportY > 14000) {
+        teleportY = 1000;
+        distanceMulti = 1;
+    } else {
+        teleportY = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = `${y}m`;
+    document.getElementById("meterDisplay").innerHTML = `${teleportY}m`;
 }
 
-async function teleport() {
+async function teleport(goToY) {
     canMine = false;
     clearInterval(loopTimer);
     currDirection = "";
-    canMine = await toLocation();
+    canMine = await toLocation(goToY);
     displayArea();
 }
 
-function toLocation() {
+function toLocation(goToY) {
     return new Promise((resolve) => {
     let x = curX;
-    let y = document.getElementById("meterDisplay").innerHTML;
-    y = Number(y.substring(0, y.length - 1));
+    let y = goToY;
+    if (typeof goToY !== "number") {
+        y = document.getElementById("meterDisplay").innerHTML;
+        y = Number(y.substring(0, y.length - 1));
+    }
     for (let r = y - 50; r < y + 50; r++) {
         if(mine[r] === undefined) mine[r] = [];
         for (let c = x - 50; c < x + 50; c++)
@@ -244,4 +249,11 @@ function getParams(distanceX, distanceY, x, y) {
     if (y > distanceY) displayUp = distanceY;
     else displayUp = y;
     return {left: displayLeft, up: displayUp};
+}
+
+function updateCapacity(value) {
+    if (!isNaN(value) && value > 0) {
+        baseMineCapacity = value;
+        mineCapacity = value;
+    }
 }

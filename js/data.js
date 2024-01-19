@@ -17,6 +17,8 @@ function saveAllData() {
     dataStorage["settings"]["musicVolume"] = document.getElementById("musicVolume").value;
     dataStorage["settings"]["spawnVolume"] = document.getElementById("spawnVolume").value;
     dataStorage["settings"]["musicButton"] = document.getElementById("musicButton").innerHTML;
+    dataStorage["settings"]["baseMineCapacity"] = baseMineCapacity;
+    dataStorage["settings"]["warnBeforeClosing"] = warnClose;
     dataStorage["gears"] = gears;
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
@@ -36,8 +38,7 @@ function loadAllData() {
             for (let pick in data["pickaxes"]["inv"])
                 pickaxes[pick] = data["pickaxes"]["inv"][pick];
         }
-        if (data["pickaxes"]["curr"] !== undefined)
-            currentPickaxe = data["pickaxes"]["curr"];
+        currentPickaxe = data["pickaxes"]["curr"] || 0;
         totalMined = data["stats"]["totalMined"] || 0;
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
         for (let ore in oreList) {
@@ -56,11 +57,13 @@ function loadAllData() {
             }
         }
         if (data["settings"]["musicVolume"] !== undefined) {
+            //data["settings"]["musicVolume"] = JSON.parse(data["settings"]["musicVolume"]);
             document.getElementById("musicVolume").value = data["settings"]["musicVolume"];
             changeMusicVolume(data["settings"]["musicVolume"]);
         }
         if (data["settings"]["spawnVolume"] !== undefined) {
-            document.getElementById("spawnVolume").value = data["settings"]["musicVolume"];
+            //data["settings"]["spawnVolume"] = JSON.parse(data["settings"]["spawnVolume"]);
+            document.getElementById("spawnVolume").value = data["settings"]["spawnVolume"];
             changeAllVolume(data["settings"]["spawnVolume"]);
         }
         //let canContinue = false;
@@ -71,8 +74,11 @@ function loadAllData() {
                 }, 100);
             }
         }
+        if (data["settings"]["warnBeforeClosing"] !== undefined)
+            warnClose = data["settings"]["warnBeforeClosing"];
+        updateWarnBeforeCloseButton();
         if (data["gears"] !== undefined && data["gears"] !== null) {
-            for (let gear in Object.keys(data["gears"]))
+            for (let gear in data["gears"])
                 gears[gear] = data["gears"][gear];
         }
         if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
@@ -180,9 +186,19 @@ function hideData() {
     visible(document.getElementById("mainContent"));
 }
 
+function warnBeforeClosingToggle() {
+    warnClose = !warnClose;
+    updateWarnBeforeCloseButton();
+    return warnClose;
+}
+
+function updateWarnBeforeCloseButton() {
+    document.getElementById("warnBeforeClosingButton").innerHTML = `Warn Before Closing: ${warnClose ? "on" : "off"}`;
+}
+
 async function warnBeforeClosing() {
     window.onbeforeunload = null;
-    if (debug) return;
+    if (debug || warnClose) return;
     setTimeout(() => {
         window.onbeforeunload = () => "";
     }, "60000");

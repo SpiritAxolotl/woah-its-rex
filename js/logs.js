@@ -2,7 +2,7 @@ class secureLogs {
     #spawnLogs;
     #verifiedLogs;
     #logsTimer;
-    #maxLuck = [1, 1.2, 1.35, 1.8, 2, 5, 10, 3, 4, 20, 17.5];
+    #maxLuck = [1, 1.2, 1.35, 1.8, 2, 5, 10, 3, 4, 20, 17.5, 30];
     constructor() {
         this.#spawnLogs = [];
         this.#verifiedLogs = [];
@@ -15,7 +15,7 @@ class secureLogs {
         if (gears["fortune-3-book"])
             luckModifier *= 1.6;
         const maxLuck = (this.#maxLuck[currentPickaxe] * luckModifier) + 1;
-        if (obj.stack.includes("main.js") && luck <= maxLuck) {
+        if (obj.stack.includes("mine.js") && luck <= maxLuck) {
             if (mine[y][x] === "⬜")
                 this.#spawnLogs.push({y: y, x: x, intended: intended, luck: luck});
         }
@@ -28,21 +28,26 @@ class secureLogs {
                     this.#spawnLogs.splice(i, 1);
                     this.#verifiedLogs.push({ore: mine[y][x], y: y, x: x, date: new Date(), something: false, variant: "Normal", luck: log["luck"]});
                     break;
+                } else {
+                    console.log('failed to verify', r, c);
                 }
             }
         }
     }
     verifyFind(block, y, x, variant) {
+        let verified = false;
         for (let i = 0; i < this.#verifiedLogs.length; i++) {
             const log = this.#verifiedLogs[i];
             if (log["y"] === y && log["x"] === x) {
                 if (block === log["ore"]) {
                     log["something"] = true;
                     log["variant"] = variant;
+                    verified = true;
                     break;
                 }
             }
         }
+        console.log(verified);
     }
     showLogs() {
         if (isVisible(document.getElementById("dataExport"))) {
@@ -71,6 +76,9 @@ class secureLogs {
     }
     #reloadLogs(output) {
         document.getElementById("generatedLogs").innerHTML = output;
+    }
+    getLuckBoosts() {
+        return this.#maxLuck;
     }
 }
 let verifiedOres = new secureLogs();
