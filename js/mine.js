@@ -110,7 +110,7 @@ function mineBlock(x, y, cause, luck) {
             totalMined++;
             if (cause !== "ability") {
                 rollAbilities();
-                updateActiveRecipe();
+                updateActiveRecipe(ore);
             }
         }
     }
@@ -127,9 +127,8 @@ const variantMultis = {
 
 function giveBlock(ore, x, y, fromReset) {
     if (gears["layer-materializer"]) {
-        const blocks = Object.keys(...currentLayer);
-        const block = blocks[blocks.length-1];
-        oreList[block]["inv"]["normal"]++;
+        const block = currentLayer[currentLayer.length-1];
+        inventory[block]["normal"]++;
         updateInventory(block, "normal");
     }
     
@@ -147,7 +146,7 @@ function giveBlock(ore, x, y, fromReset) {
             if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
                 logFind(ore, x, y, variantNamesEmojis[variant-1], totalMined, fromReset);
         }
-        oreList[ore]["inv"][variantNames[variant-1].toLowerCase()]++;
+        inventory[ore][variantNames[variant-1].toLowerCase()]++;
         updateInventory(ore, variantNames[variant-1]);
     }
 }
@@ -155,19 +154,18 @@ function giveBlock(ore, x, y, fromReset) {
 function generateBlock(luck, location) {
     if (debug && typeof debugLuck === "number") luck = debugLuck;
     let hasLog = false;
-    const probabilityTable = {...currentLayer, ...spawnsEverywhere};
+    const layer = currentLayer.concat(spawnsEverywhere);
     let blockToGive = "";
     let summedProbability = 0;
     const chosenValue = Math.random()/luck;
-    const probTable = sortObj(probabilityTable).reverse();
-    for (let ore of probTable) {
-        summedProbability += 1/probabilityTable[ore];
+    for (let ore of sortOres(layer)) {
+        summedProbability += 1/oreList[ore]["prob"];
         if (chosenValue < summedProbability) {
             blockToGive = ore;
             break;
         }
     }
-    const probability = probabilityTable[blockToGive];
+    const probability = oreList[blockToGive]["prob"];
     if (probability >= 750000) {
         //TODO: make a better less hardcoded system for replacing blocks
         if (blockToGive === "🧌") {
