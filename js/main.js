@@ -280,7 +280,7 @@ function sortOres(layer) {
 
 let holdingShift = true;
 document.addEventListener("keydown", (event) => {
-    const name = event.key.toLowerCase();
+    let name = event.key.toLowerCase();
     let validInput = false;
     switch(name) {
         case "shift":
@@ -325,7 +325,10 @@ document.addEventListener("keydown", (event) => {
     if (validInput) {
         clearInterval(loopTimer);
         currDirection = "";
-        movePlayer(name);
+        if (holdingShift)
+            goDirection(name);
+        else
+            movePlayer(name);
         if (ability1Active) {
             clearTimeout(ability1Timeout);
             ability1Active = false;
@@ -333,8 +336,7 @@ document.addEventListener("keydown", (event) => {
     }
 }, false);
 document.addEventListener("keyup", (event) => {
-    const name = event.key.toLowerCase();
-    console.log(name);
+    let name = event.key.toLowerCase();
     switch(name) {
         case "shift":
             holdingShift = false;
@@ -512,12 +514,12 @@ function spawnMessage(ore, location) {
         for (let i in latestSpawns) {
             output += `<span class="emoji">${latestSpawns[i]["ore"]}</span> 1/${oreList[latestSpawns[i]["ore"]]["prob"].toLocaleString()}`;
             if (latestSpawns[i]["y"] !== undefined && latestSpawns[i]["x"] !== undefined)
-                output += ` | X: ${latestSpawns[i]["x"] - 1000000000}, Y: ${-latestSpawns[i]["y"]}<br>`;
+                output += ` | X: ${(latestSpawns[i]["x"] - 1000000000).toLocaleString()}, Y: ${-latestSpawns[i]["y"].toLocaleString()}<br>`;
             else output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
         if (currentPickaxe === 5 || gears["ore-tracker"])
-            document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!<br> 1/${oreList[ore]["prob"].toLocaleString()}<br>X: ${location["x"] - 1000000000}<br>Y: ${-location["y"]}`;
+            document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!<br> 1/${oreList[ore]["prob"].toLocaleString()}<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
@@ -531,7 +533,7 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     latestFinds.push({type: type, x: x, y: y, variant: variant, atMined: atMined, fromReset: fromReset});
     if (latestFinds.length > 10) latestFinds.shift();
     for (let i = latestFinds.length - 1; i >= 0; i--) {
-        output += `${latestFinds[i]["variant"]}${latestFinds[i]["type"]} | X: ${latestFinds[i]["x"] - 1000000000}, Y: ${-latestFinds[i]["y"]} | `;
+        output += `${latestFinds[i]["variant"]}${latestFinds[i]["type"]} | X: ${(latestFinds[i]["x"] - 1000000000).toLocaleString()}, Y: ${(-latestFinds[i]["y"]).toLocaleString()} | `;
         if (latestFinds[i]["fromReset"]) output += "FROM RESET<br>";
         else output += `At ${latestFinds[i]["atMined"].toLocaleString()} Mined<br>`;
     }
