@@ -11,6 +11,7 @@ let debugLuck = "",
     baseMineCapacity = 40000,
     canMine = false,
     lastDirection = "",
+    resetsThisSession = 0,
     warnClose = true;
 
 let pickaxes = {
@@ -438,6 +439,7 @@ function displayArea() {
         document.getElementById("blockDisplay").innerHTML = output;
     }
     document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
+    document.getElementById("resetsThisSession").innerHTML = `(Reset #${resetsThisSession.toLocaleString()})`;
     document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
     document.getElementById("location").innerHTML = `X: ${curX - 1000000000}<br>Y: ${-curY}`;
 }
@@ -541,26 +543,27 @@ function spawnMessage(ore, location) {
     let output = "";
     let addToLatest = true;
     if (currentPickaxe === 5 || gears["ore-tracker"])
-        latestSpawns.push({ore: ore, y: location["y"], x: location["x"]});
+        latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"]});
     else if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
-        latestSpawns.push({ore: ore, y: undefined, x: undefined});
+        latestSpawns.unshift({ore: ore, y: undefined, x: undefined});
     else addToLatest = false;
     if (gears["real-vitriol"] || gears["infinity-collector"]) {
         if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000) {
-            loggedFinds.push({y: location["y"], x: location["x"]});
+            loggedFinds.unshift({y: location["y"], x: location["x"]});
         }
     }
-    if (latestSpawns.length > 10) latestSpawns.splice(0, 1);
+    if (latestSpawns.length > 10) latestSpawns.pop();
     if (addToLatest) {
-        for (let i in latestSpawns) {
-            output += `<span class="emoji">${latestSpawns[i]["ore"]}</span> 1/${oreList[latestSpawns[i]["ore"]]["prob"].toLocaleString()}`;
-            if (latestSpawns[i]["y"] !== undefined && latestSpawns[i]["x"] !== undefined)
-                output += ` | X: ${(latestSpawns[i]["x"] - 1000000000).toLocaleString()}, Y: ${-latestSpawns[i]["y"].toLocaleString()}<br>`;
+        for (let spawn of latestSpawns) {
+            output += `<span class="emoji">${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()}`;
+            if (spawn["y"] !== undefined && spawn["x"] !== undefined)
+                output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${resetsThisSession}<br>`;
             else output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
+        document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!`;//<br> 1/${oreList[ore]["prob"].toLocaleString()}`
         if (currentPickaxe === 5 || gears["ore-tracker"])
-            document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!<br> 1/${oreList[ore]["prob"].toLocaleString()}<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
+            document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
@@ -571,12 +574,13 @@ function spawnMessage(ore, location) {
 let latestFinds = [];
 function logFind(type, x, y, variant, atMined, fromReset) {
     let output = "";
-    latestFinds.push({type: type, x: x, y: y, variant: variant, atMined: atMined, fromReset: fromReset});
-    if (latestFinds.length > 10) latestFinds.shift();
-    for (let i = latestFinds.length - 1; i >= 0; i--) {
-        output += `${latestFinds[i]["variant"]}${latestFinds[i]["type"]} | X: ${(latestFinds[i]["x"] - 1000000000).toLocaleString()}, Y: ${(-latestFinds[i]["y"]).toLocaleString()} | `;
-        if (latestFinds[i]["fromReset"]) output += "FROM RESET<br>";
-        else output += `At ${latestFinds[i]["atMined"].toLocaleString()} Mined<br>`;
+    latestFinds.unshift({type: type, x: x, y: y, variant: variant, atMined: atMined, fromReset: fromReset});
+    if (latestFinds.length > 10) latestFinds.pop();
+    for (let find of latestFinds) {
+        output += `${find["variant"]}${find["type"]} | `;
+        if (gears["ore-tracker"]) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${resetsThisSession} | `;
+        if (find["fromReset"]) output += "FROM RESET<br>";
+        else output += `${find["atMined"].toLocaleString()}◻️<br>`;
     }
     document.getElementById("latestFinds").innerHTML = output;
 }

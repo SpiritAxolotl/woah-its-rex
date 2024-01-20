@@ -1,6 +1,7 @@
 //for the button on the UI
 function resetMine() {
     clearInterval(loopTimer);
+    resetsThisSession++;
     currDirection = "";
     mine = [[]];
     layersChanged = {};
@@ -18,9 +19,10 @@ let resetting = false;
 async function mineReset() {
     if (!resetting) {
         resetting = true;
+        resetsThisSession++;
         mineCapacity = baseMineCapacity;
         layersChanged = {};
-        layersChanged[`${Math.floor(curY/2000)}`] = allLayersNames[allLayers.indexOf(currentLayer)]
+        layersChanged[`${Math.floor(curY/2000)}`] = allLayersNames[allLayers.indexOf(currentLayer)];
         const currDirectionBeforeReset = currDirection;
         currDirection = "";
         const temp = await collectOres(currDirectionBeforeReset);
