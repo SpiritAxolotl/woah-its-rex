@@ -39,6 +39,7 @@
     <p id="gameTitle">Re:REx</p>
     <p id="credits">
         Game made by <code>@thecatofalltime</code> on Discord!<br>
+        Some features made by <code>@millabasset</code> on Discord!<br>
         Background music made by <code>@x2corp</code> on Discord!<br>
         Spawn sounds come fron REx:R on Roblox<br>
         Some sounds made by <code>@tevv_</code> on Discord!<br>
@@ -65,10 +66,8 @@
             <button onclick="switchDistance()" class="movementButton" id="meterDisplay">1000m</button>
         </div>
         <p id="blockDisplay" class="emoji"></p>
-        <div>
+        <div id="latestDisplays">
             <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
-        </div>
-        <div>
             <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
         </div>
     </div>
@@ -78,7 +77,8 @@
             <button id="settings" onclick="showData()">Settings</button>
             <button onclick="changeCanDisplay(this)">Disable Display</button>
         </div>
-        <p id="mineResetProgress"></p>
+        <p id="mineResetProgress">Reset Progress: 0.00%</p>
+        <p id="resetsThisSession">(Reset #0)</p>
         <p id="blocksMined">0 Blocks Mined</p>
         <p id="location">X: 0<br>Y: 0</p>
         <p id="spawnMessage">Spawn Messages Appear Here!</p>
