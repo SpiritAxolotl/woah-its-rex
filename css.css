@@ -75,19 +75,6 @@
   color: green;
 }
 
-.latestDisplay {
-  text-align: left !important;
-  border-style: solid;
-  border-color: #959595;
-  border-radius: 0.2em;
-  padding: 0 0.25em;
-  float: left;
-  width: 50%;
-  font-size: 0.5em;
-  /*min-height: 15em;
-  max-height: 15em;*/
-}
-
 .itemDescription {
   font-size: 0.75em;
 }
@@ -110,7 +97,8 @@
 
 #mineResetProgress {
   /* font-size: 1vw; */
-  padding-top: 0.75em;
+  margin-top: 0.75em;
+  margin-bottom: 0;
 }
 
 #dataExport {
@@ -166,6 +154,18 @@ body {
   user-select: none;
   text-wrap: nowrap;
   text-align: center;
+}
+
+.latestDisplay {
+  text-align: left;
+  border: 0.15em solid #959595;
+  border-radius: 0.2em;
+  padding: 0 0.25em;
+  float: left;
+  width: 50%;
+  font-size: 0.75em;
+  /*min-height: 15em;
+  max-height: 15em;*/
 }
 
 #spawnMessage {
@@ -289,11 +289,12 @@ button {
   border: none;
 }
 
-#latestSpawns, #latestFinds {
-  height: 100%;
-  /*font-size: 0.8vw;*/
-  /*overflow-y: scroll;*/
-}
+/*#latestDisplays {
+  height: auto;
+  border-style: solid;
+  border-color: #959595;
+  border-radius: 0.2em;
+}*/
 
 /*
 .col-5 {
