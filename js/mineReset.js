@@ -39,10 +39,10 @@ async function mineReset() {
 function collectOres(inDirection) {
     return new Promise((resolve) => {
     if (gears["infinity-collector"]) {
-        for (let i = 0; i < loggedFinds.length; i++) {
-            if (mine[loggedFinds[i][0]] !== undefined &&
-              mine[loggedFinds[i][0]][loggedFinds[i][1]] !== undefined)
-                mineBlock(loggedFinds[i]["x"], loggedFinds[i]["t"], "reset", 1);
+        for (let find of loggedFinds) {
+            if (mine[find["y"]] !== undefined &&
+              mine[find["y"]][find["x"]] !== undefined)
+                mineBlock(find["x"], find["y"], "reset", 1);
         }
     } else {
         let direction = "";
