@@ -15,7 +15,7 @@ class secureLogs {
         if (gears[5])
             luckModifier *= 1.6;
         const maxLuck = (this.#maxLuck[currentPickaxe] * luckModifier) + 1;
-        if (obj.stack.includes("mine.js") && luck <= maxLuck) {
+        if ((obj.stack.includes("mine.js") || obj.stack.includes("caves.js")) && luck <= maxLuck) {
             if (mine[r][c] === "⬜")
                 this.#spawnLogs.push([r, c, intended, luck]);
         } else {
