@@ -117,6 +117,13 @@ function checkAllAround(x, y, luck) {
 function mineBlock(x, y, cause, luck) {
     if (mine[y][x] !== "⚪" && mine[y][x] !== "⛏️" && mine[y][x] !== "⬜") {
         let ore = mine[y][x];
+        if (checkFromCave([y, x])) {
+            let adjMulti = getCaveMultiFromOre(mine[y][x]);
+            giveBlock(mine[y][x], x, y, false, true, adjMulti);
+            mine[y][x] = "⚪";
+            checkAllAround(x, y, 1);
+            totalMined++;
+        } else {
         if (ore === "🟩")
             ore = "🟫";
         if (cause === "reset") {
@@ -132,6 +139,8 @@ function mineBlock(x, y, cause, luck) {
                 updateActiveRecipe();
             }
         }
+        }
+        
     }
 }
 
@@ -139,14 +148,7 @@ function mineBlock(x, y, cause, luck) {
 
 let multis = [1, 50, 250, 500];
 let inv;
-function giveBlock(type, x, y, fromReset) {
-    if (gears[4]) {
-        let block = Object.keys(currentLayer);
-        block = block[block.length - 1];
-        oreList[block][1][0]++;
-        updateInventory(block, 1);
-    }
-    
+function giveBlock(type, x, y, fromReset, fromCave, caveInfo) {
     if (type !== "⛏️") {
         inv = 1;
         if (type === "🟩")
@@ -157,8 +159,15 @@ function giveBlock(type, x, y, fromReset) {
             inv = 3;
         else if (Math.floor(Math.random() * 500) === 250)
             inv = 4;
-        if (Math.round(1 / (oreList[type][0])) >= 160000000)
-            verifiedOres.verifyFind(mine[y][x], y, x, names[inv - 1]);
+        if (!fromCave) {
+            if (gears[4]) {
+                let block = Object.keys(currentLayer);
+                block = block[block.length - 1];
+                oreList[block][1][0]++;
+                updateInventory(block, 1);
+            }
+            if (Math.round(1 / (oreList[type][0])) >= 160000000)
+                verifiedOres.verifyFind(mine[y][x], y, x, names[inv - 1]);
         if (Math.round(1/oreList[type][0]) >= 750000) {
             if (gears[7])
                 gearAbility1();
@@ -170,6 +179,33 @@ function giveBlock(type, x, y, fromReset) {
         }
         oreList[type][1][inv-1]++;
         updateInventory(type, inv);
+        } else {
+            if (getCaveTypeFromOre(type) === currentLayer) {
+                if ((1/oreList[type][0]) * caveInfo > 160000000) {
+                    verifiedOres.verifyFind(mine[y][x], y, x, names[inv - 1]);
+                }
+                if (Math.round(1/oreList[type][0]) >= 750000) {
+                    if (gears[7])
+                    gearAbility1();
+                    if (currentPickaxe >= 7) {
+                        if (Math.round(1/oreList[type][0]) > 2000000)
+                            logFind(type, x, y, namesemojis[inv - 1], totalMined, fromReset);
+                    } else
+                        logFind(type, x, y, namesemojis[inv - 1], totalMined, fromReset);
+                }
+            } else {
+                if ((1/oreList[type][0]) * caveInfo > 500000000) {
+                    verifiedOres.verifyFind(mine[y][x], y, x, names[inv - 1]);
+                }
+                if ((1/oreList[type][0]) * caveInfo > 250000000) {
+                    logFind(type, x, y, namesemojis[inv - 1], totalMined, fromReset);
+                }
+                if (gears[7])
+                    gearAbility1();
+            }
+            oreList[type][1][inv-1]++;
+            updateInventory(type, inv);
+        }
     }
 }
 
@@ -194,12 +230,6 @@ function generateBlock(luck, location) {
     }
     if (Math.round(1 / (probabilityTable[blockToGive])) >= 750000) {
         if (Math.round(1 / (probabilityTable[blockToGive])) > 5000000000) {
-            /*
-            if (blockToGive === "🧌") {
-                localStorage.setItem("nyehehehehehe", true);
-                blockToGive = "♾️"
-            }
-            */
             verifiedOres.createLog(location[0],location[1],blockToGive, new Error(), luck);
             hasLog = true;
             spawnMessage(blockToGive, location);
