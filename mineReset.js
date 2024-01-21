@@ -35,7 +35,7 @@ function collectOres(temp) {
             if (mine[loggedFinds[i][0]] !== undefined && mine[loggedFinds[i][0]][loggedFinds[i][1]] !== undefined)
                 mineBlock(loggedFinds[i][1], loggedFinds[i][0], "reset", 1);
         }
-    } else {
+    }
         let direction = "";
         if (temp !== "")
             direction = temp;
@@ -90,7 +90,6 @@ function collectOres(temp) {
                 }
             }
         }
-    }
     setTimeout(() => {
         resolve(true);
     }, 1000);
