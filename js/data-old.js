@@ -69,7 +69,7 @@ function loadAllDataOld() {
         localStorage.removeItem("dataBackupOld");
         return true;
     } catch(error) {
-        console.log(error);
+        console.error(error);
         localStorage.setItem("playerData", localStorage.getItem("dataBackupOld"));
         window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
         return false;
