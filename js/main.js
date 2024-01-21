@@ -164,6 +164,7 @@ function init() {
     createIndex();
     createMine();
     const playedBefore = localStorage.getItem("playedBefore");
+    if (!playedBefore) localStorage.setItem("newSaveFormat", true);
     canContinue = playedBefore ? loadAllData() : true;
     if (canContinue) {
         repeatDataSave();
@@ -171,15 +172,16 @@ function init() {
         localStorage.setItem("game2DataChanges", true);
         createPickaxeRecipes();
         createGearRecipes();
-        document.getElementById("dataText").value = "";
+        //document.getElementById("dataText").value = "";
         createIndex();
     }
     for (let element of document.getElementsByClassName("itemDescription"))
         invisible(element)
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     visible(document.getElementById("playButton"));
+    document.getElementById("dataFile").addEventListener("change", importData);
 });
 
 let chill,
@@ -467,7 +469,7 @@ function createInventory() {
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
-            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"].toLocaleString() * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
             document.getElementById(`inventory${variant}`).appendChild(element);
         }
     }
@@ -475,28 +477,37 @@ function createInventory() {
 
 function createIndex() {
     document.getElementById("indexDisplay").innerHTML = "";
-    let prob = 0;
     let output = "";
     let multi = verifiedOres.getLuckBoosts()[currentPickaxe];
     if (gears["real-candilium"])
         multi *= 1.1;
-    if (gears["fortune-3-book"]) 
+    if (gears["fortune-3-book"])
         multi *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
         output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">${allLayersNames[i]} Layer`;
+        //TODO: have a better exclusionary system for silly/flute layers
         if (i < allLayers.length - 2)
             output += ` (${i * 2000}-${(i+1) * 2000}m)`;
         output += "</p>";
         for (let ore of allLayers[i]) {
-            prob = oreList[ore]["prob"];
+            //const prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
-            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${(prob * multi).toLocaleString()}</p>`;
+            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | `;
+            if (unaffectedByLuck.indexOf(ore) !== -1)
+                output += `1/${(oreList[ore]["prob"] * multi).toLocaleString()}</p>`;
+            else
+                output += `1/${oreList[ore]["prob"].toLocaleString()}</p>`;
         }
         output += `</div>`;
     }
     output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle">Everywhere</p>`;
-    for (let ore of spawnsEverywhere)
-        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * multi).toLocaleString()}</p>`;
+    for (let ore of spawnsEverywhere) {
+        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | `;
+        if (unaffectedByLuck.indexOf(ore) !== -1)
+            output += `1/${(oreList[ore]["prob"] * multi).toLocaleString()}</p>`;
+        else
+            output += `1/${oreList[ore]["prob"].toLocaleString()}</p>`;
+    }
     document.getElementById("indexDisplay").innerHTML = output;
     //don't hardcode this in future when other hidden layers get added
     if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
@@ -542,10 +553,11 @@ function spawnMessage(ore, location) {
         mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
-    if (currentPickaxe === 5 || gears["ore-tracker"])
-        latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"]});
-    else if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
-        latestSpawns.unshift({ore: ore, y: undefined, x: undefined});
+    if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
+        if (currentPickaxe === 5 || gears["ore-tracker"])
+            latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"]});
+        else
+            latestSpawns.unshift({ore: ore, y: undefined, x: undefined});
     else addToLatest = false;
     if (gears["real-vitriol"] || gears["infinity-collector"]) {
         if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000) {

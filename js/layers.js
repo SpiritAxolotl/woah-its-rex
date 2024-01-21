@@ -149,7 +149,6 @@ for (let ore in oreList)
 //SPAWNS ON ALL LAYERS
 const spawnsEverywhere = [/*"😻",*//*"⛄",*/"🤍","🖤","🤎","💜","❤️","🧡","💛","💙","💚","⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧"],
 
-//TODO: implement this:
 unaffectedByLuck = ["⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧","🟫","🧱","🌫️","🌊","🪨","☢️","🌵","📰","🎂","🪈"],
 
 //ALL LAYERS
@@ -173,6 +172,22 @@ allLayers = [
     radioactiveLayer,
     cactusLayer,
     paperLayer,
+    sillyLayer,
+    fluteLayer
+],
+
+normalLayers = [
+    dirtLayer,
+    brickLayer,
+    foggyLayer,
+    waterLayer,
+    rockLayer,
+    radioactiveLayer,
+    cactusLayer,
+    paperLayer
+],
+
+sillyLayers = [
     sillyLayer,
     fluteLayer
 ],
