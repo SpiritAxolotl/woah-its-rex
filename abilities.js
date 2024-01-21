@@ -8,8 +8,10 @@ async function rollAbilities() {
     if (gears[8])
         m = 1.2;
     let temp;
-    if (Math.random() < 1/750) {
-        generateCave(curX, curY, 0, 0);
+    if (!resetting) {
+        if (Math.random() < 1/750) {
+            generateCave(curX, curY, 0, 0);
+        }
     }
     switch (currentPickaxe) {
         case 1:
