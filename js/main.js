@@ -149,10 +149,10 @@ function romanize(num) {
     return str;
 }
 function clamp(num, min, max) {
-    return num <= min 
-      ? min 
-      : num >= max 
-        ? max 
+    return num <= min
+      ? min
+      : num >= max
+        ? max
         : num
   }
 
@@ -277,9 +277,6 @@ function movePlayer(dir) {
     }
 }
 
-function random() {
-    return Math.random();
-}
 function random(lower, upper) {
     if (typeof lower !== "number" && typeof upper !== "number") {
         //[0-1)
@@ -484,9 +481,13 @@ function createIndex() {
     if (gears["fortune-3-book"])
         multi *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
-        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">${allLayersNames[i]} Layer`;
-        //TODO: have a better exclusionary system for silly/flute layers
-        if (i < allLayers.length - 2)
+        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">`;
+        if (allCaves.indexOf(allLayers[i]) === -1)
+            output += `${allLayersNames[i]} Layer`;
+        else
+            output += `${allCavesNames[allCaves.indexOf(allLayers[i])]}`;
+        
+        if (normalLayers.indexOf(allLayers[i]) !== -1)
             output += ` (${i * 2000}-${(i+1) * 2000}m)`;
         output += "</p>";
         for (let ore of allLayers[i]) {
@@ -510,14 +511,19 @@ function createIndex() {
     }
     document.getElementById("indexDisplay").innerHTML = output;
     //don't hardcode this in future when other hidden layers get added
-    if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
-        visible(document.getElementById("layerDisplaySilly"));
-    else
+    //ok adding this to the TODO
+    if (inventory["🎂"]["normal"] === 0 && !gears["silly-tp"])
         invisible(document.getElementById("layerDisplaySilly"));
-    if (inventory["🪈"]["normal"] > 0)
-        visible(document.getElementById("layerDisplayFlute"));
-    else
+    if (inventory["🪈"]["normal"] === 0)
         invisible(document.getElementById("layerDisplayFlute"));
+    if (inventory["❓"]["normal"] === 0)
+        invisible(document.getElementById("layerDisplayCave1"));
+    if (inventory["🎵"]["normal"] === 0)
+        invisible(document.getElementById("layerDisplayCave2"));
+    if (inventory["☣️"]["normal"] === 0)
+        invisible(document.getElementById("layerDisplayCave3"));
+    if (inventory["🦠"]["normal"] === 0)
+        invisible(document.getElementById("layerDisplayCave4"));
 }
 
 let showing = false;
@@ -548,17 +554,23 @@ function updateInventory(ore, variant) {
 let spawnOre;
 let loggedFinds = [];
 let latestSpawns = [];
-function spawnMessage(ore, location) {
+function spawnMessage(ore, location, caveInfo) {
+    //ADD TO MINE CAPACITY IF NEAR RESET
+    //CAVEINFO[0] = TRUE/FALSE
+    //CAVEINFO[1] = ADJUSTED RARITY
     if (!gears["real-vitriol"] && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
         mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
-    if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
-        if (currentPickaxe === 5 || gears["ore-tracker"])
-            latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"]});
-        else
-            latestSpawns.unshift({ore: ore, y: undefined, x: undefined});
-    else addToLatest = false;
+    const fromCave = caveInfo !== undefined && caveInfo["isCave"];
+    if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000) {
+        //IF PICKAXE IS 5, ADD LOCATION
+        if (currentPickaxe === 5 || gears["ore-tracker"]) {
+            latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"], fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
+        } else {
+            latestSpawns.unshift({ore: ore});
+        }
+    } else addToLatest = false;
     if (gears["real-vitriol"] || gears["infinity-collector"]) {
         if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000) {
             loggedFinds.unshift({y: location["y"], x: location["x"]});
@@ -567,13 +579,18 @@ function spawnMessage(ore, location) {
     if (latestSpawns.length > 10) latestSpawns.pop();
     if (addToLatest) {
         for (let spawn of latestSpawns) {
-            output += `<span class="emoji">${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()}`;
-            if (spawn["y"] !== undefined && spawn["x"] !== undefined)
-                output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${resetsThisSession}<br>`;
-            else output += "<br>";
+            output += `<span class="emoji">${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()} Adjusted.`;
+            if (typeof spawn["y"] === "number" && typeof spawn["x"] === "number")
+                output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${resetsThisSession}`;
+            output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
-        document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!`;//<br> 1/${oreList[ore]["prob"].toLocaleString()}`
+        document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!<br>`;
+        if (caveInfo !== undefined && caveInfo["rarity"])
+            document.getElementById("spawnMessage").innerHTML += `1/${caveInfo["rarity"].toLocaleString()}`;
+        else
+            document.getElementById("spawnMessage").innerHTML += `1/${oreList[ore]["prob"].toLocaleString()}`;
+        
         if (currentPickaxe === 5 || gears["ore-tracker"])
             document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
     }

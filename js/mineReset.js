@@ -44,50 +44,49 @@ function collectOres(inDirection) {
               mine[find["y"]][find["x"]] !== undefined)
                 mineBlock(find["x"], find["y"], "reset", 1);
         }
-    } else {
-        let direction = "";
-        if (inDirection !== "") direction = inDirection;
-        else if (lastDirection !== "") direction = lastDirection;
-        if (direction === "s") {
-            let constraints = getParams(30, 500);
-            for (let y = curY - constraints["up"]; y < curY + 30; y++) {
-                for (let x = curX - constraints["left"]; x < curX + 30; x++) {
-                    //TODO: make this into a function
-                    if (mine[y] !== undefined &&
-                      oreList[mine[y][x]] !== undefined &&
-                      oreList[mine[y][x]]["prob"] >= 750000)
-                        mineBlock(x, y, "reset", 1);
-                }
+    }
+    let direction = "";
+    if (inDirection !== "") direction = inDirection;
+    else if (lastDirection !== "") direction = lastDirection;
+    if (direction === "s") {
+        let constraints = getParams(30, 500);
+        for (let y = curY - constraints["up"]; y < curY + 30; y++) {
+            for (let x = curX - constraints["left"]; x < curX + 30; x++) {
+                //TODO: make this into a function
+                if (mine[y] !== undefined &&
+                    oreList[mine[y][x]] !== undefined &&
+                    oreList[mine[y][x]]["prob"] >= 750000)
+                    mineBlock(x, y, "reset", 1);
             }
-        } else if (direction === "w") {
-            let constraints = getParams(30, 30);
-            for (let y = curY - constraints["up"]; y < curY + 500; y++) {
-                for (let x = curX - constraints["left"]; x < curX + 30; x++) {
-                    if (mine[y] !== undefined &&
-                      oreList[mine[y][x]] !== undefined &&
-                      oreList[mine[y][x]]["prob"] >= 750000)
-                        mineBlock(x, y, "reset", 1);
-                }
+        }
+    } else if (direction === "w") {
+        let constraints = getParams(30, 30);
+        for (let y = curY - constraints["up"]; y < curY + 500; y++) {
+            for (let x = curX - constraints["left"]; x < curX + 30; x++) {
+                if (mine[y] !== undefined &&
+                    oreList[mine[y][x]] !== undefined &&
+                    oreList[mine[y][x]]["prob"] >= 750000)
+                    mineBlock(x, y, "reset", 1);
             }
-        } else if (direction === "a") {
-            let constraints = getParams(30, 30);
-            for (let y = curY - constraints["up"]; y < curY + 30; y++) {
-                for (let x = curX - constraints["left"]; x < curX + 500; x++) {
-                    if (mine[y] !== undefined &&
-                      oreList[mine[y][x]] !== undefined &&
-                      oreList[mine[y][x]]["prob"] >= 750000)
-                        mineBlock(x, y, "reset", 1);
-                }
+        }
+    } else if (direction === "a") {
+        let constraints = getParams(30, 30);
+        for (let y = curY - constraints["up"]; y < curY + 30; y++) {
+            for (let x = curX - constraints["left"]; x < curX + 500; x++) {
+                if (mine[y] !== undefined &&
+                    oreList[mine[y][x]] !== undefined &&
+                    oreList[mine[y][x]]["prob"] >= 750000)
+                    mineBlock(x, y, "reset", 1);
             }
-        } else if (direction === "d") {
-            let constraints = getParams(500, 30);
-            for (let y = curY - constraints["up"]; y < curY + 30; y++) {
-                for (let x = curX - constraints["left"]; x < curX + 30; x++) {
-                    if (mine[y] !== undefined &&
-                      oreList[mine[y][x]] !== undefined &&
-                      oreList[mine[y][x]]["prob"] >= 750000)
-                        mineBlock(x, y, "reset", 1);
-                }
+        }
+    } else if (direction === "d") {
+        let constraints = getParams(500, 30);
+        for (let y = curY - constraints["up"]; y < curY + 30; y++) {
+            for (let x = curX - constraints["left"]; x < curX + 30; x++) {
+                if (mine[y] !== undefined &&
+                    oreList[mine[y][x]] !== undefined &&
+                    oreList[mine[y][x]]["prob"] >= 750000)
+                    mineBlock(x, y, "reset", 1);
             }
         }
     }
