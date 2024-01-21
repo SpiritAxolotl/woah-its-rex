@@ -94,6 +94,7 @@ function loadAllData() {
         else
             invisible(document.getElementById("layerDisplayFlute"));
         localStorage.removeItem("dataBackup");
+        localStorage.setItem("newSaveFormat", true);
         warnBeforeClosing();
         return true;
     } catch (error) {
