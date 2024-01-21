@@ -494,7 +494,7 @@ function createIndex() {
             //if (prob > 2000000 && prob < 5000000000)
             output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
             if (unaffectedByLuck.indexOf(ore) === -1)
-                output += `${(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
+                output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
             else
                 output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
         }
@@ -504,7 +504,7 @@ function createIndex() {
     for (let ore of spawnsEverywhere) {
         output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
         if (unaffectedByLuck.indexOf(ore) === -1)
-            output += `${(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
+            output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
         else
             output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
     }

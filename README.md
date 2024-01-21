@@ -41,6 +41,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Make the spawn/find messages into grids
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
+- [ ] Arrange the on-screen controls in a d-pad configuration
 
 ## Misc.
 - [x] Update to latest
@@ -53,3 +54,4 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Move TODO to a github tracking thing
 - [ ] Move lots of initialized variables to a separate file to reduce clutter
 - [ ] Clean up the code in the scary pickaxe ability functions...
+- [ ] Add a list of features exclusive to this fork

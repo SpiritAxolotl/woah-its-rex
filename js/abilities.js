@@ -102,7 +102,8 @@ function gearAbilitySillyTp() {
     if (gears["silly-tp"]) {
         if (Object.values(layersChanged).indexOf("Silly") === -1) {
             overrideLayer = sillyLayer;
-            teleport(Math.max(Math.floor(curY/2000)*2000, 16000)+7000);
+            const randomY = Math.floor(Math.random()*6)*2000+1000;
+            teleport(Math.max(Math.floor(curY/2000)*2000, 16000)+randomY);
         } else {
             teleport(Number(Object.keys(layersChanged)[Object.values(layersChanged).indexOf("Silly")])*2000+1000);
         }
