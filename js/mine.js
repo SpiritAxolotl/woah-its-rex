@@ -166,7 +166,8 @@ function generateBlock(luck, location) {
         return {ore: "🟩", hasLog: false};
     for (let ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
-        if ((unaffectedByLuck.indexOf(ore) === -1 && modifiedLuck < summedProbability) || (unaffectedByLuck.indexOf(ore) !== -1 && baseLuck < summedProbability)) {
+        const chosenLuck = unaffectedByLuck.indexOf(ore) === -1 ? modifiedLuck : baseLuck;
+        if (chosenLuck < summedProbability) {
             blockToGive = ore;
             break;
         }

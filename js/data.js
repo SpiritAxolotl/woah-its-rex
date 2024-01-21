@@ -8,6 +8,7 @@ function saveAllData() {
         "gears": {}
     };
     
+    dataStorage["version"] = 2;
     for (let ore in oreList)
         dataStorage["ores"][ore] = inventory[ore];
     dataStorage["pickaxes"]["inv"] = pickaxes;
@@ -27,6 +28,11 @@ function loadAllData() {
     localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
     try {
         const data = JSON.parse(localStorage.getItem("playerData"));
+        if (!localStorage.getItem("newSaveFormat") || data["version"] < 2) {
+            const succeed = loadAllDataOld();
+            localStorage.setItem("newSaveFormat", succeed);
+            return succeed;
+        }
         //if (data["ores"] !== undefined) {
         for (let ore in data["ores"]) {
             if (oreList[ore] !== undefined) {
@@ -91,10 +97,21 @@ function loadAllData() {
         warnBeforeClosing();
         return true;
     } catch (error) {
-        console.error(error);
-        localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
-        window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
-        return false;
+        const succeed = loadAllDataOld();
+        if (!succeed) {
+            console.error(error);
+            return false;
+        }
+        return succeed;
+        //console.log("Attempting to load the old save data format...");
+        /*if (succeed) {
+            console.log("Success!");
+            return true;
+        } else {
+            localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
+            window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
+            return false;
+        }*/
     }
 }
 
@@ -121,7 +138,8 @@ function fromBinary(encoded) {
 
 function exportData() {
     const data = toBinary(JSON.stringify(JSON.parse(localStorage.getItem("playerData"))));
-    let textField = document.getElementById("dataText");
+    exportDataAsFile(data, `${debug?"debug":""}data.txt`, "text/plain");
+    /*let textField = document.getElementById("dataText");
     textField.value = data;
     if (confirm("Download save data as file?"))
         exportDataAsFile(data, "data.txt", "text/plain");
@@ -129,21 +147,18 @@ function exportData() {
         textField.select();
         textField.setSelectionRange(0, 99999);
         alert("The textbox has been selected for you; make sure to copy your data to your clipboard so you don't lose it!");
-    }
+    }*/
 }
 
-function importData(data) {
-    if (data === "") {
-        if (confirm("You are importing nothing. This will perform a hard reset on your save file. Are you sure you want to do this?")) {
-            localStorage.clear();
-            location.reload();
-        }
-    } else {
-        if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
-            localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
-            clearInterval(dataTimer);
+function importData() {
+    const [file] = document.getElementById("dataFile").files;
+    const reader = new FileReader();
+    reader.addEventListener(
+        "load",
+        () => {
             try {
-                data = fromBinary(data);
+                const data = fromBinary(reader.result);
+                console.log(data);
                 localStorage.setItem("playerData", data);
                 setTimeout(() => {
                     location.reload();
@@ -153,6 +168,19 @@ function importData(data) {
                 localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
                 window.alert("DATA CORRUPTION DETECTED, CONTACT A MODERATOR IN THE DISCORD");
             }
+        },
+        false,
+    );
+    if (!file) {
+        if (confirm("You are importing nothing. This will perform a hard reset on your save file. Are you sure you want to do this?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    } else {
+        if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
+            localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
+            clearInterval(dataTimer);
+            reader.readAsText(file);
         }
     }
 }
@@ -200,4 +228,14 @@ async function warnBeforeClosing() {
     setTimeout(() => {
         window.onbeforeunload = () => "";
     }, "60000");
+}
+
+function changeDataUploadType() {
+    if (isVisible(document.getElementById("dataText"))) {
+        invisible(document.getElementById("dataText"));
+        visible(document.getElementById("dataFile"));
+    } else {
+        invisible(document.getElementById("dataText"));
+        visible(document.getElementById("dataFile"));
+    }
 }
