@@ -32,7 +32,7 @@ let gears = [
     false, //HASTE II BEACON 6
     false, //ENERGY SIPHONER 7
     false, //SUGAR RUSH 8
-    false, //SILLY TP
+    false, //SILLY TP 9
 ];
 let currentPickaxe = 0;
 
@@ -361,26 +361,60 @@ function updateInventory(type, inv) {
 let spawnOre;
 let loggedFinds = [];
 let latestSpawns = [];
-function spawnMessage(block, location) {
+function spawnMessage(block, location, caveInfo) {
+    //ADD TO MINE CAPACITY IF NEAR RESET
+    //CAVEINFO[0] = TRUE/FALSE
+    //CAVEINFO[1] = ADJUSTED RARITY
     if (!(gears[3]) && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
         mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
-    if (currentPickaxe === 5)
+    let fromCave = false;
+    if (caveInfo != undefined && caveInfo[0]) {
+        fromCave = true
+    }
+    if (currentPickaxe === 5) {
+    //IF PICKAXE IS 5, ADD LOCATION
+    if (fromCave)
+        //IF FROM CAVE ADD ADJUSTED RARITY
+        latestSpawns.push([block, location[1], location[0], true, caveInfo[1]]);
+    else
         latestSpawns.push([block, location[1], location[0]]);
-    else if (currentPickaxe < 7) {
-        if (gears[0])
-            latestSpawns.push([block, location[1], location[0]]);
-        else
-            latestSpawns.push([block, undefined, undefined]);
+    } else if (currentPickaxe < 7) {
+        if (gears[0]) {
+            //IF PICKAXE IS UNDER 7, BUT ORE TRACKER IS OWNED, ADD LOCATION
+            if (fromCave)
+                //IF FROM CAVE ADD ADJUSTED RARITY
+                latestSpawns.push([block, location[1], location[0], true, caveInfo[1]]);
+            else 
+                latestSpawns.push([block, location[1], location[0]]);
+        } else {
+            //IF NO TRACKER AND PICKAXE IS UNDER 5, DO NOT PUSH LOCATION
+            if (fromCave)
+                latestSpawns.push([block, undefined, undefined, true, caveInfo[1]]);
+            else
+                latestSpawns.push([block, undefined, undefined]);
+        }
+        
     } else if (Math.round(1 / (oreList[block][0])) > 2000000) {
-        if (gears[0])
-            latestSpawns.push([block, location[1], location[0]]);
-        else
+        //IF CURRENT PICKAXE IS OVER 7, ONLY ADD ORES OVER 1/2M
+        if (gears[0]) {
+            //IF ORE TRACKER IS OWNED, ADD LOCATION
+            if (fromCave)
+                latestSpawns.push([block, location[1], location[0], true, caveInfo[1]]);
+            else
+                latestSpawns.push([block, location[1], location[0]]);
+        } else {
+            //IF NO ORE TRACKER, DO NOT ADD LOCATION
+            if (fromCave)
+            latestSpawns.push([block, undefined, undefined, true, caveInfo[1]]);
+            else
             latestSpawns.push([block, undefined, undefined]);
         }
-    else
-        addToLatest = false;
+            
+        } else
+            //IF ORE IS <1/2M WITH A PICKAXE OVER 7, DO NOT ADD TO LATEST
+            addToLatest = false;
     if (gears[3]) {
         if (currentPickaxe < 10) {
             loggedFinds.push([location[0], location[1]]);
@@ -392,13 +426,19 @@ function spawnMessage(block, location) {
         latestSpawns.splice(0, 1);
     if (addToLatest) {
         for (let i = latestSpawns.length - 1; i >= 0; i--) {
-            output += latestSpawns[i][0] + " 1/" + (Math.round(1 / (oreList[latestSpawns[i][0]][0]))).toLocaleString();
+            if (latestSpawns[i][3]) {
+                output += latestSpawns[i][0] + " 1/" + (latestSpawns[i][4]).toLocaleString() + " Adjusted.";
+            } else {
+                output += latestSpawns[i][0] + " 1/" + (Math.round(1 / (oreList[latestSpawns[i][0]][0]))).toLocaleString();
+            }
             if (latestSpawns[i][1] !== undefined)
-                output += " | X: " + (latestSpawns[i][1] - 1000000000).toLocaleString() + ", Y: " + (-(latestSpawns[i][2])).toLocaleString() + "<br>";
-            else
-                output += "<br>";
+                output += " | X: " + (latestSpawns[i][1] - 1000000000).toLocaleString() + ", Y: " + (-(latestSpawns[i][2])).toLocaleString();
+            output += "<br>"
         }
         document.getElementById("latestSpawns").innerHTML = output;
+        if (caveInfo != undefined && caveInfo[0])
+        document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (caveInfo[1]).toLocaleString() + (currentPickaxe === 5 || gears[0]?"<br>X: " + (location[1] - 1000000000).toLocaleString() + "<br>Y: " + (-(location[0])).toLocaleString():"");
+        else
         document.getElementById("spawnMessage").innerHTML = block + " Has Spawned!<br>" + "1/" + (Math.round(1 / (oreList[block][0]))).toLocaleString() + (currentPickaxe === 5 || gears[0]?"<br>X: " + (location[1] - 1000000000).toLocaleString() + "<br>Y: " + (-(location[0])).toLocaleString():"");
     }
     clearTimeout(spawnOre);
