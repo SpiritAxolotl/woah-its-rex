@@ -52,3 +52,4 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Add a readme
 - [ ] Move TODO to a github tracking thing
 - [ ] Move lots of initialized variables to a separate file to reduce clutter
+- [ ] Clean up the code in the scary pickaxe ability functions...
