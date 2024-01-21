@@ -14,6 +14,9 @@
 - [x] Fix layer generation to accommodate the new layer setting system
 - [x] Make spawn messages work again
 - [x] Make spawn logs generate in the correct order again
+- [ ] Fix white hearts not having logs? (on pick 6?)
+- [ ] Fix XY coords on "location" being NaN sometimes?
+
 # New features
 - [x] Softcode things that will be harder to scale
   - [x] Buttons for crafting gears
@@ -27,7 +30,7 @@
 - [x] Add reset count to ore tracker logs
 - [ ] Color spawned messages based on whether the player mined it or not
 - [ ] Make the spawn/find messages into grids
-- [ ] Implement unaffectedByLuck (ores that are unaffected by luck)
+- [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 
 # Misc.
 - [x] Update to latest
