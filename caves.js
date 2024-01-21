@@ -1,4 +1,3 @@
-let caveLuck = 1;
 function generateCave(x, y, rate, reps, type) {
     let caveType;
     if (type === undefined) {
@@ -109,7 +108,6 @@ function generateCaveBlock(y, x, type) {
     let probabilityTable = type;
     let summedProbability = 0;
     let chosenValue = Math.random();
-    chosenValue /= caveLuck;
     for (let propertyName in probabilityTable) {
         summedProbability += probabilityTable[propertyName];
         if (chosenValue < summedProbability) {
