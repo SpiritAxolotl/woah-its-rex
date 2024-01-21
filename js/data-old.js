@@ -58,8 +58,14 @@ function loadAllDataOld() {
             for (let i = 0; i < data[4][0].length; i++)
                 gears[gearNames[i]] = data[4][0][i];
         }
-        /*if (oreList["🎂"][1][0] > 0 || gears[9])
-            document.getElementById("sillyRecipe").style.display = "block";*/
+        if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
+            visible(document.getElementById("layerDisplaySilly"));
+        else
+            invisible(document.getElementById("layerDisplaySilly"));
+        if (inventory["🪈"]["normal"] > 0)
+            visible(document.getElementById("layerDisplayFlute"));
+        else
+            invisible(document.getElementById("layerDisplayFlute"));
         localStorage.removeItem("dataBackupOld");
         return true;
     } catch(error) {
