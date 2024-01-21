@@ -24,6 +24,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Make spawn logs generate in the correct order again
 - [x] Fix white hearts not having logs? (on pick 6?)
 - [ ] Fix XY coords on "location" being NaN sometimes?
+- [ ] Make the audio work properly (completely untested)
 
 ## New features
 - [x] Softcode things that will be harder to scale
