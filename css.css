@@ -112,8 +112,12 @@
   margin: 0.3em 0;
 }
 
-#dataText {
+/*#dataText {
   width: 50vw;
+}*/
+
+#dataFile, label {
+  font-family: "Arial";
 }
 
 body {
@@ -172,7 +176,7 @@ body {
   font-size: 30px;
 }
 
-p {
+p, label, input[type=file] {
   color: white;
 }
 
