@@ -492,21 +492,21 @@ function createIndex() {
         for (let ore of allLayers[i]) {
             //const prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
-            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | `;
+            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
             if (unaffectedByLuck.indexOf(ore) === -1)
-                output += `1/${(oreList[ore]["prob"] * multi).toLocaleString()}</p>`;
+                output += `${(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
             else
-                output += `1/${oreList[ore]["prob"].toLocaleString()}</p>`;
+                output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
         }
         output += `</div>`;
     }
     output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle">Everywhere</p>`;
     for (let ore of spawnsEverywhere) {
-        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | `;
+        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
         if (unaffectedByLuck.indexOf(ore) === -1)
-            output += `1/${(oreList[ore]["prob"] * multi).toLocaleString()}</p>`;
+            output += `${(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
         else
-            output += `1/${oreList[ore]["prob"].toLocaleString()}</p>`;
+            output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
     }
     document.getElementById("indexDisplay").innerHTML = output;
     //don't hardcode this in future when other hidden layers get added
