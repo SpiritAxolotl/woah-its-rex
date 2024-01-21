@@ -1,4 +1,11 @@
-# Bugfixing
+# woah, it's rex
+This is a 2D browser version of a 3D idle mining game on Roblox called REx:R.
+
+This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes).
+
+# TODO List
+
+## Bugfixing
 - [x] Make saving work properly \[high priority\]
 - [x] get settings to display properly \[high priority\]
 - [x] Fix the ore generation not working in deeper layers (95125m) \[obscure bug?\]
@@ -18,10 +25,11 @@
 - [x] Fix white hearts not having logs? (on pick 6?)
 - [ ] Fix XY coords on "location" being NaN sometimes?
 
-# New features
+## New features
 - [x] Softcode things that will be harder to scale
   - [x] Buttons for crafting gears
   - [x] Descriptions for pickaxes and gears
+  - [ ] Mute music buttons
 - [ ] Make a better less hardcoded system for replacing blocks
 - [x] Add title
 - [x] Add versions
@@ -34,7 +42,7 @@
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
 
-# Misc.
+## Misc.
 - [x] Update to latest
 - [ ] Combine gear and pickaxe crafting methods \[low priority\]
 - [x] Make the layer variables arrays again with probability being stored in orelist
