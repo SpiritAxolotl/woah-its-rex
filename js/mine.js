@@ -99,19 +99,27 @@ function checkAllAround(x, y, luck) {
 
 function mineBlock(x, y, cause, luck) {
     if (mine[y][x] !== "⚪" && mine[y][x] !== "⛏️" && mine[y][x] !== "⬜") {
-        let ore = mine[y][x];
-        if (ore === "🟩") ore = "🟫";
-        if (cause === "reset") {
-            giveBlock(mine[y][x], x, y, true);
+        if (checkFromCave(y, x)) {
+            let adjMulti = getCaveMultiFromOre(mine[y][x]);
+            giveBlock(mine[y][x], x, y, false, true, adjMulti);
             mine[y][x] = "⚪";
-        } else {
-            giveBlock(mine[y][x], x, y);
-            mine[y][x] = "⚪";
-            checkAllAround(x, y, luck);
+            checkAllAround(x, y, 1);
             totalMined++;
-            if (cause !== "ability") {
-                rollAbilities();
-                updateActiveRecipe(ore);
+        } else {
+            let ore = mine[y][x];
+            if (ore === "🟩") ore = "🟫";
+            if (cause === "reset") {
+                giveBlock(mine[y][x], x, y, true);
+                mine[y][x] = "⚪";
+            } else {
+                giveBlock(mine[y][x], x, y);
+                mine[y][x] = "⚪";
+                checkAllAround(x, y, luck);
+                totalMined++;
+                if (cause !== "ability") {
+                    rollAbilities();
+                    updateActiveRecipe(ore);
+                }
             }
         }
     }
@@ -126,7 +134,7 @@ const variantMultis = {
     "explosive": 500
 };
 
-function giveBlock(ore, x, y, fromReset) {
+function giveBlock(ore, x, y, fromReset, fromCave, caveInfo) {
     if (gears["layer-materializer"]) {
         const block = currentLayer[currentLayer.length-1];
         inventory[block]["normal"]++;
@@ -134,21 +142,53 @@ function giveBlock(ore, x, y, fromReset) {
     }
     
     if (ore !== "⛏️") {
-        let variant = 1;
+        let variant = 0;
         if (ore === "🟩") ore = "🟫";
-        let rand = random(1, 500);
-        if (rand % 50 === 0) variant = 2;
-        if (rand % 250 === 0) variant = 3;
-        if (rand % 500 === 0) variant = 4;
-        if (oreList[ore]["prob"] >= 160000000)
-            verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant-1]);
-        if (oreList[ore]["prob"] >= 750000) {
-            if (gears["energy-siphoner"]) gearAbilityRealVitriol();
-            if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
-                logFind(ore, x, y, variantNamesEmojis[variant-1], totalMined, fromReset);
+        const rand = random(1, 500);
+        if (rand % 50 === 0) variant = 1;
+        if (rand % 250 === 0) variant = 2;
+        if (rand % 500 === 0) variant = 3;
+        if (!fromCave) {
+            if (gears["layer-materializer"]) {
+                const block = sortOres(currentLayer).reverse()[0];
+                inventory[block]["normal"]++;
+                updateInventory(block, "normal");
+            }
+            if (oreList[ore]["prob"] >= 160000000)
+                verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
+            if (oreList[ore]["prob"] >= 750000) {
+                if (gears["energy-siphoner"]) gearAbilityRealVitriol();
+                if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
+                    logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+            }
+            inventory[ore][variantNames[variant].toLowerCase()]++;
+            updateInventory(ore, variantNames[variant]);
+        } else {
+            if (getCaveTypeFromOre(ore) === currentLayer) {
+                if (oreList[ore]["prob"] * caveInfo > 160000000) {
+                    verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
+                }
+                if (oreList[ore]["prob"] >= 750000) {
+                    if (gears["energy-siphoner"])
+                        gearAbilityRealVitriol();
+                    if (currentPickaxe >= 6) {
+                        if (oreList[ore]["prob"] > 2000000)
+                            logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+                    } else
+                        logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+                }
+            } else {
+                if (oreList[ore]["prob"] * caveInfo > 500000000) {
+                    verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
+                }
+                if (oreList[ore]["prob"] * caveInfo > 250000000) {
+                    logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+                }
+                if (gears["energy-siphoner"]) gearAbilityRealVitriol();
+            }
+            inventory[ore][variant]++;
+            updateInventory(ore, variantNames[variant]);
         }
-        inventory[ore][variantNames[variant-1].toLowerCase()]++;
-        updateInventory(ore, variantNames[variant-1]);
     }
 }
 

@@ -7,6 +7,11 @@ async function rollAbilities() {
         boost *= 1.6;
     if (gears["sugar-rush"])
         m = 1.2;
+    if (!resetting) {
+        if (Math.random() < 1/750) {
+            generateCave(curX, curY, 0, 0);
+        }
+    }
     switch (currentPickaxe) {
         case 1:
             if (Math.random() < (1/30 * m)) {
@@ -322,7 +327,7 @@ function pickaxeAbility7(x, y, boost) {
                 if (mine[r][c] !== "⛏️")
                     mineBlock(c, r, "ability", thisLuck);
             }
-            reps++; 
+            reps++;
         }
     }
     reps = 1;
