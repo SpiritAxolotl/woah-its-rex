@@ -23,8 +23,9 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Make spawn messages work again
 - [x] Make spawn logs generate in the correct order again
 - [x] Fix white hearts not having logs? (on pick 6?)
-- [ ] Fix XY coords on "location" being NaN sometimes?
+- [x] Fix XY coords on "location" being NaN sometimes?
 - [ ] Make the audio work properly (completely untested)
+- [x] Fix inventory variant being set to 0 sometimes
 
 ## New features
 - [x] Softcode things that will be harder to scale
@@ -43,6 +44,9 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
 - [ ] Arrange the on-screen controls in a d-pad configuration
+- [ ] Add a dedicated "reset game" button
+- [x] Add the main layer ore next to the teleport meter display button thing
+  - [ ] Center the emoji somehow
 
 ## Misc.
 - [x] Update to latest
@@ -56,3 +60,5 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Move lots of initialized variables to a separate file to reduce clutter
 - [ ] Clean up the code in the scary pickaxe ability functions...
 - [ ] Add a list of features exclusive to this fork
+- [x] Scale all probability things
+- [ ] Add a better system for layer management (variable-wise)

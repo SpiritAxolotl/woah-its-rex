@@ -242,7 +242,7 @@ function pickaxeAbility5(x, y, boost) {
     let c = x + area1 + 1;
     for (let i = c; i < c + 5; i++) {
         if (mine[r][i] === "⬜") {
-            generated = generateBlock(thisLuck, [r, i]);
+            generated = generateBlock(thisLuck, {y: r, x: i});
                     mine[r][i] = generated["ore"];
             if (generated["hasLog"])
                 verifiedOres.verifyLog(r, c);
@@ -254,7 +254,7 @@ function pickaxeAbility5(x, y, boost) {
     for (let i = 0; i < 5; i++) {
         for (let j = c - 1; j < c+6; j++) {
             if (mine[r][j] === "⬜") {
-                generated = generateBlock(thisLuck, [r, j]);
+                generated = generateBlock(thisLuck, {y: r, x: j});
                     mine[r][j] = generated["ore"];
                 if (generated["hasLog"])
                     verifiedOres.verifyLog(r, j);
@@ -266,7 +266,7 @@ function pickaxeAbility5(x, y, boost) {
     }
     for (let i = c; i < c + 5; i++) {
         if (mine[r][i] === "⬜") {
-            generated = generateBlock(thisLuck, [r, i]);
+            generated = generateBlock(thisLuck, {y: r, x: i});
             mine[r][i] = generated["ore"];
             if (generated["hasLog"])
                 verifiedOres.verifyLog(r, i);
@@ -291,7 +291,7 @@ function pickaxeAbility6(x, y, boost) {
         for (let c = x - dist; c <= x + dist; c++) {
             if (c >= x - constraints["left"]) {
                 if (mine[r][c] === "⬜") {
-                    generated = generateBlock(thisLuck, [r, c]);
+                    generated = generateBlock(thisLuck, {y: r, x: c});
                     mine[r][c] = generated["ore"];
                     if (generated["hasLog"])
                         verifiedOres.verifyLog(r, c);
@@ -319,7 +319,7 @@ function pickaxeAbility7(x, y, boost) {
         for (let c = x - constraints["left"]; c < x + 5; c++) {
             if (reps !== 4 && reps !== 6) {
                 if (mine[r][c] === "⬜") {
-                    generated = generateBlock(thisLuck, [r, c]);
+                    generated = generateBlock(thisLuck, {y: r, x: c});
                     mine[r][c] = generated["ore"];
                     if (generated["hasLog"])
                         verifiedOres.verifyLog(r, c);
@@ -336,7 +336,7 @@ function pickaxeAbility7(x, y, boost) {
         for (let c = x - dist; c <= x + dist; c++) {
             if (c >= x - constraints["left"]) {
                 if (mine[r][c] === "⬜") {
-                    generated = generateBlock(thisLuck, [r, c]);
+                    generated = generateBlock(thisLuck, {y: r, x: c});
                     mine[r][c] = generated["ore"];
                     if (generated["hasLog"])
                         verifiedOres.verifyLog(r, c);
@@ -502,7 +502,7 @@ function pickaxeAbility10(x, y, boost) {
             if (mine[r] !== undefined && mine[r][c] !== undefined) {
                 if (!(skips[reps].includes(i))) {
                     if (mine[r][c] === "⬜") {
-                        generated = generateBlock(thisLuck, [r, c]);
+                        generated = generateBlock(thisLuck, {y: r, x: c});
                         mine[r][c] = generated["ore"];
                         if (generated["hasLog"])
                             verifiedOres.verifyLog(r, c);
@@ -523,7 +523,7 @@ function pickaxeAbility10(x, y, boost) {
             if (mine[r] !== undefined && mine[r][c] !== undefined) {
                 if (!(skips[reps].includes(i))) {
                     if (mine[r][c] === "⬜") {
-                        generated = generateBlock(thisLuck, [r, c]);
+                        generated = generateBlock(thisLuck, {y: r, x: c});
                         mine[r][c] = generated["ore"];
                         if (generated["hasLog"])
                             verifiedOres.verifyLog(r, c);
@@ -555,7 +555,7 @@ function pickaxeAbility11(x, y, boost) {
                         for (let c = 7 * i; c < (7 * i + 7); c++) {
                             if (mine[y + r] !== undefined) {
                                 if (mine[y + r][x + c] === "⬜") {
-                                    generated = generateBlock(thisLuck, [y + r, x + c]);
+                                    generated = generateBlock(thisLuck, {y: y + r, x: x + c});
                                     mine[y + r][x + c] = generated["ore"];
                                     if (generated["hasLog"])
                                         verifiedOres.verifyLog(r, c);

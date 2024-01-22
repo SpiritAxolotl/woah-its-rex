@@ -51,7 +51,7 @@ function loadAllData() {
             if (document.getElementById(`${ore}Normal`) !== null) {
                 for (let variant in inventory[ore]) {
                     updateInventory(ore, variant);
-                    if (inventory[ore][variant] > 0)
+                    if (inventory[ore][variant] >= 1)
                         visible(document.getElementById(ore + capitalize(variant)));
                 }
             }
@@ -85,11 +85,11 @@ function loadAllData() {
             for (let gear in data["gears"])
                 gears[gear] = data["gears"][gear];
         }
-        if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
+        if (inventory["🎂"]["normal"] >= 1 || gears["silly-tp"])
             visible(document.getElementById("layerDisplaySilly"));
         else
             invisible(document.getElementById("layerDisplaySilly"));
-        if (inventory["🪈"]["normal"] > 0)
+        if (inventory["🪈"]["normal"] >= 1)
             visible(document.getElementById("layerDisplayFlute"));
         else
             invisible(document.getElementById("layerDisplayFlute"));
