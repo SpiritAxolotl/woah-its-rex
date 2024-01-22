@@ -109,6 +109,23 @@ function isVisible(element) {
     return !element.classList.contains("invisible");
 }
 
+function debugGiveAllOres(type) {
+    if (debug) {
+        if (typeof type === "number") {
+            const pick = type;
+            for (let ingredient in pickaxeRecipes[pick]) {
+                inventory[ingredient]["normal"] += pickaxeRecipes[pick][ingredient];
+            }
+        } else if (typeof type === "string") {
+            const gear = type;
+            for (let ingredient in gearRecipes[gear]) {
+                inventory[ingredient]["normal"] += pickaxeRecipes[gear][ingredient];
+            }
+        }
+    }
+    updateActiveRecipe();
+}
+
 function snakeToCamel(str, startUpper) {
     const snake = str.toLowerCase();
     let camel = "";
@@ -190,7 +207,7 @@ function init() {
     }
     for (let element of document.getElementsByClassName("itemDescription"))
         invisible(element)
-    for (let ore in oreList) updateIndex(ore);
+    //for (let ore in oreList) updateIndex(ore);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -467,14 +484,14 @@ function displayArea() {
 
 //HTML EDITING
 
-let currVariant = 1;
+let currVariant = 0;
 const variantNames = ["Normal", "Electrified", "Radioactive", "Explosive"];
 const variantNamesEmojis = ["", "⚡️", "☢️", "💥"];
 function switchInventory() {
-    invisible(document.getElementById(`inventory${variantNames[currVariant-1]}`));
-    currVariant = currVariant >= 4 ? 1 : ++currVariant;
-    visible(document.getElementById(`inventory${variantNames[currVariant-1]}`));
-    document.getElementById("switchInventory").innerHTML = `${variantNames[currVariant-1]} Inventory`;
+    invisible(document.getElementById(`inventory${variantNames[currVariant]}`));
+    currVariant = currVariant+1 % 4;
+    visible(document.getElementById(`inventory${variantNames[currVariant]}`));
+    document.getElementById("switchInventory").innerHTML = `${variantNames[currVariant]} Inventory`;
     invisible(document.getElementById("indexDisplay"));
     document.getElementById("showIndex").innerHTML = "Show Index";
     showing = false;
@@ -532,6 +549,7 @@ function createIndex() {
             output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
     }
     document.getElementById("indexDisplay").innerHTML = output;
+    updateIndex();
 }
 
 let showing = false;
@@ -539,34 +557,39 @@ function showIndex() {
     if (showing) {
         invisible(document.getElementById("indexDisplay"));
         document.getElementById("showIndex").innerHTML = "Show Index";
-        visible(document.getElementById("inventory" + variantNames[currVariant-1]));
+        visible(document.getElementById("inventory" + variantNames[currVariant]));
         showing = false;
     } else {
         visible(document.getElementById("indexDisplay"));
         document.getElementById("showIndex").innerHTML = "Show Inventory";
-        invisible(document.getElementById("inventory" + variantNames[currVariant-1]));
+        invisible(document.getElementById("inventory" + variantNames[currVariant]));
         showing = true;
     }
 }
 
-function updateIndex(ore) {
-    const hasAnyOre = hasAny(ore);
-    if (document.getElementById(`${ore}Index`) !== null && hasAnyOre)
-        document.getElementById(`${ore}Index`).classList.add("hasOne");
-    const index = allLayers.indexOf(getLayerFromOre(ore));
-    const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.indexOf(ore) !== -1 ? "Everywhere" : undefined;
-    const display = document.getElementById(`layerDisplay${name}`);
-    if (display !== null && hasAnyOre) {
-        if (!isVisible(display))
-            visible(display);
-        let isCompleted = true;
-        for (let child of display.children) {
-            if (!child.classList.contains("oreTitle") && !child.classList.contains("hasOne")) {
-                isCompleted = false;
-                break;
+function updateIndex(type) {
+    let ores = [type];
+    if (typeof type !== "string")
+        ores = Object.keys(oreList);
+    for (let ore of ores) {
+        const hasAnyOre = hasAny(ore);
+        if (document.getElementById(`${ore}Index`) !== null && hasAnyOre)
+            document.getElementById(`${ore}Index`).classList.add("hasOne");
+        const index = allLayers.indexOf(getLayerFromOre(ore));
+        const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.indexOf(ore) !== -1 ? "Everywhere" : undefined;
+        const display = document.getElementById(`layerDisplay${name}`);
+        if (display !== null && hasAnyOre) {
+            if (!isVisible(display))
+                visible(display);
+            let isCompleted = true;
+            for (let child of display.children) {
+                if (!child.classList.contains("oreTitle") && !child.classList.contains("hasOne")) {
+                    isCompleted = false;
+                    break;
+                }
             }
+            if (isCompleted) display.getElementsByClassName("oreTitle")[0].classList.add("hasOne");
         }
-        if (isCompleted) display.getElementsByClassName("oreTitle")[0].classList.add("hasOne");
     }
 }
 
@@ -585,8 +608,8 @@ let loggedFinds = [];
 let latestSpawns = [];
 function spawnMessage(ore, location, caveInfo) {
     //ADD TO MINE CAPACITY IF NEAR RESET
-    //CAVEINFO[0] = TRUE/FALSE
-    //CAVEINFO[1] = ADJUSTED RARITY
+    //CAVEINFO["fromCave"] = TRUE/FALSE
+    //CAVEINFO["rarity"] = ADJUSTED RARITY
     if (!gears["real-vitriol"] && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
         mineCapacity += 10000;
     let output = "";
