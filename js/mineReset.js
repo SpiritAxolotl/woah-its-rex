@@ -2,6 +2,7 @@
 function resetMine() {
     clearInterval(loopTimer);
     resetsThisSession++;
+    totalResets++;
     currDirection = "";
     mine = [[]];
     layersChanged = {};
@@ -20,6 +21,7 @@ async function mineReset() {
     if (!resetting) {
         resetting = true;
         resetsThisSession++;
+        totalResets++;
         mineCapacity = baseMineCapacity;
         layersChanged = {};
         layersChanged[`${Math.floor(curY/2000)}`] = allLayersNames[allLayers.indexOf(currentLayer)];

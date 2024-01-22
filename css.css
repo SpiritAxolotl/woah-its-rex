@@ -8,6 +8,9 @@
 }
 .small-emoji {
   font-size: 0.6em;
+  /* display: flex; */
+  /* position: absolute; */
+  /* align-items: center; */
 }
 /*#meterDisplay {
   display: flex;
