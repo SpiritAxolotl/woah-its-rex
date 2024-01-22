@@ -29,7 +29,7 @@ class secureLogs {
                     this.#verifiedLogs.push({ore: mine[y][x], y: y, x: x, date: new Date(), something: false, variant: "Normal", luck: log["luck"]});
                     break;
                 } else {
-                    console.log('failed to verify', r, c);
+                    console.log("failed to verify", r, c);
                 }
             }
         }
