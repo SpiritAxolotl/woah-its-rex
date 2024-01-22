@@ -376,10 +376,12 @@ document.addEventListener("keydown", (event) => {
         clearInterval(loopTimer);
         currDirection = "";
         energySiphonerDirection = "";
-        if (event.shiftKey)
-            goDirection(name);
-        else
-            movePlayer(name);
+        if (!event.metaKey && !event.altKey) {
+            if (event.shiftKey)
+                goDirection(name);
+            else
+                movePlayer(name);
+        }
         if (realVitriolActive) {
             clearTimeout(realVitriolTimeout);
             realVitriolActive = false;
