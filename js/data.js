@@ -15,6 +15,7 @@ function saveAllData() {
     dataStorage["pickaxes"]["inv"] = pickaxes;
     dataStorage["pickaxes"]["curr"] = currentPickaxe;
     dataStorage["stats"]["totalMined"] = totalMined;
+    dataStorage["stats"]["totalResets"] = totalResets;
     dataStorage["settings"]["mutedSounds"] = canPlay;
     dataStorage["settings"]["musicVolume"] = Number(document.getElementById("musicVolume").value);
     dataStorage["settings"]["spawnVolume"] = Number(document.getElementById("spawnVolume").value);
@@ -81,6 +82,7 @@ function loadAllData() {
         if (data["settings"]["warnBeforeClosing"] !== undefined)
             warnClose = data["settings"]["warnBeforeClosing"];
         warnBeforeClosingToggle();
+        totalResets = data["stats"]["totalResets"] || 0;
         if (data["gears"] !== undefined && data["gears"] !== null) {
             if (data["gears"]["inv"] !== undefined) {
                 for (let gear in data["gears"]["inv"])
