@@ -192,7 +192,7 @@ caveType2 = ["🎷","🪘","🥁","🪇","🎹","🎵"],
 caveType3 = ["🧫","🛸","🍄","🕸️","💉","☣️"],
 caveType4 = ["⚕️","🌡️","💊","🧬","🍥","🦠"],
 allCaves = [caveType1, caveType2, caveType3, caveType4],
-allCavesNames = ["Cave 1", "Cave 2", "Cave 3", "Cave 4"],
+allCavesNames = ["Confusing", "Music", "Biohazard", "Germ"],
 
 allLayers = [
     dirtLayer,

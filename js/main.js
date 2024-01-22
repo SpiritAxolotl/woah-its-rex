@@ -504,7 +504,7 @@ function createIndex() {
         if (allCaves.indexOf(allLayers[i]) === -1)
             output += `${allLayersNames[i]} Layer`;
         else
-            output += `${allCavesNames[allCaves.indexOf(allLayers[i])]}`;
+            output += `${allCavesNames[allCaves.indexOf(allLayers[i])]} Cave (1/${caves[allCaves.indexOf(allLayers[i])]})`;
         
         if (normalLayers.indexOf(allLayers[i]) !== -1)
             output += ` (${i * 2000}-${(i+1) * 2000}m)`;
