@@ -134,7 +134,7 @@ const variantMultis = {
     "explosive": 500
 };
 
-function giveBlock(ore, x, y, fromReset, fromCave, caveInfo) {
+function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
     if (gears["layer-materializer"]) {
         const block = currentLayer[currentLayer.length-1];
         inventory[block]["normal"]++;
@@ -163,9 +163,10 @@ function giveBlock(ore, x, y, fromReset, fromCave, caveInfo) {
             }
             inventory[ore][variantNames[variant].toLowerCase()]++;
             updateInventory(ore, variantNames[variant]);
+            updateIndex(ore);
         } else {
             if (getCaveTypeFromOre(ore) === currentLayer) {
-                if (oreList[ore]["prob"] * caveInfo > 160000000) {
+                if (oreList[ore]["prob"] * rarity > 160000000) {
                     verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
                 }
                 if (oreList[ore]["prob"] >= 750000) {
@@ -178,16 +179,17 @@ function giveBlock(ore, x, y, fromReset, fromCave, caveInfo) {
                         logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
                 }
             } else {
-                if (oreList[ore]["prob"] * caveInfo > 500000000) {
+                if (oreList[ore]["prob"] * rarity > 500000000) {
                     verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
                 }
-                if (oreList[ore]["prob"] * caveInfo > 250000000) {
+                if (oreList[ore]["prob"] * rarity > 250000000) {
                     logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
                 }
                 if (gears["energy-siphoner"]) gearAbilityRealVitriol();
             }
-            inventory[ore][variant]++;
+            inventory[ore][variantNames[variant].toLowerCase()]++;
             updateInventory(ore, variantNames[variant]);
+            updateIndex(ore);
         }
     }
 }
@@ -200,7 +202,7 @@ function generateBlock(luck, location) {
         layer.push("🥬");
     let blockToGive = "";
     let summedProbability = 0;
-    const baseLuck = Math.random();
+    const baseLuck = Math.random()*addUpAllProbs(layer);
     const modifiedLuck = baseLuck/luck;
     if (location["y"] === 0)
         return {ore: "🟩", hasLog: false};
@@ -244,7 +246,7 @@ function switchDistance() {
         teleportY = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = `${teleportY}m`;
+    document.getElementById("meterDisplay").innerHTML = `<span class="emoji small-emoji">${lastItemIn(allLayers[(teleportY-1000)/2000])}</span>${teleportY}m`;
 }
 
 async function teleport(goToY) {
