@@ -10,9 +10,9 @@ class secureLogs {
     }
     createLog(y, x, intended, obj, luck) {
         let luckModifier = 1;
-        if (gears["real-candilium"])
+        if (hasGear("real-candilium"))
             luckModifier *= 1.1;
-        if (gears["fortune-3-book"])
+        if (hasGear("fortune-3-book"))
             luckModifier *= 1.6;
         const maxLuck = (this.#maxLuck[currentPickaxe] * luckModifier) + 1;
         if ((obj.stack.includes("mine.js") || obj.stack.includes("caves.js")) && luck <= maxLuck) {

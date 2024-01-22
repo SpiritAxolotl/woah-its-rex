@@ -8,7 +8,8 @@ function saveAllData() {
         "gears": {}
     };
     
-    dataStorage["version"] = 2;
+    //update this whenever the format of the data storage changes (then add if(data["version"]===num) to stuff)
+    dataStorage["version"] = 3;
     for (let ore in oreList)
         dataStorage["ores"][ore] = inventory[ore];
     dataStorage["pickaxes"]["inv"] = pickaxes;
@@ -20,7 +21,9 @@ function saveAllData() {
     dataStorage["settings"]["musicButton"] = Number(document.getElementById("musicButton").innerHTML);
     dataStorage["settings"]["baseMineCapacity"] = baseMineCapacity;
     dataStorage["settings"]["warnBeforeClosing"] = warnClose;
-    dataStorage["gears"] = gears;
+    dataStorage["settings"]["autoSave"] = autoSave;
+    dataStorage["gears"]["inv"] = gears;
+    dataStorage["gears"]["curr"] = currentGears;
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
 
@@ -28,11 +31,8 @@ function loadAllData() {
     localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
     try {
         const data = JSON.parse(localStorage.getItem("playerData"));
-        if (!localStorage.getItem("newSaveFormat") || data["version"] < 2) {
-            const succeed = loadAllDataOld();
-            localStorage.setItem("newSaveFormat", succeed);
-            return succeed;
-        }
+        if (data["version"] === undefined)
+            return loadAllDataOld();
         //if (data["ores"] !== undefined) {
         for (let ore in data["ores"]) {
             if (oreList[ore] !== undefined) {
@@ -80,46 +80,42 @@ function loadAllData() {
         }
         if (data["settings"]["warnBeforeClosing"] !== undefined)
             warnClose = data["settings"]["warnBeforeClosing"];
-        updateWarnBeforeCloseButton();
+        warnBeforeClosingToggle();
         if (data["gears"] !== undefined && data["gears"] !== null) {
-            for (let gear in data["gears"])
-                gears[gear] = data["gears"][gear];
+            if (data["gears"]["inv"] !== undefined) {
+                for (let gear in data["gears"]["inv"])
+                    gears[gear] = data["gears"]["inv"][gear];
+            } else if (data["version"] === 2) {
+                for (let gear in data["gears"])
+                    gears[gear] = data["gears"][gear];
+            }
         }
-        if (inventory["🎂"]["normal"] >= 1 || gears["silly-tp"])
-            visible(document.getElementById("layerDisplaySilly"));
-        else
-            invisible(document.getElementById("layerDisplaySilly"));
-        if (inventory["🪈"]["normal"] >= 1)
-            visible(document.getElementById("layerDisplayFlute"));
-        else
-            invisible(document.getElementById("layerDisplayFlute"));
+        if (data["version"] >= 3)
+            currentGears = data["gears"]["curr"];
+        else {
+            for (let gear in data["gears"]) {
+                if (data["gears"][gear])
+                    currentGears.push(gear);
+            }
+        }
+        if (data["settings"]["autoSave"] !== undefined)
+            autoSave = data["settings"]["autoSave"];
         localStorage.removeItem("dataBackup");
         localStorage.setItem("newSaveFormat", true);
         warnBeforeClosing();
         return true;
     } catch (error) {
-        const succeed = loadAllDataOld();
-        if (!succeed) {
-            console.error(error);
-            return false;
-        }
-        return succeed;
-        //console.log("Attempting to load the old save data format...");
-        /*if (succeed) {
-            console.log("Success!");
-            return true;
-        } else {
-            localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
-            window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
-            return false;
-        }*/
+        console.error(error);
+        localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
+        window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
+        return false;
     }
 }
 
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-    dataTimer = setInterval(saveAllData, 2000);
+    dataTimer = autoSave ? setInterval(saveAllData, 2000) : null;
 }
 
 function toBinary(string) {
@@ -215,11 +211,6 @@ function hideData() {
 
 function warnBeforeClosingToggle() {
     warnClose = !warnClose;
-    updateWarnBeforeCloseButton();
-    return warnClose;
-}
-
-function updateWarnBeforeCloseButton() {
     document.getElementById("warnBeforeClosingButton").innerHTML = `Warn Before Closing: ${warnClose ? "on" : "off"}`;
 }
 
@@ -231,7 +222,7 @@ async function warnBeforeClosing() {
     }, "60000");
 }
 
-function changeDataUploadType() {
+/*function changeDataUploadType() {
     if (isVisible(document.getElementById("dataText"))) {
         invisible(document.getElementById("dataText"));
         visible(document.getElementById("dataFile"));
@@ -239,4 +230,4 @@ function changeDataUploadType() {
         invisible(document.getElementById("dataText"));
         visible(document.getElementById("dataFile"));
     }
-}
+}*/

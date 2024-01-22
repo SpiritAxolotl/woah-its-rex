@@ -135,7 +135,7 @@ const variantMultis = {
 };
 
 function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
-    if (gears["layer-materializer"]) {
+    if (hasGear("layer-materializer")) {
         const block = currentLayer[currentLayer.length-1];
         inventory[block]["normal"]++;
         updateInventory(block, "normal");
@@ -149,7 +149,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
         if (rand % 250 === 0) variant = 2;
         if (rand % 500 === 0) variant = 3;
         if (!fromCave) {
-            if (gears["layer-materializer"]) {
+            if (hasGear("layer-materializer")) {
                 const block = sortOres(currentLayer).reverse()[0];
                 inventory[block]["normal"]++;
                 updateInventory(block, "normal");
@@ -157,7 +157,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
             if (oreList[ore]["prob"] >= 160000000)
                 verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
             if (oreList[ore]["prob"] >= 750000) {
-                if (gears["energy-siphoner"]) gearAbilityProc();
+                if (hasGear("energy-siphoner")) gearAbilityProc();
                 if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
                     logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
             }
@@ -170,7 +170,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
                     verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
                 }
                 if (oreList[ore]["prob"] >= 750000) {
-                    if (gears["energy-siphoner"])
+                    if (hasGear("energy-siphoner"))
                         gearAbilityProc();
                     if (currentPickaxe >= 6) {
                         if (oreList[ore]["prob"] > 2000000)
@@ -183,7 +183,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
                     verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
                     logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
                 }
-                if (gears["energy-siphoner"]) gearAbilityProc();
+                if (hasGear("energy-siphoner")) gearAbilityProc();
             }
             inventory[ore][variantNames[variant].toLowerCase()]++;
             updateInventory(ore, variantNames[variant]);
