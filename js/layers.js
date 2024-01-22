@@ -187,11 +187,11 @@ paperLayer = ["💵","🪅","👀","🌟","📝","⌚","🗜️","🏆","🎲","
 sillyLayer = ["🧌","♾️","💅","✈️","🪢","🫃","🎂"],
 fluteLayer = ["🪈"],
 
-caveType1 = ["🪔","🩺","💱","🔭","📡","❓"],
-caveType2 = ["🎷","🪘","🥁","🪇","🎹","🎵"],
-caveType3 = ["🧫","🛸","🍄","🕸️","💉","☣️"],
-caveType4 = ["⚕️","🌡️","💊","🧬","🍥","🦠"],
-allCaves = [caveType1, caveType2, caveType3, caveType4],
+caveTypeConfusing = ["🪔","🩺","💱","🔭","📡","❓"],
+caveTypeMusic = ["🎷","🪘","🥁","🪇","🎹","🎵"],
+caveTypeBiohazard = ["🧫","🛸","🍄","🕸️","💉","☣️"],
+caveTypeGerm = ["⚕️","🌡️","💊","🧬","🍥","🦠"],
+allCaves = [caveTypeConfusing, caveTypeMusic, caveTypeBiohazard, caveTypeGerm],
 allCavesNames = ["Confusing", "Music", "Biohazard", "Germ"],
 
 allLayers = [
@@ -205,10 +205,10 @@ allLayers = [
     paperLayer,
     sillyLayer,
     fluteLayer,
-    caveType1,
-    caveType2,
-    caveType3,
-    caveType4
+    caveTypeConfusing,
+    caveTypeMusic,
+    caveTypeBiohazard,
+    caveTypeGerm
 ],
 
 allLayersNames = [
@@ -222,10 +222,10 @@ allLayersNames = [
     "Paper",
     "Silly",
     "Flute",
-    "Cave1",
-    "Cave2",
-    "Cave3",
-    "Cave4"
+    "CaveConfusing",
+    "CaveMusic",
+    "CaveBiohazard",
+    "CaveGerm"
 ],
 
 normalLayers = [

@@ -23,9 +23,12 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Make spawn messages work again
 - [x] Make spawn logs generate in the correct order again
 - [x] Fix white hearts not having logs? (on pick 6?)
-- [x] Fix XY coords on "location" being NaN sometimes?
+- [ ] Fix XY coords on "location" being NaN sometimes?
+  - it's persistent ughh
 - [ ] Make the audio work properly (completely untested)
 - [x] Fix inventory variant being set to 0 sometimes
+- [ ] Fix whatever causes the game to either freeze for a bit or just stop mining when automining
+- [ ] Fix latest spawns not displaying when it should be ???
 
 ## New features
 - [x] Softcode things that will be harder to scale
@@ -37,7 +40,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Add versions
 - [x] Hold shift to constantly go in a direction (after hitting wasd)
 - [x] SillyTP has its own layer
-- [ ] Highlight a layer when it's completed (as well as the elements under it when the player has at least one)
+- [x] Highlight a layer when it's completed (as well as the elements under it when the player has at least one)
 - [x] Add reset count to ore tracker logs
 - [ ] Color spawned messages based on whether the player mined it or not
 - [ ] Make the spawn/find messages into grids
@@ -48,7 +51,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Add the main layer ore next to the teleport meter display button thing
   - [ ] Center the emoji somehow
 - [ ] Display what pickaxe the player has currently selected
-- [ ] Let players equip pickaxe 0 if they want to
+- [x] Let players equip pickaxe 0 if they want to
 
 ## Misc.
 - [x] Update to latest
@@ -63,4 +66,5 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Clean up the code in the scary pickaxe ability functions...
 - [ ] Add a list of features exclusive to this fork
 - [x] Scale all probability things
-- [ ] Add a better system for layer management (variable-wise)
+- [ ] Add a better system for layer management (variable-wise) (make it a class maybe?)
+- [ ] Somehow shift the game icon down by three pixels without increasing the filesize

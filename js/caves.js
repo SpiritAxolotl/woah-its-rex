@@ -116,7 +116,7 @@ function generateCaveBlock(y, x, type) {
     if (allCaves.includes(type)) {
         if (adjRarity > 750000) {
             verifiedOres.createLog(y, x, blockToGive, new Error(), 1);
-            spawnMessage(blockToGive, {y: y, x: x}, {isCave: true, rarity: adjRarity});
+            spawnMessage(blockToGive, {y: y, x: x}, {fromCave: true, rarity: adjRarity});
             hasLog = true;
             attemptToPlaySound(adjRarity);
         }
@@ -130,16 +130,16 @@ function generateCaveBlock(y, x, type) {
 function getCaveMulti(type) {
     let multi;
     switch(type) {
-        case caveType1:
+        case caveTypeConfusing:
             multi = caves[0];
             break;
-        case caveType2:
+        case caveTypeMusic:
             multi = caves[1];
             break;
-        case caveType3:
+        case caveTypeBiohazard:
             multi = caves[2];
             break;
-        case caveType4:
+        case caveTypeGerm:
             multi = caves[3];
             break;
         default:

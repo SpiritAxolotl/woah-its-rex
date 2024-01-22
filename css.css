@@ -83,6 +83,10 @@
   color: green;
 }
 
+.hasOne {
+  color: rgb(0, 195, 0);
+}
+
 .itemDescription {
   font-size: 0.75em;
 }
@@ -286,9 +290,10 @@ button {
   justify-self: end;
 }
 #discord > img {
-  width: 3em;
-  height: 3em;
+  width: 1.75em;
+  height: 1.75em;
   aspect-ratio: 1;
+  margin: 0.5em 0.75em;
 }
 #discord > p {
   /*width: 100%;*/
