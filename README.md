@@ -47,6 +47,8 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Add a dedicated "reset game" button
 - [x] Add the main layer ore next to the teleport meter display button thing
   - [ ] Center the emoji somehow
+- [ ] Display what pickaxe the player has currently selected
+- [ ] Let players equip pickaxe 0 if they want to
 
 ## Misc.
 - [x] Update to latest
