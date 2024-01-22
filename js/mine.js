@@ -157,7 +157,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
             if (oreList[ore]["prob"] >= 160000000)
                 verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
             if (oreList[ore]["prob"] >= 750000) {
-                if (gears["energy-siphoner"]) gearAbilityRealVitriol();
+                if (gears["energy-siphoner"]) gearAbilityProc();
                 if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
                     logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
             }
@@ -171,7 +171,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
                 }
                 if (oreList[ore]["prob"] >= 750000) {
                     if (gears["energy-siphoner"])
-                        gearAbilityRealVitriol();
+                        gearAbilityProc();
                     if (currentPickaxe >= 6) {
                         if (oreList[ore]["prob"] > 2000000)
                             logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
@@ -179,13 +179,11 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
                         logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
                 }
             } else {
-                if (oreList[ore]["prob"] * rarity > 500000000) {
+                if (oreList[ore]["prob"] * rarity >= 250000000) {
                     verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
-                }
-                if (oreList[ore]["prob"] * rarity > 250000000) {
                     logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
                 }
-                if (gears["energy-siphoner"]) gearAbilityRealVitriol();
+                if (gears["energy-siphoner"]) gearAbilityProc();
             }
             inventory[ore][variantNames[variant].toLowerCase()]++;
             updateInventory(ore, variantNames[variant]);
