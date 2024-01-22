@@ -15,7 +15,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Fix inventory being weird on first load (no data)
 - [x] Get Discord stuff clamped to the bottom of the screen \[low priority\]
 - [x] AND have the index/inventory stuff stretch \[low priority\]
-- [ ] AND get column 3 to stop scrolling horizontally \[low priority\]
+- [ ] AND get columns to stop scrolling horizontally \[low priority\]
 - [x] Implement old save file format transfer
 - [ ] Make sure that the old save file format transfer works well and consistently
 - [x] Figure out why gears don't save to inv
@@ -52,6 +52,8 @@ This is an unofficial version of amber's original project to make the code more 
   - [ ] Center the emoji somehow
 - [ ] Display what pickaxe the player has currently selected
 - [x] Let players equip pickaxe 0 if they want to
+- [x] Let gears be equippable
+- [x] totalResets statistic
 
 ## Misc.
 - [x] Update to latest

@@ -6,6 +6,7 @@ let debugLuck = "",
     curY = 0,
     currentDisplay = "",
     totalMined = 0,
+    totalResets = 0,
     blocksRevealedThisReset = 0,
     mineCapacity = 40000, // in case this ever needs to be raised
     baseMineCapacity = 40000,
