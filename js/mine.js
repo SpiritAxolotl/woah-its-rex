@@ -260,10 +260,10 @@ async function teleport(goToY) {
 function toLocation(goToY) {
     return new Promise((resolve) => {
     let x = curX;
-    let y = goToY;
-    if (typeof goToY !== "number") {
+    let y = goToY || teleportY;
+    if (typeof y !== "number") {
         y = document.getElementById("meterDisplay").innerHTML;
-        y = Number(y.substring(0, y.length - 1));
+        y = Number(y.substring(y.lastIndexOf(">")+1, y.lastIndexOf("m")));
     }
     for (let r = y - 50; r < y + 50; r++) {
         if(mine[r] === undefined) mine[r] = [];
