@@ -135,7 +135,8 @@ const pickaxeRecipes = [
         ["🫧", 500],
         ["🤿", 500],
         ["🎣", 500],
-        ["⛵", 500]
+        ["⛵", 500],
+        ["🎣", 500]
     ]
 ],
 gearRecipes = [
@@ -242,7 +243,7 @@ function displayRecipe(num) {
     for (let i = 0; i < craftableChildren.length; i++) {
         craftableChildren[i].style.display = "none";
     }
-    if (document.getElementById("pickaxeCrafts").style.display === "block") {
+    if (!(document.getElementById("pickaxeCrafts").classList.contains("hidden"))) {
         let parent = document.getElementById("displayRecipe")
         while (parent.firstChild)
             parent.removeChild(parent.firstChild);
@@ -329,7 +330,7 @@ function createGearRecipes() {
 }
 
 function updateActiveRecipe() {
-    if (document.getElementById("pickaxeCrafts").style.display === "block") {
+    if (!(document.getElementById("pickaxeCrafts").classList.contains("hidden"))) {
         for (let i = 0; i < recipeElements[0].length; i++) {
             if (recipeElements[0][i].style.display === "block") {
                 let parent = recipeElements[0][i];
@@ -413,10 +414,10 @@ function craftGear(num) {
 }
 
 function showPickaxes() {
-    document.getElementById("pickaxeCrafts").style.display = "block";
-    document.getElementById("gearCrafts").style.display = "none";
+    appear(document.getElementById("pickaxeCrafts"));
+    disappear(document.getElementById("gearCrafts"));
 }
 function showGears() {
-    document.getElementById("pickaxeCrafts").style.display = "none";
-    document.getElementById("gearCrafts").style.display = "block";
+    disappear(document.getElementById("pickaxeCrafts"));
+    appear(document.getElementById("gearCrafts"));
 }
