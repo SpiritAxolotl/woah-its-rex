@@ -325,6 +325,15 @@ function createIndex() {
         }
         output += "--------------<br>";
     }
+    for (let i = 0; i < allCaves.length; i++) {
+        let caveOres = Object.keys(allCaves[i]);
+        output += caveOres[5] + " Cave, 1/" + caveMultis[i] + "<br>";
+        for (let j = 0; j < caveOres.length - 1; j++) {
+            num = Math.round(1/allCaves[i][caveOres[j]]);
+            output += caveOres[j] + " | 1/" + num.toLocaleString() + " in caves.<br>";
+        }
+        output += "--------------<br>";
+    }
     for (let propertyName in oreList) {
         if (Math.round(1/(oreList[propertyName][0]) <= 2000000 && Math.round(1/(oreList[propertyName][0]) > 1)))
             output += propertyName + " | 1/" + (Math.round(1/(oreList[propertyName][0] * multi))).toLocaleString() + " | Everywhere<br>";
