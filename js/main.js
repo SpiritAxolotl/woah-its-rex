@@ -73,12 +73,12 @@ const gearDescriptions = {
     "ore-tracker": "Tracks the location of new ore spawns.",
     "real-candilium": "Boosts ability luck by 1.1x.",
     "real-vitriol": "Sets mining speed delay to 15ms from 25ms.",
-    "infinity-collector": "Increases ability proc rates by 20%.",
+    "infinity-collector": "Mines all rare ores in the mine upon mine reset.",
     "layer-materializer": "For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.",
     "fortune-3-book": "Increases ability luck by 1.6x. Stacks with Real Candilium.",
     "haste-2-beacon": "Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.",
     "energy-siphoner": "Boosts mining speed slightly upon mining any exotic+ ore (1/750k+).",
-    "sugar-rush": "Mines all rare ores in the mine upon mine reset.",
+    "sugar-rush": "Increases ability proc rates by 20%.",
     "silly-tp": ":3<br>Instantly teleports you to the silly layer."
 };
 let gearNames = Object.keys(gears);
