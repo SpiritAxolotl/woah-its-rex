@@ -29,7 +29,7 @@ let pickaxes = {
     11: false
 };
 const pickaxeDescriptions = {
-    0: "how are you even reading this",
+    0: "Humble beginnings :)<br>No special abilities.",
     1: "Mines a few blocks in every cardinal direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.",
     2: "Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.",
     3: "Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.",
@@ -43,7 +43,7 @@ const pickaxeDescriptions = {
     11: "Mines an extremely large spiral around the player.<br>Has an ability proc rate of 1/100.<br>Has 30x luck."
 };
 const pickaxeSillyDescriptions = {
-    0: "again, how are you reading this",
+    0: ":33333333",
     1: "is anyone gonna read these lol",
     2: "hi!!! hii!!",
     3: "wait no get out of here",
@@ -190,6 +190,7 @@ function init() {
     }
     for (let element of document.getElementsByClassName("itemDescription"))
         invisible(element)
+    for (let ore in oreList) updateIndex(ore);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -500,7 +501,7 @@ function createIndex() {
     if (gears["fortune-3-book"])
         multi *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
-        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle">`;
+        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle" id="${allLayersNames[i]}Title">`;
         if (allCaves.indexOf(allLayers[i]) === -1)
             output += `${allLayersNames[i]} Layer`;
         else
@@ -512,37 +513,23 @@ function createIndex() {
         for (let ore of allLayers[i]) {
             //const prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
-            output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
+            output += `<p class="oreDisplay" id="${ore}Index"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">`;
             if (unaffectedByLuck.indexOf(ore) === -1 && allCaves.indexOf(allLayers[i]) !== -1)
-                output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
+                output += `1/${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
             else
-                output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
+                output += `1/${oreList[ore]["prob"].toLocaleString()}</span></p>`;
         }
         output += `</div>`;
     }
-    output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle">Everywhere</p>`;
+    output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle" id="EverywhereTitle">Everywhere</p>`;
     for (let ore of spawnsEverywhere) {
-        output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
+        output += `<p class="oreDisplay" id="${ore}Index"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
         if (unaffectedByLuck.indexOf(ore) === -1)
             output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
         else
             output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
     }
     document.getElementById("indexDisplay").innerHTML = output;
-    //don't hardcode this in future when other hidden layers get added
-    //ok adding this to the TODO
-    if (inventory["🎂"]["normal"] === 0 && !gears["silly-tp"])
-        invisible(document.getElementById("layerDisplaySilly"));
-    if (inventory["🪈"]["normal"] === 0)
-        invisible(document.getElementById("layerDisplayFlute"));
-    if (inventory["❓"]["normal"] === 0)
-        invisible(document.getElementById("layerDisplayCave1"));
-    if (inventory["🎵"]["normal"] === 0)
-        invisible(document.getElementById("layerDisplayCave2"));
-    if (inventory["☣️"]["normal"] === 0)
-        invisible(document.getElementById("layerDisplayCave3"));
-    if (inventory["🦠"]["normal"] === 0)
-        invisible(document.getElementById("layerDisplayCave4"));
 }
 
 let showing = false;
@@ -561,8 +548,24 @@ function showIndex() {
 }
 
 function updateIndex(ore) {
-    const display = document.getElementById(`layerDisplay${allLayersNames[allLayers.indexOf(getLayerFromOre(ore))]}`);
-    if (display !== null && !isVisible(display) && hasAny(ore)) visible(display);
+    const hasAnyOre = hasAny(ore);
+    if (document.getElementById(`${ore}Index`) !== null && hasAnyOre)
+        document.getElementById(`${ore}Index`).classList.add("hasOne");
+    const index = allLayers.indexOf(getLayerFromOre(ore));
+    const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.indexOf(ore) !== -1 ? "Everywhere" : undefined;
+    const display = document.getElementById(`layerDisplay${name}`);
+    if (display !== null && hasAnyOre) {
+        if (!isVisible(display))
+            visible(display);
+        let isCompleted = true;
+        for (let child of display.children) {
+            if (!child.classList.contains("oreTitle") && !child.classList.contains("hasOne")) {
+                isCompleted = false;
+                break;
+            }
+        }
+        if (isCompleted) display.getElementsByClassName("oreTitle")[0].classList.add("hasOne");
+    }
 }
 
 function updateInventory(ore, variant) {
@@ -586,7 +589,7 @@ function spawnMessage(ore, location, caveInfo) {
         mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
-    const fromCave = caveInfo !== undefined && caveInfo["isCave"];
+    const fromCave = caveInfo !== undefined && caveInfo["fromCave"];
     if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000) {
         //IF PICKAXE IS 5, ADD LOCATION
         if (currentPickaxe === 5 || gears["ore-tracker"]) {
