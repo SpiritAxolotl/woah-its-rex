@@ -29,6 +29,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Fix inventory variant being set to 0 sometimes
 - [ ] Fix whatever causes the game to either freeze for a bit or just stop mining when automining
 - [ ] Fix latest spawns not displaying when it should be ???
+- [ ] Combine data-old.js with data.js (using "data\["version"\]" to differentiate the different save files)
 
 ## New features
 - [x] Softcode things that will be harder to scale
