@@ -154,7 +154,20 @@ function clamp(num, min, max) {
       : num >= max
         ? max
         : num
-  }
+}
+
+function addUpAllProbs(arr) {
+    let total = 0;
+    for (let num of arr) {
+        if (typeof num === "number") total += 1/num;
+        else if (typeof num === "string") total += 1/oreList[num]["prob"];
+    }
+    return total;
+}
+
+function lastItemIn(arr) {
+    return arr[arr.length-1];
+}
 
 //IMPORTANT
 
@@ -310,6 +323,12 @@ function sortOres(layer) {
         sortedores.splice(index, 0, ore);
     }
     return sortedores.reverse();
+}
+
+function hasAny(ore) {
+    for (let variant of variantNames)
+        if (inventory[ore][variant.toLowerCase()] >= 1) return true;
+    return false;
 }
 
 document.addEventListener("keydown", (event) => {
@@ -494,7 +513,7 @@ function createIndex() {
             //const prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
             output += `<p class="oreDisplay"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
-            if (unaffectedByLuck.indexOf(ore) === -1)
+            if (unaffectedByLuck.indexOf(ore) === -1 && allCaves.indexOf(allLayers[i]) !== -1)
                 output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
             else
                 output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
@@ -541,6 +560,11 @@ function showIndex() {
     }
 }
 
+function updateIndex(ore) {
+    const display = document.getElementById(`layerDisplay${allLayersNames[allLayers.indexOf(getLayerFromOre(ore))]}`);
+    if (display !== null && !isVisible(display) && hasAny(ore)) visible(display);
+}
+
 function updateInventory(ore, variant) {
     document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
     if (inventory[ore][variant.toLowerCase()] > 0)
@@ -579,7 +603,7 @@ function spawnMessage(ore, location, caveInfo) {
     if (latestSpawns.length > 10) latestSpawns.pop();
     if (addToLatest) {
         for (let spawn of latestSpawns) {
-            output += `<span class="emoji">${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()} Adjusted.`;
+            output += `<span class="emoji">${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()}`;
             if (typeof spawn["y"] === "number" && typeof spawn["x"] === "number")
                 output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${resetsThisSession}`;
             output += "<br>";
@@ -591,8 +615,8 @@ function spawnMessage(ore, location, caveInfo) {
         else
             document.getElementById("spawnMessage").innerHTML += `1/${oreList[ore]["prob"].toLocaleString()}`;
         
-        if (currentPickaxe === 5 || gears["ore-tracker"])
-            document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
+        //if (currentPickaxe === 5 || gears["ore-tracker"])
+        document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {

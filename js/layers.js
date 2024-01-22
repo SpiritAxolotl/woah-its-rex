@@ -211,22 +211,6 @@ allLayers = [
     caveType4
 ],
 
-normalLayers = [
-    dirtLayer,
-    brickLayer,
-    foggyLayer,
-    waterLayer,
-    rockLayer,
-    radioactiveLayer,
-    cactusLayer,
-    paperLayer
-],
-
-sillyLayers = [
-    sillyLayer,
-    fluteLayer
-],
-
 allLayersNames = [
     "Dirt",
     "Brick",
@@ -242,13 +226,32 @@ allLayersNames = [
     "Cave2",
     "Cave3",
     "Cave4"
+],
+
+normalLayers = [
+    dirtLayer,
+    brickLayer,
+    foggyLayer,
+    waterLayer,
+    rockLayer,
+    radioactiveLayer,
+    cactusLayer,
+    paperLayer
+],
+
+sillyLayers = [
+    sillyLayer,
+    fluteLayer
 ];
 
-/*function searchDepth(y) {
-    for (let depth in layersChanged)
-        if (depth === `${y}`) return true;
-    return false;
-}*/
+function getLayerFromOre(ore) {
+    for (let layer of allLayers) {
+        if (layer.indexOf(ore) !== -1) {
+            return layer;
+        }
+    }
+    return undefined;
+}
 
 //SETTING LAYERS
 
