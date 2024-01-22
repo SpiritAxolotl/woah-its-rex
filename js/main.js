@@ -12,7 +12,8 @@ let debugLuck = "",
     canMine = false,
     lastDirection = "",
     resetsThisSession = 0,
-    warnClose = true;
+    warnClose = true,
+    autoSave = true;
 
 let pickaxes = {
     0: true,
@@ -95,6 +96,7 @@ let gearNamesNormalized = {
     "silly-tp": "Silly TP"
 };
 let currentPickaxe = 0;
+let currentGears = [];
 
 function visible(element) {
     element.classList.remove("invisible");
@@ -119,7 +121,7 @@ function debugGiveAllOres(type) {
         } else if (typeof type === "string") {
             const gear = type;
             for (let ingredient in gearRecipes[gear]) {
-                inventory[ingredient]["normal"] += pickaxeRecipes[gear][ingredient];
+                inventory[ingredient]["normal"] += gearRecipes[gear][ingredient];
             }
         }
     }
@@ -349,6 +351,10 @@ function hasAny(ore) {
     return false;
 }
 
+function hasGear(gear) {
+    return gears[gear] && currentGears.indexOf(gear) !== -1;
+}
+
 document.addEventListener("keydown", (event) => {
     let name = event.key.toLowerCase();
     let validInput = false;
@@ -420,8 +426,8 @@ function goDirection(direction, speed) {
     } else {
         clearInterval(loopTimer);
         if (speed === undefined) {
-            if (gears["real-vitriol"]) miningSpeed = 15;
-            if (gears["haste-2-beacon"]) miningSpeed = 10;
+            if (hasGear("real-vitriol")) miningSpeed = 15;
+            if (hasGear("haste-2-beacon")) miningSpeed = 10;
         } else miningSpeed = speed;
         loopTimer = setInterval(movePlayer, miningSpeed, direction);
         currDirection = direction;
@@ -515,9 +521,9 @@ function createIndex() {
     document.getElementById("indexDisplay").innerHTML = "";
     let output = "";
     let multi = verifiedOres.getLuckBoosts()[currentPickaxe];
-    if (gears["real-candilium"])
+    if (hasGear("real-candilium"))
         multi *= 1.1;
-    if (gears["fortune-3-book"])
+    if (hasGear("fortune-3-book"))
         multi *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
         output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle" id="${allLayersNames[i]}Title">`;
@@ -610,20 +616,20 @@ function spawnMessage(ore, location, caveInfo) {
     //ADD TO MINE CAPACITY IF NEAR RESET
     //CAVEINFO["fromCave"] = TRUE/FALSE
     //CAVEINFO["rarity"] = ADJUSTED RARITY
-    if (!gears["real-vitriol"] && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
+    if (!hasGear("real-vitriol") && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
         mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
     const fromCave = caveInfo !== undefined && caveInfo["fromCave"];
     if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000) {
         //IF PICKAXE IS 5, ADD LOCATION
-        if (currentPickaxe === 5 || gears["ore-tracker"]) {
+        if (currentPickaxe === 5 || hasGear("ore-tracker")) {
             latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"], fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
         } else {
             latestSpawns.unshift({ore: ore});
         }
     } else addToLatest = false;
-    if (gears["real-vitriol"] || gears["infinity-collector"]) {
+    if (hasGear("real-vitriol") || hasGear("infinity-collector")) {
         if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000) {
             loggedFinds.unshift({y: location["y"], x: location["x"]});
         }
@@ -643,7 +649,7 @@ function spawnMessage(ore, location, caveInfo) {
         else
             document.getElementById("spawnMessage").innerHTML += `1/${oreList[ore]["prob"].toLocaleString()}`;
         
-        //if (currentPickaxe === 5 || gears["ore-tracker"])
+        //if (currentPickaxe === 5 || hasGear("ore-tracker"))
         document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
     }
     clearTimeout(spawnOre);
@@ -659,7 +665,7 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     if (latestFinds.length > 10) latestFinds.pop();
     for (let find of latestFinds) {
         output += `${find["variant"]}${find["type"]} | `;
-        if (gears["ore-tracker"]) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${resetsThisSession} | `;
+        if (hasGear("ore-tracker")) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${resetsThisSession} | `;
         if (find["fromReset"]) output += "FROM RESET<br>";
         else output += `${find["atMined"].toLocaleString()}◻️<br>`;
     }

@@ -1,11 +1,11 @@
 async function rollAbilities() {
     let boost = 1;
     let m = 1;
-    if (gears["real-candilium"])
+    if (hasGear("real-candilium"))
         boost *= 1.1;
-    if (gears["fortune-3-book"])
+    if (hasGear("fortune-3-book"))
         boost *= 1.6;
-    if (gears["sugar-rush"])
+    if (hasGear("sugar-rush"))
         m = 1.2;
     if (!resetting) {
         if (Math.random() < 1/750) {

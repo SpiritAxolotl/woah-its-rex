@@ -38,7 +38,7 @@ async function mineReset() {
 
 function collectOres(inDirection) {
     return new Promise((resolve) => {
-    if (gears["infinity-collector"]) {
+    if (hasGear("infinity-collector")) {
         for (let find of loggedFinds) {
             if (mine[find["y"]] !== undefined &&
               mine[find["y"]][find["x"]] !== undefined)

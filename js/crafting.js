@@ -335,10 +335,14 @@ function createGearRecipes() {
         button.id = `craftGear${snakeToCamel(gear, true)}`;
         button.classList.add("actualCraftButton");
         button.setAttribute("onclick", `craftGear('${gear}', this)`);
-        if (gears[gear])
-            button.innerHTML = gear !== "silly-tp" ? "Owned!" : "Teleport!";
-        else
-            button.innerHTML = "Craft!";
+        if (gears[gear]) {
+            if (gear !== "silly-tp") {
+                if (currentGears.indexOf(gear) !== -1)
+                    button.innerHTML = "Equipped!";
+                else
+                    button.innerHTML = "Equip!";
+            } else button.innerHTML = "Teleport!";
+        } else button.innerHTML = "Craft!";
         gearDisplay.appendChild(button);
         recipeElements["gears"][gear] = gearDisplay;
         
@@ -435,6 +439,7 @@ function craftPickaxe(pick) {
             let pickaxeDisplay = document.getElementById(`pickaxeRecipe${pick}`);
             pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
             updateActiveRecipe();
+            createIndex();
             currentPickaxe = pick;
         }
     } else {
@@ -442,10 +447,11 @@ function craftPickaxe(pick) {
         pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
         currentPickaxe = pick;
     }
-    createIndex();
 }
-function craftGear(gear) {
+function craftGear(gear, button) {
     canCraft = true;
+    let gearDisplay = document.getElementById(`gearRecipe${snakeToCamel(gear, true)}`);
+    button = button || gearDisplay.lastElementChild.innerHTML;
     if (!gears[gear]) {
         for (let ingredient in gearRecipes[gear]) {
             if (inventory[ingredient]["normal"] < gearRecipes[gear][ingredient]) {
@@ -455,16 +461,25 @@ function craftGear(gear) {
         }
         if (canCraft) {
             gears[gear] = true;
+            currentGears.push(gear);
             for (let ingredient in gearRecipes[gear]) {
                 inventory[ingredient]["normal"] -= gearRecipes[gear][ingredient];
                 updateInventory(ingredient, "normal");
             }
-            let gearDisplay = document.getElementById(`gearRecipe${snakeToCamel(gear, true)}`);
-            gearDisplay.lastElementChild.innerHTML = gear !== "silly-tp" ? "Owned!" : "Teleport!";
+            if (gear !== "silly-tp")
+                button.innerHTML = "Equipped!";
+            else
+                button.innerHTML = "Teleport!";
             updateActiveRecipe();
-        }
+            createIndex();
+        } else button.innerHTML = "Craft!";
+    } else if (currentGears.indexOf(gear) === -1) {
+        button.innerHTML = "Equipped!";
+        currentGears.push(gear);
+    } else {
+        button.innerHTML = "Equip!";
+        currentGears.splice(currentGears.indexOf(gear), 1);
     }
-    createIndex();
     if (gear === "silly-tp" && gears["silly-tp"]) gearAbilitySillyTp();
 }
 
