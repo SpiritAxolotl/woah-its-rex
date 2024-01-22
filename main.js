@@ -365,6 +365,13 @@ function updateInventory(type, inv) {
         document.getElementById(type + inv).style.display = "none";
 }
 
+function appear(element){
+    element.classList.remove("hidden")
+}
+function disappear(element){
+    element.classList.add("hidden")
+}
+
 //SPAWNS AND FINDS
 
 let spawnOre;
