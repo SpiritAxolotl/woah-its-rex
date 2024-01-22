@@ -102,12 +102,13 @@ function mineCaveBlock(c, r, type) {
         blocksRevealedThisReset++;
     }
 }
-
+//let caveLuck = 1;
 function generateCaveBlock(y, x, type) {
     let hasLog;
     let probabilityTable = type;
     let summedProbability = 0;
     let chosenValue = Math.random();
+    //chosenValue /= caveLuck;
     for (let propertyName in probabilityTable) {
         summedProbability += probabilityTable[propertyName];
         if (chosenValue < summedProbability) {
@@ -143,7 +144,9 @@ function generateCaveBlock(y, x, type) {
                 hasLog = true;
                 playSound("unfathomable")
             } else if (adjRarity > 250000000) { // 250M
+                verifiedOres.createLog(y,x,blockToGive, new Error(), 1);
                 spawnMessage(blockToGive, [y, x], [true, adjRarity]);
+                hasLog = true;
                 playSound("enigmatic");
             }
         }

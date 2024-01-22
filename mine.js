@@ -194,10 +194,10 @@ function giveBlock(type, x, y, fromReset, fromCave, caveInfo) {
                         logFind(type, x, y, namesemojis[inv - 1], totalMined, fromReset);
                 }
             } else {
-                if ((1/oreList[type][0]) * caveInfo > 500000000) {
+                if ((1/oreList[type][0]) * caveInfo >= 250000000) {
                     verifiedOres.verifyFind(mine[y][x], y, x, names[inv - 1]);
                 }
-                if ((1/oreList[type][0]) * caveInfo > 250000000) {
+                if ((1/oreList[type][0]) * caveInfo >= 250000000) {
                     logFind(type, x, y, namesemojis[inv - 1], totalMined, fromReset);
                 }
                 if (gears[7])
