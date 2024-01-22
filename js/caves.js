@@ -93,16 +93,17 @@ function mineCaveBlock(x, y, type) {
     }
 }
 
+let caveLuck = 1;
 function generateCaveBlock(y, x, type) {
     let hasLog = false;
     const layer = type.concat(spawnsEverywhere);
     let summedProbability = 0;
     const baseLuck = Math.random()*addUpAllProbs(layer);
-    //const modifiedLuck = baseLuck/luck;
+    const modifiedLuck = baseLuck/caveLuck;
     for (let ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
-        //const chosenLuck = unaffectedByLuck.indexOf(ore) === -1 ? modifiedLuck : baseLuck;
-        if (baseLuck < summedProbability) {
+        const chosenLuck = unaffectedByLuck.indexOf(ore) === -1 ? modifiedLuck : baseLuck;
+        if (chosenLuck < summedProbability) {
             blockToGive = ore;
             break;
         }

@@ -85,7 +85,7 @@ let realVitriolActive = false,
     realVitriolTimeout,
     energySiphonerSpeed,
     energySiphonerDirection;
-function gearAbilityRealVitriol() {
+function gearAbilityProc() {
     if (!realVitriolActive && !resetting) {
         realVitriolActive = true;
         let tempSpeed = miningSpeed;
