@@ -14,7 +14,9 @@ let debugLuck = "",
     lastDirection = "",
     resetsThisSession = 0,
     warnClose = true,
-    autoSave = true;
+    autoSave = true,
+    caveToggle = true,
+    turnOffAbilities = false;
 
 let pickaxes = {
     0: true,
@@ -483,7 +485,7 @@ function displayArea() {
         }
         document.getElementById("blockDisplay").innerHTML = output;
     }
-    document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
+    document.getElementById("mineResetProgress").innerHTML = `Reset Progress:<br>${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
     document.getElementById("resetsThisSession").innerHTML = `(Reset #${resetsThisSession.toLocaleString()})`;
     document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
     document.getElementById("location").innerHTML = `X: ${curX - 1000000000}<br>Y: ${-curY}`;
@@ -496,7 +498,7 @@ const variantNames = ["Normal", "Electrified", "Radioactive", "Explosive"];
 const variantNamesEmojis = ["", "⚡️", "☢️", "💥"];
 function switchInventory() {
     invisible(document.getElementById(`inventory${variantNames[currVariant]}`));
-    currVariant = currVariant+1 % 4;
+    currVariant = (currVariant+1) % 4;
     visible(document.getElementById(`inventory${variantNames[currVariant]}`));
     document.getElementById("switchInventory").innerHTML = `${variantNames[currVariant]} Inventory`;
     invisible(document.getElementById("indexDisplay"));
@@ -624,16 +626,13 @@ function spawnMessage(ore, location, caveInfo) {
     const fromCave = caveInfo !== undefined && caveInfo["fromCave"];
     if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000) {
         //IF PICKAXE IS 5, ADD LOCATION
-        if (currentPickaxe === 5 || hasGear("ore-tracker")) {
+        if (currentPickaxe === 5 || hasGear("ore-tracker"))
             latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"], fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
-        } else {
-            latestSpawns.unshift({ore: ore});
-        }
+        else latestSpawns.unshift({ore: ore});
     } else addToLatest = false;
     if (hasGear("real-vitriol") || hasGear("infinity-collector")) {
-        if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000) {
+        if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000)
             loggedFinds.unshift({y: location["y"], x: location["x"]});
-        }
     }
     if (latestSpawns.length > 10) latestSpawns.pop();
     if (addToLatest) {
