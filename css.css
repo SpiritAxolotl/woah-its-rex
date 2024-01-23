@@ -175,6 +175,11 @@ body {
   text-align: center;
 }
 
+.disabledDisplay {
+  letter-spacing: 0 !important;
+  font-family: "Arial";
+}
+
 .latestDisplay {
   text-align: left;
   border: 0.15em solid #959595;

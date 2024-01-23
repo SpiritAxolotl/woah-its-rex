@@ -454,19 +454,22 @@ function moveOne(dir, button) {
 //DISPLAY
 
 let canDisplay = true;
-function changeCanDisplay(button) {
+function changeCanDisplay(toggle) {
+    let button = document.getElementById("disableDisplay");
     let blockDisplay = document.getElementById("blockDisplay");
-    if (button.innerHTML.includes("Disable")) {
-        button.innerHTML = "Enable Display";
-        canDisplay = false;
-        blockDisplay.innerHTML = "DISABLED";
-        blockDisplay.style.letterSpacing = 0;
-    } else {
-        button.innerHTML = "Disable Display";
-        canDisplay = true;
-        blockDisplay.style.letterSpacing = "";
-        displayArea();
-    }
+    if (typeof toggle === "boolean") {
+        canDisplay = toggle;
+        if (toggle) {
+            button.innerHTML = "Disable Display";
+            canDisplay = true;
+            blockDisplay.classList.remove("disabledDisplay");
+            displayArea();
+        } else {
+            button.innerHTML = "Enable Display";
+            blockDisplay.innerHTML = "DISABLED";
+            blockDisplay.classList.add("disabledDisplay");
+        }
+    } else changeCanDisplay(button.innerHTML.includes("Enable"));
 }
 function displayArea() {
     if (canDisplay) {
@@ -623,7 +626,7 @@ function spawnMessage(ore, location, caveInfo) {
         mineCapacity += 10000;
     let output = "";
     let addToLatest = true;
-    const fromCave = caveInfo !== undefined && caveInfo["fromCave"];
+    const fromCave = typeof caveInfo === "object" && caveInfo["fromCave"];
     if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000) {
         //IF PICKAXE IS 5, ADD LOCATION
         if (currentPickaxe === 5 || hasGear("ore-tracker"))
@@ -644,7 +647,7 @@ function spawnMessage(ore, location, caveInfo) {
         }
         document.getElementById("latestSpawns").innerHTML = output;
         document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!<br>`;
-        if (caveInfo !== undefined && caveInfo["rarity"])
+        if (typeof caveInfo === "object" && caveInfo["rarity"])
             document.getElementById("spawnMessage").innerHTML += `1/${caveInfo["rarity"].toLocaleString()}`;
         else
             document.getElementById("spawnMessage").innerHTML += `1/${oreList[ore]["prob"].toLocaleString()}`;

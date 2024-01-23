@@ -42,8 +42,8 @@ function collectOres(inDirection) {
     return new Promise((resolve) => {
     if (hasGear("infinity-collector")) {
         for (let find of loggedFinds) {
-            if (mine[find["y"]] !== undefined &&
-              mine[find["y"]][find["x"]] !== undefined)
+            if (typeof mine[find["y"]] === "object" &&
+              typeof mine[find["y"]][find["x"]] === "string")
                 mineBlock(find["x"], find["y"], "reset", 1);
         }
     }
@@ -55,9 +55,9 @@ function collectOres(inDirection) {
         for (let y = curY - constraints["up"]; y < curY + 30; y++) {
             for (let x = curX - constraints["left"]; x < curX + 30; x++) {
                 //TODO: make this into a function
-                if (mine[y] !== undefined &&
-                    oreList[mine[y][x]] !== undefined &&
-                    oreList[mine[y][x]]["prob"] >= 750000)
+                if (typeof mine[y] === "object" &&
+                  typeof oreList[mine[y][x]] === "string" &&
+                  oreList[mine[y][x]]["prob"] >= 750000)
                     mineBlock(x, y, "reset", 1);
             }
         }
@@ -65,9 +65,9 @@ function collectOres(inDirection) {
         let constraints = getParams(30, 30);
         for (let y = curY - constraints["up"]; y < curY + 500; y++) {
             for (let x = curX - constraints["left"]; x < curX + 30; x++) {
-                if (mine[y] !== undefined &&
-                    oreList[mine[y][x]] !== undefined &&
-                    oreList[mine[y][x]]["prob"] >= 750000)
+                if (typeof mine[y] === "object" &&
+                  typeof oreList[mine[y][x]] === "string" &&
+                  oreList[mine[y][x]]["prob"] >= 750000)
                     mineBlock(x, y, "reset", 1);
             }
         }
@@ -75,9 +75,9 @@ function collectOres(inDirection) {
         let constraints = getParams(30, 30);
         for (let y = curY - constraints["up"]; y < curY + 30; y++) {
             for (let x = curX - constraints["left"]; x < curX + 500; x++) {
-                if (mine[y] !== undefined &&
-                    oreList[mine[y][x]] !== undefined &&
-                    oreList[mine[y][x]]["prob"] >= 750000)
+                if (typeof mine[y] === "object" &&
+                  typeof oreList[mine[y][x]] === "string" &&
+                  oreList[mine[y][x]]["prob"] >= 750000)
                     mineBlock(x, y, "reset", 1);
             }
         }
@@ -85,9 +85,9 @@ function collectOres(inDirection) {
         let constraints = getParams(500, 30);
         for (let y = curY - constraints["up"]; y < curY + 30; y++) {
             for (let x = curX - constraints["left"]; x < curX + 30; x++) {
-                if (mine[y] !== undefined &&
-                    oreList[mine[y][x]] !== undefined &&
-                    oreList[mine[y][x]]["prob"] >= 750000)
+                if (typeof mine[y] === "object" &&
+                  typeof oreList[mine[y][x]] === "string" &&
+                  oreList[mine[y][x]]["prob"] >= 750000)
                     mineBlock(x, y, "reset", 1);
             }
         }
@@ -108,7 +108,7 @@ function mineResetAid() {
         for (let r = y - 50; r < y + 50; r++) {
             if (r > -1 && mine[r] === undefined) mine[r] = [];
             for (let c = x - 50; c < x + 50; c++)
-                if (mine[r] !== undefined)
+                if (typeof mine[r] === "object")
                     mine[r][c] = "⬜";
         }
         checkAllAround(curX, curY, 1);
