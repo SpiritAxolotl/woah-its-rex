@@ -10,7 +10,7 @@ function generateCave(x, y, rate, reps, type) {
         let distX = Math.round(Math.random() * 10) + 3;
         let distY = Math.round(Math.random() * 10) + 3;
         let newOrigins = [];
-        if (!((mine[y] === undefined && mine[y][x] === "⚪") && (mine[y + distY] === undefined && mine[y + distY][x + distX] === "⚪"))) {
+            if ((mine[y] != undefined && mine[y + distY] != undefined) && !(mine[y][x] === "⚪" && mine[y + distY][x + distX] === "⚪")) {
             for (let r = y; r < y + distY; r++) {
                 for (let c = x; c < x + distX; c++) {
                     if (Math.random() < (0.1 - rate))
@@ -28,7 +28,8 @@ function generateCave(x, y, rate, reps, type) {
                         mineCaveBlock(c, r, caveType);
                 }
             }
-            rate += 0.025;
+            let newRate = Math.round(Math.random() * 10) / 600;
+            rate += newRate;
             reps++;
         }
         for (let i = 0; i < newOrigins.length; i++) {

@@ -30,12 +30,12 @@ async function mineReset() {
 
 function collectOres(temp) {
     return new Promise((resolve) => {
-    if (gears[3]) {
+    /*if (gears[3]) {
         for (let i = 0; i < loggedFinds.length; i++) {
             if (mine[loggedFinds[i][0]] !== undefined && mine[loggedFinds[i][0]][loggedFinds[i][1]] !== undefined)
                 mineBlock(loggedFinds[i][1], loggedFinds[i][0], "reset", 1);
         }
-    }
+    }*/
         let direction = "";
         if (temp !== "")
             direction = temp;
