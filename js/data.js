@@ -17,6 +17,7 @@ function saveAllData() {
     dataStorage["stats"]["totalMined"] = totalMined;
     dataStorage["stats"]["totalResets"] = totalResets;
     dataStorage["settings"]["mutedSounds"] = canPlay;
+    dataStorage["settings"]["toggleCaves"] = caveToggle;
     dataStorage["settings"]["musicVolume"] = Number(document.getElementById("musicVolume").value);
     dataStorage["settings"]["spawnVolume"] = Number(document.getElementById("spawnVolume").value);
     dataStorage["settings"]["musicButton"] = Number(document.getElementById("musicButton").innerHTML);
@@ -79,9 +80,11 @@ function loadAllData() {
                 }, 100);
             }
         }
+        caveToggle = data["settings"]["toggleCaves"] || false;
+        toggleCaves(false);
         if (data["settings"]["warnBeforeClosing"] !== undefined)
             warnClose = data["settings"]["warnBeforeClosing"];
-        warnBeforeClosingToggle();
+        warnBeforeClosingToggle(false);
         totalResets = data["stats"]["totalResets"] || 0;
         if (data["gears"] !== undefined && data["gears"] !== null) {
             if (data["gears"]["inv"] !== undefined) {
@@ -211,8 +214,8 @@ function hideData() {
     visible(document.getElementById("mainContent"));
 }
 
-function warnBeforeClosingToggle() {
-    warnClose = !warnClose;
+function warnBeforeClosingToggle(toggle) {
+    if (toggle || toggle === undefined) warnClose = !warnClose;
     document.getElementById("warnBeforeClosingButton").innerHTML = `Warn Before Closing: ${warnClose ? "on" : "off"}`;
 }
 
@@ -222,6 +225,11 @@ async function warnBeforeClosing() {
     setTimeout(() => {
         window.onbeforeunload = () => "";
     }, "60000");
+}
+
+function toggleCaves(toggle) {
+    if (toggle || toggle === undefined) caveToggle = !caveToggle;
+    document.getElementById("toggleCavesButton").innerHTML = `Toggle Caves: ${caveToggle ? "on" : "off"}`;
 }
 
 /*function changeDataUploadType() {

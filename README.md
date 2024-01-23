@@ -25,11 +25,13 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Fix white hearts not having logs? (on pick 6?)
 - [ ] Fix XY coords on "location" being NaN sometimes?
   - it's persistent ughh
+  - when is it safe to check this off
 - [ ] Make the audio work properly (completely untested)
 - [x] Fix inventory variant being set to 0 sometimes
 - [ ] Fix whatever causes the game to either freeze for a bit or just stop mining when automining
-- [ ] Fix latest spawns not displaying when it should be ???
-- [ ] Combine data-old.js with data.js (using "data\["version"\]" to differentiate the different save files)
+  - Probably a performance issue that can be solved with optimizing code
+- [ ] Fix latest spawns not displaying when it should be ??? \[medium priority\]
+- [ ] Fix index completion highlighting on ores themselves (only doesn't work for some ores)
 
 ## New features
 - [x] Softcode things that will be harder to scale
@@ -71,3 +73,5 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Scale all probability things
 - [ ] Add a better system for layer management (variable-wise) (make it a class maybe?)
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
+- [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
+- [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
