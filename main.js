@@ -148,6 +148,7 @@ function movePlayer(dir) {
                     console.log("wrong key!!");
             }
             displayArea();
+            gearAbility3();
         }
 }
 
@@ -432,11 +433,8 @@ function spawnMessage(block, location, caveInfo) {
             //IF ORE IS <1/2M WITH A PICKAXE OVER 7, DO NOT ADD TO LATEST
             addToLatest = false;
     if (gears[3]) {
-        if (currentPickaxe < 10) {
-            loggedFinds.push([location[0], location[1]]);
-        } else if (1 / (oreList[block][0]) > 2000001) {
-            loggedFinds.push([location[0], location[1]]);
-        }
+        if (oreList[block][0] < 1/2000000)
+        loggedFinds.push([location[0], location[1]]);
     }
     if (latestSpawns.length > 10)
         latestSpawns.splice(0, 1);

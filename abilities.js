@@ -118,6 +118,20 @@ function gearAbility2() {
         currentLayer = sillyLayer;
     }
 }
+
+function gearAbility3() {
+    if (gears[3] && loggedFinds.length > 0) {
+        console.log(loggedFinds);
+        for (let i = 0; i < loggedFinds.length; i++) {
+            if (mine[loggedFinds[i][0]] !== undefined && mine[loggedFinds[i][0]][loggedFinds[i][1]] !== undefined) {
+                console.log("mined");
+                mineBlock(loggedFinds[i][1], loggedFinds[i][0], "ability", 1);
+                loggedFinds.splice(i, 1);
+            }
+        }
+        console.log(loggedFinds);
+    }
+}
 function pickaxeAbility1(x, y, size, customLuck, boost) {
     return new Promise((resolve) => {
     let generated;

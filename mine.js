@@ -98,10 +98,11 @@ function checkAllAround(x, y, luck) {
         }
     }
     if (blocksRevealedThisReset >= mineCapacity) {
-        
+        canMine = false;
+        gearAbility3();
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
-        canMine = false;
+        
         setTimeout(() => {
             if (ability1Active) {
                 clearTimeout(ability1Timeout);
@@ -338,3 +339,4 @@ function updateCapacity(value) {
         mineCapacity = value;
     }        
 }
+
