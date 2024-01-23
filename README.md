@@ -57,6 +57,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Let players equip pickaxe 0 if they want to
 - [x] Let gears be equippable
 - [x] totalResets statistic
+- [ ] Add what layer an ore spawns on when hovering (`title` attribute)
 
 ## Misc.
 - [x] Update to latest
