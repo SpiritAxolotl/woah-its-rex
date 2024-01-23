@@ -14,7 +14,7 @@ function generateCave(x, y, rate, reps, type) {
             for (let r = y; r < y + distY; r++) {
                 for (let c = x; c < x + distX; c++) {
                     if (Math.random() < (0.1 - rate))
-                        newOrigins.push([c + (Math.round(Math.random() * 6)) - (5 + reps), r + (Math.round(Math.random() * 6)) - (5 + reps)]);
+                        newOrigins.push([c + (Math.round(Math.random() * 4)) - (5 + reps), r + (Math.round(Math.random() * 4)) - (5 + reps)]);
                     
                         if (r > 0) {
                             if (mine[r][c] === "⬜") {
