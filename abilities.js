@@ -581,7 +581,7 @@ function pickaxeAbility12(x, y, boost, index, dirNum) {
     let newX = x;
     if (dirNum > 3)
         dirNum = 0;
-    const thisLuck = 30000 * boost;
+    const thisLuck = 30 * boost;
     const nums = [3, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 21, 23, 24, 26, 27, 29, 30, 32, 33, 35, 36, 38, 39, 41, 42, 44, 45, 47, 48, 50, 51, 53, 54];
     const dirs = ["down", "left", "up", "right"];
     const direction = dirs[dirNum];
