@@ -34,7 +34,7 @@ function generateCave(x, y, rate, reps, type) {
 
 function mineCaveBlock(x, y, type) {
     const block = mine[y][x];
-    if (block !== undefined) {
+    if (block === "string") {
         if (block !== "⚪" && block !== "⬜" && block !== "⛏️") {
             giveBlock(block, x, y, false, true, getCaveMultiFromOre(block));
             mine[y][x] = "⚪";
@@ -159,7 +159,7 @@ function getCaveType() {
             break;
         }
     }
-    return caveType !== undefined ? caveType : currentLayer;
+    return typeof caveType === "boolean" ? caveType : currentLayer;
 }
 
 let caveOreLocations = [];

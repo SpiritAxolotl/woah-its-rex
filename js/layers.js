@@ -263,7 +263,7 @@ function setLayer(y) {
     regY = Math.floor(y / 2000);
     const lastCurrentLayer = allLayers[allLayersNames.indexOf(layersChanged[`${regY}`])]; //might be undefined
     if (Object.keys(layersChanged).indexOf(`${regY}`) === -1) {
-        if (overrideLayer !== undefined) {
+        if (typeof overrideLayer === "object") {
             currentLayer = overrideLayer;
             overrideLayer = undefined;
         } else if (regY < normalLayers.length) currentLayer = normalLayers[regY];
