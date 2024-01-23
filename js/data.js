@@ -18,6 +18,7 @@ function saveAllData() {
     dataStorage["stats"]["totalResets"] = totalResets;
     dataStorage["settings"]["mutedSounds"] = canPlay;
     dataStorage["settings"]["toggleCaves"] = caveToggle;
+    dataStorage["settings"]["canDisplay"] = canDisplay;
     dataStorage["settings"]["musicVolume"] = Number(document.getElementById("musicVolume").value);
     dataStorage["settings"]["spawnVolume"] = Number(document.getElementById("spawnVolume").value);
     dataStorage["settings"]["musicButton"] = Number(document.getElementById("musicButton").innerHTML);
@@ -33,77 +34,70 @@ function loadAllData() {
     localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
     try {
         const data = JSON.parse(localStorage.getItem("playerData"));
-        if (data["version"] === undefined)
+        if (typeof data["version"] !== "number")
             return loadAllDataOld();
-        //if (data["ores"] !== undefined) {
-        for (let ore in data["ores"]) {
-            if (oreList[ore] !== undefined) {
+        for (let ore in data["ores"])
+            if (typeof oreList[ore] === "object")
                 for (let variant of variantNames)
                     inventory[ore][variant.toLowerCase()] = data["ores"][ore][variant.toLowerCase()];
-            }
-        }
-        if (data["pickaxes"]["inv"] !== undefined) {
+        if (typeof data["pickaxes"]["inv"] === "object")
             for (let pick in data["pickaxes"]["inv"])
                 pickaxes[pick] = data["pickaxes"]["inv"][pick];
-        }
         currentPickaxe = data["pickaxes"]["curr"] || 0;
         totalMined = data["stats"]["totalMined"] || 0;
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
-        for (let ore in oreList) {
-            if (document.getElementById(`${ore}Normal`) !== null) {
+        for (let ore in oreList)
+            if (document.getElementById(`${ore}Normal`) !== null)
                 for (let variant in inventory[ore]) {
                     updateInventory(ore, variant);
                     if (inventory[ore][variant] >= 1)
                         visible(document.getElementById(ore + capitalize(variant)));
                 }
-            }
-        }
-        if (data["settings"]["mutedSounds"] !== undefined) {
-            for (let sound in data["settings"]["mutedSounds"]) {
+        if (typeof data["settings"]["mutedSounds"] === "number")
+            for (let sound in data["settings"]["mutedSounds"])
                 if (!data["settings"]["mutedSounds"][sound])
                     document.getElementById(`mute${capitalize(sound)}`).click();
-            }
-        }
-        if (data["settings"]["musicVolume"] !== undefined) {
+        if (typeof data["settings"]["musicVolume"] === "number") {
             document.getElementById("musicVolume").value = data["settings"]["musicVolume"];
             changeMusicVolume(data["settings"]["musicVolume"]);
         }
-        if (data["settings"]["spawnVolume"] !== undefined) {
+        if (typeof data["settings"]["spawnVolume"] === "number") {
             document.getElementById("spawnVolume").value = data["settings"]["spawnVolume"];
             changeAllVolume(data["settings"]["spawnVolume"]);
         }
         //let canContinue = false;
-        if (data["settings"]["musicButton"] !== undefined) {
-            if (data["settings"]["musicButton"] === "Unmute Music") {
-                setTimeout(() => {
-                    document.getElementById("musicButton").click();
-                }, 100);
-            }
+        if (data["settings"]["musicButton"] === "Unmute Music") {
+            setTimeout(() => {
+                document.getElementById("musicButton").click();
+            }, 100);
         }
-        caveToggle = data["settings"]["toggleCaves"] || false;
-        toggleCaves(false);
-        if (data["settings"]["warnBeforeClosing"] !== undefined)
+        if (typeof data["settings"]["toggleCaves"] === "boolean") {
+            caveToggle = data["settings"]["toggleCaves"];
+            toggleCaves(caveToggle);
+        }
+        if (typeof data["settings"]["canDisplay"] === "boolean") {
+            canDisplay = data["settings"]["canDisplay"];
+            changeCanDisplay(canDisplay);
+        }
+        if (typeof data["settings"]["warnBeforeClosing"] === "boolean") {
             warnClose = data["settings"]["warnBeforeClosing"];
-        warnBeforeClosingToggle(false);
+            warnBeforeClosingToggle(warnClose);
+        }
         totalResets = data["stats"]["totalResets"] || 0;
-        if (data["gears"] !== undefined && data["gears"] !== null) {
-            if (data["gears"]["inv"] !== undefined) {
+        if (typeof data["gears"] === "object")
+            if (typeof data["gears"]["inv"] === "object")
                 for (let gear in data["gears"]["inv"])
                     gears[gear] = data["gears"]["inv"][gear];
-            } else if (data["version"] === 2) {
+            else if (data["version"] === 2)
                 for (let gear in data["gears"])
                     gears[gear] = data["gears"][gear];
-            }
-        }
         if (data["version"] >= 3)
             currentGears = data["gears"]["curr"];
-        else {
-            for (let gear in data["gears"]) {
+        else
+            for (let gear in data["gears"])
                 if (data["gears"][gear])
                     currentGears.push(gear);
-            }
-        }
-        if (data["settings"]["autoSave"] !== undefined)
+        if (typeof data["settings"]["autoSave"] === "boolean")
             autoSave = data["settings"]["autoSave"];
         localStorage.removeItem("dataBackup");
         localStorage.setItem("newSaveFormat", true);
@@ -215,7 +209,10 @@ function hideData() {
 }
 
 function warnBeforeClosingToggle(toggle) {
-    if (toggle || toggle === undefined) warnClose = !warnClose;
+    if (typeof toggle === "boolean")
+        warnClose = toggle;
+    else
+        warnClose = !warnClose;
     document.getElementById("warnBeforeClosingButton").innerHTML = `Warn Before Closing: ${warnClose ? "on" : "off"}`;
 }
 
@@ -228,7 +225,10 @@ async function warnBeforeClosing() {
 }
 
 function toggleCaves(toggle) {
-    if (toggle || toggle === undefined) caveToggle = !caveToggle;
+    if (typeof toggle === "boolean")
+        caveToggle = toggle;
+    else
+        caveToggle = !caveToggle;
     document.getElementById("toggleCavesButton").innerHTML = `Toggle Caves: ${caveToggle ? "on" : "off"}`;
 }
 
