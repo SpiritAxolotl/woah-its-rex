@@ -129,7 +129,7 @@ function generateCaveBlock(y, x, type) {
 }
 
 function getCaveMulti(type) {
-    let multi;
+    let multi = 1;
     switch(type) {
         case caveTypeConfusing:
             multi = caves[0];
@@ -143,16 +143,15 @@ function getCaveMulti(type) {
         case caveTypeGerm:
             multi = caves[3];
             break;
-        default:
-            multi = 1;
     }
     return multi;
 }
 
+const caveProbsSum = addUpAllProbs(caves);
 function getCaveType() {
     let caveType = undefined;
     let summedProbability = 0;
-    const chosenValue = Math.random()*addUpAllProbs(caves);
+    const chosenValue = Math.random()*caveProbsSum;
     for (let cave of caves) {
         summedProbability += 1/cave;
         if (chosenValue < summedProbability) {
