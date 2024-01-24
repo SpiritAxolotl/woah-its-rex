@@ -28,7 +28,7 @@ function generateCave(x, y, rate, reps, type) {
                         mineCaveBlock(c, r, caveType);
                 }
             }
-            let newRate = Math.round(Math.random() * 10) / 650;
+            let newRate = Math.round(Math.random() * 10) / 450;
             rate += newRate;
             reps++;
         }
