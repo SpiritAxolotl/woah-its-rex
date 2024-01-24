@@ -152,7 +152,7 @@ function getCaveMulti(type) {
 function getCaveType() {
     let caveType = undefined;
     let summedProbability = 0;
-    const chosenValue = Math.random()*addUpAllProbs(caves)*2; //50% chance of normal cave
+    const chosenValue = Math.random()*addUpAllProbs(caves);
     for (let cave of caves) {
         summedProbability += 1/cave;
         if (chosenValue < summedProbability) {
@@ -160,7 +160,7 @@ function getCaveType() {
             break;
         }
     }
-    return typeof caveType === "boolean" ? caveType : currentLayer;
+    return typeof caveType === "object" ? caveType : currentLayer;
 }
 
 let caveOreLocations = [];
