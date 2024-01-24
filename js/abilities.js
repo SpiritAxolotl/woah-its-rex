@@ -8,8 +8,10 @@ async function rollAbilities() {
     if (hasGear("sugar-rush"))
         m = 1.2;
     if (!resetting) {
-        if (caveToggle && Math.random() < 1/750)
+        if (caveToggle && Math.random() < 1/750) {
             generateCave(curX, curY, 0, 0);
+            displayArea();
+        }
     }
     if (turnOffAbilities) return;
     switch (currentPickaxe) {
