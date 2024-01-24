@@ -106,6 +106,8 @@
   margin: 0.1em;
 }
 
+/*.hidden{display: none !important;}*/
+
 .inventoryButtons {
   width: 100%;
 }
@@ -193,7 +195,7 @@ body {
 }
 
 #spawnMessage {
-  font-size: 30px;
+  font-size: 2em;
 }
 
 p, label, input[type=file] {
@@ -262,6 +264,7 @@ button {
 
 #col-1 {
   width: 50%;
+  /*float: left;*/
 }
 #col-2 {
   width: 25%;
