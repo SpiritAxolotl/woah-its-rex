@@ -1,92 +1,81 @@
 async function rollAbilities() {
     let boost = 1;
-    let m = 1;
+    let proc = 1;
     if (hasGear("real-candilium"))
         boost *= 1.1;
     if (hasGear("fortune-3-book"))
         boost *= 1.6;
     if (hasGear("sugar-rush"))
-        m = 1.2;
+        proc = 1.2;
     if (!resetting) {
         if (caveToggle && Math.random() < 1/750) {
             generateCave(curX, curY, 0, 0);
             displayArea();
         }
     }
-    if (turnOffAbilities) return;
+    if (turnOffAbilities || !currentPickaxe) return;
     switch (currentPickaxe) {
         case 1:
-            if (Math.random() < (1/30 * m)) {
+            if (Math.random() < (1/30 * proc)) {
                 canMine = await(pickaxeAbility1(curX, curY, boost));
-                updateActiveRecipe();
             }
             break;
         case 2:
-            if (Math.random() <= (1/35 * m)) {
+            if (Math.random() <= (1/35 * proc)) {
                 canMine = await(pickaxeAbility2(curX, curY, 3, 1.35, boost));
-                updateActiveRecipe();
             }
             break;
         case 3:
-            if (Math.random() <= (1/30 * m)) {
+            if (Math.random() <= (1/30 * proc)) {
                 canMine = await(pickaxeAbility3(curX, curY, boost));
-                updateActiveRecipe();
             }
             break;
         case 4:
-            if (Math.random() <= (1/25 * m)) {
+            if (Math.random() <= (1/25 * proc)) {
                 canMine = await(pickaxeAbility4(curX, curY, boost));
-                updateActiveRecipe();
             }
             break;
         case 5:
-            if (Math.random() <= (1/17 * m)) {
+            if (Math.random() <= (1/17 * proc)) {
                 canMine = await(pickaxeAbility5(curX, curY, boost));
-                updateActiveRecipe();
             }
             break;
         case 6:
-            if (Math.random() <= (1/60 * m)) {
+            if (Math.random() <= (1/60 * proc)) {
                 canMine = await(pickaxeAbility6A(curX, curY, boost));
-                updateActiveRecipe();
-            } else if (Math.random() <= (1/40 * m)) {
+            } else if (Math.random() <= (1/40 * proc)) {
                 canMine = await(pickaxeAbility6B(curX, curY, boost));
-                updateActiveRecipe();
             }
             break;
         case 7:
-            if (Math.random() <= (1/50 * m)) {
+            if (Math.random() <= (1/50 * proc)) {
                 canMine = await(pickaxeAbility7(curX, curY, 0, boost));
-                updateActiveRecipe();
             }
             break;
         case 8:
-            if (Math.random() <= (1/50 * m)) {
+            if (Math.random() <= (1/50 * proc)) {
                 canMine = await(pickaxeAbility8(curX, curY, 0, boost));
-                updateActiveRecipe();
             }
             break;
         case 9:
-            if (Math.random() <= (1/30 * m)) {
+            if (Math.random() <= (1/30 * proc)) {
                 canMine = await(pickaxeAbility9(curX, curY, boost));
-                updateActiveRecipe();
             }
             break;
         case 10:
-            if (Math.random() <= (1/50 * m)) {
+            if (Math.random() <= (1/50 * proc)) {
                 canMine = await(pickaxeAbility10(curX, curY, boost));
-                updateActiveRecipe();
             }
             break;
         case 11:
-            if (Math.random() <= (1/100 * m)) {
+            if (Math.random() <= (1/100 * proc)) {
                 canMineMaybe = await(pickaxeAbility11(curX, curY, boost));
                 if (!resetting)
                     canMine = canMineMaybe;
-                updateActiveRecipe();
             }
             break;
     }
+    updateActiveRecipe();
 }
 
 //investigate this in future. seems like you need real vitriol for faster mining speed even with other items
