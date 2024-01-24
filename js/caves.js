@@ -31,7 +31,6 @@ function generateCave(x, y, rate, reps, type) {
     reps++;
     for (let origin of newOrigins)
         generateCave(origin["x"], origin["y"], rate, reps, type);
-    displayArea();
 }
 
 function mineCaveBlock(x, y, type) {
