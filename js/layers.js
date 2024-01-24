@@ -266,14 +266,18 @@ function setLayer(y) {
         if (typeof overrideLayer === "object") {
             currentLayer = overrideLayer;
             overrideLayer = undefined;
-        } else if (regY < normalLayers.length) currentLayer = normalLayers[regY];
+        } else if (regY < normalLayers.length)
+            currentLayer = normalLayers[regY];
         else if (random(1,77) === 33)
             currentLayer = sillyLayer;
         else if (random(1,40) === 20)
             currentLayer = fluteLayer;
         else
             currentLayer = normalLayers[random(normalLayers.length-1)];
-        
+        layerProbsSum = addUpAllProbs(currentLayer);
         layersChanged[`${regY}`] = allLayersNames[allLayers.indexOf(currentLayer)];
-    } else if (currentLayer !== lastCurrentLayer) currentLayer = lastCurrentLayer;
+    } else if (currentLayer !== lastCurrentLayer) {
+        currentLayer = lastCurrentLayer;
+        layerProbsSum = addUpAllProbs(currentLayer);
+    }
 }

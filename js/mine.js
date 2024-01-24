@@ -192,6 +192,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
     }
 }
 
+let layerProbsSum;
 function generateBlock(luck, location) {
     if (debug && typeof debugLuck === "number") luck = debugLuck;
     let hasLog = false;
@@ -200,7 +201,7 @@ function generateBlock(luck, location) {
         layer.push("🥬");
     let blockToGive = "";
     let summedProbability = 0;
-    const baseLuck = Math.random()*addUpAllProbs(layer);
+    const baseLuck = Math.random()*layerProbsSum;
     const modifiedLuck = baseLuck/luck;
     if (location["y"] === 0)
         return {ore: "🟩", hasLog: false};
