@@ -271,7 +271,7 @@ function displayArea() {
         }
         document.getElementById("blockDisplay").innerHTML = output;
     } else {
-        document.getElementById("blockDisplay").innerHTML = "DISABLED";
+        document.getElementById("blockDisplay").innerHTML = "D I S A B L E D";
     }
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset.toLocaleString() + "/" + mineCapacity.toLocaleString() + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
