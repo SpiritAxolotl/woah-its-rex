@@ -49,20 +49,28 @@
   padding-right: 0.1em;
   float: left;
   width: 50%;
-  font-size: 1vw;
-  min-height: 15em;
-  max-height: 15em;
+  font-size: 0.75vw;
+  min-height: 4em;
+  max-height: 16em;
 }
 .itemDescription {
   font-size:1vw;
 }
-.gearCrafts {
-  display: none;
+#gearCrafts {
+  display:flex;
+  flex-flow:column;
+  align-items:center;
+  gap:3px;
 }
 
-.pickaxeCrafts {
-  display: block;
+#pickaxeCrafts {
+  display:flex;
+  flex-flow:column;
+  align-items:center;
+  gap:3px;
 }
+
+.hidden{display: none !important;}
 
 .inventoryButtons {
   border-style: solid;
@@ -97,11 +105,56 @@
 }
 
 body {
-  overscroll-behavior: none;
-  background-color: black;
-  max-height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  justify-content: flex-end;
 }
-
+img.roundcat {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 20vw;
+  max-height: 40vh;
+}
+.credits {
+  position: absolute;
+  bottom: 2%;
+  left: 3%;
+  color: #fff;
+  width: 80vw;
+  line-height: 2.5;
+  font-size: 1vw;
+}
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333333;
+  color: #fff;
+  padding: 0.25vw 1.2vw;
+  font-size: 1.75vw;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.server-link {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 1vh;
+  display: flex;
+  align-items: center;
+}
+.server-link img {
+  margin-right: 1rem;
+  max-height: 10vh;
+} 
 .row {
   display: flex;
   height: 100%;
@@ -116,9 +169,6 @@ body {
   text-align: center;
 }
 
-.row > div {
-  overflow-y: scroll;
-}
 
 #blockDisplay {
   padding: 0.5em;
@@ -128,10 +178,11 @@ body {
   user-select: none;
   text-wrap: nowrap;
   text-align: center;
+  letter-spacing: -0.2em;
 }
 
 #spawnMessage {
-  font-size: 30px;
+  font-size: 1vw;
 }
 
 p {
@@ -189,13 +240,14 @@ button, .col-3 > div > button {
   height: 100vh;
   max-height: 100vh;
   width: 50%;
+  float: left;
 }
 
 .col-2 {
   width: 25%;
   height: 100vh;
   max-height: 100vh;
-  /*overflow-x: none;*/
+  overflow-y: scroll;
   border-style: solid;
   border-color: rgb(49, 49, 49);
   border-top: 0;
@@ -247,10 +299,9 @@ button, .col-3 > div > button {
   border: none;
 }
 
-#latestSpawns, #latestFinds {
+#latestSpawns  #latestFinds {
   height: 100%;
-  overflow-y: scroll;
-  font-size: 0.8vw;
+  font-size: 0.3vh;
 }
 
 /*.col-3 > a {
