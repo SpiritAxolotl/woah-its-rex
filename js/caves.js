@@ -25,7 +25,7 @@ function generateCave(x, y, rate, reps, type) {
                 mineCaveBlock(c, r, type);
         }
     }
-    rate += 0.025;
+    rate += Math.round(Math.random() * 10) / 450;
     reps++;
     for (let origin of newOrigins)
         generateCave(origin["x"], origin["y"], rate, reps, type);

@@ -32,6 +32,7 @@ This is an unofficial version of amber's original project to make the code more 
   - Probably a performance issue that can be solved with optimizing code
 - [ ] Fix latest spawns not displaying when it should be ??? \[medium priority\]
 - [ ] Fix index completion highlighting on ores themselves (only doesn't work for some ores)
+- [ ] Replace my `overflow-y: scroll;` stuff with `overflow: clip;` to better get rid of scrollbars
 
 ## New features
 - [x] Softcode things that will be harder to scale
@@ -58,6 +59,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Let gears be equippable
 - [x] totalResets statistic
 - [ ] Add what layer an ore spawns on when hovering (`title` attribute)
+- [ ] Update the title to something like the main branch
 
 ## Misc.
 - [x] Update to latest
@@ -76,3 +78,4 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
 - [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
+- [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
