@@ -69,6 +69,9 @@
   align-items:center;
   gap:3px;
 }
+#pressPlay {
+  font-family: 'Arial', sans-serif;
+}
 
 .hidden{display: none !important;}
 
@@ -105,7 +108,6 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
   background-color: #1a1a1a;
   margin: 0;
   padding: 0;
