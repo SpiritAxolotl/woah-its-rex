@@ -49,9 +49,9 @@
   padding-right: 0.1em;
   float: left;
   width: 50%;
-  font-size: 1vw;
-  min-height: 15em;
-  max-height: 15em;
+  font-size: 0.75vw;
+  min-height: 4em;
+  max-height: 16em;
 }
 .itemDescription {
   font-size:1vw;
@@ -299,10 +299,9 @@ button, .col-3 > div > button {
   border: none;
 }
 
-#latestSpawns, #latestFinds {
+#latestSpawns  #latestFinds {
   height: 100%;
-  font-size: 0.8vw;
-  overflow: clip;
+  font-size: 0.3vh;
 }
 
 /*.col-3 > a {
