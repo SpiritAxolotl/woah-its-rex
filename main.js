@@ -148,6 +148,7 @@ function movePlayer(dir) {
                     console.log("wrong key!!");
             }
             displayArea();
+            gearAbility3();
         }
 }
 
@@ -270,7 +271,7 @@ function displayArea() {
         }
         document.getElementById("blockDisplay").innerHTML = output;
     } else {
-        document.getElementById("blockDisplay").innerHTML = "DISABLED";
+        document.getElementById("blockDisplay").innerHTML = "D I S A B L E D";
     }
     document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset.toLocaleString() + "/" + mineCapacity.toLocaleString() + " Blocks Revealed This Reset";
     document.getElementById("blocksMined").innerHTML = totalMined.toLocaleString() + " Blocks Mined";
@@ -365,6 +366,13 @@ function updateInventory(type, inv) {
         document.getElementById(type + inv).style.display = "none";
 }
 
+function appear(element){
+    element.classList.remove("hidden")
+}
+function disappear(element){
+    element.classList.add("hidden")
+}
+
 //SPAWNS AND FINDS
 
 let spawnOre;
@@ -425,11 +433,8 @@ function spawnMessage(block, location, caveInfo) {
             //IF ORE IS <1/2M WITH A PICKAXE OVER 7, DO NOT ADD TO LATEST
             addToLatest = false;
     if (gears[3]) {
-        if (currentPickaxe < 10) {
-            loggedFinds.push([location[0], location[1]]);
-        } else if (1 / (oreList[block][0]) > 2000001) {
-            loggedFinds.push([location[0], location[1]]);
-        }
+        if (oreList[block][0] < 1/2000000)
+        loggedFinds.push([location[0], location[1]]);
     }
     if (latestSpawns.length > 10)
         latestSpawns.splice(0, 1);
