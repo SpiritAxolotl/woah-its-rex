@@ -44,7 +44,8 @@ class secureLogs {
                     log["variant"] = variant;
                     verified = true;
                     break;
-                }
+                } else
+                    console.log("failed to verify find", block, this.#verifiedLogs[i][0]);
             }
         }
         console.log(verified);
