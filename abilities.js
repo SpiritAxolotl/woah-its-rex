@@ -80,7 +80,7 @@ async function rollAbilities() {
             break;
         case 11:
             if (Math.random() <= (1/100 * m)) {
-                temp = await(pickaxeAbility12(curX, curY, boost, 0, 0));
+                temp = await(pickaxeAbility12(curX, curY, boost));
                 if (!resetting)
                     canMine = temp;
                 updateActiveRecipe();
@@ -116,6 +116,20 @@ function gearAbility1() {
 function gearAbility2() {
     if (gears[9]) {
         currentLayer = sillyLayer;
+    }
+}
+
+function gearAbility3() {
+    if (gears[3] && loggedFinds.length > 0) {
+        console.log(loggedFinds);
+        for (let i = 0; i < loggedFinds.length; i++) {
+            if (mine[loggedFinds[i][0]] !== undefined && mine[loggedFinds[i][0]][loggedFinds[i][1]] !== undefined) {
+                console.log("mined");
+                mineBlock(loggedFinds[i][1], loggedFinds[i][0], "ability", 1);
+                loggedFinds.splice(i, 1);
+            }
+        }
+        console.log(loggedFinds);
     }
 }
 function pickaxeAbility1(x, y, size, customLuck, boost) {
@@ -575,19 +589,18 @@ function pickaxeAbility11(x, y, boost) {
     });
 }
 
-function pickaxeAbility12(x, y, boost, index, dirNum) {
+function pickaxeAbility12(x, y, boost) {
     return new Promise((resolve) => {
-    let newY = y;
-    let newX = x;
-    if (dirNum > 3)
-        dirNum = 0;
+    let direction;
+    let dirNum = 0;
     const thisLuck = 30 * boost;
     const nums = [3, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 21, 23, 24, 26, 27, 29, 30, 32, 33, 35, 36, 38, 39, 41, 42, 44, 45, 47, 48, 50, 51, 53, 54];
     const dirs = ["down", "left", "up", "right"];
-    const direction = dirs[dirNum];
+    for (let i = 0; i < nums.length; i++) {
+        direction = dirs[dirNum];
         switch(direction) {
             case "down":
-                for (let r = y; r <= y + nums[index]; r++) {
+                for (let r = y; r <= y + nums[i]; r++) {
                     if (mine[r] != undefined) {
                         if (mine[r][x] === "⬜") {
                             generated = generateBlock(thisLuck, [r, x]);
@@ -600,10 +613,10 @@ function pickaxeAbility12(x, y, boost, index, dirNum) {
                     }   
                     } 
             }
-            newY = y + nums[index];
+            y += nums[i];
             break;
             case "left":
-                for (let c = x; c >= x - nums[index]; c--) {
+                for (let c = x; c >= x - nums[i]; c--) {
                     if (mine[y] != undefined && mine[y][c] != undefined) {
                         if (mine[y][c] === "⬜") {
                             generated = generateBlock(thisLuck, [y, c]);
@@ -615,10 +628,10 @@ function pickaxeAbility12(x, y, boost, index, dirNum) {
                         
                     }
                 }
-                newX = x - nums[index];
+                x -= nums[i];
                 break;
             case "up":
-                for (let r = y; r >= y - nums[index]; r--) {
+                for (let r = y; r >= y - nums[i]; r--) {
                     if (mine[r] != undefined) {
                         if (mine[r][x] === "⬜") {
                             generated = generateBlock(thisLuck, [r, x]);
@@ -631,10 +644,10 @@ function pickaxeAbility12(x, y, boost, index, dirNum) {
                         }
                     }
                 }
-                newY = y - nums[index];
+                y -= nums[i];
                 break;
             case "right":
-                for (let c = x; c <= x + nums[index]; c++) {
+                for (let c = x; c <= x + nums[i]; c++) {
                     if (mine[y] != undefined && mine[y][c] != undefined) {
                         if (mine[y][c] === "⬜") {
                             generated = generateBlock(thisLuck, [y, c]);
@@ -645,17 +658,14 @@ function pickaxeAbility12(x, y, boost, index, dirNum) {
                         mineBlock(c, y, "ability", thisLuck); 
                     }
                 }
-                newX = x + nums[index];
+                x += nums[i];
                 break;
         }
-        index++;
         dirNum++;
-        if (index < nums.length) {
-            pickaxeAbility12(newX, newY, boost, index, dirNum);
-        } else {
-            displayArea();
-        }
-        resolve(true);
+        if (dirNum > 3)
+            dirNum = 0;
+    }
+    
     displayArea();
     setTimeout(() => {
         resolve(true);
