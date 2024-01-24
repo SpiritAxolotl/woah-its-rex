@@ -11,18 +11,20 @@ function generateCave(x, y, rate, reps, type) {
     let newOrigins = [];
     for (let r = y; r < y + distY; r++) {
         for (let c = x; c < x + distX; c++) {
-            if (Math.random() < (0.1 - rate))
+            if (Math.random() < 0.1 - rate) {
                 newOrigins.push({x: c + random(-4, 1), y: r + random(-2, 3)});
-                if (r > 0) {
-                    if (mine[r][c] === "⬜") {
-                        const generated = generateCaveBlock(r, c, type);
-                        mine[r][c] = generated["ore"];
-                        if (generated["hasLog"])
-                            verifiedOres.verifyLog(r, c);
+                if (typeof mine[r] === "object" && typeof mine[r][c] === "string") {
+                    if (r > 0) {
+                        if (mine[r][c] === "⬜") {
+                            const generated = generateCaveBlock(r, c, type);
+                            mine[r][c] = generated["ore"];
+                            if (generated["hasLog"])
+                                verifiedOres.verifyLog(r, c);
+                        }
                     }
-                    
+                    mineCaveBlock(c, r, type);
                 }
-                mineCaveBlock(c, r, type);
+            }
         }
     }
     rate += Math.round(Math.random() * 10) / 450;
@@ -34,7 +36,7 @@ function generateCave(x, y, rate, reps, type) {
 
 function mineCaveBlock(x, y, type) {
     const block = mine[y][x];
-    if (block === "string") {
+    if (typeof block === "string") {
         if (block !== "⚪" && block !== "⬜" && block !== "⛏️") {
             giveBlock(block, x, y, false, true, getCaveMultiFromOre(block));
             mine[y][x] = "⚪";
