@@ -488,10 +488,10 @@ function displayArea() {
         }
         document.getElementById("blockDisplay").innerHTML = output;
     }
-    document.getElementById("mineResetProgress").innerHTML = `Reset Progress:<br>${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
+    document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
     document.getElementById("resetsThisSession").innerHTML = `(Reset #${resetsThisSession.toLocaleString()})`;
     document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
-    document.getElementById("location").innerHTML = `X: ${curX - 1000000000}<br>Y: ${-curY}`;
+    document.getElementById("location").innerHTML = `X: ${curX - 1000000000} / Y: ${-curY}`;
 }
 
 //HTML EDITING
@@ -509,15 +509,28 @@ function switchInventory() {
     showing = false;
 }
 
+function createOreDisplay(ore, variant) {
+    if (variant == undefined) {
+        variant = "normal"
+    }
+    return `
+    <span class="emoji">${ore}</span>
+    <div>
+        <p>x${inventory[ore][variant.toLowerCase()].toLocaleString()}</p>
+        <span>1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()}</span>
+    </div>
+    `}
+
 function createInventory() {
     for (let ore in oreList) {
         for (let variant of variantNames) {
-            let element = document.createElement("p");
+            let element = document.createElement("div");
             element.id = ore + variant;
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
-            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+            // element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+            element.innerHTML = createOreDisplay(ore, variant)
             document.getElementById(`inventory${variant}`).appendChild(element);
         }
     }
@@ -544,17 +557,20 @@ function createIndex() {
         for (let ore of allLayers[i]) {
             //const prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
-            output += `<p class="oreDisplay" id="${ore}Index"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">`;
-            if (unaffectedByLuck.indexOf(ore) === -1 && allCaves.indexOf(allLayers[i]) !== -1)
-                output += `1/${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
-            else
-                output += `1/${oreList[ore]["prob"].toLocaleString()}</span></p>`;
+            output += "<div class='oreDisplay'>";
+            output += createOreDisplay(ore, undefined);
+            // TODO: fix this and add it to createoredisplay
+            // if (unaffectedByLuck.indexOf(ore) === -1 && allCaves.indexOf(allLayers[i]) !== -1)
+            //     output += `1/${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
+            // else
+            //     output += `1/${oreList[ore]["prob"].toLocaleString()}</span></p>`;
+            output += `</div>`;
         }
         output += `</div>`;
     }
     output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle" id="EverywhereTitle">Everywhere</p>`;
     for (let ore of spawnsEverywhere) {
-        output += `<p class="oreDisplay" id="${ore}Index"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
+        output += createOreDisplay(ore, undefined);
         if (unaffectedByLuck.indexOf(ore) === -1)
             output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
         else
@@ -606,7 +622,7 @@ function updateIndex(type) {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+    document.getElementById(ore + capitalize(variant)).innerHTML = createOreDisplay(ore,variant)
     if (inventory[ore][variant.toLowerCase()] > 0)
         visible(document.getElementById(ore + capitalize(variant)));
     else

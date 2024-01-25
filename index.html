@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/twemoji-colr-font@14.1.3/twemoji.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
@@ -45,6 +46,38 @@
 <div class="container-fluid">
 <div class="row">
     <div class="col" id="col-1">
+        <div>
+            <button id="resetMine" onclick="resetMine()">Reset Mine</button>
+            <button id="settings" onclick="showData()">Settings</button>
+            <button id ="disableDisplay" onclick="changeCanDisplay()">Disable Display</button>
+        </div>
+        <div style="display:flex; justify-content: center; align-items: center; gap:3em;">
+            <div>
+                <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
+                <p id="resetsThisSession">(Reset #0)</p>
+            </div>
+            <div>
+                <p id="blocksMined">0 Blocks Mined</p>
+            </div>
+        </div>
+        <p id="spawnMessage">Spawn Messages Appear Here!</p>
+        <p id="crafting">Crafting</p>
+        <div id="craftingClick">
+            <div>
+                <button onclick="showPickaxes()" id="showPickaxes" class="darkButton">Pickaxes</button>
+                <button onclick="showGears()" id="showGears">Gears</button>
+            </div>
+            <div id="pickaxeCrafts"></div>
+            <div id="gearCrafts" class="invisible"></div>
+        </div>
+        <div id="displayRecipe">
+            <p id="displayedRecipe"></p>
+        </div>
+        <div id="craftableDescriptions">
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    <div class="col" id="col-2">
         <div class="mobile">
             <button onclick="goDirection('a')" class="movementButton">Left</button>
             <button onclick="goDirection('s')" class="movementButton">Down</button>
@@ -64,43 +97,10 @@
             <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
             <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
         </div>
-    </div>
-    <div class="col" id="col-2">
-        <div>
-            <button id="resetMine" onclick="resetMine()">Reset Mine</button>
-            <button id="settings" onclick="showData()">Settings</button>
-            <button id ="disableDisplay" onclick="changeCanDisplay()">Disable Display</button>
-        </div>
-        <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
-        <p id="resetsThisSession">(Reset #0)</p>
-        <p id="blocksMined">0 Blocks Mined</p>
-        <p id="location">X: 0<br>Y: 0</p>
-        <p id="spawnMessage">Spawn Messages Appear Here!</p>
-        <p id="crafting">Crafting</p>
-        <div id="craftingClick">
-            <div>
-                <button onclick="showPickaxes()" id="showPickaxes" class="darkButton">Pickaxes</button>
-                <button onclick="showGears()" id="showGears">Gears</button>
-            </div>
-            <div id="pickaxeCrafts"></div>
-            <div id="gearCrafts" class="invisible"></div>
-        </div>
-        <div id="displayRecipe">
-            <p id="displayedRecipe"></p>
-        </div>
-        <div id="craftableDescriptions">
-            <p id="itemDescription"></p>
-        </div>
+        <p id="location">X: 0 / Y: 0</p>
     </div>
     <div class="col" id="col-3">
-        <div id="musicStuff">
-            <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
-            <p>Music Volume</p>
-            <label class="slidecontainer">
-                <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
-            </label>
-        </div>
-        <div>
+        <div style="display: flex;">
             <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
             <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
         </div>
@@ -113,8 +113,20 @@
         </div>
         <a href="https://discord.gg/tXxYa6ubYf" id="discord" target="_blank">
             <img src="images/discord-logo.svg" alt="Discord Logo">
-            <p>Join the Discord!</p>
+            <p>Join the Spinning Rat Discord!</p>
         </a>
+        <a href="https://discord.gg/tXxYa6ubYf" id="discord" target="_blank">
+            <img src="images/discord-logo.svg" alt="Discord Logo">
+            <p>Join the Woah It's Rex Discord!</p>
+        </a>
+        <hr>
+        <div id="musicStuff">
+            <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
+            <p>Music Volume</p>
+            <label class="slidecontainer">
+                <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
+            </label>
+        </div>
     </div>
 </div>
 </div>
