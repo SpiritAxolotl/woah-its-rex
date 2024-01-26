@@ -50,15 +50,6 @@
             <button id="settings" onclick="showData()">Settings</button>
             <button id ="disableDisplay" onclick="changeCanDisplay()">Disable Display</button>
         </div>
-        <div id="generalStats">
-            <div>
-                <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
-                <p id="resetsThisSession">(Reset #0)</p>
-            </div>
-            <div>
-                <p id="blocksMined">0 Blocks Mined</p>
-            </div>
-        </div>
         <p id="spawnMessage">Spawn Messages Appear Here!</p>
         <p id="crafting">Crafting</p>
         <div id="craftingClick">
@@ -96,7 +87,16 @@
             <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
             <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
         </div>
-        <p id="location">X: 0<br>Y: 0</p>
+        <div id="generalStats">
+            <p id="location">X: 0 / Y: 0</p>
+            <div>
+                <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
+                <p id="resetsThisSession">(Reset #0)</p>
+            </div>
+            <div>
+                <p id="blocksMined">0 Blocks Mined</p>
+            </div>
+        </div>
     </div>
     <div class="col" id="col-3">
         <div id="switchButtons">
@@ -114,7 +114,7 @@
             <img src="images/discord-logo.svg" alt="Discord Logo">
             <p>Join the Spinning Rat Discord!</p>
         </a>
-        <a href="https://discord.gg/tXxYa6ubYf" id="discord" target="_blank">
+        <a href="https://discord.gg/WfFj2bxGTX" id="discord" target="_blank">
             <img src="images/discord-logo.svg" alt="Discord Logo">
             <p>Join the Woah It's Rex Discord!</p>
         </a>
