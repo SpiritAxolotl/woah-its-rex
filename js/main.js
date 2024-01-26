@@ -18,6 +18,7 @@ let debugLuck = "",
     caveToggle = true,
     turnOffAbilities = false;
 
+//TODO: refactor this
 let pickaxes = {
     0: true,
     1: false,
@@ -100,6 +101,14 @@ let gearNamesNormalized = {
 };
 let currentPickaxe = 0;
 let currentGears = [];
+
+/*
+Object.defineProperty(Array.prototype, 'contains', {
+    value: function(any) {
+        return this.indexOf(any) !== -1;
+    }
+});
+*/
 
 function visible(element) {
     element.classList.remove("invisible");
@@ -355,7 +364,7 @@ function hasAny(ore) {
 }
 
 function hasGear(gear) {
-    return gears[gear] && currentGears.indexOf(gear) !== -1;
+    return gears[gear] && currentGears.includes(gear);
 }
 
 document.addEventListener("keydown", (event) => {
@@ -491,11 +500,12 @@ function displayArea() {
     document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
     document.getElementById("resetsThisSession").innerHTML = `(Reset #${resetsThisSession.toLocaleString()})`;
     document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
-    document.getElementById("location").innerHTML = `X: ${curX - 1000000000} / Y: ${-curY}`;
+    document.getElementById("location").innerHTML = `X: ${curX - 1000000000}<br>Y: ${-curY}`;
 }
 
 //HTML EDITING
 
+//TODO: Refactor this too
 let currVariant = 0;
 const variantNames = ["Normal", "Electrified", "Radioactive", "Explosive"];
 const variantNamesEmojis = ["", "⚡️", "☢️", "💥"];
@@ -509,17 +519,24 @@ function switchInventory() {
     showing = false;
 }
 
-function createOreDisplay(ore, variant) {
-    if (variant == undefined) {
-        variant = "normal"
-    }
+function createOreDisplay(ore, variant, luck) {
+    if (typeof variant !== "string")
+        variant = "normal";
+    variant = variant.toLowerCase();
+    if (typeof luck !== "number")
+        luck = 1/variantMultis[variant];
+    let oreTotal = inventory[ore][variant].toLocaleString();
+    let oreProb = oreList[ore]["prob"].toLocaleString();
+    if (!unaffectedByLuck.includes(ore))
+        oreProb = Math.round(oreList[ore]["prob"] / luck).toLocaleString();
     return `
-    <span class="emoji">${ore}</span>
-    <div>
-        <p>x${inventory[ore][variant.toLowerCase()].toLocaleString()}</p>
-        <span>1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()}</span>
+    <p class="emoji">${ore}</p>
+    <div class="totalAndProbContainer">
+        <p class="oreTotal">x${oreTotal}</p>
+        <p class="oreProb">1/${oreProb}</p>
     </div>
-    `}
+    `;
+}
 
 function createInventory() {
     for (let ore in oreList) {
@@ -529,7 +546,7 @@ function createInventory() {
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
-            // element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
             element.innerHTML = createOreDisplay(ore, variant)
             document.getElementById(`inventory${variant}`).appendChild(element);
         }
@@ -539,42 +556,36 @@ function createInventory() {
 function createIndex() {
     document.getElementById("indexDisplay").innerHTML = "";
     let output = "";
-    let multi = verifiedOres.getLuckBoosts()[currentPickaxe];
+    let luckBoost = verifiedOres.getLuckBoosts()[currentPickaxe];
     if (hasGear("real-candilium"))
-        multi *= 1.1;
+        luckBoost *= 1.1;
     if (hasGear("fortune-3-book"))
-        multi *= 1.6;
+        luckBoost *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
-        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle" id="${allLayersNames[i]}Title">`;
-        if (allCaves.indexOf(allLayers[i]) === -1)
+        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}">`;
+        output += `<p class="oreTitle" id="${allLayersNames[i]}Title">`;
+        if (!allCaves.includes(allLayers[i]))
             output += `${allLayersNames[i]} Layer`;
         else
-            output += `${allCavesNames[allCaves.indexOf(allLayers[i])]} Cave (1/${caves[allCaves.indexOf(allLayers[i])]})`;
+            output += `${allCavesNames[allCaves.indexOf(allLayers[i])]} Cave (1/${allCaveMultis[allCaves.indexOf(allLayers[i])]})`;
         
-        if (normalLayers.indexOf(allLayers[i]) !== -1)
-            output += ` (${i * 2000}-${(i+1) * 2000}m)`;
+        if (normalLayers.includes(allLayers[i]))
+            output += ` (${normalLayersDepths[i]}-${normalLayersDepths[i]+2000}m)`;
         output += "</p>";
         for (let ore of allLayers[i]) {
-            //const prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
-            output += "<div class='oreDisplay'>";
-            output += createOreDisplay(ore, undefined);
-            // TODO: fix this and add it to createoredisplay
-            // if (unaffectedByLuck.indexOf(ore) === -1 && allCaves.indexOf(allLayers[i]) !== -1)
-            //     output += `1/${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
-            // else
-            //     output += `1/${oreList[ore]["prob"].toLocaleString()}</span></p>`;
-            output += `</div>`;
+            output += `<div class="oreDisplay" id=${ore}Index>`;
+            output += createOreDisplay(ore, undefined, luckBoost);
+            output += "</div>";
         }
-        output += `</div>`;
+        output += "</div>";
     }
-    output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle" id="EverywhereTitle">Everywhere</p>`;
+    output += `<div class="layerDisplay" id="layerDisplayEverywhere">`;
+    output += `<p class="oreTitle" id="EverywhereTitle">Everywhere</p>`;
     for (let ore of spawnsEverywhere) {
-        output += createOreDisplay(ore, undefined);
-        if (unaffectedByLuck.indexOf(ore) === -1)
-            output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
-        else
-            output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
+        output += `<div class="oreDisplay" id=${ore}Index>`;
+        output += createOreDisplay(ore, undefined, luckBoost);
+        output += "</div>";
     }
     document.getElementById("indexDisplay").innerHTML = output;
     updateIndex();
@@ -604,7 +615,7 @@ function updateIndex(type) {
         if (document.getElementById(`${ore}Index`) !== null && hasAnyOre)
             document.getElementById(`${ore}Index`).classList.add("hasOne");
         const index = allLayers.indexOf(getLayerFromOre(ore));
-        const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.indexOf(ore) !== -1 ? "Everywhere" : undefined;
+        const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.includes(ore) ? "Everywhere" : undefined;
         const display = document.getElementById(`layerDisplay${name}`);
         if (display !== null && hasAnyOre) {
             if (!isVisible(display))
@@ -622,7 +633,7 @@ function updateIndex(type) {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + capitalize(variant)).innerHTML = createOreDisplay(ore,variant)
+    document.getElementById(ore + capitalize(variant)).innerHTML = createOreDisplay(ore, variant);
     if (inventory[ore][variant.toLowerCase()] > 0)
         visible(document.getElementById(ore + capitalize(variant)));
     else
