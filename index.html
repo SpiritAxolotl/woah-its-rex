@@ -83,19 +83,17 @@
             <button onclick="switchDistance()" class="movementButton" id="meterDisplay"><span class="emoji small-emoji">🟫</span>1000m</button>
         </div>
         <p id="blockDisplay" class="emoji"></p>
-        <div id="latestDisplays">
-            <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
-            <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
-        </div>
         <div id="generalStats">
             <p id="location">X: 0 / Y: 0</p>
             <div>
                 <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
                 <p id="resetsThisSession">(Reset #0)</p>
-            </div>
-            <div>
                 <p id="blocksMined">0 Blocks Mined</p>
             </div>
+        </div>
+        <div id="latestDisplays">
+            <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
+            <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
         </div>
     </div>
     <div class="col" id="col-3">
@@ -118,47 +116,59 @@
             <img src="images/discord-logo.svg" alt="Discord Logo">
             <p>Join the Woah It's Rex Discord!</p>
         </a>
-        <div id="musicStuff">
-            <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
-            <p>Music Volume</p>
-            <label class="slidecontainer">
-                <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
-            </label>
-        </div>
+        
     </div>
 </div>
 </div>
 </div>
 <div id="dataExport" class="invisible">
-<div class="container-fluid">
-    <label>Import Data</label>
-    <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
-    <button onclick="exportData()">Export Data</button>
-    <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
-    <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
-    <br>
-    <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
-    <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
-    <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
-    <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
-    <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
-    <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
-    <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
-    <br>
-    <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
-    <div id="logHolder"></div>
-    <div id="masterVolume">
-        <p>Spawn Volumes</p>
-        <label class="slidecontainer">
-            <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
-        </label>
+    <div class="pausedTitle">
+        <h1 style="margin-bottom: 0; display: flex; gap:0.2em; align-items: center;">Woah It's Rex!
+            <div>
+                <p class="subtext" style="font-size: medium;">SPAX'S FORK</p>
+                <p class="subtext" style="font-size: medium;">c6b9194</p>
+            </div>
+        </h1>
+        <span>Paused</span>
+        <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
     </div>
-    <input autocomplete="off" type="text" id="mineCapacitySetter">
-    <button onclick="updateCapacity(document.getElementById('mineCapacitySetter').value)" id="updateCapacityButton">Update Mine Capacity</button>
-    <br>
-    <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
-    <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
-</div>
+    <div class="container-fluid settingsMenu">
+        <label>Import Data</label>
+        <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
+        <button onclick="exportData()">Export Data</button>
+        <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
+        <br>
+        <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
+        <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
+        <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
+        <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
+        <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
+        <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
+        <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
+        <br>
+        <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
+        <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
+        <div id="logHolder"></div>
+        <div id="masterVolume">
+            <div class="volumeController">
+                <p>Spawn Volumes</p>
+                <label class="slidecontainer">
+                    <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
+                </label>
+            </div>
+            <div class="volumeController">
+                <p>Music Volume</p>
+                <label class="slidecontainer">
+                    <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
+                </label>
+            </div>
+        </div>
+        <input autocomplete="off" type="text" id="mineCapacitySetter">
+        <button onclick="updateCapacity(document.getElementById('mineCapacitySetter').value)" id="updateCapacityButton">Update Mine Capacity</button>
+        <br>
+        <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
+        <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
+    </div>
 </div>
 
 <script src="js/layers.js"></script>
