@@ -367,6 +367,7 @@ function hasGear(gear) {
     return gears[gear] && currentGears.includes(gear);
 }
 
+let settingsToggle = false;
 document.addEventListener("keydown", (event) => {
     let name = event.key.toLowerCase();
     let validInput = false;
@@ -403,6 +404,13 @@ document.addEventListener("keydown", (event) => {
             validInput = true;
             name = "d";
             break;
+        case "escape":
+            event.preventDefault();
+            settingsToggle = !settingsToggle;
+            hideData()
+            if (settingsToggle) {
+                showData()
+            }
         /*default:
             console.log("wrong key!");
             break;*/

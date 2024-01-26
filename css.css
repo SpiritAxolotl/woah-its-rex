@@ -191,16 +191,25 @@ body {
 
 #mineResetProgress {
   /* font-size: 1vw; */
-  margin-top: 0.75em;
-  margin-bottom: 0;
+  /* margin-top: 0.75em; */
+  margin-bottom: 0.5em;
 }
-
+#resetsThisSession {
+  margin-top: 0.5em;
+}
 #dataExport {
-  padding: 3em;
+  padding:3em;
   height: 100%;
   width: 100%;
   position: absolute;
+  top:0; 
+  left:0;
+  backdrop-filter: blur(5px) brightness(0.5);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
 }
+
 #dataExport button {
   text-wrap: nowrap;
   margin: 0.3em 0;
@@ -343,12 +352,12 @@ button {
   width: 100%;
 }
 
-#musicStuff > label {
+.volumeController > label {
   padding: 0;
   padding-bottom: 0.5em;
 }
 
-#musicStuff > p {
+.volumeController > p {
   text-wrap: nowrap;
   margin-top: 0.5em;
   margin-bottom: 0;
@@ -429,7 +438,9 @@ button {
 
 #masterVolume {
   text-align: center;
-  max-width: 10em;
+  max-width: 30em;
+  gap:2em;
+  display: flex;
   /*position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -440,6 +451,10 @@ button {
   margin: 0;
 }
 
+.subtext {
+  opacity: .5;
+  margin: 0;
+}
 #noscript {
   user-select: none;
   position: absolute;
@@ -453,4 +468,9 @@ button {
   font-size: 10vw;
   text-align: center;
   text-wrap: wrap;
+}
+
+.pausedTitle {
+  margin-bottom: auto;
+  color:white;
 }
