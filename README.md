@@ -75,7 +75,14 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Add a list of features exclusive to this fork
 - [x] Scale all probability things
 - [x] Add a better system for layer management (variable-wise) (make it a class maybe?)
+  - Thank you nkko
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
 - [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
+- [ ] Add more organized credits
+- [ ] Add a manager class for:
+  - [x] layers
+  - [ ] pickaxes
+  - [ ] gears
+  - [ ] ores

@@ -207,7 +207,7 @@ function generateBlock(luck, location) {
         return {ore: "🟩", hasLog: false};
     for (let ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
-        const chosenLuck = unaffectedByLuck.indexOf(ore) === -1 ? modifiedLuck : baseLuck;
+        const chosenLuck = !unaffectedByLuck.includes(ore) ? modifiedLuck : baseLuck;
         if (chosenLuck < summedProbability) {
             blockToGive = ore;
             break;
@@ -245,7 +245,12 @@ function switchDistance() {
         teleportY = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = `<span class="emoji small-emoji">${lastItemIn(allLayers[(teleportY-1000)/2000])}</span>${teleportY}m`;
+    document.getElementById("meterDisplay").innerHTML = `
+        <span class="emoji small-emoji">
+            ${lastItemIn(allLayers[(teleportY-1000)/2000])}
+        </span>
+        ${teleportY}m
+    `;
 }
 
 async function teleport(goToY) {
@@ -295,9 +300,13 @@ function getParams(distanceX, distanceY, x, y) {
 }
 
 function updateCapacity(value) {
-    value = Number(value);
-    if (!isNaN(value) && value > 0) {
-        baseMineCapacity = value;
-        mineCapacity = value;
-    }
+    capacity = Number(value);
+    if (!isNaN(capacity)) {
+        if (capacity > 0) {
+            if (window.confirm("Warning: Increasing mine capacity above 40k will most likely slow down your browser. Are you certain you want to do this?")) {
+                baseMineCapacity = capacity;
+                mineCapacity = capacity;
+            }
+        } else window.alert(`"${capacity}" should be greater than 0!`);
+    } else window.alert(`"${value}" is not a number!`);
 }
