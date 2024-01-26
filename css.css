@@ -1,12 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lexend&display=swap");
 
 :root {
   --bgcolor: #14161a;
   --bgsecondary: #161b1d;
 }
+
+body {
+  overscroll-behavior: none;
+  background-color: var(--bgcolor);
+  max-height: 100%;
+  font-family: "Courier";
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+}
+
+/** {
+  overflow: clip;
+}*/
+
+.row {
+  display: flex;
+  height: 100%;
+  /*padding-top: 0.5em;*/
+}
+
+.row > * > *:first-child {
+  margin-top: 0.25em;
+}
+
+.row * {
+  text-align: center;
+}
+
+.row > div {
+  overflow-y: scroll;
+}
+
 .emoji {
-  font-family: "Twemoji";
+  font-family: "Twemoji", monospace;
 }
 .small-emoji {
   font-size: 0.6em;
@@ -28,7 +62,7 @@
 *, *::before, *::after {
   image-rendering: pixelated;
   box-sizing: border-box;
-  font-family: "Lexend", "Twemoji", sans-serif;
+  font-family: "Lexend", "Twemoji", monospace;
 }
 
 #inventoryDisplay {
@@ -52,30 +86,48 @@
   margin-bottom: 0;
 }
 
+#generalStats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+}
+
+#switchButtons {
+  display: flex;
+}
+
 .oreDisplay .emoji {
   font-size: 2em;
 }
-.oreDisplay div > p {
+
+.totalAndProbContainer > * {
   text-align: left;
   margin: 0;
 }
-.oreDisplay div > span {
-  color:white;
-  opacity: 0.4;
+
+.oreTotal {
+  color: #ffffff;
 }
+
+.oreProb {
+  color: #666666;
+}
+
 .oreDisplay {
-  margin: .3em;
-  text-align: left;
-  gap:1em;
-  background: var(--bgsecondary);
+  display: flex;
   flex-grow: 1;
-  height:min-content;
+  margin: 0.3em;
+  text-align: left;
+  gap: 1em;
+  background: var(--bgsecondary);
+  height: min-content;
   max-height: 100px;
-  padding:10px;
+  padding: 10px;
   border: 1px solid #343434;
   font-size: 2em;
-  display: flex;
 }
+
 .oreTitle {
   /*margin-top: 1em;*/
   margin: 0;
@@ -111,7 +163,7 @@
 }
 
 .hasOne {
-  color: rgb(0, 195, 0);
+  color: #00c300;
 }
 
 .itemDescription {
@@ -161,38 +213,6 @@
   font-family: "Arial";
 }
 
-body {
-  overscroll-behavior: none;
-  background-color: var(--bgcolor);
-  max-height: 100%;
-  font-family: "Courier";
-}
-
-*::-webkit-scrollbar {
-  width: 0;
-}
-
-/** {
-  overflow: clip;
-}*/
-
-.row {
-  display: flex;
-  height: 100%;
-  /*padding-top: 0.5em;*/
-}
-
-.row > * > *:first-child {
-  margin-top: 0.25em;
-}
-
-.row * {
-  text-align: center;
-}
-
-.row > div {
-  overflow-y: scroll;
-}
 #blocksMined {
   margin: 0;
   margin-top: 1em;
@@ -200,8 +220,8 @@ body {
 #blockDisplay {
   padding: 0.5em 0;
   margin: 0;
-  line-height: .98ch;
-  letter-spacing: -.02em;
+  line-height: 0.98ch;
+  letter-spacing: -0.02ch;
   font-size: 1.8vw;
   user-select: none;
   text-wrap: nowrap;
@@ -304,7 +324,7 @@ button {
 }
 #col-2 {
   width: 50%;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   border-style: none solid;

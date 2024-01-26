@@ -337,7 +337,7 @@ function createGearRecipes() {
         button.setAttribute("onclick", `craftGear('${gear}', this)`);
         if (gears[gear]) {
             if (gear !== "silly-tp") {
-                if (currentGears.indexOf(gear) !== -1)
+                if (currentGears.includes(gear))
                     button.innerHTML = "Equipped!";
                 else
                     button.innerHTML = "Equip!";
@@ -473,7 +473,7 @@ function craftGear(gear, button) {
             updateActiveRecipe();
             createIndex();
         } else button.innerHTML = "Craft!";
-    } else if (currentGears.indexOf(gear) === -1) {
+    } else if (!currentGears.includes(gear)) {
         button.innerHTML = "Equipped!";
         currentGears.push(gear);
     } else {

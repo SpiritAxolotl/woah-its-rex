@@ -171,163 +171,181 @@ for (let ore in oreList)
     inventory[ore] = {"normal": 0, "electrified": 0, "radioactive": 0, "explosive": 0};
 
 class LayerManager {
-
+    
     static spawnsEverywhere = [/*"😻",*//*"⛄",*/"🤍","🖤","🤎","💜","❤️","🧡","💛","💙","💚","⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧"];
     static unaffectedByLuck = ["⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧","🟫","🧱","🌫️","🌊","🪨","☢️","🌵","📰","🎂","🪈","❓","🎵","☣️","🦠"];
-
+    
     static layers = {
         "DIRT": {
-            name:"Dirt",
-            layer:["🌳","💐","🥗","🌪️","🌏","🌲","🎃","🎍","🎄","🪵","🌻","🍁","🟫"],
-            type:"normal",
+            name: "Dirt",
+            layer: ["🌳","💐","🥗","🌪️","🌏","🌲","🎃","🎍","🎄","🪵","🌻","🍁","🟫"],
+            type: "normal",
+            depth: 0
         },
         "BRICK": {
-            name:"Brick",
-            layer:["🏰","🌇","🥉","🪞","🔩","🧲","🪬","🧨","🔗","🪙","🗿","🪚","🪜","🧱"],
-            type:"normal",
+            name: "Brick",
+            layer: ["🏰","🌇","🥉","🪞","🔩","🧲","🪬","🧨","🔗","🪙","🗿","🪚","🪜","🧱"],
+            type: "normal",
+            depth: 2000
         },
         "FOGGY": {
-            name:"Foggy",
-            layer:["🚿","👁️","💸","⌛","🧵","🕯️","🕋","🎨","🎴","🥽","🪄","🎭","🌫️"],
-            type:"normal",
+            name: "Foggy",
+            layer: ["🚿","👁️","💸","⌛","🧵","🕯️","🕋","🎨","🎴","🥽","🪄","🎭","🌫️"],
+            type: "normal",
+            depth: 4000
         },
         "WATER": {
-            name:"Water",
-            layer:["🐋","💫","🪩","👿","🌀","🔱","👑","🐟","🫧","🤿","🎣","⛵","🌊"],
-            type:"normal",
+            name: "Water",
+            layer: ["🐋","💫","🪩","👿","🌀","🔱","👑","🐟","🫧","🤿","🎣","⛵","🌊"],
+            type: "normal",
+            depth: 6000
         },
         "ROCK": {
-            name:"Rock",
-            layer:["🏔️","🌈","🧊","❄️","🏝️","✨","⛄","💎","☄️","🔮","🔋","💍","🥏","⚜️","💠","🪨"],
-            type:"normal",
+            name: "Rock",
+            layer: ["🏔️","🌈","🧊","❄️","🏝️","✨","⛄","💎","☄️","🔮","🔋","💍","🥏","⚜️","💠","🪨"],
+            type: "normal",
+            depth: 8000
         },
         "RADIOACTIVE": {
-            name:"Radioactive",
-            layer:["⚠️","🎆","🧀","🌌","🥀","🎇","🔳","⏹️","🧩","🔔","⚗️","🧪","☢️"],
-            type:"normal",
+            name: "Radioactive",
+            layer: ["⚠️","🎆","🧀","🌌","🥀","🎇","🔳","⏹️","🧩","🔔","⚗️","🧪","☢️"],
+            type: "normal",
+            depth: 10000
         },
         "CACTUS": {
-            name:"Cactus",
-            layer:["🐪","🏵️","🪐","💥","🔥","🔆","⭐","🎀","🗡️","📟","⚱️","🖍️","🌵"],
-            type:"normal",
+            name: "Cactus",
+            layer: ["🐪","🏵️","🪐","💥","🔥","🔆","⭐","🎀","🗡️","📟","⚱️","🖍️","🌵"],
+            type: "normal",
+            depth: 12000
         },
         "PAPER": {
-            name:"Paper",
-            layer:["💵","🪅","👀","🌟","📝","⌚","🗜️","🏆","🎲","✂️","🃏","⚙️","📰"],
-            type:"normal",
+            name: "Paper",
+            layer: ["💵","🪅","👀","🌟","📝","⌚","🗜️","🏆","🎲","✂️","🃏","⚙️","📰"],
+            type: "normal",
+            depth: 14000
         },
         "SILLY": {
-            name:"Silly",
-            layer:["🧌","♾️","💅","✈️","🪢","🫃","🎂"],
-            type:"silly",
+            name: "Silly",
+            layer: ["🧌","♾️","💅","✈️","🪢","🫃","🎂"],
+            type: "silly"
         },
         "FLUTE": {
-            name:"Flute",
-            layer:["🪈"],
-            type:"silly",
-        }, 
+            name: "Flute",
+            layer: ["🪈"],
+            type: "flute"
+        },
         "CAVECONFUSING": {
-            name:"Confusing",
-            layer:["🪔","🩺","💱","🔭","📡","❓"],
-            type:"cave"
+            name: "Confusing",
+            layer: ["🪔","🩺","💱","🔭","📡","❓"],
+            type: "cave",
+            multi: 50
         },
         "CAVEMUSIC": {
-            name:"Music",
-            layer:["🎷","🪘","🥁","🪇","🎹","🎵"],
-            type:"cave"
+            name: "Music",
+            layer: ["🎷","🪘","🥁","🪇","🎹","🎵"],
+            type: "cave",
+            multi: 35
         },
         "CAVEBIOHAZARD": {
-            name:"Biohazard",
-            layer:["🧫","🛸","🍄","🕸️","💉","☣️"],
-            type:"cave"
+            name: "Biohazard",
+            layer: ["🧫","🛸","🍄","🕸️","💉","☣️"],
+            type: "cave",
+            multi: 20
         },
         "CAVEGERM": {
-            name:"Germ",
-            layer:["⚕️","🌡️","💊","🧬","🍥","🦠"],
-            type:"cave"
+            name: "Germ",
+            layer: ["⚕️","🌡️","💊","🧬","🍥","🦠"],
+            type: "cave",
+            multi: 10
         }
     }
-
+    
     getLayerNamesFromType(type) {
-        let layers = []
-        Object.keys(LayerManager.layers).forEach(layer => {
-            // actually so fucking dumb but it works??
-            if (LayerManager.layers[layer].type == type) {
-                layers.push(LayerManager.layers[layer].name)
-            }
-        });
-        return layers;
-    }
-
-    getLayersFromType(type) {
-        let layers = []
-        Object.keys(LayerManager.layers).forEach(layer => {
-            // actually so fucking dumb but it works??
-            if (LayerManager.layers[layer].type == type) {
-                layers.push(LayerManager.layers[layer].layer)
-            }
-        });
-        return layers;
-    }
-
-    getAllLayerNames() {
         let names = [];
-        Object.keys(LayerManager.layers).forEach(layer => {
-            let key = LayerManager.layers[layer];
-            names.push(key.name);
-        });
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                names.push(LayerManager.layers[layer].name);
         return names;
     }
-
+    
+    getLayersFromType(type) {
+        let layers = [];
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                layers.push(LayerManager.layers[layer].layer);
+        return layers;
+    }
+    
+    getLayerMultisFromType(type) {
+        let multis = [];
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                multis.push(LayerManager.layers[layer].multi);
+        return multis;
+    }
+    
+    getLayerDepthsFromType(type) {
+        let depths = [];
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                depths.push(LayerManager.layers[layer].depth);
+        return depths;
+    }
+    
+    getAllLayerNames() {
+        let names = [];
+        for (let layer in LayerManager.layers)
+            names.push(LayerManager.layers[layer].name);
+        return names;
+    }
+    
     getAllLayerOres() {
         let ores = [];
-        Object.keys(LayerManager.layers).forEach(layer => {
-            let key = LayerManager.layers[layer];
-            ores.push(key.layer);
-        });
+        for (let layer in LayerManager.layers)
+            ores.push(LayerManager.layers[layer].layer);
         return ores;
     }
 }
 
 //SETTING LAYERS
-//let lastLayerChange = 6000;
 
 function getLayerFromOre(ore) {
-    Object.keys(LayerManager.layers).forEach(layer => {
-        if (layer.indexOf(ore) !== -1) {
+    for (let layer in LayerManager.layers)
+        if (layer.includes(ore))
             return layer;
-        }
-    });
     return undefined;
 }
 
 // GENERAL STUFF (SAME NAME FOR COMPATIBILITY)
 
-let manager = new LayerManager();
-let allLayersNames = manager.getAllLayerNames();
-let allLayers = manager.getAllLayerOres();
+const manager = new LayerManager();
 
-let allCaves = manager.getLayersFromType('cave');
-let allCavesNames = manager.getLayerNamesFromType('cave');
+const allLayersNames = manager.getAllLayerNames();
+const allLayers = manager.getAllLayerOres();
 
-let normalLayers = manager.getLayersFromType('normal');
-let sillyLayers = manager.getLayersFromType('silly');
-let fluteLayers = manager.getLayersFromType('flute');
+const normalLayers = manager.getLayersFromType("normal");
+const [sillyLayer] = manager.getLayersFromType("silly");
+const [fluteLayer] = manager.getLayersFromType("flute");
+const normalLayersDepths = manager.getLayerDepthsFromType("normal");
 
-let spawnsEverywhere = LayerManager.spawnsEverywhere;
-let unaffectedByLuck = LayerManager.unaffectedByLuck;
+const allCaves = manager.getLayersFromType("cave");
+const allCavesNames = manager.getLayerNamesFromType("cave");
+const allCaveMultis = manager.getLayerMultisFromType("cave");
+
+const spawnsEverywhere = LayerManager.spawnsEverywhere;
+const unaffectedByLuck = LayerManager.unaffectedByLuck;
 
 let layersChanged = {};
-let currentLayer = undefined;
-let overrideLayer = undefined;
+let currentLayer;
+let overrideLayer;
 function setLayer(y) {
     regY = Math.floor(y / 2000);
     const lastCurrentLayer = allLayers[allLayersNames.indexOf(layersChanged[`${regY}`])]; //might be undefined
-    if (Object.keys(layersChanged).indexOf(`${regY}`) === -1) {
+    if (!Object.keys(layersChanged).includes(`${regY}`)) {
         if (typeof overrideLayer === "object") {
             currentLayer = overrideLayer;
             overrideLayer = undefined;
-        } else if (regY < allLayers.length)
+        } else if (regY < normalLayers.length)
             currentLayer = normalLayers[regY];
         else if (random(1,77) === 33)
             currentLayer = sillyLayer;
