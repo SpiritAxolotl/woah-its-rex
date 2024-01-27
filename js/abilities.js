@@ -140,9 +140,10 @@ function gearAbilitySillyTp() {
 function gearAbilityInfinityCollector() {
     if (gears["infinity-collector"] && loggedFinds.length > 0)
         for (let find of loggedFinds)
-            //if (typeof mine[find["y"]] === "object" && typeof mine[find["y"]][find["x"]] === "string") {
-                //mineBlock(find["x"], find["y"], "ability", 1);
-                loggedFinds.splice(i, 1);
+            if (typeof mine[find["y"]] === "object" && typeof mine[find["y"]][find["x"]] === "string") {
+                mineBlock(find["x"], find["y"], "ability", 1);
+                loggedFinds.splice(loggedFinds.indexOf(find), 1);
+            }
 }
 
 
