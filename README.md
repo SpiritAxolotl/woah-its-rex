@@ -23,13 +23,15 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Make spawn messages work again
 - [x] Make spawn logs generate in the correct order again
 - [x] Fix white hearts not having logs? (on pick 6?)
-- [ ] Fix XY coords on "location" being NaN sometimes?
+- [x] Fix XY coords on "location" being NaN sometimes?
   - it's persistent ughh
   - when is it safe to check this off
+  - fuck it
 - [ ] Make the audio work properly (completely untested)
 - [x] Fix inventory variant being set to 0 sometimes
 - [ ] Fix whatever causes the game to either freeze for a bit or just stop mining when automining
   - Probably a performance issue that can be solved with optimizing code
+  - fixed?? maybe???
 - [ ] Fix latest spawns not displaying when it should be ??? \[medium priority\]
 - [ ] Fix index completion highlighting on ores themselves (only doesn't work for some ores)
 - [ ] Replace my `overflow-y: scroll;` stuff with `overflow: clip;` to better get rid of scrollbars
@@ -39,7 +41,7 @@ This is an unofficial version of amber's original project to make the code more 
   - [x] Buttons for crafting gears
   - [x] Descriptions for pickaxes and gears
   - [ ] Mute music buttons
-- [ ] Make a better less hardcoded system for replacing blocks
+- [ ] Make a better less hardcoded system for replacing blocks \[low priority\]
 - [x] Add title
 - [x] Add versions
 - [x] Hold shift to constantly go in a direction (after hitting wasd)
@@ -51,7 +53,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
 - [ ] Arrange the on-screen controls in a d-pad configuration
-- [ ] Add a dedicated "reset game" button
+- [x] Add a dedicated "reset game" button
 - [x] Add the main layer ore next to the teleport meter display button thing
   - [ ] Center the emoji somehow
 - [ ] Display what pickaxe the player has currently selected
@@ -60,6 +62,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] totalResets statistic
 - [ ] Add what layer an ore spawns on when hovering (`title` attribute)
 - [ ] Update the title to something like the main branch
+- [x] Hide crafting stuff by clicking the selected item again
 
 ## Misc.
 - [x] Update to latest
@@ -71,11 +74,12 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Add a readme
 - [ ] Move TODO to a github tracking thing
 - [ ] Move lots of initialized variables to a separate file to reduce clutter
-- [ ] Clean up the code in the scary pickaxe ability functions...
+- [x] Clean up the code in the scary pickaxe ability functions...
 - [ ] Add a list of features exclusive to this fork
 - [x] Scale all probability things
 - [ ] Add a better system for layer management (variable-wise) (make it a class maybe?)
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
+  - replaced the icon (to differentiate between amber's version and my version) so I don't think I need to do this one yet
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
 - [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
