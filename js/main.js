@@ -491,9 +491,9 @@ function changeCanDisplay(toggle) {
 function displayArea() {
     if (canDisplay) {
         let output = "";
-        const constraints = getParams(9, 9);
+        const constraints = getParams(12, 9);
         for (let y = curY - constraints["up"]; y <= curY + 9 + (9-constraints["up"]); y++) {
-            for (let x = curX - constraints["left"]; x <= curX + 9 + (9-constraints["left"]); x++) {
+            for (let x = curX - constraints["left"]; x <= curX + 12 + (12-constraints["left"]); x++) {
                 /*if (mine[r][c] === "⚪") {
                     output += "<span style='opacity:0;'>" + mine[r][c] + "</span>"
                 } else {
@@ -709,3 +709,46 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     }
     document.getElementById("latestFinds").innerHTML = output;
 }
+
+let moveOnce = false;
+let movementModes = {
+    "a":[
+        '<i class="fas fa-angles-left"></i>',
+        '<i class="fas fa-angle-left"></i>',
+    ],
+    "d":[
+        '<i class="fas fa-angles-right"></i>',
+        '<i class="fas fa-angle-right"></i>',
+    ],
+    "w":[
+        '<i class="fas fa-angles-up"></i>',
+        '<i class="fas fa-angle-up"></i>',
+    ],
+    "s":[
+        '<i class="fas fa-angles-down"></i>',
+        '<i class="fas fa-angle-down"></i>'
+    ]
+}
+
+
+function switchMovementMode () {
+    moveOnce = !moveOnce;
+    refreshButtons()
+}
+
+function refreshButtons() {
+    let elements = document.getElementsByClassName("movementButton")
+    Array.from(elements).forEach((element) => {
+        if (moveOnce == true) {
+            element.innerHTML = movementModes[element.id][1];
+            element.onclick = () => {moveOne(element.id, element)}
+            element.title = `Click to move once`
+        } else {
+            element.innerHTML = movementModes[element.id][0]
+            element.onclick = () => {goDirection(element.id)}
+            element.title = `Hold shift to move once`
+        }
+    })
+}
+
+refreshButtons();
