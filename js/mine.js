@@ -245,11 +245,11 @@ function switchDistance() {
         teleportY = 1000;
         distanceMulti = 1;
     }
+    document.getElementById("meterDisplay").title = `
+Teleports you to ${teleportY}m
+    `;
     document.getElementById("meterDisplay").innerHTML = `
-        <span class="emoji small-emoji">
-            ${lastItemIn(allLayers[(teleportY-1000)/2000])}
-        </span>
-        ${teleportY}m
+        ${lastItemIn(allLayers[(teleportY-1000)/2000])}
     `;
 }
 
