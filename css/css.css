@@ -59,7 +59,7 @@ body {
   visibility: hidden !important;
 }
 
-*, *::before, *::after {
+*{
   image-rendering: pixelated;
   box-sizing: border-box;
   font-family: "Lexend", "Twemoji", monospace;
@@ -71,9 +71,33 @@ body {
   border-style: solid;
   border-color: #313131;
   border-left: none;
+  border-top: none;
   border-right: none;
   margin-top: 0.35em;
   flex-grow: 1;
+}
+
+.movementButtons{
+  max-width: 100%;
+  display: flex;
+}
+.movementButtons > *{
+  font-size: 1.2em;
+  height: max-content;
+  margin: 0;
+
+  border: none;
+  border-bottom: solid #343434;
+  background-color: #161b1d;
+  flex-grow: 1;
+  width: 100%;
+  color: white;
+  padding: 1em;
+  transition: background-color 0.2s, color 0.2s, border 0.5s;
+}
+.movementButtons>*:hover {
+  background-color:white;
+  color: black;
 }
 
 #inventoryDisplay > * {
@@ -137,10 +161,6 @@ body {
 
 .layerDisplay {
   margin-bottom: 1em;
-}
-
-.movementButton {
-  width: 6vw;
 }
 
 .craftingAmountsDisplay {
@@ -230,9 +250,10 @@ body {
 #blockDisplay {
   padding: 0.5em 0;
   margin: 0;
-  line-height: 0.98ch;
-  letter-spacing: -0.02ch;
-  font-size: 1.8vw;
+  line-height: 1.2em;
+  white-space: nowrap;
+  /* letter-spacing: em; */
+  font-size: 1.3vw;
   user-select: none;
   text-wrap: nowrap;
   text-align: center;
@@ -292,7 +313,7 @@ button {
   border-width: 0.1em;
   border-radius: 0.25em;
   color: white;
-  font-family: "Lexend", sans-serif;
+  /* font-family: "Lexend", sans-serif; */
   text-align: center;
   min-width: 5em;
   text-wrap: nowrap;
@@ -329,6 +350,30 @@ button {
   text-align: left;
   color:white;
 }
+.headerButtons {
+  display: flex;
+  gap: 0;
+  margin: 0;
+  width: 100%;
+}
+.headerButtons > * {
+  /* font-size: 2em; */
+  border: none;
+  border-bottom: solid #343434;
+  background-color: #161b1d;
+  flex-grow: 1;
+  color: white;
+  padding: 1em;
+  transition: background-color 0.2s, color 0.2s, border 0.5s;
+}
+.headerButtons > *:hover {
+  background-color:white;
+  color: black;
+}
+.redButton:hover {
+  background-color:#eb2424;
+  color: black;
+}
 
 #playButton {
   max-height: 100px;
@@ -338,7 +383,7 @@ button {
   transition: all 0.2s;
 }
 #playButton:hover {
-  background-color:#00c300;
+  background-color:#24eb24;
   border: none;
 }
 #col-1 {
@@ -346,20 +391,25 @@ button {
   background-color: var(--bgcolor);
   /* resize: horizontal; */
   /*float: left;*/
+  padding: 0;
+}
+#col-2 > * {
+  flex-grow: 1;
 }
 #col-2 {
-  width: 50%;
+  min-width: 50%;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   border-style: none solid;
   border-color: #313131;
-  background-color: var(--bgsecondary);
+  background-color: var(--bgcolor);
 }
 #col-3 {
   width: 25%;
   display: flex;
   flex-direction: column;
+  padding: 0;
   align-items: center;
   background-color: var(--bgcolor);
 }
@@ -493,4 +543,9 @@ code {
 .pausedTitle {
   margin-bottom: auto;
   color:white;
+}
+
+@font-face {
+  font-family: "Twemoji";
+  src: url("/fonts/Twemoji.otf");
 }
