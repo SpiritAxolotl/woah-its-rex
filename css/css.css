@@ -1,6 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lexend&display=swap");
 
+@font-face {
+  font-family: "Twemoji";
+  src: url("/fonts/Twemoji.otf");
+}
+
 :root {
   --bgcolor: #14161a;
   --bgsecondary: #161b1d;
@@ -48,7 +53,7 @@ body {
   /* position: absolute; */
   /* align-items: center; */
 }
-/*#meterDisplay {
+/*#teleportButton {
   display: flex;
   position: absolute;
   align-items: center;
@@ -59,7 +64,7 @@ body {
   visibility: hidden !important;
 }
 
-*{
+* {
   image-rendering: pixelated;
   box-sizing: border-box;
   font-family: "Lexend", "Twemoji", monospace;
@@ -77,27 +82,51 @@ body {
   flex-grow: 1;
 }
 
-.movementButtons{
+.movementButtons {
   max-width: 100%;
   display: flex;
 }
-.movementButtons > *{
+.movementButtons button {
   font-size: 1.2em;
   height: max-content;
   margin: 0;
-
   border: none;
   border-bottom: solid #343434;
   background-color: #161b1d;
   flex-grow: 1;
-  width: 100%;
   color: white;
   padding: 1em;
   transition: background-color 0.2s, color 0.2s, border 0.5s;
 }
-.movementButtons>*:hover {
+.movementButtons > button {
+  width: 100%;
+}
+.movementButtons button:hover {
   background-color:white;
   color: black;
+}
+
+#teleportContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#teleportContainer button {
+  padding: 0;
+}
+
+#teleportContainer > * {
+  width: 50%;
+}
+
+#switchDistanceContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#switchDistanceContainer > button {
+  border-bottom: none;
 }
 
 #inventoryDisplay > * {
@@ -112,9 +141,10 @@ body {
 
 #generalStats {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 3em;
+  /* gap: 3em; */
+  text-align: left;
 }
 
 #switchButtons {
@@ -213,11 +243,12 @@ body {
   /* font-size: 1vw; */
   /* margin-top: 0.75em; */
   margin-bottom: 0.5em;
+  /* text-align: left; */
 }
 #resetsThisSession {
   margin-top: 0.5em;
 }
-#dataExport {
+#pausedGameContainer {
   padding:3em;
   height: 100%;
   width: 100%;
@@ -230,7 +261,7 @@ body {
   flex-direction: column;
 }
 
-#dataExport button {
+#pausedGameContainer button {
   text-wrap: nowrap;
   margin: 0.3em 0;
 }
@@ -250,9 +281,9 @@ body {
 #blockDisplay {
   padding: 0.5em 0;
   margin: 0;
-  line-height: 1.2em;
+  line-height: 1.14em;
   white-space: nowrap;
-  /* letter-spacing: em; */
+  letter-spacing: -0.1em;
   font-size: 1.3vw;
   user-select: none;
   text-wrap: nowrap;
@@ -282,6 +313,7 @@ body {
 
 #location {
   font-size: 3em;
+  text-align: left;
 }
 p, label, input[type=file] {
   color: white;
@@ -350,6 +382,12 @@ button {
   text-align: left;
   color:white;
 }
+
+#creditsContainer {
+  display: flex;
+  gap: 3em;
+  align-items: center;
+}
 .headerButtons {
   display: flex;
   gap: 0;
@@ -384,7 +422,7 @@ button {
 }
 #playButton:hover {
   background-color:#24eb24;
-  border: none;
+  border-color: #161b1d00;
 }
 #col-1 {
   width: 25%;
@@ -522,8 +560,9 @@ code {
 }
 
 .subtext {
-  opacity: .5;
+  color: #808080;
   margin: 0;
+  font-size: medium;
 }
 #noscript {
   user-select: none;
@@ -540,12 +579,7 @@ code {
   text-wrap: wrap;
 }
 
-.pausedTitle {
+.pausedTitleContainer {
   margin-bottom: auto;
   color:white;
-}
-
-@font-face {
-  font-family: "Twemoji";
-  src: url("/fonts/Twemoji.otf");
 }

@@ -407,10 +407,9 @@ document.addEventListener("keydown", (event) => {
         case "escape":
             event.preventDefault();
             settingsToggle = !settingsToggle;
-            hideData()
-            if (settingsToggle) {
-                showData()
-            }
+            hideData();
+            if (settingsToggle)
+                showData();
         /*default:
             console.log("wrong key!");
             break;*/
@@ -711,42 +710,42 @@ function logFind(type, x, y, variant, atMined, fromReset) {
 }
 
 let moveOnce = false;
-let movementModes = {
-    "a":[
-        '<i class="fas fa-angles-left"></i>',
-        '<i class="fas fa-angle-left"></i>',
-    ],
-    "d":[
-        '<i class="fas fa-angles-right"></i>',
-        '<i class="fas fa-angle-right"></i>',
-    ],
-    "w":[
-        '<i class="fas fa-angles-up"></i>',
-        '<i class="fas fa-angle-up"></i>',
-    ],
-    "s":[
-        '<i class="fas fa-angles-down"></i>',
-        '<i class="fas fa-angle-down"></i>'
-    ]
+const movementModes = {
+    "a": {
+        "two": `<i class="fas fa-angles-left"></i>`,
+        "one": `<i class="fas fa-angle-left"></i>`
+    },
+    "d": {
+        "two": `<i class="fas fa-angles-right"></i>`,
+        "one": `<i class="fas fa-angle-right"></i>`
+    },
+    "w": {
+        "two": `<i class="fas fa-angles-up"></i>`,
+        "one": `<i class="fas fa-angle-up"></i>`
+    },
+    "s": {
+        "two": `<i class="fas fa-angles-down"></i>`,
+        "one": `<i class="fas fa-angle-down"></i>`
+    }
 }
 
 
 function switchMovementMode () {
     moveOnce = !moveOnce;
-    refreshButtons()
+    refreshButtons();
 }
 
 function refreshButtons() {
     let elements = document.getElementsByClassName("movementButton")
     Array.from(elements).forEach((element) => {
         if (moveOnce == true) {
-            element.innerHTML = movementModes[element.id][1];
-            element.onclick = () => {moveOne(element.id, element)}
-            element.title = `Click to move once`
+            element.innerHTML = movementModes[element.id]["one"];
+            element.onclick = () => {moveOne(element.id, element)};
+            element.title = "Hold shift to automine";
         } else {
-            element.innerHTML = movementModes[element.id][0]
-            element.onclick = () => {goDirection(element.id)}
-            element.title = `Hold shift to move once`
+            element.innerHTML = movementModes[element.id]["two"];
+            element.onclick = () => {goDirection(element.id)};
+            element.title = "Hold shift to move once";
         }
     })
 }
