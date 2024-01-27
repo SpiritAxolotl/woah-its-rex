@@ -9,7 +9,7 @@ function saveAllData() {
     };
     
     //update this whenever the format of the data storage changes (then add if(data["version"]===num) to stuff)
-    dataStorage["version"] = 3;
+    dataStorage["version"] = 4;
     for (let ore in oreList)
         dataStorage["ores"][ore] = inventory[ore];
     dataStorage["pickaxes"]["inv"] = pickaxes;
@@ -40,10 +40,32 @@ function loadAllData() {
             if (typeof oreList[ore] === "object")
                 for (let variant of variantNames)
                     inventory[ore][variant.toLowerCase()] = data["ores"][ore][variant.toLowerCase()];
-        if (typeof data["pickaxes"]["inv"] === "object")
-            for (let pick in data["pickaxes"]["inv"])
-                pickaxes[pick] = data["pickaxes"]["inv"][pick];
-        currentPickaxe = data["pickaxes"]["curr"] || 0;
+        if (typeof data["pickaxes"]["inv"] === "object"){
+            if (data["version"] >= 4) {
+                for (let pick in data["pickaxes"]["inv"])
+                    pickaxes[pick] = data["pickaxes"]["inv"][pick];
+                    currentPickaxe = data["pickaxes"]["curr"] || "ol-faithful";
+            } else {
+                const pickNumToStringConversion = {
+                    0: "ol-faithful",
+                    1: "mulch-mallet",
+                    2: "mud-sickle",
+                    3: "dirt-ravager",
+                    4: "void-crusher",
+                    5: "geode-staff",
+                    6: "earth-soiler",
+                    7: "crypt-smasher",
+                    8: "labrynthian-tide",
+                    9: "77-leaf-destroyer",
+                    10: "planet-buster",
+                    11: "whirlpool-of-fate",
+                    12: "wings-of-glory"
+                }
+                for (let pick in data["pickaxes"]["inv"])
+                    pickaxes[pickNumToStringConversion[pick]] = data["pickaxes"]["inv"][pick];
+                currentPickaxe = pickNumToStringConversion[data["pickaxes"]["curr"]] || "ol-faithful";
+            }
+        }
         totalMined = data["stats"]["totalMined"] || 0;
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
         for (let ore in oreList)
@@ -100,7 +122,6 @@ function loadAllData() {
         if (typeof data["settings"]["autoSave"] === "boolean")
             autoSave = data["settings"]["autoSave"];
         localStorage.removeItem("dataBackup");
-        localStorage.setItem("newSaveFormat", true);
         warnBeforeClosing();
         return true;
     } catch (error) {
@@ -230,6 +251,13 @@ function toggleCaves(toggle) {
     else
         caveToggle = !caveToggle;
     document.getElementById("toggleCavesButton").innerHTML = `Toggle Caves: ${caveToggle ? "on" : "off"}`;
+}
+
+function resetGame() {
+    if (confirm("THIS WILL RESET YOUR ENTIRE GAME. ARE YOU SURE YOU WANT TO DO THIS?")) {
+        localStorage.clear();
+        location.reload();
+    }
 }
 
 /*function changeDataUploadType() {

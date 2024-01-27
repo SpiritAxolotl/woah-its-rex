@@ -16,50 +16,69 @@ let debugLuck = "",
     warnClose = true,
     autoSave = true,
     caveToggle = true,
-    turnOffAbilities = false;
+    turnOffAbilities = false,
+    debugVerbose = false;
 
 let pickaxes = {
-    0: true,
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-    6: false,
-    7: false,
-    8: false,
-    9: false,
-    10: false,
-    11: false
+    "ol-faithful": true,
+    "mulch-mallet": false,
+    "mud-sickle": false,
+    "dirt-ravager": false,
+    "void-crusher": false,
+    "geode-staff": false,
+    "earth-soiler": false,
+    "crypt-smasher": false,
+    "labrynthian-tide": false,
+    "77-leaf-destroyer": false,
+    "planet-buster": false,
+    "whirlpool-of-fate": false,
+    "wings-of-glory": false
+};
+const pickaxeNamesNormalized = {
+    "ol-faithful": "Ol' Faithful",
+    "mulch-mallet": "Mulch Mallet",
+    "mud-sickle": "Mud Sickle",
+    "dirt-ravager": "Dirt Ravager",
+    "void-crusher": "Void Crusher",
+    "geode-staff": "Geode Staff",
+    "earth-soiler": "Earth Soiler",
+    "crypt-smasher": "Crypt Smasher",
+    "labrynthian-tide": "Labrynthian Tide",
+    "77-leaf-destroyer": "77 Leaf Destroyer",
+    "planet-buster": "Planet Buster",
+    "whirlpool-of-fate": "Whirlpool of Fate",
+    "wings-of-glory": "Wings of Glory"
 };
 const pickaxeDescriptions = {
-    0: "Humble beginnings :)<br>No special abilities.",
-    1: "Mines a few blocks in every cardinal direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.",
-    2: "Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.",
-    3: "Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.",
-    4: "Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.",
-    5: "Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.",
-    6: "Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.",
-    7: "Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.",
-    8: "Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.",
-    9: "Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck.",
-    10: "Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.",
-    11: "Mines an extremely large spiral around the player.<br>Has an ability proc rate of 1/100.<br>Has 30x luck."
+    "ol-faithful": "Humble beginnings :)<br>No special abilities.",
+    "mulch-mallet": "Mines a few blocks in every cardinal direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.",
+    "mud-sickle": "Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.",
+    "dirt-ravager": "Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.",
+    "void-crusher": "Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.",
+    "geode-staff": "Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.",
+    "earth-soiler": "Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.",
+    "crypt-smasher": "Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.",
+    "labrynthian-tide": "Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.",
+    "77-leaf-destroyer": "Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck.",
+    "planet-buster": "Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.",
+    "whirlpool-of-fate": "Mines an extremely large spiral around the player.<br>Has an ability proc rate of 1/100.<br>Has 30x luck.",
+    "wings-of-glory": "WMines wings around the player.<br>Mines 2 blocks at once when using automine.<br>Has 2x special cave type luck.<br>Has an ability proc rate of 1/150.<br>Has 75x luck."
 };
 const pickaxeSillyDescriptions = {
-    0: ":33333333",
-    1: "is anyone gonna read these lol",
-    2: "hi!!! hii!!",
-    3: "wait no get out of here",
-    4: "stop it get out",
-    5: "leave!!!!!!!!",
-    6: "i have your ip",
-    7: "grrrrr leave!!",
-    8: ":pouting-cat:",
-    9: ">:C",
-    10: "IM HERE NOW TOO",
-    11: "mrrp meow meow!",
-    12: "cataxe"
+    "ol-faithful": ":33333333",
+    "mulch-mallet": "is anyone gonna read these lol",
+    "mud-sickle": "hi!!! hii!!",
+    "dirt-ravager": "wait no get out of here",
+    "void-crusher": "stop it get out",
+    "geode-staff": "leave!!!!!!!!",
+    "earth-soiler": "i have your ip",
+    "crypt-smasher": "grrrrr leave!!",
+    "labrynthian-tide": ":pouting-cat:",
+    "77-leaf-destroyer": ">:C",
+    "planet-buster": "IM HERE NOW TOO",
+    "whirlpool-of-fate": "mrrp meow meow!",
+    "wings-of-glory": "cataxe",
+    "undefined": "sorry chat, felt evil"
 };
 let gears = {
     "ore-tracker": false,
@@ -86,7 +105,7 @@ const gearDescriptions = {
     "silly-tp": ":3<br>Instantly teleports you to the silly layer."
 };
 let gearNames = Object.keys(gears);
-let gearNamesNormalized = {
+const gearNamesNormalized = {
     "ore-tracker": "Ore Tracker",
     "real-candilium": "Real Candilium",
     "real-vitriol": "Real Vitriol",
@@ -98,7 +117,7 @@ let gearNamesNormalized = {
     "sugar-rush": "Sugar Rush",
     "silly-tp": "Silly TP"
 };
-let currentPickaxe = 0;
+let currentPickaxe = "ol-faithful";
 let currentGears = [];
 
 function visible(element) {
@@ -116,19 +135,19 @@ function isVisible(element) {
 
 function debugGiveAllOres(type) {
     if (debug) {
-        if (typeof type === "number") {
+        if (typeof pickaxeRecipes[type] === "object") {
             const pick = type;
             for (let ingredient in pickaxeRecipes[pick]) {
                 inventory[ingredient]["normal"] += pickaxeRecipes[pick][ingredient];
             }
-        } else if (typeof type === "string") {
+        } else if (typeof gearRecipes[type] === "object") {
             const gear = type;
             for (let ingredient in gearRecipes[gear]) {
                 inventory[ingredient]["normal"] += gearRecipes[gear][ingredient];
             }
         }
+        updateActiveRecipe();
     }
-    updateActiveRecipe();
 }
 
 function snakeToCamel(str, startUpper) {
@@ -198,6 +217,8 @@ function init() {
     createInventory();
     createIndex();
     createMine();
+    //remove this line after no one has this anymore (it's basically cosmetic now)
+    localStorage.removeItem("newSaveFormat");
     const playedBefore = localStorage.getItem("playedBefore");
     if (!playedBefore) localStorage.setItem("newSaveFormat", true);
     canContinue = playedBefore ? loadAllData() : true;
@@ -309,6 +330,7 @@ function movePlayer(dir) {
             /*default:
                 console.log("wrong key!!");*/
         }
+        gearAbilityInfinityCollector();
         displayArea();
     }
 }
@@ -627,14 +649,14 @@ function spawnMessage(ore, location, caveInfo) {
     let output = "";
     let addToLatest = true;
     const fromCave = typeof caveInfo === "object" && caveInfo["fromCave"];
-    if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000) {
+    if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000) {
         //IF PICKAXE IS 5, ADD LOCATION
-        if (currentPickaxe === 5 || hasGear("ore-tracker"))
+        if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
             latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"], fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
         else latestSpawns.unshift({ore: ore});
     } else addToLatest = false;
     if (hasGear("real-vitriol") || hasGear("infinity-collector")) {
-        if (currentPickaxe < 10 || oreList[ore]["prob"] > 2000000)
+        if (Object.keys(pickaxes).indexOf(currentPickaxe) < 10 || oreList[ore]["prob"] > 2000000)
             loggedFinds.unshift({y: location["y"], x: location["x"]});
     }
     if (latestSpawns.length > 10) latestSpawns.pop();
@@ -652,7 +674,7 @@ function spawnMessage(ore, location, caveInfo) {
         else
             document.getElementById("spawnMessage").innerHTML += `1/${oreList[ore]["prob"].toLocaleString()}`;
         
-        //if (currentPickaxe === 5 || hasGear("ore-tracker"))
+        //if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
         document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
     }
     clearTimeout(spawnOre);

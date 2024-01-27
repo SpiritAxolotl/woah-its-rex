@@ -106,9 +106,7 @@
         <div id="musicStuff">
             <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
             <p>Music Volume</p>
-            <label class="slidecontainer">
-                <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
-            </label>
+            <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
         </div>
         <div>
             <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
@@ -131,7 +129,7 @@
 </div>
 <div id="dataExport" class="invisible">
 <div class="container-fluid">
-    <label>Import Data</label>
+    <label for="dataFile">Import Data</label>
     <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
     <button onclick="exportData()">Export Data</button>
     <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
@@ -148,10 +146,8 @@
     <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
     <div id="logHolder"></div>
     <div id="masterVolume">
-        <p>Spawn Volumes</p>
-        <label class="slidecontainer">
-            <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
-        </label>
+        <p>Spawn Volume</p>
+        <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
     </div>
     <br>
     <input autocomplete="off" type="text" id="mineCapacitySetter">
@@ -159,6 +155,7 @@
     <br>
     <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
     <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
+    <button onclick="resetGame()" id="resetGameButton">Reset Game</button>
 </div>
 </div>
 </body>
