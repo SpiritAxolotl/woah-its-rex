@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Woah It's Rex!</title>
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="Rex Reincarnated, REx, REx:R, Re:Rex, woah it's rex, Roblox, go mining">
-    <title>Woah It's Rex!</title>
     <meta name="description" content="A 2D browser version of a 3D luck-based idle mining game.">
-
+    
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://spiritaxolotl.github.io/woah-its-rex">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Woah It's Rex!">
     <meta property="og:description" content="A 2D browser version of a 3D luck-based idle mining game.">
     <meta property="og:image" content="/images/embed.png">
-
+    
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="spiritaxolotl.github.io">
@@ -24,7 +22,7 @@
     <meta name="twitter:title" content="Woah It's Rex!">
     <meta name="twitter:description" content="A 2D browser version of a 3D luck-based idle mining game.">
     <meta name="twitter:image" content="/images/embed.png">
-
+    
     <!--<link property="og:type" content="favicon.ico">-->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="/css/css.css">
@@ -39,19 +37,16 @@
 </noscript>
 <div id="pressPlay">
     <p id="gameTitle">Woah It's Rex</p>
-    <div style="display: flex; gap:3em; align-items: center;">
+    <div id="creditsContailer">
         <ul id="credits">
             <li>Game originally made by <code>@thecatofalltime</code> on Discord!</li>
+            <li>UI, major code refactor, and new features by <code>@Spaxolotl</code> on Discord!</li>
             <li>Some features made by <code>@millabasset</code> on Discord!</li>
             <li>Background music made by <code>@x2corp</code> on Discord!</li>
             <li>Spawn sounds come from REx:R on Roblox</li>
             <li>Some sounds made by <code>@tevv_</code> on Discord!</li>
-            <li>UI, major code refactor, and new features by <code>@Spaxolotl</code> on Discord!</li>
             <li>With some help provided by <code>@nikoundrscr</code> on Discord!</li>
-            <br>
-            Made With Love ❤️
         </ul>
-
         <button id="playButton" class="invisible" onclick="loadContent()">Play!</button>
     </div>
 </div>
@@ -83,9 +78,8 @@
     <div class="col" id="col-2">
         <div style="max-width: 100%;">
             <div class="movementButtons">
-
                 <button id="a" class="movementButton">
-                    <i class="fas fa-angles-left"></i>          
+                    <i class="fas fa-angles-left"></i>
                 </button>
                 <button id="s" class="movementButton">
                     <i class="fa-solid fa-angles-down"></i>
@@ -96,11 +90,22 @@
                 <button id="d" class="movementButton">
                     <i class="fa-solid fa-angles-right"></i>
                 </button>
-    
-                <button onclick="switchDistance(); teleport()" id="meterDisplay" title="Teleports you to 1000m">🟫</button>
                 <button onclick="switchMovementMode()" id="movementMode">
-                    <i class="fa-solid fa-rotate"></i>  
+                    <i class="fa-solid fa-rotate"></i>
                 </button>
+                <div id="teleportContainer">
+                    <div id="switchDistanceContainer">
+                        <button onclick="switchDistance('down')">
+                            <i class="fas fa-angle-left"></i>
+                        </button>
+                        <button onclick="switchDistance('up')">
+                            <i class="fas fa-angle-right"></i>
+                        </button>
+                    </div>
+                    <button onclick="teleport()" id="teleportButton" title="Teleports you to 1000m">
+                        <span class="emoji">🟫</span>
+                    </button>
+                </div>
             </div>
         </div>
         <!-- <div class="mobile">
@@ -143,24 +148,23 @@
             <img src="images/discord-logo.svg" alt="Discord Logo">
             <p>Join the Woah It's Rex Discord!</p>
         </a>
-        
     </div>
 </div>
 </div>
 </div>
-<div id="dataExport" class="invisible">
-    <div class="pausedTitle">
-        <h1 style="margin-bottom: 0; display: flex; gap:0.2em; align-items: center;">Woah It's Rex!
+<div id="pausedGameContainer" class="invisible">
+    <div class="pausedTitleContainer">
+        <h1 id="pausedTitle">Woah It's Rex!
             <div>
-                <p class="subtext" style="font-size: medium;">SPAX'S FORK</p>
-                <p class="subtext" style="font-size: medium;">c6b9194</p>
+                <p class="subtext">SPAX'S FORK</p>
+                <p class="subtext"><a href="https://github.com/SpiritAxolotl/woah-its-rex">#c6b9194</a></p>
             </div>
         </h1>
         <span>Paused</span>
         <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
     </div>
     <div class="container-fluid settingsMenu">
-        <label>Import Data</label>
+        <label for="dataFile">Import Data</label>
         <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
         <button onclick="exportData()">Export Data</button>
         <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
@@ -179,15 +183,13 @@
         <div id="masterVolume">
             <div class="volumeController">
                 <p>Spawn Volumes</p>
-                <label class="slidecontainer">
-                    <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
-                </label>
+                <label class="slidecontainer" for="spawnVolume"></label>
+                <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
             </div>
             <div class="volumeController">
                 <p>Music Volume</p>
-                <label class="slidecontainer">
-                    <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
-                </label>
+                <label class="slidecontainer" for="musicVolume"></label>
+                <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
             </div>
         </div>
         <input autocomplete="off" type="text" id="mineCapacitySetter">
