@@ -1,13 +1,13 @@
 const pickaxeRecipes = {
-    0: {},
-    1: {
+    "ol-faithful": {},
+    "mulch-mallet": {
         "🟫": 10000,
         "🟧": 333,
         "🟥": 290,
         "🟪": 250,
         "⚫": 100
     },
-    2: {
+    "mud-sickle": {
         "🟫": 50000,
         "🟢": 1111,
         "🔵": 1000,
@@ -17,7 +17,7 @@ const pickaxeRecipes = {
         "🟣": 625,
         "🟤": 555
     },
-    3: {
+    "dirt-ravager": {
         "🟫": 100000,
         "🟢": 2222,
         "🔵": 2000,
@@ -26,7 +26,7 @@ const pickaxeRecipes = {
         "💚": 1,
         "💙": 1
     },
-    4: {
+    "void-crusher": {
         "📰": 250000,
         "🟢": 5555,
         "🔵": 5000,
@@ -36,7 +36,7 @@ const pickaxeRecipes = {
         "🤍": 1,
         "⚙️": 1
     },
-    5: {
+    "geode-staff": {
         "🪨": 500000,
         "🟢": 11000,
         "🔵": 10000,
@@ -47,7 +47,7 @@ const pickaxeRecipes = {
         "💠": 1,
         "🥏": 1
     },
-    6: {
+    "earth-soiler": {
         "🟫": 650000,
         "🟧": 75000,
         "🟪": 60000,
@@ -57,7 +57,7 @@ const pickaxeRecipes = {
         "🎄": 1,
         "🎍": 1
     },
-    7: {
+    "crypt-smasher": {
         "🌵": 500000,
         "🌊": 300000,
         "🟢": 150000,
@@ -70,7 +70,7 @@ const pickaxeRecipes = {
         "🐟": 2,
         "🎀": 2
     },
-    8: {
+    "labrynthian-tide": {
         "🧱": 5000000,
         "🌊": 5000000,
         "☢️": 5000000,
@@ -87,7 +87,7 @@ const pickaxeRecipes = {
         "🪙": 5,
         "🗿": 5
     },
-    9: {
+    "77-leaf-destroyer": {
         "📰": 15000000,
         "🧱": 15000000,
         "📝": 1,
@@ -100,7 +100,7 @@ const pickaxeRecipes = {
         "🎲": 50,
         "✂️": 50
     },
-    10: {
+    "planet-buster": {
         "🟫": 75000000,
         "🥗": 2,
         "🌪️": 5,
@@ -113,7 +113,7 @@ const pickaxeRecipes = {
         "🌻": 100,
         "🍁": 100
     },
-    11: {
+    "whirlpool-of-fate": {
         "🌊": 200000000,
         "💫": 1,
         "🪩": 5,
@@ -126,6 +126,23 @@ const pickaxeRecipes = {
         "🤿": 500,
         "🎣": 500,
         "⛵": 500
+    },
+    "wings-of-glory": {
+        "🧱": 150000000,
+        "🪨": 150000000,
+        "🌫️": 150000000,
+        "🌇": 1,
+        "🌈": 2,
+        "👁️": 3,
+        "💸": 15,
+        "🧊": 30,
+        "🥉": 30,
+        "❄️": 40,
+        "🧵": 50,
+        "🤍": 750,
+        "💚": 1500,
+        "⚫": 50000000,
+        "🟤": 35000000
     }
 },
 gearRecipes = {
@@ -219,53 +236,60 @@ const gearList = Object.keys(gearRecipes);
 
 let recipeElements = {"pickaxes": {}, "gears": {}};
 function displayRecipe(n, button) {
+    if (button.classList.contains("darkButton")) {
+        button.classList.remove("darkButton");
+        if (isVisible(document.getElementById("pickaxeCrafts")))
+            invisible(recipeElements["pickaxes"][n]);
+        else
+            invisible(recipeElements["gears"][n]);
+        invisible(document.getElementById("displayedRecipe"));
+        invisible(document.getElementById("itemDescription"));
+        return;
+    }
+    visible(document.getElementById("displayRecipe"));
+    visible(document.getElementById("displayedRecipe"));
+    visible(document.getElementById("itemDescription"));
     for (let element of document.getElementById("pickaxeCrafts").children)
-        element.classList.remove("darkButton")
+        element.classList.remove("darkButton");
     for (let element of document.getElementById("gearCrafts").children)
-        element.classList.remove("darkButton")
+        element.classList.remove("darkButton");
     button.classList.add("darkButton");
     if (isVisible(document.getElementById("pickaxeCrafts"))) {
-        if (typeof n !== "number") {
-            console.error("displayRecipe takes in a string for pickaxe recipes");
-            return;
-        }
+        const pick = n;
         let itemDescription = document.getElementById("itemDescription");
-        itemDescription.innerHTML = pickaxeDescriptions[n];
+        itemDescription.innerHTML = pickaxeDescriptions[pick];
         let recipes = document.getElementById("displayRecipe");
         while (recipes.firstChild)
             recipes.removeChild(recipes.firstChild);
         for (let pick in recipeElements["pickaxes"])
             invisible(recipeElements["pickaxes"][pick]);
-        recipes.appendChild(recipeElements["pickaxes"][n]);
-        visible(recipeElements["pickaxes"][n]);
+        recipes.appendChild(recipeElements["pickaxes"][pick]);
+        visible(recipeElements["pickaxes"][pick]);
         let button = recipes.firstElementChild.lastElementChild;
-        if (currentPickaxe === n)
+        if (currentPickaxe === pick)
             button.innerHTML = "Equipped!";
-        else if (pickaxes[n])
+        else if (pickaxes[pick])
             button.innerHTML = "Equip!";
         let displayedRecipe = document.createElement("p");
         displayedRecipe.id = "displayedRecipe";
-        displayedRecipe.innerHTML = `Pickaxe ${n}:`;
-        displayedRecipe.title = pickaxeSillyDescriptions[n];
+        displayedRecipe.innerHTML = `${pickaxeNamesNormalized[pick]}:`;
+        displayedRecipe.title = pickaxeSillyDescriptions[pick];
         recipes.insertBefore(displayedRecipe, recipes.children[0]);
         updateActiveRecipe();
     } else {
-        if (typeof n !== "string") {
-            console.error("displayRecipe takes in a string for gear recipes");
-            return;
-        }
+        const gear = n;
         let itemDescription = document.getElementById("itemDescription");
-        itemDescription.innerHTML = gearDescriptions[n];
+        itemDescription.innerHTML = gearDescriptions[gear];
         let recipes = document.getElementById("displayRecipe");
         while (recipes.firstChild)
             recipes.removeChild(recipes.firstChild);
         for (let gear in recipeElements["gears"])
             invisible(recipeElements["gears"][gear]);
-        recipes.appendChild(recipeElements["gears"][n]);
-        visible(recipeElements["gears"][n]);
+        recipes.appendChild(recipeElements["gears"][gear]);
+        visible(recipeElements["gears"][gear]);
         let displayedRecipe = document.createElement("p");
         displayedRecipe.id = "displayedRecipe";
-        displayedRecipe.innerHTML = `${gearNamesNormalized[n]}:`;
+        displayedRecipe.innerHTML = `${gearNamesNormalized[gear]}:`;
         recipes.insertBefore(displayedRecipe, recipes.children[0]);
         updateActiveRecipe();
     }
@@ -276,7 +300,7 @@ function createPickaxeRecipes() {
     let pickaxeCrafts = document.getElementById("pickaxeCrafts");
     for (let pick in pickaxeRecipes) {
         let pickaxeDisplay = document.createElement("div");
-        pickaxeDisplay.id = `pickaxeRecipe${pick}`;
+        pickaxeDisplay.id = `pickaxeRecipe${snakeToCamel(pick, true)}`;
         invisible(pickaxeDisplay);
         pickaxeDisplay.classList.add("craftingAmountsDisplay");
         for (let ingredient in pickaxeRecipes[pick]) {
@@ -293,9 +317,9 @@ function createPickaxeRecipes() {
             pickaxeDisplay.appendChild(ingredientDisplay);
         }
         let button = document.createElement("button");
-        button.id = `craftPickaxe${pick}`;
+        button.id = `craftPickaxe${snakeToCamel(pick, true)}`;
         button.classList.add("actualCraftButton");
-        button.setAttribute("onclick", `craftPickaxe(${pick}, this)`);
+        button.setAttribute("onclick", `craftPickaxe('${pick}', this)`);
         if (pickaxes[pick])
             button.innerHTML = "Equip!";
         else
@@ -304,9 +328,9 @@ function createPickaxeRecipes() {
         recipeElements["pickaxes"][pick] = pickaxeDisplay;
         
         let craftPickaxeButton = document.createElement("button");
-        craftPickaxeButton.setAttribute("onclick", `displayRecipe(${pick}, this)`);
-        craftPickaxeButton.classList.add("craftPickaxeButton");
-        craftPickaxeButton.innerHTML = `Pickaxe ${pick}`;
+        craftPickaxeButton.setAttribute("onclick", `displayRecipe('${pick}', this)`);
+        craftPickaxeButton.classList.add("craftPickaxeButton", "craftButton");
+        craftPickaxeButton.innerHTML = pickaxeNamesNormalized[pick];
         pickaxeCrafts.appendChild(craftPickaxeButton);
     }
 }
@@ -351,7 +375,7 @@ function createGearRecipes() {
         if (!gears["silly-tp"] && inventory["🎂"]["normal"] === 0 && gear === "silly-tp")
             invisible(craftGearButton);
         craftGearButton.setAttribute("onclick", `displayRecipe('${gear}', this)`);
-        craftGearButton.classList.add("craftGearButton");
+        craftGearButton.classList.add("craftGearButton", "craftButton");
         craftGearButton.innerHTML = gearNamesNormalized[gear];
         gearCrafts.appendChild(craftGearButton);
     }
@@ -436,14 +460,14 @@ function craftPickaxe(pick) {
                 inventory[ingredient]["normal"] -= pickaxeRecipes[pick][ingredient];
                 updateInventory(ingredient, "normal");
             }
-            let pickaxeDisplay = document.getElementById(`pickaxeRecipe${pick}`);
+            let pickaxeDisplay = document.getElementById(`pickaxeRecipe${snakeToCamel(pick, true)}`);
             pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
             updateActiveRecipe();
             createIndex();
             currentPickaxe = pick;
         }
     } else {
-        let pickaxeDisplay = document.getElementById(`pickaxeRecipe${pick}`);
+        let pickaxeDisplay = document.getElementById(`pickaxeRecipe${snakeToCamel(pick, true)}`);
         pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
         currentPickaxe = pick;
     }
@@ -484,14 +508,30 @@ function craftGear(gear, button) {
 }
 
 function showPickaxes() {
-    visible(document.getElementById("pickaxeCrafts"));
-    document.getElementById("showPickaxes").classList.add("darkButton");
-    invisible(document.getElementById("gearCrafts"));
-    document.getElementById("showGears").classList.remove("darkButton");
+    if (document.getElementById("showPickaxes").classList.contains("darkButton")) {
+        document.getElementById("showPickaxes").classList.remove("darkButton");
+        invisible(document.getElementById("pickaxeCrafts"));
+        invisible(document.getElementById("displayRecipe"));
+        invisible(document.getElementById("displayedRecipe"));
+        invisible(document.getElementById("itemDescription"));
+    } else {
+        visible(document.getElementById("pickaxeCrafts"));
+        document.getElementById("showPickaxes").classList.add("darkButton");
+        invisible(document.getElementById("gearCrafts"));
+        document.getElementById("showGears").classList.remove("darkButton");
+    }
 }
 function showGears() {
-    invisible(document.getElementById("pickaxeCrafts"));
-    document.getElementById("showPickaxes").classList.remove("darkButton");
-    visible(document.getElementById("gearCrafts"));
-    document.getElementById("showGears").classList.add("darkButton");
+    if (document.getElementById("showGears").classList.contains("darkButton")) {
+        document.getElementById("showGears").classList.remove("darkButton");
+        invisible(document.getElementById("gearCrafts"));
+        invisible(document.getElementById("displayRecipe"));
+        invisible(document.getElementById("displayedRecipe"));
+        invisible(document.getElementById("itemDescription"));
+    } else {
+        invisible(document.getElementById("pickaxeCrafts"));
+        document.getElementById("showPickaxes").classList.remove("darkButton");
+        visible(document.getElementById("gearCrafts"));
+        document.getElementById("showGears").classList.add("darkButton");
+    }
 }

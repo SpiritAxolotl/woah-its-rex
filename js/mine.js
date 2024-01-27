@@ -7,7 +7,6 @@ function createMine() {
             mine[y][c] = y === 0 ? "🟩" : "⬜";
     }
     mine[0][1000000000] = "⛏️"; //trusty pickaxe
-    displayArea();
     setLayer(0);
     checkAllAround(curX, curY, 1);
     displayArea();
@@ -85,6 +84,7 @@ function checkAllAround(x, y, luck) {
         clearInterval(loopTimer);
         blocksRevealedThisReset = 0;
         canMine = false;
+        gearAbilityInfinityCollector();
         setTimeout(() => {
             if (realVitriolActive) {
                 clearTimeout(realVitriolTimeout);
@@ -98,7 +98,13 @@ function checkAllAround(x, y, luck) {
 //MINING
 
 function mineBlock(x, y, cause, luck) {
-    if (mine[y][x] !== "⚪" && mine[y][x] !== "⛏️" && mine[y][x] !== "⬜") {
+    if (mine[y][x] === "⬜") {
+        generated = generateBlock(luck, {y: y, x: x});
+        mine[y][x] = generated["ore"];
+        if (generated["hasLog"])
+            verifiedOres.verifyLog(r, c);
+    }
+    if (mine[y][x] !== "⚪" && mine[y][x] !== "⛏️") {
         if (checkFromCave(y, x)) {
             const adjMulti = getCaveMultiFromOre(mine[y][x]);
             giveBlock(mine[y][x], x, y, false, true, adjMulti);
@@ -123,6 +129,7 @@ function mineBlock(x, y, cause, luck) {
             }
         }
     }
+    if (debug && debugVerbose) displayArea();
 }
 
 //ORE GENERATION AND OBTAINING
@@ -158,7 +165,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
                 verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
             if (oreList[ore]["prob"] >= 750000) {
                 if (hasGear("energy-siphoner")) gearAbilityProc();
-                if (currentPickaxe < 6 || oreList[ore]["prob"] > 2000000)
+                if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000)
                     logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
             }
             inventory[ore][variantNames[variant].toLowerCase()]++;
@@ -172,7 +179,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
                 if (oreList[ore]["prob"] >= 750000) {
                     if (hasGear("energy-siphoner"))
                         gearAbilityProc();
-                    if (currentPickaxe >= 6) {
+                    if (Object.keys(pickaxes).indexOf(currentPickaxe) >= 6) {
                         if (oreList[ore]["prob"] > 2000000)
                             logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
                     } else
