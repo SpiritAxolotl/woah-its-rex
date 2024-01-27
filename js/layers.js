@@ -178,85 +178,61 @@ class LayerManager {
     static layers = {
         "DIRT": {
             name: "Dirt",
-            layer: ["🌳","💐","🥗","🌪️","🌏","🌲","🎃","🎍","🎄","🪵","🌻","🍁","🟫"],
+            ores: ["🌳","💐","🥗","🌪️","🌏","🌲","🎃","🎍","🎄","🪵","🌻","🍁","🟫"],
             type: "normal",
             depth: 0
         },
         "BRICK": {
             name: "Brick",
-            layer: ["🏰","🌇","🥉","🪞","🔩","🧲","🪬","🧨","🔗","🪙","🗿","🪚","🪜","🧱"],
+            ores: ["🏰","🌇","🥉","🪞","🔩","🧲","🪬","🧨","🔗","🪙","🗿","🪚","🪜","🧱"],
             type: "normal",
             depth: 2000
         },
         "FOGGY": {
             name: "Foggy",
-            layer: ["🚿","👁️","💸","⌛","🧵","🕯️","🕋","🎨","🎴","🥽","🪄","🎭","🌫️"],
+            ores: ["🚿","👁️","💸","⌛","🧵","🕯️","🕋","🎨","🎴","🥽","🪄","🎭","🌫️"],
             type: "normal",
             depth: 4000
         },
         "WATER": {
             name: "Water",
-            layer: ["🐋","💫","🪩","👿","🌀","🔱","👑","🐟","🫧","🤿","🎣","⛵","🌊"],
+            ores: ["🐋","💫","🪩","👿","🌀","🔱","👑","🐟","🫧","🤿","🎣","⛵","🌊"],
             type: "normal",
             depth: 6000
         },
         "ROCK": {
             name: "Rock",
-            layer: ["🏔️","🌈","🧊","❄️","🏝️","✨","⛄","💎","☄️","🔮","🔋","💍","🥏","⚜️","💠","🪨"],
+            ores: ["🏔️","🌈","🧊","❄️","🏝️","✨","⛄","💎","☄️","🔮","🔋","💍","🥏","⚜️","💠","🪨"],
             type: "normal",
             depth: 8000
         },
         "RADIOACTIVE": {
             name: "Radioactive",
-            layer: ["⚠️","🎆","🧀","🌌","🥀","🎇","🔳","⏹️","🧩","🔔","⚗️","🧪","☢️"],
+            ores: ["⚠️","🎆","🧀","🌌","🥀","🎇","🔳","⏹️","🧩","🔔","⚗️","🧪","☢️"],
             type: "normal",
             depth: 10000
         },
         "CACTUS": {
             name: "Cactus",
-            layer: ["🐪","🏵️","🪐","💥","🔥","🔆","⭐","🎀","🗡️","📟","⚱️","🖍️","🌵"],
+            ores: ["🐪","🏵️","🪐","💥","🔥","🔆","⭐","🎀","🗡️","📟","⚱️","🖍️","🌵"],
             type: "normal",
             depth: 12000
         },
         "PAPER": {
             name: "Paper",
-            layer: ["💵","🪅","👀","🌟","📝","⌚","🗜️","🏆","🎲","✂️","🃏","⚙️","📰"],
+            ores: ["💵","🪅","👀","🌟","📝","⌚","🗜️","🏆","🎲","✂️","🃏","⚙️","📰"],
             type: "normal",
             depth: 14000
         },
         "SILLY": {
             name: "Silly",
-            layer: ["🧌","♾️","💅","✈️","🪢","🫃","🎂"],
+            ores: ["🧌","♾️","💅","✈️","🪢","🫃","🎂"],
             type: "silly"
         },
         "FLUTE": {
             name: "Flute",
-            layer: ["🪈"],
+            ores: ["🪈"],
             type: "flute"
-        },
-        "CAVECONFUSING": {
-            name: "Confusing",
-            layer: ["🪔","🩺","💱","🔭","📡","❓"],
-            type: "cave",
-            multi: 50
-        },
-        "CAVEMUSIC": {
-            name: "Music",
-            layer: ["🎷","🪘","🥁","🪇","🎹","🎵"],
-            type: "cave",
-            multi: 35
-        },
-        "CAVEBIOHAZARD": {
-            name: "Biohazard",
-            layer: ["🧫","🛸","🍄","🕸️","💉","☣️"],
-            type: "cave",
-            multi: 20
-        },
-        "CAVEGERM": {
-            name: "Germ",
-            layer: ["⚕️","🌡️","💊","🧬","🍥","🦠"],
-            type: "cave",
-            multi: 10
         }
     }
     
@@ -272,7 +248,7 @@ class LayerManager {
         let layers = [];
         for (let layer in LayerManager.layers)
             if (LayerManager.layers[layer].type === type)
-                layers.push(LayerManager.layers[layer].layer);
+                layers.push(LayerManager.layers[layer].ores);
         return layers;
     }
     
@@ -302,12 +278,19 @@ class LayerManager {
     getAllLayerOres() {
         let ores = [];
         for (let layer in LayerManager.layers)
-            ores.push(LayerManager.layers[layer].layer);
+            ores.push(LayerManager.layers[layer].ores);
         return ores;
     }
 }
 
 //SETTING LAYERS
+
+function getOreProbability(ore) {
+    for (let ores in oreList)
+        if (ores.includes(ore))
+            return ores[ore];
+    return undefined;
+}
 
 function getLayerFromOre(ore) {
     for (let layer in LayerManager.layers)
@@ -328,9 +311,9 @@ const [sillyLayer] = manager.getLayersFromType("silly");
 const [fluteLayer] = manager.getLayersFromType("flute");
 const normalLayersDepths = manager.getLayerDepthsFromType("normal");
 
-const allCaves = manager.getLayersFromType("cave");
-const allCavesNames = manager.getLayerNamesFromType("cave");
-const allCaveMultis = manager.getLayerMultisFromType("cave");
+// const allCaves = manager.getLayersFromType("cave");
+// const allCavesNames = manager.getLayerNamesFromType("cave");
+// const allCaveMultis = manager.getLayerMultisFromType("cave");
 
 const spawnsEverywhere = LayerManager.spawnsEverywhere;
 const unaffectedByLuck = LayerManager.unaffectedByLuck;
