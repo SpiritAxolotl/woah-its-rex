@@ -233,6 +233,30 @@ class LayerManager {
             name: "Flute",
             ores: ["🪈"],
             type: "flute"
+        },
+        "CAVECONFUSING": {
+            name: "Confusing",
+            ores: ["🪔","🩺","💱","🔭","📡","❓"],
+            type: "cave",
+            multi: 50
+        },
+        "CAVEMUSIC": {
+            name: "Music",
+            ores: ["🎷","🪘","🥁","🪇","🎹","🎵"],
+            type: "cave",
+            multi: 35
+        },
+        "CAVEBIOHAZARD": {
+            name: "Biohazard",
+            ores: ["🧫","🛸","🍄","🕸️","💉","☣️"],
+            type: "cave",
+            multi: 20
+        },
+        "CAVEGERM": {
+            name: "Germ",
+            ores: ["⚕️","🌡️","💊","🧬","🍥","🦠"],
+            type: "cave",
+            multi: 10
         }
     }
     
@@ -311,9 +335,9 @@ const [sillyLayer] = manager.getLayersFromType("silly");
 const [fluteLayer] = manager.getLayersFromType("flute");
 const normalLayersDepths = manager.getLayerDepthsFromType("normal");
 
-// const allCaves = manager.getLayersFromType("cave");
-// const allCavesNames = manager.getLayerNamesFromType("cave");
-// const allCaveMultis = manager.getLayerMultisFromType("cave");
+const allCaves = manager.getLayersFromType("cave");
+const allCavesNames = manager.getLayerNamesFromType("cave");
+const allCaveMultis = manager.getLayerMultisFromType("cave");
 
 const spawnsEverywhere = LayerManager.spawnsEverywhere;
 const unaffectedByLuck = LayerManager.unaffectedByLuck;
