@@ -242,8 +242,8 @@ button {
   background-color: #343434;
 }
 
-#musicButton {
-  width: auto;
+#musicVolume {
+  width: 100%;
 }
 
 .slidecontainer {

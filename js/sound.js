@@ -105,10 +105,10 @@ function attemptToPlaySound(prob) {
     else if (prob >= 160000000) playSound("unfathomable");
     else if (prob >= 25000000) playSound("enigmatic");
     else if (prob >= 5000000) {
-        if (currentPickaxe < 8 && !(hasGear("infinity-collector")))
+        if (Object.keys(pickaxes).indexOf(currentPickaxe) < 8 && !(hasGear("infinity-collector")))
             playSound("transcendent");
     } else if (prob >= 750000) {
-        if (currentPickaxe < 6)
+        if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6)
             playSound("exotic");
     }
 }
