@@ -234,23 +234,30 @@ function generateBlock(luck, location) {
 
 let distanceMulti = 1;
 let teleportY = 1000;
-function switchDistance() {
-    if (teleportY < 14000) {
-        teleportY = 2000 * distanceMulti + 1000;
-        distanceMulti++;
-    } else if (teleportY > 14000) {
+function switchDistance(direction) {
+    const dir = direction === "up" ? 1 : -1;
+    if (teleportY >= 1000 && teleportY <= 15000) {
+        teleportY += 2000 * dir;
+        distanceMulti += dir;
+        if (distanceMulti < 1) {
+            teleportY = 15000;
+            distanceMulti = 8;
+        } else if (distanceMulti > 8) {
+            teleportY = 1000;
+            distanceMulti = 1;
+        }
+    } else if (teleportY >= 14000) {
         teleportY = 1000;
         distanceMulti = 1;
+    } else if (teleportY < 1000) {
+        teleportY = 15000;
+        distanceMulti = 8;
     } else {
         teleportY = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").title = `
-Teleports you to ${teleportY}m
-    `;
-    document.getElementById("meterDisplay").innerHTML = `
-        ${lastItemIn(allLayers[(teleportY-1000)/2000])}
-    `;
+    document.getElementById("teleportButton").title = `Teleports you to ${teleportY}m`;
+    document.getElementById("teleportButton").innerHTML = `${lastItemIn(allLayers[(teleportY-1000)/2000])}`;
 }
 
 async function teleport(goToY) {
@@ -266,7 +273,7 @@ function toLocation(goToY) {
     let x = curX;
     let y = goToY || teleportY;
     if (typeof y !== "number") {
-        y = document.getElementById("meterDisplay").innerHTML;
+        y = document.getElementById("teleportButton").innerHTML;
         y = Number(y.substring(y.lastIndexOf(">")+1, y.lastIndexOf("m")));
     }
     for (let r = y - 50; r < y + 50; r++) {
