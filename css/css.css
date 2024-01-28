@@ -394,6 +394,7 @@ button {
 
 #creditsContainer {
   display: flex;
+  flex-direction: column;
   gap: 3em;
   align-items: center;
 }
