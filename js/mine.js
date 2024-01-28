@@ -232,9 +232,17 @@ function generateBlock(luck, location) {
             hasLog = true;
         }
         spawnMessage(blockToGive, location);
-        attemptToPlaySound(probability);
+        if (stopOnRare) {
+            if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || probability > 2000000)
+                stopMining();
+        }
     }
+    attemptToPlaySound(probability);
     return {ore: blockToGive, hasLog: hasLog};
+}
+
+function stopMining() {
+    goDirection(currDirection, 0);
 }
 
 //TELEPORTING
@@ -252,7 +260,12 @@ function switchDistance() {
         teleportY = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = `<span class="emoji small-emoji">${lastItemIn(allLayers[(teleportY-1000)/2000])}</span>${teleportY}m`;
+    document.getElementById("meterDisplay").innerHTML = `
+        <span class="emoji small-emoji">
+            ${lastItemIn(allLayers[(teleportY-1000)/2000])}
+        </span>
+        ${teleportY}m
+    `;
 }
 
 async function teleport(goToY) {
