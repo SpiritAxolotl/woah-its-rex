@@ -1,23 +1,24 @@
-const debug = window.location.href.match(/^https?:\/\/127\.0\.0\.1:\d{4}/) !== null;
-let debugLuck = "",
-    currLuck = 1,
-    mine = [], //[y, x]
-    curX = 1000000000, //large for a reason
-    curY = 0,
-    currentDisplay = "",
-    totalMined = 0,
-    totalResets = 0,
-    blocksRevealedThisReset = 0,
-    mineCapacity = 40000, // in case this ever needs to be raised
-    baseMineCapacity = 40000,
-    canMine = false,
-    lastDirection = "",
-    resetsThisSession = 0,
-    warnClose = true,
-    autoSave = true,
-    caveToggle = true,
-    turnOffAbilities = false,
-    debugVerbose = false;
+const debug = window.location.href.match(/^(https?:\/\/127\.0\.0\.1|localhost):\d{4}/) !== null;
+let debugLuck = "";
+let currLuck = 1;
+let mine = []; //[y, x]
+let curX = 1000000000; //large for a reason
+let curY = 0;
+let currentDisplay = "";
+let totalMined = 0;
+let totalResets = 0;
+let blocksRevealedThisReset = 0;
+let mineCapacity = 40000; // in case this ever needs to be raised
+let baseMineCapacity = 40000;
+let canMine = false;
+let lastDirection = "";
+let resetsThisSession = 0;
+let warnClose = true;
+let autoSave = true;
+let caveToggle = true;
+let turnOffAbilities = false;
+let debugVerbose = false;
+let stopOnRare = false;
 
 let pickaxes = {
     "ol-faithful": true,
@@ -104,7 +105,7 @@ const gearDescriptions = {
     "sugar-rush": "Increases ability proc rates by 20%.",
     "silly-tp": ":3<br>Instantly teleports you to the silly layer."
 };
-let gearNames = Object.keys(gears);
+const gearNames = Object.keys(gears);
 const gearNamesNormalized = {
     "ore-tracker": "Ore Tracker",
     "real-candilium": "Real Candilium",
@@ -441,7 +442,7 @@ let loopTimer = null,
     currDirection = "",
     miningSpeed = 25;
 function goDirection(direction, speed) {
-    if (currDirection === direction) {
+    if (currDirection === direction || speed === 0) {
         clearInterval(loopTimer);
         currDirection = "";
         if (realVitriolActive) {
