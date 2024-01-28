@@ -345,6 +345,7 @@ p, label, input[type=file] {
 }
 
 button {
+  cursor: pointer;
   font-size: 0.9em;
   user-select: none;
   background-color: #494949;
