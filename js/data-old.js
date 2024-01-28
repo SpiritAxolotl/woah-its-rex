@@ -13,9 +13,24 @@ function loadAllDataOld() {
                     inventory[data[0][i][0]][variantNames[j].toLowerCase()] = data[0][i][1][0][j];
             }
         }
+        const pickNumToStringConversion = {
+            0: "ol-faithful",
+            1: "mulch-mallet",
+            2: "mud-sickle",
+            3: "dirt-ravager",
+            4: "void-crusher",
+            5: "geode-staff",
+            6: "earth-soiler",
+            7: "crypt-smasher",
+            8: "labrynthian-tide",
+            9: "77-leaf-destroyer",
+            10: "planet-buster",
+            11: "whirlpool-of-fate",
+            12: "wings-of-glory"
+        }
         for (let i = 0; i < data[1][0][0].length; i++)
-            pickaxes[i] = data[1][0][0][i][1];
-        currentPickaxe = data[1][0][1];
+            pickaxes[pickNumToStringConversion[i]] = data[1][0][0][i][1];
+        currentPickaxe = pickNumToStringConversion[data[1][0][1]];
         totalMined = data[2];
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
         for (let ore in oreList) {
