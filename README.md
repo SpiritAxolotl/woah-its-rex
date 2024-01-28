@@ -52,16 +52,16 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Make the spawn/find messages into grids
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
-- [ ] Arrange the on-screen controls in a d-pad configuration
-- [x] Add a dedicated "reset game" button
+- [ ] ~~Arrange the on-screen controls in a d-pad configuration~~
+- [ ] Add a dedicated "reset game" button
 - [x] Add the main layer ore next to the teleport meter display button thing
-  - [ ] Center the emoji somehow
+- [x] Center the emoji somehow
 - [ ] Display what pickaxe the player has currently selected
 - [x] Let players equip pickaxe 0 if they want to
 - [x] Let gears be equippable
 - [x] totalResets statistic
 - [ ] Add what layer an ore spawns on when hovering (`title` attribute)
-- [ ] Update the title to something like the main branch
+- [x] Update the title to something like the main branch
 - [x] Hide crafting stuff by clicking the selected item again
 
 ## Misc.
@@ -77,10 +77,17 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Clean up the code in the scary pickaxe ability functions...
 - [ ] Add a list of features exclusive to this fork
 - [x] Scale all probability things
-- [ ] Add a better system for layer management (variable-wise) (make it a class maybe?)
+- [x] Add a better system for layer management (variable-wise) (make it a class maybe?)
+  - Thank you niko
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
   - replaced the icon (to differentiate between amber's version and my version) so I don't think I need to do this one yet
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
 - [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
+- [ ] Add more organized credits
+- [ ] Add a manager class for:
+  - [x] layers
+  - [ ] pickaxes
+  - [ ] gears
+  - [ ] ores

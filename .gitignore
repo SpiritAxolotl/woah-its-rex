@@ -1,2 +1,9 @@
 **/.DS_Store
 .vscode/*
+
+# yarn and linter stuff niko uses
+# TODO: implement node
+node_modules
+yarn.lock
+package.json
+.eslintrc.cjs

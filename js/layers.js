@@ -170,99 +170,185 @@ let inventory = {};
 for (let ore in oreList)
     inventory[ore] = {"normal": 0, "electrified": 0, "radioactive": 0, "explosive": 0};
 
-//SPAWNS ON ALL LAYERS
-const spawnsEverywhere = [/*"😻",*//*"⛄",*/"🤍","🖤","🤎","💜","❤️","🧡","💛","💙","💚","⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧"],
-
-unaffectedByLuck = ["⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧","🟫","🧱","🌫️","🌊","🪨","☢️","🌵","📰","🎂","🪈","❓","🎵","☣️","🦠"],
-
-//ALL LAYERS
-dirtLayer = ["🌳","💐","🥗","🌪️","🌏","🌲","🎃","🎍","🎄","🪵","🌻","🍁","🟫"],
-brickLayer = ["🏰","🌇","🥉","🪞","🔩","🧲","🪬","🧨","🔗","🪙","🗿","🪚","🪜","🧱"],
-foggyLayer = ["🚿","👁️","💸","⌛","🧵","🕯️","🕋","🎨","🎴","🥽","🪄","🎭","🌫️"],
-waterLayer = ["🐋","💫","🪩","👿","🌀","🔱","👑","🐟","🫧","🤿","🎣","⛵","🌊"],
-rockLayer = ["🏔️","🌈","🧊","❄️","🏝️","✨","⛄","💎","☄️","🔮","🔋","💍","🥏","⚜️","💠","🪨"],
-radioactiveLayer = ["⚠️","🎆","🧀","🌌","🥀","🎇","🔳","⏹️","🧩","🔔","⚗️","🧪","☢️"],
-cactusLayer = ["🐪","🏵️","🪐","💥","🔥","🔆","⭐","🎀","🗡️","📟","⚱️","🖍️","🌵"],
-paperLayer = ["💵","🪅","👀","🌟","📝","⌚","🗜️","🏆","🎲","✂️","🃏","⚙️","📰"],
-sillyLayer = ["🧌","♾️","💅","✈️","🪢","🫃","🎂"],
-fluteLayer = ["🪈"],
-
-caveTypeConfusing = ["🪔","🩺","💱","🔭","📡","❓"],
-caveTypeMusic = ["🎷","🪘","🥁","🪇","🎹","🎵"],
-caveTypeBiohazard = ["🧫","🛸","🍄","🕸️","💉","☣️"],
-caveTypeGerm = ["⚕️","🌡️","💊","🧬","🍥","🦠"],
-allCaves = [caveTypeConfusing, caveTypeMusic, caveTypeBiohazard, caveTypeGerm],
-allCavesNames = ["Confusing", "Music", "Biohazard", "Germ"],
-
-allLayers = [
-    dirtLayer,
-    brickLayer,
-    foggyLayer,
-    waterLayer,
-    rockLayer,
-    radioactiveLayer,
-    cactusLayer,
-    paperLayer,
-    sillyLayer,
-    fluteLayer,
-    caveTypeConfusing,
-    caveTypeMusic,
-    caveTypeBiohazard,
-    caveTypeGerm
-],
-
-allLayersNames = [
-    "Dirt",
-    "Brick",
-    "Foggy",
-    "Water",
-    "Rock",
-    "Radioactive",
-    "Cactus",
-    "Paper",
-    "Silly",
-    "Flute",
-    "CaveConfusing",
-    "CaveMusic",
-    "CaveBiohazard",
-    "CaveGerm"
-],
-
-normalLayers = [
-    dirtLayer,
-    brickLayer,
-    foggyLayer,
-    waterLayer,
-    rockLayer,
-    radioactiveLayer,
-    cactusLayer,
-    paperLayer
-],
-
-sillyLayers = [
-    sillyLayer,
-    fluteLayer
-];
-
-function getLayerFromOre(ore) {
-    for (let layer of allLayers) {
-        if (layer.indexOf(ore) !== -1) {
-            return layer;
+class LayerManager {
+    
+    static spawnsEverywhere = [/*"😻",*//*"⛄",*/"🤍","🖤","🤎","💜","❤️","🧡","💛","💙","💚","⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧"];
+    static unaffectedByLuck = ["⚫","🟤","🟣","🔴","🟠","🟡","🔵","🟢","🟪","🟥","🟧","🟫","🧱","🌫️","🌊","🪨","☢️","🌵","📰","🎂","🪈","❓","🎵","☣️","🦠"];
+    
+    static layers = {
+        "DIRT": {
+            name: "Dirt",
+            ores: ["🌳","💐","🥗","🌪️","🌏","🌲","🎃","🎍","🎄","🪵","🌻","🍁","🟫"],
+            type: "normal",
+            depth: 0
+        },
+        "BRICK": {
+            name: "Brick",
+            ores: ["🏰","🌇","🥉","🪞","🔩","🧲","🪬","🧨","🔗","🪙","🗿","🪚","🪜","🧱"],
+            type: "normal",
+            depth: 2000
+        },
+        "FOGGY": {
+            name: "Foggy",
+            ores: ["🚿","👁️","💸","⌛","🧵","🕯️","🕋","🎨","🎴","🥽","🪄","🎭","🌫️"],
+            type: "normal",
+            depth: 4000
+        },
+        "WATER": {
+            name: "Water",
+            ores: ["🐋","💫","🪩","👿","🌀","🔱","👑","🐟","🫧","🤿","🎣","⛵","🌊"],
+            type: "normal",
+            depth: 6000
+        },
+        "ROCK": {
+            name: "Rock",
+            ores: ["🏔️","🌈","🧊","❄️","🏝️","✨","⛄","💎","☄️","🔮","🔋","💍","🥏","⚜️","💠","🪨"],
+            type: "normal",
+            depth: 8000
+        },
+        "RADIOACTIVE": {
+            name: "Radioactive",
+            ores: ["⚠️","🎆","🧀","🌌","🥀","🎇","🔳","⏹️","🧩","🔔","⚗️","🧪","☢️"],
+            type: "normal",
+            depth: 10000
+        },
+        "CACTUS": {
+            name: "Cactus",
+            ores: ["🐪","🏵️","🪐","💥","🔥","🔆","⭐","🎀","🗡️","📟","⚱️","🖍️","🌵"],
+            type: "normal",
+            depth: 12000
+        },
+        "PAPER": {
+            name: "Paper",
+            ores: ["💵","🪅","👀","🌟","📝","⌚","🗜️","🏆","🎲","✂️","🃏","⚙️","📰"],
+            type: "normal",
+            depth: 14000
+        },
+        "SILLY": {
+            name: "Silly",
+            ores: ["🧌","♾️","💅","✈️","🪢","🫃","🎂"],
+            type: "silly"
+        },
+        "FLUTE": {
+            name: "Flute",
+            ores: ["🪈"],
+            type: "flute"
+        },
+        "CAVECONFUSING": {
+            name: "Confusing",
+            ores: ["🪔","🩺","💱","🔭","📡","❓"],
+            type: "cave",
+            multi: 50
+        },
+        "CAVEMUSIC": {
+            name: "Music",
+            ores: ["🎷","🪘","🥁","🪇","🎹","🎵"],
+            type: "cave",
+            multi: 35
+        },
+        "CAVEBIOHAZARD": {
+            name: "Biohazard",
+            ores: ["🧫","🛸","🍄","🕸️","💉","☣️"],
+            type: "cave",
+            multi: 20
+        },
+        "CAVEGERM": {
+            name: "Germ",
+            ores: ["⚕️","🌡️","💊","🧬","🍥","🦠"],
+            type: "cave",
+            multi: 10
         }
     }
-    return undefined;
+    
+    getLayerNamesFromType(type) {
+        let names = [];
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                names.push(LayerManager.layers[layer].name);
+        return names;
+    }
+    
+    getLayersFromType(type) {
+        let layers = [];
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                layers.push(LayerManager.layers[layer].ores);
+        return layers;
+    }
+    
+    getLayerMultisFromType(type) {
+        let multis = [];
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                multis.push(LayerManager.layers[layer].multi);
+        return multis;
+    }
+    
+    getLayerDepthsFromType(type) {
+        let depths = [];
+        for (let layer in LayerManager.layers)
+            if (LayerManager.layers[layer].type === type)
+                depths.push(LayerManager.layers[layer].depth);
+        return depths;
+    }
+    
+    getAllLayerNames() {
+        let names = [];
+        for (let layer in LayerManager.layers)
+            names.push(LayerManager.layers[layer].name);
+        return names;
+    }
+    
+    getAllLayerOres() {
+        let ores = [];
+        for (let layer in LayerManager.layers)
+            ores.push(LayerManager.layers[layer].ores);
+        return ores;
+    }
 }
 
 //SETTING LAYERS
 
-//let lastLayerChange = 6000;
+function getOreProbability(ore) {
+    for (let ores in oreList)
+        if (ores.includes(ore))
+            return ores[ore];
+    return undefined;
+}
+
+function getLayerFromOre(ore) {
+    for (let layer in LayerManager.layers)
+        if (layer.includes(ore))
+            return layer;
+    return undefined;
+}
+
+// GENERAL STUFF (SAME NAME FOR COMPATIBILITY)
+
+const manager = new LayerManager();
+
+const allLayersNames = manager.getAllLayerNames();
+const allLayers = manager.getAllLayerOres();
+
+const normalLayers = manager.getLayersFromType("normal");
+const [sillyLayer] = manager.getLayersFromType("silly");
+const [fluteLayer] = manager.getLayersFromType("flute");
+const normalLayersDepths = manager.getLayerDepthsFromType("normal");
+
+const allCaves = manager.getLayersFromType("cave");
+const allCavesNames = manager.getLayerNamesFromType("cave");
+const allCaveMultis = manager.getLayerMultisFromType("cave");
+
+const spawnsEverywhere = LayerManager.spawnsEverywhere;
+const unaffectedByLuck = LayerManager.unaffectedByLuck;
+
 let layersChanged = {};
-let currentLayer = undefined;
-let overrideLayer = undefined;
+let currentLayer;
+let overrideLayer;
 function setLayer(y) {
     regY = Math.floor(y / 2000);
     const lastCurrentLayer = allLayers[allLayersNames.indexOf(layersChanged[`${regY}`])]; //might be undefined
-    if (Object.keys(layersChanged).indexOf(`${regY}`) === -1) {
+    if (!Object.keys(layersChanged).includes(`${regY}`)) {
         if (typeof overrideLayer === "object") {
             currentLayer = overrideLayer;
             overrideLayer = undefined;
