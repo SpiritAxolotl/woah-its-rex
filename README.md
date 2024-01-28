@@ -1,7 +1,9 @@
-# woah, it's rex
+# Woah It's Rex
 This is a 2D browser version of a 3D idle mining game on Roblox called REx:R.
 
-This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes).
+This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes). Her version can be found [here](https://ambercatgirl.github.io/woah-its-rex).
+
+# [LICENSE](./media/LICENSE.mp4)
 
 # TODO List
 
@@ -85,7 +87,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
   - replaced the icon (to differentiate between amber's version and my version) so I don't think I need to do this one yet
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
-- [x] Make a dev branch 
+- [x] Make a dev branch
   - [ ] and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
@@ -95,3 +97,4 @@ This is an unofficial version of amber's original project to make the code more 
   - [x] layers
   - [ ] pickaxes & gears
   - [ ] ores
+- [ ] Move this TODO list to the github projects thing
