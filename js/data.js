@@ -224,14 +224,14 @@ function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
 
 function showData() {
     canMine = false;
-    visible(document.getElementById("dataExport"));
-    invisible(document.getElementById("mainContent"));
+    visible(document.getElementById("pausedGameContainer"));
+    // invisible(document.getElementById("mainContent"));
 }
 
 function hideData() {
     canMine = true;
-    invisible(document.getElementById("dataExport"));
-    visible(document.getElementById("mainContent"));
+    invisible(document.getElementById("pausedGameContainer"));
+    // visible(document.getElementById("mainContent"));
 }
 
 function warnBeforeClosingToggle(toggle) {

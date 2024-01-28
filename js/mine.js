@@ -214,7 +214,7 @@ function generateBlock(luck, location) {
         return {ore: "🟩", hasLog: false};
     for (let ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
-        const chosenLuck = unaffectedByLuck.indexOf(ore) === -1 ? modifiedLuck : baseLuck;
+        const chosenLuck = !unaffectedByLuck.includes(ore) ? modifiedLuck : baseLuck;
         if (chosenLuck < summedProbability) {
             blockToGive = ore;
             break;
@@ -249,23 +249,30 @@ function stopMining() {
 
 let distanceMulti = 1;
 let teleportY = 1000;
-function switchDistance() {
-    if (teleportY < 14000) {
-        teleportY = 2000 * distanceMulti + 1000;
-        distanceMulti++;
-    } else if (teleportY > 14000) {
+function switchDistance(direction) {
+    const dir = direction === "up" ? 1 : -1;
+    if (teleportY >= 1000 && teleportY <= 15000) {
+        teleportY += 2000 * dir;
+        distanceMulti += dir;
+        if (distanceMulti < 1) {
+            teleportY = 15000;
+            distanceMulti = 8;
+        } else if (distanceMulti > 8) {
+            teleportY = 1000;
+            distanceMulti = 1;
+        }
+    } else if (teleportY >= 14000) {
         teleportY = 1000;
         distanceMulti = 1;
+    } else if (teleportY < 1000) {
+        teleportY = 15000;
+        distanceMulti = 8;
     } else {
         teleportY = 1000;
         distanceMulti = 1;
     }
-    document.getElementById("meterDisplay").innerHTML = `
-        <span class="emoji small-emoji">
-            ${lastItemIn(allLayers[(teleportY-1000)/2000])}
-        </span>
-        ${teleportY}m
-    `;
+    document.getElementById("teleportButton").title = `Teleports you to ${teleportY}m`;
+    document.getElementById("teleportButton").innerHTML = `${lastItemIn(allLayers[(teleportY-1000)/2000])}`;
 }
 
 async function teleport(goToY) {
@@ -281,7 +288,7 @@ function toLocation(goToY) {
     let x = curX;
     let y = goToY || teleportY;
     if (typeof y !== "number") {
-        y = document.getElementById("meterDisplay").innerHTML;
+        y = document.getElementById("teleportButton").innerHTML;
         y = Number(y.substring(y.lastIndexOf(">")+1, y.lastIndexOf("m")));
     }
     for (let r = y - 50; r < y + 50; r++) {
@@ -315,9 +322,13 @@ function getParams(distanceX, distanceY, x, y) {
 }
 
 function updateCapacity(value) {
-    value = Number(value);
-    if (!isNaN(value) && value > 0) {
-        baseMineCapacity = value;
-        mineCapacity = value;
-    }
+    capacity = Number(value);
+    if (!isNaN(capacity)) {
+        if (capacity > 0) {
+            if (window.confirm("Warning: Increasing mine capacity above 40k will most likely slow down your browser. Are you certain you want to do this?")) {
+                baseMineCapacity = capacity;
+                mineCapacity = capacity;
+            }
+        } else window.alert(`"${capacity}" should be greater than 0!`);
+    } else window.alert(`"${value}" is not a number!`);
 }

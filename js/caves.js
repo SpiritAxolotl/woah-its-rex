@@ -1,11 +1,6 @@
-const caves = [50, 35, 20, 10];
-
 function generateCave(x, y, rate, reps, type) {
     if (type === undefined)
         type = getCaveType();
-        /*if (type === undefined) {
-            type = currentLayer;
-        }*/
     let distX = random(3, 12);
     let distY = random(3, 12);
     let newOrigins = [];
@@ -27,7 +22,7 @@ function generateCave(x, y, rate, reps, type) {
             }
         }
     }
-    rate += Math.round(Math.random() * 10) / 450;
+    rate += random(9) / 450;
     reps++;
     for (let origin of newOrigins)
         generateCave(origin["x"], origin["y"], rate, reps, type);
@@ -103,7 +98,7 @@ function generateCaveBlock(y, x, type) {
     const modifiedLuck = baseLuck/caveLuck;
     for (let ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
-        const chosenLuck = unaffectedByLuck.indexOf(ore) === -1 ? modifiedLuck : baseLuck;
+        const chosenLuck = !unaffectedByLuck.includes(ore) ? modifiedLuck : baseLuck;
         if (chosenLuck < summedProbability) {
             blockToGive = ore;
             break;
@@ -128,39 +123,22 @@ function generateCaveBlock(y, x, type) {
     return {ore: blockToGive, hasLog: hasLog, adjRarity: adjRarity};
 }
 
-function getCaveMulti(type) {
-    let multi = 1;
-    switch(type) {
-        case caveTypeConfusing:
-            multi = caves[0];
-            break;
-        case caveTypeMusic:
-            multi = caves[1];
-            break;
-        case caveTypeBiohazard:
-            multi = caves[2];
-            break;
-        case caveTypeGerm:
-            multi = caves[3];
-            break;
-    }
-    return multi;
+function getCaveMulti(cave) {
+    return allCaves.indexOf(cave);
 }
 
-const caveProbsSum = addUpAllProbs(caves);
+const caveProbsSum = addUpAllProbs(allCaveMultis);
 function getCaveType() {
     let luck = 1;
     if (pickaxes["wings-of-glory"] && currentPickaxe === "wings-of-glory")
         luck = 2;
     let caveType = undefined;
     let summedProbability = 0;
-    const baseLuck = Math.random()*caveProbsSum;
-    const modifiedLuck = baseLuck/luck;
-    for (let cave of caves) {
+    const chosenValue = Math.random()*caveProbsSum;
+    for (let cave of allCaveMultis) {
         summedProbability += 1/cave;
-        const chosenLuck = modifiedLuck;
-        if (chosenLuck < summedProbability) {
-            caveType = allCaves[caves.indexOf(cave)];
+        if (chosenValue < summedProbability) {
+            caveType = allCaves[allCaveMultis.indexOf(cave)];
             break;
         }
     }
@@ -179,15 +157,14 @@ function checkFromCave(y, x) {
 }
 function getCaveMultiFromOre(ore) {
     for (let cave of allCaves) {
-        if (cave.indexOf(ore) !== -1) {
-            return caves[allCaves.indexOf(cave)];
-        }
+        if (cave.includes(ore))
+            return allCaveMultis[allCaves.indexOf(cave)];
     }
     return 1;
 }
 function getCaveTypeFromOre(ore) {
     for (let cave of allCaves) {
-        if (cave.indexOf(ore) !== -1) {
+        if (cave.includes(ore)) {
             return cave;
         }
     }
