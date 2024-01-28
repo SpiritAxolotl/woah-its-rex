@@ -32,9 +32,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Create /dev
-        run: mkdir -p /dev
+        run: mkdir -p ./dev
       - name: Move to /dev
-        run: mv . /dev
+        run: mv . ./dev
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
