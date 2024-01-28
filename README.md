@@ -47,7 +47,9 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Add versions
 - [x] Hold shift to constantly go in a direction (after hitting wasd)
 - [x] SillyTP has its own layer
-- [x] Highlight a layer when it's completed (as well as the elements under it when the player has at least one)
+- [ ] Highlight a layer when it's completed (as well as the elements under it when the player has at least one)
+  - new UI changes this lol. will have to re-implement
+  - (highlighting still works on completion)
 - [x] Add reset count to ore tracker logs
 - [ ] Color spawned messages based on whether the player mined it or not
 - [ ] Make the spawn/find messages into grids
@@ -66,7 +68,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Hide crafting stuff by clicking the selected item again
 
 ## Misc.
-- [ ] Update to latest 
+- [x] Update to latest
 - [ ] Combine gear and pickaxe crafting methods \[low priority\]
 - [x] Make the layer variables arrays again with probability being stored in orelist
 - [ ] Rename all "block"s to "ore"?
