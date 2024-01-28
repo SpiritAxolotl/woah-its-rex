@@ -20,6 +20,7 @@ let turnOffAbilities = false;
 let debugVerbose = false;
 let stopOnRare = false;
 
+//TODO: refactor this
 let pickaxes = {
     "ol-faithful": true,
     "mulch-mallet": false,
@@ -120,6 +121,14 @@ const gearNamesNormalized = {
 };
 let currentPickaxe = "ol-faithful";
 let currentGears = [];
+
+/*
+Object.defineProperty(Array.prototype, 'contains', {
+    value: function(any) {
+        return this.indexOf(any) !== -1;
+    }
+});
+*/
 
 function visible(element) {
     element.classList.remove("invisible");
@@ -378,9 +387,10 @@ function hasAny(ore) {
 }
 
 function hasGear(gear) {
-    return gears[gear] && currentGears.indexOf(gear) !== -1;
+    return gears[gear] && currentGears.includes(gear);
 }
 
+let settingsToggle = false;
 document.addEventListener("keydown", (event) => {
     let name = event.key.toLowerCase();
     let validInput = false;
@@ -417,6 +427,12 @@ document.addEventListener("keydown", (event) => {
             validInput = true;
             name = "d";
             break;
+        case "escape":
+            event.preventDefault();
+            settingsToggle = !settingsToggle;
+            hideData();
+            if (settingsToggle)
+                showData();
         /*default:
             console.log("wrong key!");
             break;*/
@@ -497,9 +513,9 @@ function changeCanDisplay(toggle) {
 function displayArea() {
     if (canDisplay) {
         let output = "";
-        const constraints = getParams(9, 9);
+        const constraints = getParams(12, 9);
         for (let y = curY - constraints["up"]; y <= curY + 9 + (9-constraints["up"]); y++) {
-            for (let x = curX - constraints["left"]; x <= curX + 9 + (9-constraints["left"]); x++) {
+            for (let x = curX - constraints["left"]; x <= curX + 12 + (12-constraints["left"]); x++) {
                 /*if (mine[r][c] === "⚪") {
                     output += "<span style='opacity:0;'>" + mine[r][c] + "</span>"
                 } else {
@@ -511,7 +527,7 @@ function displayArea() {
         }
         document.getElementById("blockDisplay").innerHTML = output;
     }
-    document.getElementById("mineResetProgress").innerHTML = `Reset Progress:<br>${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
+    document.getElementById("mineResetProgress").innerHTML = `Reset Progress: ${(blocksRevealedThisReset/mineCapacity*100).toFixed(2)}%`;
     document.getElementById("resetsThisSession").innerHTML = `(Reset #${resetsThisSession.toLocaleString()})`;
     document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
     document.getElementById("location").innerHTML = `X: ${curX - 1000000000}<br>Y: ${-curY}`;
@@ -519,6 +535,7 @@ function displayArea() {
 
 //HTML EDITING
 
+//TODO: Refactor this too
 let currVariant = 0;
 const variantNames = ["Normal", "Electrified", "Radioactive", "Explosive"];
 const variantNamesEmojis = ["", "⚡️", "☢️", "💥"];
@@ -532,15 +549,35 @@ function switchInventory() {
     showing = false;
 }
 
+function createOreDisplay(ore, variant, luck) {
+    if (typeof variant !== "string")
+        variant = "normal";
+    variant = variant.toLowerCase();
+    if (typeof luck !== "number")
+        luck = 1/variantMultis[variant];
+    let oreTotal = inventory[ore][variant].toLocaleString();
+    let oreProb = oreList[ore]["prob"].toLocaleString();
+    if (!unaffectedByLuck.includes(ore))
+        oreProb = Math.round(oreList[ore]["prob"] / luck).toLocaleString();
+    return `
+    <p class="emoji">${ore}</p>
+    <div class="totalAndProbContainer">
+        <p class="oreTotal">x${oreTotal}</p>
+        <p class="oreProb">1/${oreProb}</p>
+    </div>
+    `;
+}
+
 function createInventory() {
     for (let ore in oreList) {
         for (let variant of variantNames) {
-            let element = document.createElement("p");
+            let element = document.createElement("div");
             element.id = ore + variant;
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
             element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+            element.innerHTML = createOreDisplay(ore, variant)
             document.getElementById(`inventory${variant}`).appendChild(element);
         }
     }
@@ -549,39 +586,36 @@ function createInventory() {
 function createIndex() {
     document.getElementById("indexDisplay").innerHTML = "";
     let output = "";
-    let multi = verifiedOres.getLuckBoosts()[currentPickaxe];
+    let luckBoost = verifiedOres.getLuckBoosts()[currentPickaxe];
     if (hasGear("real-candilium"))
-        multi *= 1.1;
+        luckBoost *= 1.1;
     if (hasGear("fortune-3-book"))
-        multi *= 1.6;
+        luckBoost *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
-        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}"><p class="oreTitle" id="${allLayersNames[i]}Title">`;
-        if (allCaves.indexOf(allLayers[i]) === -1)
+        output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}">`;
+        output += `<p class="oreTitle" id="${allLayersNames[i]}Title">`;
+        if (!allCaves.includes(allLayers[i]))
             output += `${allLayersNames[i]} Layer`;
         else
-            output += `${allCavesNames[allCaves.indexOf(allLayers[i])]} Cave (1/${caves[allCaves.indexOf(allLayers[i])]})`;
+            output += `${allCavesNames[allCaves.indexOf(allLayers[i])]} Cave (1/${allCaveMultis[allCaves.indexOf(allLayers[i])]})`;
         
-        if (normalLayers.indexOf(allLayers[i]) !== -1)
-            output += ` (${i * 2000}-${(i+1) * 2000}m)`;
+        if (normalLayers.includes(allLayers[i]))
+            output += ` (${normalLayersDepths[i]}-${normalLayersDepths[i]+2000}m)`;
         output += "</p>";
         for (let ore of allLayers[i]) {
-            //const prob = oreList[ore]["prob"];
             //if (prob > 2000000 && prob < 5000000000)
-            output += `<p class="oreDisplay" id="${ore}Index"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">`;
-            if (unaffectedByLuck.indexOf(ore) === -1 && allCaves.indexOf(allLayers[i]) !== -1)
-                output += `1/${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
-            else
-                output += `1/${oreList[ore]["prob"].toLocaleString()}</span></p>`;
+            output += `<div class="oreDisplay" id=${ore}Index>`;
+            output += createOreDisplay(ore, undefined, luckBoost);
+            output += "</div>";
         }
-        output += `</div>`;
+        output += "</div>";
     }
-    output += `<div class="layerDisplay" id="layerDisplayEverywhere"><p class="oreTitle" id="EverywhereTitle">Everywhere</p>`;
+    output += `<div class="layerDisplay" id="layerDisplayEverywhere">`;
+    output += `<p class="oreTitle" id="EverywhereTitle">Everywhere</p>`;
     for (let ore of spawnsEverywhere) {
-        output += `<p class="oreDisplay" id="${ore}Index"><span class="emoji">${ore}</span> | <span title="1/${oreList[ore]["prob"].toLocaleString()}">1/`;
-        if (unaffectedByLuck.indexOf(ore) === -1)
-            output += `${Math.round(oreList[ore]["prob"] / multi).toLocaleString()}</span></p>`;
-        else
-            output += `${oreList[ore]["prob"].toLocaleString()}</span></p>`;
+        output += `<div class="oreDisplay" id=${ore}Index>`;
+        output += createOreDisplay(ore, undefined, luckBoost);
+        output += "</div>";
     }
     document.getElementById("indexDisplay").innerHTML = output;
     updateIndex();
@@ -611,7 +645,7 @@ function updateIndex(type) {
         if (document.getElementById(`${ore}Index`) !== null && hasAnyOre)
             document.getElementById(`${ore}Index`).classList.add("hasOne");
         const index = allLayers.indexOf(getLayerFromOre(ore));
-        const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.indexOf(ore) !== -1 ? "Everywhere" : undefined;
+        const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.includes(ore) ? "Everywhere" : undefined;
         const display = document.getElementById(`layerDisplay${name}`);
         if (display !== null && hasAnyOre) {
             if (!isVisible(display))
@@ -629,7 +663,7 @@ function updateIndex(type) {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + capitalize(variant)).innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+    document.getElementById(ore + capitalize(variant)).innerHTML = createOreDisplay(ore, variant);
     if (inventory[ore][variant.toLowerCase()] > 0)
         visible(document.getElementById(ore + capitalize(variant)));
     else
@@ -697,3 +731,46 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     }
     document.getElementById("latestFinds").innerHTML = output;
 }
+
+let moveOnce = false;
+const movementModes = {
+    "a": {
+        "two": `<i class="fas fa-angles-left"></i>`,
+        "one": `<i class="fas fa-angle-left"></i>`
+    },
+    "d": {
+        "two": `<i class="fas fa-angles-right"></i>`,
+        "one": `<i class="fas fa-angle-right"></i>`
+    },
+    "w": {
+        "two": `<i class="fas fa-angles-up"></i>`,
+        "one": `<i class="fas fa-angle-up"></i>`
+    },
+    "s": {
+        "two": `<i class="fas fa-angles-down"></i>`,
+        "one": `<i class="fas fa-angle-down"></i>`
+    }
+}
+
+
+function switchMovementMode () {
+    moveOnce = !moveOnce;
+    refreshButtons();
+}
+
+function refreshButtons() {
+    let elements = document.getElementsByClassName("movementButton")
+    Array.from(elements).forEach((element) => {
+        if (moveOnce == true) {
+            element.innerHTML = movementModes[element.id]["one"];
+            element.onclick = () => {moveOne(element.id, element)};
+            element.title = "Hold shift to automine";
+        } else {
+            element.innerHTML = movementModes[element.id]["two"];
+            element.onclick = () => {goDirection(element.id)};
+            element.title = "Hold shift to move once";
+        }
+    })
+}
+
+refreshButtons();

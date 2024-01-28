@@ -4,93 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Woah It's Rex!</title>
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="Rex Reincarnated, REx, REx:R, Re:Rex, woah it's rex, Roblox">
-    <meta property="og:title" content="Re:REx">
-    <meta property="og:description" content="A 2D browser version of a 3D luck-based idle mining game.">
+    <meta name="keywords" content="Rex Reincarnated, REx, REx:R, Re:Rex, woah it's rex, Roblox, go mining">
+    <meta name="description" content="A 2D browser version of a 3D luck-based idle mining game.">
+    
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://spiritaxolotl.github.io/woah-its-rex">
     <meta property="og:type" content="website">
-    <link property="og:type" content="images/game-icon.png">
+    <meta property="og:title" content="Woah It's Rex!">
+    <meta property="og:description" content="A 2D browser version of a 3D luck-based idle mining game.">
+    <meta property="og:image" content="/images/embed.png">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="spiritaxolotl.github.io">
+    <meta property="twitter:url" content="https://spiritxaxolotl.github.io/woah-its-rex">
+    <meta name="twitter:title" content="Woah It's Rex!">
+    <meta name="twitter:description" content="A 2D browser version of a 3D luck-based idle mining game.">
+    <meta name="twitter:image" content="/images/embed.png">
+    
+    <!--<link property="og:type" content="favicon.ico">-->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="js/layers.js"></script>
-    <script src="js/logs.js"></script>
-    <script src="js/mine.js"></script>
-    <script src="js/sound.js"></script>
-    <script src="js/mineReset.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/abilities.js"></script>
-    <script src="js/crafting.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/data-old.js"></script>
-    <script src="js/caves.js"></script>
-    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="/css/css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <noscript>
     <div id="noscript">
-        <p>Enable javascript dumbass</p>
+        <p>Enable JavaScript for this game to work!!</p>
     </div>
 </noscript>
 <div id="pressPlay">
-    <p id="gameTitle">Re:REx</p>
-    <p id="credits">
-        Game originally made by <code>@thecatofalltime</code> on Discord!<br>
-        Some features made by <code>@millabasset</code> on Discord!<br>
-        Background music made by <code>@x2corp</code> on Discord!<br>
-        Spawn sounds come from REx:R on Roblox<br>
-        Some sounds made by <code>@tevv_</code> on Discord!<br>
-        UI, major code refactor, and new features by <code>@Spaxolotl</code> on Discord!
-    </p>
-    <button id="playButton" class="invisible" onclick="loadContent()">Play!</button>
+    <p id="gameTitle">Woah It's Rex</p>
+    <div id="creditsContailer">
+        <ul id="credits">
+            <li>Game originally made by <code>@thecatofalltime</code> on Discord!</li>
+            <li>UI, major code refactor, and new features by <code>@Spaxolotl</code> on Discord!</li>
+            <li>Some features made by <code>@millabasset</code> on Discord!</li>
+            <li>Background music made by <code>@x2corp</code> on Discord!</li>
+            <li>Spawn sounds come from REx:R on Roblox</li>
+            <li>Some sounds made by <code>@tevv_</code> on Discord!</li>
+            <li>With some help provided by <code>@nikoundrscr</code> on Discord!</li>
+        </ul>
+        <button id="playButton" class="invisible" onclick="loadContent()">Play!</button>
+    </div>
 </div>
 <div id="mainContent" class="invisible">
 <div class="container-fluid">
 <div class="row">
     <div class="col" id="col-1">
-        <div class="mobile">
-            <button onclick="goDirection('a')" class="movementButton">Left</button>
-            <button onclick="goDirection('s')" class="movementButton">Down</button>
-            <button onclick="goDirection('w')" class="movementButton">Up</button>
-            <button onclick="goDirection('d')" class="movementButton">Right</button>
-            <button onclick="teleport()" class="movementButton">Teleport!</button>
+        <div class="headerButtons">
+            <button id="resetMine" class="redButton" onclick="resetMine()">Reset Mine</button>
+            <button id="settings" class="whiteButton" onclick="showData()">Settings</button>
+            <button id ="disableDisplay" class="whiteButton" onclick="changeCanDisplay()">Disable Display</button>
         </div>
-        <div class="mobile">
-            <button onclick="moveOne('a', this)" class="movementButton">Left 1</button>
-            <button onclick="moveOne('s', this)" class="movementButton">Down 1</button>
-            <button onclick="moveOne('w', this)" class="movementButton">Up 1</button>
-            <button onclick="moveOne('d', this)" class="movementButton">Right 1</button>
-            <button onclick="switchDistance()" class="movementButton" id="meterDisplay"><span class="emoji small-emoji">🟫</span>1000m</button>
-        </div>
-        <p id="blockDisplay" class="emoji"></p>
-        <div id="latestDisplays">
-            <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
-            <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
-        </div>
-    </div>
-    <div class="col" id="col-2">
-        <div>
-            <button id="resetMine" onclick="resetMine()">Reset Mine</button>
-            <button id="settings" onclick="showData()">Settings</button>
-            <button id ="disableDisplay" onclick="changeCanDisplay()">Disable Display</button>
-        </div>
-        <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
-        <p id="resetsThisSession">(Reset #0)</p>
-        <p id="blocksMined">0 Blocks Mined</p>
-        <p id="location">X: 0<br>Y: 0</p>
-        <p id="spawnMessage">Spawn Messages Appear Here!</p>
-        <p id="crafting">Crafting</p>
+        <p id="spawnMessage" style="padding-top: 1rem;">Spawn Messages Appear Here!</p>
         <div id="craftingClick">
-            <div>
-                <button onclick="showPickaxes()" id="showPickaxes" class="darkButton">Pickaxes</button>
-                <button onclick="showGears()" id="showGears">Gears</button>
+            <div class="headerButtons" style="border-top: solid;">
+                <button onclick="showPickaxes()" class="whiteButton" id="showPickaxes" class="darkButton">Pickaxes</button>
+                <button onclick="showGears()" class="whiteButton" id="showGears">Gears</button>
             </div>
             <div id="pickaxeCrafts"></div>
             <div id="gearCrafts" class="invisible"></div>
@@ -102,15 +74,63 @@
             <p id="itemDescription"></p>
         </div>
     </div>
-    <div class="col" id="col-3">
-        <div id="musicStuff">
-            <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
-            <p>Music Volume</p>
-            <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
+    <div class="col" id="col-2">
+        <div style="max-width: 100%;">
+            <div class="movementButtons">
+                <button id="a" class="movementButton">
+                    <i class="fas fa-angles-left"></i>
+                </button>
+                <button id="s" class="movementButton">
+                    <i class="fa-solid fa-angles-down"></i>
+                </button>
+                <button id="w" class="movementButton">
+                    <i class="fa-solid fa-angles-up"></i>
+                </button>
+                <button id="d" class="movementButton">
+                    <i class="fa-solid fa-angles-right"></i>
+                </button>
+                <button onclick="switchMovementMode()" id="movementMode">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+                <div id="teleportContainer">
+                    <div id="switchDistanceContainer">
+                        <button onclick="switchDistance('down')">
+                            <i class="fas fa-angle-left"></i>
+                        </button>
+                        <button onclick="switchDistance('up')">
+                            <i class="fas fa-angle-right"></i>
+                        </button>
+                    </div>
+                    <button onclick="teleport()" id="teleportButton" title="Teleports you to 1000m">
+                        <span class="emoji">🟫</span>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div>
-            <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
-            <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
+        <!-- <div class="mobile">
+            <button onclick="moveOne('a', this)" class="movementButton">Left 1</button>
+            <button onclick="moveOne('s', this)" class="movementButton">Down 1</button>
+            <button onclick="moveOne('w', this)" class="movementButton">Up 1</button>
+            <button onclick="moveOne('d', this)" class="movementButton">Right 1</button>
+        </div> -->
+        <p id="blockDisplay" class="emoji"></p>
+        <div id="generalStats">
+            <p id="location">X: 0 / Y: 0</p>
+            <div>
+                <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
+                <p id="resetsThisSession">(Reset #0)</p>
+                <p id="blocksMined">0 Blocks Mined</p>
+            </div>
+        </div>
+        <div id="latestDisplays">
+            <p id="latestSpawns" class="latestDisplay">Latest Spawns Will Appear Here</p>
+            <p id="latestFinds" class="latestDisplay">Latest Finds Will Appear Here</p>
+        </div>
+    </div>
+    <div class="col" id="col-3">
+        <div id="switchButtons" class="headerButtons">
+            <button id="switchInventory" class="whiteButton inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
+            <button id="showIndex" class="whiteButton inventoryButtons" onclick="showIndex()">Show Index</button>
         </div>
         <div id="inventoryDisplay">
             <div id="inventoryNormal"></div>
@@ -121,44 +141,78 @@
         </div>
         <a href="https://discord.gg/tXxYa6ubYf" id="discord" target="_blank">
             <img src="images/discord-logo.svg" alt="Discord Logo">
-            <p>Join the Discord!</p>
+            <p>Join the Spinning Rat Discord!</p>
+        </a>
+        <a href="https://discord.gg/WfFj2bxGTX" id="discord" target="_blank">
+            <img src="images/discord-logo.svg" alt="Discord Logo">
+            <p>Join the Woah It's Rex Discord!</p>
         </a>
     </div>
 </div>
 </div>
 </div>
-<div id="dataExport" class="invisible">
-<div class="container-fluid">
-    <label for="dataFile">Import Data</label>
-    <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
-    <button onclick="exportData()">Export Data</button>
-    <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
-    <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
-    <br>
-    <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
-    <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
-    <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
-    <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
-    <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
-    <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
-    <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
-    <br>
-    <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
-    <div id="logHolder"></div>
-    <div id="masterVolume">
-        <p>Spawn Volume</p>
-        <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
+<div id="pausedGameContainer" class="invisible">
+    <div class="pausedTitleContainer">
+        <h1 id="pausedTitle">Woah It's Rex!
+            <div>
+                <p class="subtext">SPAX'S FORK</p>
+                <p class="subtext"><a href="https://github.com/SpiritAxolotl/woah-its-rex">#c6b9194</a></p>
+            </div>
+        </h1>
+        <span>Paused</span>
+        <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
     </div>
-    <br>
-    <input autocomplete="off" type="text" id="mineCapacitySetter">
-    <button onclick="updateCapacity(document.getElementById('mineCapacitySetter').value)" id="updateCapacityButton">Update Mine Capacity</button>
-    <br>
-    <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
-    <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
-    <button onclick="stopOnRareToggle()" id="stopOnRareButton">Stop on Rare: off</button>
-    <button onclick="resetGame()" id="resetGameButton">Reset Game</button>
-    <p>No, we are not implementing custom background colors. Custom theme support is coming in the future.</p>
+    <div class="container-fluid settingsMenu">
+        <label for="dataFile">Import Data</label>
+        <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
+        <button onclick="exportData()">Export Data</button>
+        <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
+        <br>
+        <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
+        <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
+        <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
+        <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
+        <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
+        <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
+        <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
+        <br>
+        <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
+        <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
+        <div id="logHolder"></div>
+        <div id="masterVolume">
+            <div class="volumeController">
+                <p>Spawn Volumes</p>
+                <label class="slidecontainer" for="spawnVolume"></label>
+                <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
+            </div>
+            <div class="volumeController">
+                <p>Music Volume</p>
+                <label class="slidecontainer" for="musicVolume"></label>
+                <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
+            </div>
+        </div>
+        <input autocomplete="off" type="text" id="mineCapacitySetter">
+        <button onclick="updateCapacity(document.getElementById('mineCapacitySetter').value)" id="updateCapacityButton">Update Mine Capacity</button>
+        <br>
+        <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
+        <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
+        <button onclick="stopOnRareToggle()" id="stopOnRareButton">Stop on Rare: off</button>
+        <button onclick="resetGame()" id="resetGameButton">Reset Game</button>
+        <p>No, we are not implementing custom background colors. Custom theme support is coming in the future.</p>
+    </div>
 </div>
-</div>
+
+<script src="js/layers.js"></script>
+<script src="js/logs.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/mineReset.js"></script>
+<script src="js/main.js"></script>
+<script src="js/abilities.js"></script>
+<script src="js/crafting.js"></script>
+<script src="js/caves.js"></script>
+<script src="js/mine.js"></script>
+<script src="js/data.js"></script>
+<script src="js/data-old.js"></script>
+
 </body>
 </html>
