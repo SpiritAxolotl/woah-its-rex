@@ -538,7 +538,7 @@ button {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  background-image: url("./images/bg.png");
+  background-image: url("../images/bg.png");
   background-size: cover;
   z-index: 4;
 }
