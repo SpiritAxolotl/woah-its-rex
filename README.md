@@ -85,11 +85,11 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
   - replaced the icon (to differentiate between amber's version and my version) so I don't think I need to do this one yet
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
-- [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
+- [x] Make a dev branch 
+  - [ ] and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
   - cmon please be less spammy but still useful
-  - test!!
 - [ ] Add more organized credits
 - [ ] Add a manager class for:
   - [x] layers
