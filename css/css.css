@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: "Twemoji";
-  src: url("/fonts/Twemoji.otf");
+  src: url("../fonts/Twemoji.otf");
 }
 
 :root {
