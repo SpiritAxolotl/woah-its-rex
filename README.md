@@ -1,7 +1,13 @@
-# woah, it's rex
+# A final note
+Hi. It's Spax. Amber is filing a DMCA claim against this repository. As much as I hate to do this, I am going to be taking down the website build and archiving the repository. I would hope I won't have to delete it (or be forced to delete it) but I guess you'll find out if this webpage disappears. Thank you to everyone who playtested, sent me bug reports, and contributed to the code. I'm sorry for my mistakes.
+-Spax
+
+# Woah It's Rex
 This is a 2D browser version of a 3D idle mining game on Roblox called REx:R.
 
-This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes).
+This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes). Her version can be found [here](https://ambercatgirl.github.io/woah-its-rex).
+
+# [LICENSE](./media/LICENSE.mp4)
 
 # TODO List
 
@@ -47,7 +53,9 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Add versions
 - [x] Hold shift to constantly go in a direction (after hitting wasd)
 - [x] SillyTP has its own layer
-- [x] Highlight a layer when it's completed (as well as the elements under it when the player has at least one)
+- [ ] Highlight a layer when it's completed (as well as the elements under it when the player has at least one)
+  - new UI changes this lol. will have to re-implement
+  - (highlighting still works on completion)
 - [x] Add reset count to ore tracker logs
 - [ ] Color spawned messages based on whether the player mined it or not
 - [ ] Make the spawn/find messages into grids
@@ -83,13 +91,14 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
   - replaced the icon (to differentiate between amber's version and my version) so I don't think I need to do this one yet
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
-- [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
+- [x] Make a dev branch
+  - [ ] and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
   - cmon please be less spammy but still useful
 - [ ] Add more organized credits
 - [ ] Add a manager class for:
   - [x] layers
-  - [ ] pickaxes
-  - [ ] gears
+  - [ ] pickaxes & gears
   - [ ] ores
+- [ ] Move this TODO list to the github projects thing
