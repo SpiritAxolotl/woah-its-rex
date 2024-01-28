@@ -198,13 +198,13 @@ function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
 
 function showData() {
     canMine = false;
-    visible(document.getElementById("dataExport"));
+    visible(document.getElementById("pausedGameContainer"));
     // invisible(document.getElementById("mainContent"));
 }
 
 function hideData() {
     canMine = true;
-    invisible(document.getElementById("dataExport"));
+    invisible(document.getElementById("pausedGameContainer"));
     // visible(document.getElementById("mainContent"));
 }
 

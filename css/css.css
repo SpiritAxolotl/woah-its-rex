@@ -115,18 +115,16 @@ body {
   padding: 0;
 }
 
-#teleportContainer > * {
-  width: 50%;
-}
-
 #switchDistanceContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: max-content;
 }
 
 #switchDistanceContainer > button {
   border-bottom: none;
+  max-width: 10%;
 }
 
 #inventoryDisplay > * {
