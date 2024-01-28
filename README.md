@@ -35,6 +35,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Fix latest spawns not displaying when it should be ??? \[medium priority\]
 - [ ] Fix index completion highlighting on ores themselves (only doesn't work for some ores)
 - [ ] Replace my `overflow-y: scroll;` stuff with `overflow: clip;` to better get rid of scrollbars
+- [ ] Players can seemingly keep mining when the game is paused if they pause during an activity
 
 ## New features
 - [x] Softcode things that will be harder to scale
