@@ -759,16 +759,16 @@ function switchMovementMode () {
 }
 
 function refreshButtons() {
-    let elements = document.getElementsByClassName("movementButton")
+    let elements = document.getElementsByClassName("movementButton");
     Array.from(elements).forEach((element) => {
-        if (moveOnce == true) {
+        if (moveOnce === true) {
             element.innerHTML = movementModes[element.id]["one"];
             element.onclick = () => {moveOne(element.id, element)};
-            element.title = "Hold shift to automine";
+            //element.title = "Hold shift to automine";
         } else {
             element.innerHTML = movementModes[element.id]["two"];
             element.onclick = () => {goDirection(element.id)};
-            element.title = "Hold shift to move once";
+            //element.title = "Hold shift to move once";
         }
     })
 }
