@@ -16,6 +16,8 @@ body {
   background-color: var(--bgcolor);
   max-height: 100%;
   font-family: "Courier";
+  margin: 0;
+  padding: 0;
 }
 
 *::-webkit-scrollbar {
@@ -69,7 +71,13 @@ body {
   box-sizing: border-box;
   font-family: "Lexend", "Twemoji", monospace;
 }
-
+#credits {
+  line-height: 2em;
+}
+#credits li code {
+  color: #ff306b;
+  font-family:'Courier New', Courier, monospace;
+}
 #inventoryDisplay {
   overflow-y: scroll;
   /* justify-self: stretch; */
@@ -78,7 +86,7 @@ body {
   border-left: none;
   border-top: none;
   border-right: none;
-  margin-top: 0.35em;
+  /* margin-top: 0.35em; */
   flex-grow: 1;
 }
 
@@ -151,7 +159,9 @@ body {
 
 .oreDisplay .emoji {
   font-size: 2em;
-  margin-left: .2em;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: block;
 }
 
 .totalAndProbContainer > * {
@@ -341,7 +351,7 @@ button {
   border-style: solid;
   border-color: white;
   border-width: 0.1em;
-  border-radius: 0.25em;
+  /* border-radius: 0.25em; */
   color: white;
   /* font-family: "Lexend", sans-serif; */
   text-align: center;
