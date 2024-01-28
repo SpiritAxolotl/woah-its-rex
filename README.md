@@ -66,7 +66,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [x] Hide crafting stuff by clicking the selected item again
 
 ## Misc.
-- [x] Update to latest
+- [ ] Update to latest 
 - [ ] Combine gear and pickaxe crafting methods \[low priority\]
 - [x] Make the layer variables arrays again with probability being stored in orelist
 - [ ] Rename all "block"s to "ore"?
@@ -90,6 +90,5 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Add more organized credits
 - [ ] Add a manager class for:
   - [x] layers
-  - [ ] pickaxes
-  - [ ] gears
+  - [ ] pickaxes & gears
   - [ ] ores
