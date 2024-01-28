@@ -231,7 +231,7 @@ function showData() {
 function hideData() {
     canMine = true;
     invisible(document.getElementById("pausedGameContainer"));
-    // visible(document.getElementById("mainContent"));
+    //visible(document.getElementById("mainContent"));
 }
 
 function warnBeforeClosingToggle(toggle) {
