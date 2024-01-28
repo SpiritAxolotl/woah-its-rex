@@ -6,9 +6,6 @@ on:
   push:
     branches: ["dev"]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -31,17 +28,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Create /dev
-        run: mkdir -p ./dev
-      - name: Move to /dev
-        run: mv . ./dev
+        with:
+          path: './site/dev' 
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './dev'
+          path: './site/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
