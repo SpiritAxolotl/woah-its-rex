@@ -50,16 +50,16 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Make the spawn/find messages into grids
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
-- [ ] Arrange the on-screen controls in a d-pad configuration
+- [ ] ~~Arrange the on-screen controls in a d-pad configuration~~
 - [ ] Add a dedicated "reset game" button
 - [x] Add the main layer ore next to the teleport meter display button thing
-  - [ ] Center the emoji somehow
+- [x] Center the emoji somehow
 - [ ] Display what pickaxe the player has currently selected
 - [x] Let players equip pickaxe 0 if they want to
 - [x] Let gears be equippable
 - [x] totalResets statistic
 - [ ] Add what layer an ore spawns on when hovering (`title` attribute)
-- [ ] Update the title to something like the main branch
+- [x] Update the title to something like the main branch
 
 ## Misc.
 - [x] Update to latest
@@ -75,7 +75,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Add a list of features exclusive to this fork
 - [x] Scale all probability things
 - [x] Add a better system for layer management (variable-wise) (make it a class maybe?)
-  - Thank you nkko
+  - Thank you niko
 - [ ] Somehow shift the game icon down by three pixels without increasing the filesize
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
 - [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
