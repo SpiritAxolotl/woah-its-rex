@@ -76,7 +76,7 @@ body {
 }
 #credits li code {
   color: #ff306b;
-  font-family:'Courier New', Courier, monospace;
+  font-family: "Courier New", "Courier", monospace;
 }
 #inventoryDisplay {
   overflow-y: scroll;
@@ -110,7 +110,7 @@ body {
   width: 100%;
 }
 .movementButtons button:hover {
-  background-color:white;
+  background-color: white;
   color: black;
 }
 
@@ -261,8 +261,8 @@ body {
   height: 100%;
   width: 100%;
   position: absolute;
-  top:0; 
-  left:0;
+  top: 0;
+  left: 0;
   backdrop-filter: blur(5px) brightness(0.5);
   z-index: 20;
   display: flex;
@@ -389,7 +389,7 @@ button {
 }
 #credits {
   text-align: left;
-  color:white;
+  color: white;
 }
 
 #creditsContainer {
@@ -414,11 +414,11 @@ button {
   transition: background-color 0.2s, color 0.2s, border 0.5s;
 }
 .headerButtons > *:hover {
-  background-color:white;
+  background-color: white;
   color: black;
 }
 .redButton:hover {
-  background-color:#eb2424;
+  background-color: #eb2424;
   color: black;
 }
 
@@ -430,7 +430,7 @@ button {
   transition: all 0.2s;
 }
 #playButton:hover {
-  background-color:#24eb24;
+  background-color: #24eb24;
   border-color: #161b1d00;
 }
 #col-1 {
@@ -556,7 +556,7 @@ code {
 #masterVolume {
   text-align: center;
   max-width: 30em;
-  gap:2em;
+  gap: 2em;
   display: flex;
   /*position: absolute;
   left: 50%;
@@ -590,5 +590,5 @@ code {
 
 .pausedTitleContainer {
   margin-bottom: auto;
-  color:white;
+  color: white;
 }
