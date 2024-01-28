@@ -2,7 +2,21 @@ class secureLogs {
     #spawnLogs;
     #verifiedLogs;
     #logsTimer;
-    #maxLuck = [1, 1.2, 1.35, 1.8, 2, 5, 10, 3, 4, 20, 17.5, 30];
+    #maxLuck = {
+        "ol-faithful": 1,
+        "mulch-mallet": 1.2,
+        "mud-sickle": 1.35,
+        "dirt-ravager": 1.8,
+        "void-crusher": 2,
+        "geode-staff": 5,
+        "earth-soiler": 10,
+        "crypt-smasher": 3,
+        "labrynthian-tide": 4,
+        "77-leaf-destroyer": 20,
+        "planet-buster": 17.5,
+        "whirlpool-of-fate": 30,
+        "wings-of-glory": 75
+    };
     constructor() {
         this.#spawnLogs = [];
         this.#verifiedLogs = [];
@@ -65,7 +79,7 @@ class secureLogs {
                     const multi = variantMultis[variantNames.indexOf(log["variant"])];
                     output += `${log["ore"]}, ${log["date"]}, ${log["something"]}, ${log["variant"]}, `;
                     output += `${log["y"]}, `;
-                    output +=`${Math.floor(1/oreList[log["ore"]]["prob"] * multi / log["luck"])}, ${Math.log10(log["luck"] * log["y"])}<br>`;
+                    output += `${Math.floor(1/oreList[log["ore"]]["prob"] * multi / log["luck"])}, ${Math.log10(log["luck"] * log["y"])}<br>`;
                 }
                 this.#logsTimer = setInterval(this.#reloadLogs, 50, output !== "" ? output : "none");
         } else {

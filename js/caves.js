@@ -129,6 +129,9 @@ function getCaveMulti(cave) {
 
 const caveProbsSum = addUpAllProbs(allCaveMultis);
 function getCaveType() {
+    let luck = 1;
+    if (pickaxes["wings-of-glory"] && currentPickaxe === "wings-of-glory")
+        luck = 2;
     let caveType = undefined;
     let summedProbability = 0;
     const chosenValue = Math.random()*caveProbsSum;
