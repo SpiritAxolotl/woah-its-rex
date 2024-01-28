@@ -1,3 +1,7 @@
+# A final note
+Hi. It's Spax. Amber is filing a DMCA claim against this repository. As much as I hate to do this, I am going to be taking down the website build and archiving the repository. I would hope I won't have to delete it (or be forced to delete it) but I guess you'll find out if this webpage disappears. Thank you to everyone who playtested, sent me bug reports, and contributed to the code. I'm sorry for my mistakes.
+-Spax
+
 # Woah It's Rex
 This is a 2D browser version of a 3D idle mining game on Roblox called REx:R.
 
