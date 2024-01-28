@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Create /dev
+        run: mkdir -p /dev
       - name: Move to /dev
         run: mv . /dev
       - name: Setup Pages
