@@ -86,6 +86,7 @@ This is an unofficial version of amber's original project to make the code more 
 - [ ] Make a dev branch and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
+  - cmon please be less spammy but still useful
 - [ ] Add more organized credits
 - [ ] Add a manager class for:
   - [x] layers
