@@ -165,7 +165,7 @@
     <div class="container-fluid settingsMenu">
         <label for="dataFile">Import Data</label>
         <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
-        <button onclick="exportData()">Export Data</button>
+        <button onclick="exportData()" id="dataExport">Export Data</button>
         <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
         <br>
         <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
@@ -177,7 +177,7 @@
         <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
         <br>
         <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
-        <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
+        <button id="musicButton" class="inventoryButtons invisible" onclick="toggleMusic()">Mute Music</button>
         <div id="logHolder"></div>
         <div id="masterVolume">
             <div class="volumeController">
