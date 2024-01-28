@@ -22,6 +22,7 @@ function saveAllData() {
     dataStorage["settings"]["musicVolume"] = Number(document.getElementById("musicVolume").value);
     dataStorage["settings"]["spawnVolume"] = Number(document.getElementById("spawnVolume").value);
     dataStorage["settings"]["musicButton"] = Number(document.getElementById("musicButton").innerHTML);
+    dataStorage["settings"]["stopOnRare"] = stopOnRare;
     dataStorage["settings"]["baseMineCapacity"] = baseMineCapacity;
     dataStorage["settings"]["warnBeforeClosing"] = warnClose;
     dataStorage["settings"]["autoSave"] = autoSave;
@@ -104,6 +105,10 @@ function loadAllData() {
         if (typeof data["settings"]["warnBeforeClosing"] === "boolean") {
             warnClose = data["settings"]["warnBeforeClosing"];
             warnBeforeClosingToggle(warnClose);
+        }
+        if (typeof data["settings"]["stopOnRare"] === "boolean") {
+            stopOnRare = data["settings"]["stopOnRare"];
+            stopOnRareToggle(stopOnRare);
         }
         totalResets = data["stats"]["totalResets"] || 0;
         if (typeof data["gears"] === "object")
@@ -235,6 +240,14 @@ function warnBeforeClosingToggle(toggle) {
     else
         warnClose = !warnClose;
     document.getElementById("warnBeforeClosingButton").innerHTML = `Warn Before Closing: ${warnClose ? "on" : "off"}`;
+}
+
+function stopOnRareToggle(toggle) {
+    if (typeof toggle === "boolean")
+        stopOnRare = toggle;
+    else
+    stopOnRare = !stopOnRare;
+    document.getElementById("stopOnRareButton").innerHTML = `Stop on Rare: ${stopOnRare ? "on" : "off"}`;
 }
 
 async function warnBeforeClosing() {
