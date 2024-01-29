@@ -8,6 +8,7 @@ This is a 2D browser version of a 3D idle mining game on Roblox called REx:R.
 This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes). Her version can be found [here](https://ambercatgirl.github.io/woah-its-rex).
 
 # [LICENSE](./media/LICENSE.mp4)
+From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-license-manifesto.html)
 
 # TODO List
 
