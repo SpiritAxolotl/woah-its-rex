@@ -302,7 +302,7 @@ function movePlayer(dir) {
         switch (dir) {
             case "s":
                 mineBlock(curX, curY + 1, "mining", 1);
-                mine[curY][curX] = "⚪";
+                mine[curY][curX] = "⬜";
                 prepareArea("s");
                 curY++;
                 mine[curY][curX] = "⛏️";
@@ -312,7 +312,7 @@ function movePlayer(dir) {
             case "w":
                 if (curY > 0) {
                     mineBlock(curX, curY - 1, "mining", 1);
-                    mine[curY][curX] = "⚪";
+                    mine[curY][curX] = "⬜";
                     prepareArea("w");
                     curY--;
                     mine[curY][curX] = "⛏️";
@@ -323,7 +323,7 @@ function movePlayer(dir) {
             case "a":
                 if (curX > 0) {
                     mineBlock(curX - 1, curY, "mining", 1);
-                    mine[curY][curX] = "⚪";
+                    mine[curY][curX] = "⬜";
                     prepareArea("a");
                     curX--;
                     mine[curY][curX] = "⛏️";
@@ -332,7 +332,7 @@ function movePlayer(dir) {
                 break;
             case "d":
                 mineBlock(curX + 1, curY, "mining", 1);
-                mine[curY][curX] = "⚪";
+                mine[curY][curX] = "⬜";
                 prepareArea("d");
                 curX++;
                 mine[curY][curX] = "⛏️";
@@ -516,7 +516,7 @@ function displayArea() {
         const constraints = getParams(12, 9);
         for (let y = curY - constraints["up"]; y <= curY + 9 + (9-constraints["up"]); y++) {
             for (let x = curX - constraints["left"]; x <= curX + 12 + (12-constraints["left"]); x++) {
-                /*if (mine[r][c] === "⚪") {
+                /*if (mine[r][c] === "⬜") {
                     output += "<span style='opacity:0;'>" + mine[r][c] + "</span>"
                 } else {
                     output += mine[r][c];
