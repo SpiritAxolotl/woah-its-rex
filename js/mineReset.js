@@ -106,10 +106,10 @@ function mineResetAid() {
         let x = 1000000000;
         let y = curY;
         for (let r = y - 50; r < y + 50; r++) {
-            if (r > -1 && mine[r] === undefined) mine[r] = [];
+            if (r >= 0) mine[r] ??= [];
             for (let c = x - 50; c < x + 50; c++)
                 if (typeof mine[r] === "object")
-                    mine[r][c] = "⬜";
+                    mine[r][c] ??= "⬜";
         }
         checkAllAround(curX, curY, 1);
     }, 125);
