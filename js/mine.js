@@ -17,35 +17,25 @@ function prepareArea(facing) {
     switch(facing) {
         case "a":
             for (let y = curY - constraints["up"]; y < curY + 50; y++) {
-                if (mine[y] === undefined)
-                    mine[y] = [];
-                if (mine[y][curX - constraints["left"]] === undefined)
-                    mine[y][curX - constraints["left"]] = y === 0 ? "🟩" : "⬜";
+                mine[y] ??= [];
+                mine[y][curX - constraints["left"]] ??= y === 0 ? "🟩" : "⬜";
             }
             break;
         case "s":
-            if (mine[curY + 50] === undefined)
-                mine[curY + 50] = [];
-            for (let x = curX - constraints["left"]; x < curX + 50; x++) {
-                if (mine[curY + 50][x] === undefined)
-                    mine[curY + 50][x] = "⬜";
-            }
+            mine[curY + 50] ??= [];
+            for (let x = curX - constraints["left"]; x < curX + 50; x++)
+                mine[curY + 50][x] ??= "⬜";
             break;
         case "d":
             for (let y = curY - constraints["up"]; y < curY + 50; y++) {
-                if (mine[y] === undefined)
-                    mine[y] = [];
-                if (mine[y][curX + 50] === undefined)
-                    mine[y][curX + 50] = y === 0 ? "🟩" : "⬜";
+                mine[y] ??= [];
+                mine[y][curX + 50] ??= y === 0 ? "🟩" : "⬜";
             }
             break;
         case "w":
-            if (mine[curY - constraints["up"]] === undefined)
-                mine[curY - constraints["up"]] = [];
-            for (let x = curX - constraints["left"]; x < curX + 50; x++) {
-                if (mine[curY - constraints["up"]][x] === undefined)
-                    mine[curY - constraints["up"]][x] = curY - constraints["up"] === 0 ? "🟩" : "⬜";
-            }
+            mine[curY - constraints["up"]] ??= [];
+            for (let x = curX - constraints["left"]; x < curX + 50; x++)
+                mine[curY - constraints["up"]][x] ??= curY - constraints["up"] === 0 ? "🟩" : "⬜";
             break;
     }
 }
@@ -173,16 +163,15 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
             updateIndex(ore);
         } else {
             if (getCaveTypeFromOre(ore) === currentLayer) {
-                if (oreList[ore]["prob"] * rarity > 160000000) {
+                if (oreList[ore]["prob"] * rarity > 160000000)
                     verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
-                }
                 if (oreList[ore]["prob"] >= 750000) {
                     if (hasGear("energy-siphoner"))
                         gearAbilityProc();
-                    if (Object.keys(pickaxes).indexOf(currentPickaxe) >= 6) {
+                    if (Object.keys(pickaxes).indexOf(currentPickaxe) >= 6)
                         if (oreList[ore]["prob"] > 2000000)
                             logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
-                    } else
+                    else
                         logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
                 }
             } else {
@@ -232,10 +221,9 @@ function generateBlock(luck, location) {
             hasLog = true;
         }
         spawnMessage(blockToGive, location);
-        if (stopOnRare) {
+        if (stopOnRare)
             if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || probability > 2000000)
                 stopMining();
-        }
     }
     attemptToPlaySound(probability);
     return {ore: blockToGive, hasLog: hasLog};
@@ -292,9 +280,9 @@ function toLocation(goToY) {
         y = Number(y.substring(y.lastIndexOf(">")+1, y.lastIndexOf("m")));
     }
     for (let r = y - 50; r < y + 50; r++) {
-        if(mine[r] === undefined) mine[r] = [];
+        mine[r] ??= [];
         for (let c = x - 50; c < x + 50; c++)
-            if (mine[r][c] === undefined) mine[r][c] = "⬜";
+            mine[r][c] ??= "⬜";
     }
     setLayer(y - 50);
     mine[curY][curX] = "⚪";
@@ -310,8 +298,8 @@ function toLocation(goToY) {
 }
 
 function getParams(distanceX, distanceY, x, y) {
-    if (x === undefined) x = curX;
-    if (y === undefined) y = curY;
+    x ??= curX;
+    y ??= curY;
     let displayLeft = 0;
     let displayUp = 0;
     if (x > distanceX) displayLeft = distanceX;
