@@ -30,9 +30,9 @@ function generateCave(x, y, rate, reps, type) {
 function mineCaveBlock(x, y, type) {
     const block = mine[y][x];
     if (typeof block === "string") {
-        if (block !== "⚪" && block !== "⬛️" && block !== "⛏️") {
+        if (block !== "⬜" && block !== "⬛️" && block !== "⛏️") {
             giveBlock(block, x, y, false, true, getCaveMultiFromOre(block));
-            mine[y][x] = "⚪";
+            mine[y][x] = "⬜";
         }
         for (let i = 0; i < caveOreLocations.length; i++) {
             if (y === caveOreLocations[i]["y"] && x === caveOreLocations[i]["x"]) {

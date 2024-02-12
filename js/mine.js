@@ -94,11 +94,11 @@ function mineBlock(x, y, cause, luck) {
         if (generated["hasLog"])
             verifiedOres.verifyLog(r, c);
     }
-    if (mine[y][x] !== "⚪" && mine[y][x] !== "⛏️") {
+    if (mine[y][x] !== "⬜" && mine[y][x] !== "⛏️") {
         if (checkFromCave(y, x)) {
             const adjMulti = getCaveMultiFromOre(mine[y][x]);
             giveBlock(mine[y][x], x, y, false, true, adjMulti);
-            mine[y][x] = "⚪";
+            mine[y][x] = "⬜";
             checkAllAround(x, y, 1);
             totalMined++;
         } else {
@@ -106,10 +106,10 @@ function mineBlock(x, y, cause, luck) {
             if (ore === "🟩") ore = "🟫";
             if (cause === "reset") {
                 giveBlock(mine[y][x], x, y, true);
-                mine[y][x] = "⚪";
+                mine[y][x] = "⬜";
             } else {
                 giveBlock(mine[y][x], x, y);
-                mine[y][x] = "⚪";
+                mine[y][x] = "⬜";
                 checkAllAround(x, y, luck);
                 totalMined++;
                 if (cause !== "ability") {
@@ -285,7 +285,7 @@ function toLocation(goToY) {
             mine[r][c] ??= "⬛️";
     }
     setLayer(y - 50);
-    mine[curY][curX] = "⚪";
+    mine[curY][curX] = "⬜";
     curX = x;
     curY = y;
     checkAllAround(curX, curY, 1);
