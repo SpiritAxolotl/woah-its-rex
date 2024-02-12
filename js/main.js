@@ -1,5 +1,6 @@
 const debug = window.location.href.match(/^(https?:\/\/127\.0\.0\.1|localhost):\d{4}/) !== null;
 let debugLuck = "";
+let debugActuallyPlaying = false;
 let currLuck = 1;
 let mine = []; //[y, x]
 let curX = 1000000000; //large for a reason
@@ -64,7 +65,7 @@ const pickaxeDescriptions = {
     "77-leaf-destroyer": "Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck.",
     "planet-buster": "Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.",
     "whirlpool-of-fate": "Mines an extremely large spiral around the player.<br>Has an ability proc rate of 1/100.<br>Has 30x luck.",
-    "wings-of-glory": "WMines wings around the player.<br>Mines 2 blocks at once when using automine.<br>Has 2x special cave type luck.<br>Has an ability proc rate of 1/150.<br>Has 75x luck."
+    "wings-of-glory": "Mines wings around the player.<br>Mines 2 blocks at once when using automine.<br>Has 2x special cave type luck.<br>Has an ability proc rate of 1/150.<br>Has 75x luck."
 };
 const pickaxeSillyDescriptions = {
     "ol-faithful": ":33333333",
@@ -163,16 +164,16 @@ function debugGiveAllOres(type) {
 function snakeToCamel(str, startUpper) {
     const snake = str.toLowerCase();
     let camel = "";
-    let detect = startUpper !== null ? startUpper : false;
+    let detect = startUpper ?? false;
     for (let i = 0; i < snake.length; i++) {
         let letter = snake.substring(i,i+1);
         if (letter === "-" || letter === "_") detect = true;
-        else if (detect) {
+        else if (detect)
             if (letter !== "-" && letter !== "_") {
                 detect = false;
                 camel += letter.toUpperCase();
             }
-        } else camel += letter.toLowerCase();
+        else camel += letter.toLowerCase();
     }
     return camel;
 }
@@ -189,7 +190,7 @@ function normalize(str, cap) {
 }
 function romanize(num) {
     if (num >= 4000) return;
-    if (num % 1 !== 0) num = Math.round(num);
+    if (num % 1) num = Math.round(num);
     const roman = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
     let str = "";
     for (let i of Object.keys(roman)) {
@@ -467,10 +468,9 @@ function goDirection(direction, speed) {
         }
     } else {
         clearInterval(loopTimer);
-        if (speed === undefined) {
-            if (hasGear("real-vitriol")) miningSpeed = 15;
-            if (hasGear("haste-2-beacon")) miningSpeed = 10;
-        } else miningSpeed = speed;
+        if (hasGear("real-vitriol")) miningSpeed = 15;
+        if (hasGear("haste-2-beacon")) miningSpeed = 10;
+        miningSpeed = speed ?? miningSpeed;
         loopTimer = setInterval(movePlayer, miningSpeed, direction);
         currDirection = direction;
         energySiphonerDirection = direction;
@@ -587,10 +587,8 @@ function createIndex() {
     document.getElementById("indexDisplay").innerHTML = "";
     let output = "";
     let luckBoost = verifiedOres.getLuckBoosts()[currentPickaxe];
-    if (hasGear("real-candilium"))
-        luckBoost *= 1.1;
-    if (hasGear("fortune-3-book"))
-        luckBoost *= 1.6;
+    if (hasGear("real-candilium")) luckBoost *= 1.1;
+    if (hasGear("fortune-3-book")) luckBoost *= 1.6;
     for (let i = 0; i < allLayers.length; i++) {
         output += `<div class="layerDisplay" id="layerDisplay${allLayersNames[i]}">`;
         output += `<p class="oreTitle" id="${allLayersNames[i]}Title">`;
@@ -687,7 +685,7 @@ function spawnMessage(ore, location, caveInfo) {
     if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000) {
         //IF PICKAXE IS 5, ADD LOCATION
         if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
-            latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"], fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
+            latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"], resetNum: resetsThisSession, fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
         else latestSpawns.unshift({ore: ore});
     } else addToLatest = false;
     if (hasGear("real-vitriol") || hasGear("infinity-collector")) {
@@ -699,7 +697,7 @@ function spawnMessage(ore, location, caveInfo) {
         for (let spawn of latestSpawns) {
             output += `<span class="emoji">${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()}`;
             if (typeof spawn["y"] === "number" && typeof spawn["x"] === "number")
-                output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${resetsThisSession}`;
+                output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${spawn["resetNum"]}`;
             output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
@@ -719,13 +717,13 @@ function spawnMessage(ore, location, caveInfo) {
 }
 
 let latestFinds = [];
-function logFind(type, x, y, variant, atMined, fromReset) {
+function logFind(type, x, y, variant, atMined, resetNum, fromReset) {
     let output = "";
-    latestFinds.unshift({type: type, x: x, y: y, variant: variant, atMined: atMined, fromReset: fromReset});
+    latestFinds.unshift({type: type, x: x, y: y, variant: variant, atMined: atMined, resetNum: resetsThisSession, fromReset: fromReset});
     if (latestFinds.length > 10) latestFinds.pop();
     for (let find of latestFinds) {
         output += `${find["variant"]}${find["type"]} | `;
-        if (hasGear("ore-tracker")) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${resetsThisSession} | `;
+        if (hasGear("ore-tracker")) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${find["resetNum"]} | `;
         if (find["fromReset"]) output += "FROM RESET<br>";
         else output += `${find["atMined"].toLocaleString()}◻️<br>`;
     }

@@ -1,21 +1,20 @@
 function generateCave(x, y, rate, reps, type) {
-    if (type === undefined)
-        type = getCaveType();
-    let distX = random(3, 12);
-    let distY = random(3, 12);
+    type ??= getCaveType();
+    let lower = Math.max(0, 3-Math.floor(reps*0.5));
+    let upper = Math.max(Math.max(0, lower-Math.floor(reps*0.5)), 12-reps);
+    let distX = random(lower, upper);
+    let distY = random(lower, upper);
     let newOrigins = [];
     for (let r = y; r < y + distY; r++) {
         for (let c = x; c < x + distX; c++) {
             if (Math.random() < 0.1 - rate) {
                 newOrigins.push({x: c + random(-4, 1), y: r + random(-2, 3)});
                 if (typeof mine[r] === "object" && typeof mine[r][c] === "string") {
-                    if (r > 0) {
-                        if (mine[r][c] === "⬜") {
-                            const generated = generateCaveBlock(r, c, type);
-                            mine[r][c] = generated["ore"];
-                            if (generated["hasLog"])
-                                verifiedOres.verifyLog(r, c);
-                        }
+                    if (r > 0 && mine[r][c] === "⬜") {
+                        const generated = generateCaveBlock(r, c, type);
+                        mine[r][c] = generated["ore"];
+                        if (generated["hasLog"])
+                            verifiedOres.verifyLog(r, c);
                     }
                     mineCaveBlock(c, r, type);
                 }
@@ -44,10 +43,8 @@ function mineCaveBlock(x, y, type) {
     }
     //CHECK BELOW THE BLOCK
     let generated;
-    if (mine[y + 1] === undefined)
-        mine[y + 1] = [];
-    if (mine[y + 1][x] === undefined)
-        mine[y + 1][x] = "⬜";
+    mine[y + 1] ??= [];
+    mine[y + 1][x] ??= "⬜";
     if (mine[y + 1][x] === "⬜") {
         generated = generateCaveBlock(y + 1, x, type);
         mine[y + 1][x] = generated["ore"];
@@ -56,8 +53,7 @@ function mineCaveBlock(x, y, type) {
         blocksRevealedThisReset++;
     }
     //CHECK TO THE RIGHT OF THE BLOCK
-    if (mine[y][x + 1] === undefined)
-        mine[y][x + 1] = "⬜";
+    mine[y][x + 1] ??= "⬜";
     if (mine[y][x + 1] === "⬜") {
         generated = generateCaveBlock(y, x + 1, type);
         mine[y][x + 1] = generated["ore"];
@@ -66,8 +62,7 @@ function mineCaveBlock(x, y, type) {
         blocksRevealedThisReset++;
     }
     //CHECK TO THE LEFT OF THE BLOCK
-    if (mine[y][x - 1] === undefined)
-        mine[y][x - 1] = "⬜";
+    mine[y][x - 1] ??= "⬜";
     if (mine[y][x - 1] === "⬜") {
         generated = generateCaveBlock(y, x - 1, type);
         mine[y][x - 1] = generated["ore"];
@@ -76,10 +71,8 @@ function mineCaveBlock(x, y, type) {
         blocksRevealedThisReset++;
     }
     //CHECK ABOVE THE BLOCK
-    if (y - 1 > 0 && mine[y - 1] === undefined)
-        mine[y - 1] = [];
-    if (y - 1 > 0 && mine[y - 1] === undefined)
-        mine[y - 1] = "⬜";
+    //mine[y - 1] ??= [];
+    mine[y - 1] ??= "⬜";
     if (y - 1 > 0 && mine[y - 1][x] === "⬜") {
         generated = generateCaveBlock(y - 1, x, type);
         mine[y - 1][x] = generated["ore"];
@@ -87,6 +80,7 @@ function mineCaveBlock(x, y, type) {
             verifiedOres.verifyLog(y - 1, x);
         blocksRevealedThisReset++;
     }
+    if (debug && debugVerbose) displayArea();
 }
 
 let caveLuck = 1;

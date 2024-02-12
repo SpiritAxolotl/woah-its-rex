@@ -41,7 +41,7 @@ function loadAllData() {
             if (typeof oreList[ore] === "object")
                 for (let variant of variantNames)
                     inventory[ore][variant.toLowerCase()] = data["ores"][ore][variant.toLowerCase()];
-        if (typeof data["pickaxes"]["inv"] === "object"){
+        if (typeof data["pickaxes"]["inv"] === "object") {
             if (data["version"] >= 4) {
                 for (let pick in data["pickaxes"]["inv"])
                     pickaxes[pick] = data["pickaxes"]["inv"][pick];
@@ -88,7 +88,6 @@ function loadAllData() {
             document.getElementById("spawnVolume").value = data["settings"]["spawnVolume"];
             changeAllVolume(data["settings"]["spawnVolume"]);
         }
-        //let canContinue = false;
         if (data["settings"]["musicButton"] === "Unmute Music") {
             setTimeout(() => {
                 document.getElementById("musicButton").click();
@@ -140,7 +139,7 @@ function loadAllData() {
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-    dataTimer = autoSave ? setInterval(saveAllData, 2000) : null;
+    dataTimer = autoSave && (!debug || debugActuallyPlaying) ? setInterval(saveAllData, 5000) : null;
 }
 
 function toBinary(string) {
@@ -176,8 +175,7 @@ function importData() {
     const [file] = document.getElementById("dataFile").files;
     const reader = new FileReader();
     reader.addEventListener(
-        "load",
-        () => {
+        "load", () => {
             try {
                 const data = fromBinary(reader.result);
                 console.log(data);

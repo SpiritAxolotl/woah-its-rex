@@ -141,8 +141,8 @@ const pickaxeRecipes = {
         "🧵": 50,
         "🤍": 750,
         "💚": 1500,
-        "⚫": 50000000,
-        "🟤": 35000000
+        "⚫": 25000000,
+        "🟤": 40000000
     }
 },
 gearRecipes = {
@@ -388,7 +388,7 @@ function updateActiveRecipe(ore) {
                 if (typeof ore === "string") {
                     let pickaxeDisplay = document.getElementById(`${ore}pickaxeRecipe${pick}Display`);
                     if (pickaxeDisplay === null) break;
-                        pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${inventory[ore]["normal"].toLocaleString()}/${pickaxeRecipes[pick][ore].toLocaleString()}`;
+                    pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${inventory[ore]["normal"].toLocaleString()}/${pickaxeRecipes[pick][ore].toLocaleString()}`;
                     if (inventory[ore]["normal"] >= pickaxeRecipes[pick][ore]) {
                         pickaxeDisplay.classList.add("recipeGreen");
                         pickaxeDisplay.classList.remove("recipeRed");
@@ -397,6 +397,7 @@ function updateActiveRecipe(ore) {
                         pickaxeDisplay.classList.remove("recipeGreen");
                     }
                 } else {
+                    //cake is delicious
                     for (let ingredient in pickaxeRecipes[pick]) {
                         let pickaxeDisplay = document.getElementById(`${ingredient}pickaxeRecipe${pick}Display`);
                         if (pickaxeDisplay === null) break;
@@ -490,18 +491,15 @@ function craftGear(gear, button) {
                 inventory[ingredient]["normal"] -= gearRecipes[gear][ingredient];
                 updateInventory(ingredient, "normal");
             }
-            if (gear !== "silly-tp")
-                button.innerHTML = "Equipped!";
-            else
-                button.innerHTML = "Teleport!";
+            button.innerHTML = gear !== "silly-tp" ? "Equipped!" : "Teleport!";
             updateActiveRecipe();
             createIndex();
         } else button.innerHTML = "Craft!";
     } else if (!currentGears.includes(gear)) {
-        button.innerHTML = "Equipped!";
+        button.innerHTML = gear !== "silly-tp" ? "Equipped!" : "Teleport!";
         currentGears.push(gear);
     } else {
-        button.innerHTML = "Equip!";
+        button.innerHTML = gear !== "silly-tp" ? "Equip!" : "Teleport!";
         currentGears.splice(currentGears.indexOf(gear), 1);
     }
     if (gear === "silly-tp" && gears["silly-tp"]) gearAbilitySillyTp();

@@ -382,11 +382,13 @@ button {
   max-height: 100vh;
   /*width: 50%;*/
   flex: auto;
+  /* padding-bottom: 0 !important;*/ /*figure out why this doesn't work | ?????????*/
 }
 
 .col > * {
   overscroll-behavior: none;
 }
+
 #credits {
   text-align: left;
   color: white;
@@ -437,7 +439,7 @@ button {
 #col-1 {
   width: 25%;
   background-color: var(--bgcolor);
-  /* resize: horizontal; */
+  /*resize: horizontal;*/
   /*float: left;*/
   padding: 0;
 }
