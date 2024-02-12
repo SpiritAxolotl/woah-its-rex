@@ -4,7 +4,7 @@ function createMine() {
     for (let y = curY; y < curY + 51; y++) {
         mine.push([]);
         for (let c = curX - 51; c < curX + 51; c++)
-            mine[y][c] = y === 0 ? "🟩" : "⬜";
+            mine[y][c] = y === 0 ? "🟩" : "⬛️";
     }
     mine[0][1000000000] = "⛏️"; //trusty pickaxe
     setLayer(0);
@@ -18,52 +18,52 @@ function prepareArea(facing) {
         case "a":
             for (let y = curY - constraints["up"]; y < curY + 50; y++) {
                 mine[y] ??= [];
-                mine[y][curX - constraints["left"]] ??= y === 0 ? "🟩" : "⬜";
+                mine[y][curX - constraints["left"]] ??= y === 0 ? "🟩" : "⬛️";
             }
             break;
         case "s":
             mine[curY + 50] ??= [];
             for (let x = curX - constraints["left"]; x < curX + 50; x++)
-                mine[curY + 50][x] ??= "⬜";
+                mine[curY + 50][x] ??= "⬛️";
             break;
         case "d":
             for (let y = curY - constraints["up"]; y < curY + 50; y++) {
                 mine[y] ??= [];
-                mine[y][curX + 50] ??= y === 0 ? "🟩" : "⬜";
+                mine[y][curX + 50] ??= y === 0 ? "🟩" : "⬛️";
             }
             break;
         case "w":
             mine[curY - constraints["up"]] ??= [];
             for (let x = curX - constraints["left"]; x < curX + 50; x++)
-                mine[curY - constraints["up"]][x] ??= curY - constraints["up"] === 0 ? "🟩" : "⬜";
+                mine[curY - constraints["up"]][x] ??= curY - constraints["up"] === 0 ? "🟩" : "⬛️";
             break;
     }
 }
 
 function checkAllAround(x, y, luck) {
     let generated;
-    if (x - 1 >= 0 && mine[y][x - 1] === "⬜") {
+    if (x - 1 >= 0 && mine[y][x - 1] === "⬛️") {
         generated = generateBlock(luck, {y: y, x: x-1});
         mine[y][x - 1] = generated["ore"];
         if (generated["hasLog"])
             verifiedOres.verifyLog(y, x-1);
         blocksRevealedThisReset++;
     }
-    if (mine[y][x + 1] === "⬜") {
+    if (mine[y][x + 1] === "⬛️") {
         generated = generateBlock(luck, {y: y, x: x+1});
         mine[y][x + 1] = generated["ore"];
         if (generated["hasLog"])
             verifiedOres.verifyLog(y, x+1);
         blocksRevealedThisReset++;
     }
-    if (mine[y + 1][x] === "⬜") {
+    if (mine[y + 1][x] === "⬛️") {
         generated = generateBlock(luck, {y: y+1, x: x});
         mine[y + 1][x] = generated["ore"];
         if (generated["hasLog"])
             verifiedOres.verifyLog(y+1, x);
         blocksRevealedThisReset++;
     }
-    if (y - 1 >= 0 && mine[y - 1][x] === "⬜") {
+    if (y - 1 >= 0 && mine[y - 1][x] === "⬛️") {
         generated = generateBlock(luck, {y: y-1, x: x});
         mine[y - 1][x] = generated["ore"];
         if (generated["hasLog"])
@@ -88,7 +88,7 @@ function checkAllAround(x, y, luck) {
 //MINING
 
 function mineBlock(x, y, cause, luck) {
-    if (mine[y][x] === "⬜") {
+    if (mine[y][x] === "⬛️") {
         generated = generateBlock(luck, {y: y, x: x});
         mine[y][x] = generated["ore"];
         if (generated["hasLog"])
@@ -282,7 +282,7 @@ function toLocation(goToY) {
     for (let r = y - 50; r < y + 50; r++) {
         mine[r] ??= [];
         for (let c = x - 50; c < x + 50; c++)
-            mine[r][c] ??= "⬜";
+            mine[r][c] ??= "⬛️";
     }
     setLayer(y - 50);
     mine[curY][curX] = "⚪";
