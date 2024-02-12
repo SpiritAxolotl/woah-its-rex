@@ -210,7 +210,7 @@ body {
 }
 
 #displayRecipe > div > p {
-  margin-bottom: 0;
+  margin: 0.2em auto;
 }
 
 .recipeRed {
