@@ -115,7 +115,7 @@
         </div> -->
         <p id="blockDisplay" class="emoji"></p>
         <div id="generalStats">
-            <p id="location">X: 0 / Y: 0</p>
+            <p id="location">X: 0<br>Y: 0</p>
             <div>
                 <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
                 <p id="resetsThisSession">(Reset #0)</p>
@@ -133,10 +133,12 @@
             <button id="showIndex" class="whiteButton inventoryButtons" onclick="showIndex()">Show Index</button>
         </div>
         <div id="inventoryDisplay">
+            <!--automate this in future-->
             <div id="inventoryNormal"></div>
             <div id="inventoryElectrified" class="invisible"></div>
             <div id="inventoryRadioactive" class="invisible"></div>
             <div id="inventoryExplosive" class="invisible"></div>
+            <div id="inventoryBloody" class="invisible"></div>
             <div id="indexDisplay" class="invisible"></div>
         </div>
         <a href="https://discord.gg/tXxYa6ubYf" id="discord" target="_blank">

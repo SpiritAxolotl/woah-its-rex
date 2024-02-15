@@ -88,7 +88,7 @@ function generateCaveBlock(y, x, type) {
     let hasLog = false;
     const layer = type.concat(spawnsEverywhere);
     let summedProbability = 0;
-    const baseLuck = Math.random()*addUpAllProbs(layer);
+    const baseLuck = Math.random()*addUpLayerProbs(layer);
     const modifiedLuck = baseLuck/caveLuck;
     for (let ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
@@ -121,7 +121,7 @@ function getCaveMulti(cave) {
     return allCaves.indexOf(cave);
 }
 
-const caveProbsSum = addUpAllProbs(allCaveMultis);
+const caveProbsSum = addUpLayerProbs(allCaveMultis);
 function getCaveType() {
     let luck = 1;
     if (pickaxes["wings-of-glory"] && currentPickaxe === "wings-of-glory")

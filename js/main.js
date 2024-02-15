@@ -208,7 +208,7 @@ function clamp(num, min, max) {
         : num
 }
 
-function addUpAllProbs(arr) {
+function addUpLayerProbs(arr) {
     let total = 0;
     for (let num of arr) {
         if (typeof num === "number") total += 1/num;
@@ -537,11 +537,9 @@ function displayArea() {
 
 //TODO: Refactor this too
 let currVariant = 0;
-const variantNames = ["Normal", "Electrified", "Radioactive", "Explosive"];
-const variantNamesEmojis = ["", "⚡️", "☢️", "💥"];
 function switchInventory() {
     invisible(document.getElementById(`inventory${variantNames[currVariant]}`));
-    currVariant = (currVariant+1) % 4;
+    currVariant = (currVariant+1) % variantNames.length;
     visible(document.getElementById(`inventory${variantNames[currVariant]}`));
     document.getElementById("switchInventory").innerHTML = `${variantNames[currVariant]} Inventory`;
     invisible(document.getElementById("indexDisplay"));
@@ -551,19 +549,20 @@ function switchInventory() {
 
 function createOreDisplay(ore, variant, luck) {
     if (typeof variant !== "string")
-        variant = "normal";
-    variant = variant.toLowerCase();
+        variant = "Normal";
+    //variant = variant.toLowerCase();
     if (typeof luck !== "number")
-        luck = 1/variantMultis[variant];
-    let oreTotal = inventory[ore][variant].toLocaleString();
-    let oreProb = oreList[ore]["prob"].toLocaleString();
+        luck = 1;
+    luck = variantMultis[variantNames.indexOf(variant)] / luck;
+    let oreTotal = inventory[ore][variant.toLowerCase()];
+    let oreProb = oreList[ore]["prob"];
     if (!unaffectedByLuck.includes(ore))
-        oreProb = Math.round(oreList[ore]["prob"] / luck).toLocaleString();
+        oreProb = Math.round(oreList[ore]["prob"]) * luck;
     return `
     <p class="emoji">${ore}</p>
     <div class="totalAndProbContainer">
-        <p class="oreTotal">x${oreTotal}</p>
-        <p class="oreProb">1/${oreProb}</p>
+        <p class="oreTotal">x${oreTotal.toLocaleString()}</p>
+        <p class="oreProb">1/${oreProb.toLocaleString()}</p>
     </div>
     `;
 }
@@ -576,8 +575,8 @@ function createInventory() {
             element.classList.add("oreDisplay");
             /*if (variant !== "Normal")*/
             invisible(element);
-            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"] * variantMultis[variant.toLowerCase()]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
-            element.innerHTML = createOreDisplay(ore, variant)
+            element.innerHTML = `<span class="emoji">${ore}</span> | 1/${(oreList[ore]["prob"]*variantMultis[variantNames.indexOf(variant)]).toLocaleString()} | x${inventory[ore][variant.toLowerCase()].toLocaleString()}`;
+            element.innerHTML = createOreDisplay(ore, variant);
             document.getElementById(`inventory${variant}`).appendChild(element);
         }
     }
@@ -661,11 +660,11 @@ function updateIndex(type) {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + capitalize(variant)).innerHTML = createOreDisplay(ore, variant);
+    document.getElementById(ore + variant).innerHTML = createOreDisplay(ore, variant);
     if (inventory[ore][variant.toLowerCase()] > 0)
-        visible(document.getElementById(ore + capitalize(variant)));
+        visible(document.getElementById(ore + variant));
     else
-        invisible(document.getElementById(ore + capitalize(variant)));
+        invisible(document.getElementById(ore + variant));
 }
 
 //SPAWNS AND FINDS
@@ -695,24 +694,25 @@ function spawnMessage(ore, variant, location, caveInfo) {
     if (latestSpawns.length > 10) latestSpawns.pop();
     if (addToLatest) {
         for (let spawn of latestSpawns) {
-            output += `<span class="emoji">${variantNamesEmojis[spawn["variant"]]}${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()}`;
+            output += `<span class="emoji">${variantEmojis[spawn["variant"]]}${spawn["ore"]}</span> 1/${(oreList[spawn["ore"]]["prob"]*variantMultis[variant]).toLocaleString()}`;
             if (typeof spawn["y"] === "number" && typeof spawn["x"] === "number")
                 output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${spawn["resetNum"]}`;
             output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
-        document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${variantNamesEmojis[variant]}${ore}</span> Has Spawned!<br>`;
+        const spawnMessage = document.getElementById("spawnMessage");
+        spawnMessage.innerHTML = `<span class="emoji">${variantEmojis[variant]}${ore}</span> Has Spawned!<br>`;
         if (typeof caveInfo === "object" && caveInfo["rarity"])
-            document.getElementById("spawnMessage").innerHTML += `1/${caveInfo["rarity"].toLocaleString()}`;
+            spawnMessage.innerHTML += `1/${caveInfo["rarity"].toLocaleString()}`;
         else
-            document.getElementById("spawnMessage").innerHTML += `1/${(oreList[ore]["prob"]*variantMultis[variantNames[variant].toLowerCase()]).toLocaleString()}`;
+            spawnMessage.innerHTML += `1/${(oreList[ore]["prob"]*variantMultis[variant]).toLocaleString()}`;
         
         //if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
-        document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
+        spawnMessage.innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
     }
     clearTimeout(spawnOre);
     spawnOre = setTimeout(() => {
-        document.getElementById("spawnMessage").innerHTML = "Spawn Messages Appear Here!";
+        spawnMessage.innerHTML = "Spawn Messages Appear Here!";
     }, 20000);
 }
 
@@ -722,7 +722,7 @@ function logFind(type, x, y, variant, atMined, fromReset) {
     latestFinds.unshift({type: type, x: x, y: y, variant: variant, atMined: atMined, resetNum: resetsThisSession, fromReset: fromReset});
     if (latestFinds.length > 10) latestFinds.pop();
     for (let find of latestFinds) {
-        output += `${variantNamesEmojis[find["variant"]]}${find["type"]} | `;
+        output += `${variantEmojis[find["variant"]]}${find["type"]} | `;
         if (hasGear("ore-tracker")) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${find["resetNum"]} | `;
         if (find["fromReset"]) output += "FROM RESET<br>";
         else output += `${find["atMined"].toLocaleString()}◻️<br>`;

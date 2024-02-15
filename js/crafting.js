@@ -459,7 +459,7 @@ function craftPickaxe(pick) {
             currentPickaxe = pick;
             for (let ingredient in pickaxeRecipes[pick]) {
                 inventory[ingredient]["normal"] -= pickaxeRecipes[pick][ingredient];
-                updateInventory(ingredient, "normal");
+                updateInventory(ingredient, "Normal");
             }
             let pickaxeDisplay = document.getElementById(`pickaxeRecipe${snakeToCamel(pick, true)}`);
             pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
@@ -489,7 +489,7 @@ function craftGear(gear, button) {
             currentGears.push(gear);
             for (let ingredient in gearRecipes[gear]) {
                 inventory[ingredient]["normal"] -= gearRecipes[gear][ingredient];
-                updateInventory(ingredient, "normal");
+                updateInventory(ingredient, "Normal");
             }
             button.innerHTML = gear !== "silly-tp" ? "Equipped!" : "Teleport!";
             updateActiveRecipe();
