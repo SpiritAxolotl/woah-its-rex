@@ -36,7 +36,7 @@ function loadAllDataOld() {
         for (let ore in oreList) {
             if (document.getElementById(ore + "Normal") !== null) {
                 for (let variant in inventory[ore]) {
-                    updateInventory(ore, variant);
+                    updateInventory(ore, capitalize(variant));
                     if (inventory[ore][variant] > 0)
                         visible(document.getElementById(ore + capitalize(variant)));
                 }
