@@ -709,11 +709,11 @@ function spawnMessage(ore, variant, location, caveInfo) {
         
         //if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
         spawnMessage.innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
+        clearTimeout(spawnOre);
+        spawnOre = setTimeout(() => {
+            spawnMessage.innerHTML = "Spawn Messages Appear Here!";
+        }, 20000);
     }
-    clearTimeout(spawnOre);
-    spawnOre = setTimeout(() => {
-        spawnMessage.innerHTML = "Spawn Messages Appear Here!";
-    }, 20000);
 }
 
 let latestFinds = [];
