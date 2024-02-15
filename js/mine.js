@@ -87,6 +87,7 @@ function checkAllAround(x, y, luck) {
 
 //MINING
 
+let variantMap = [];
 function mineBlock(x, y, cause, luck) {
     if (mine[y][x] === "⬛️") {
         generated = generateBlock(luck, {y: y, x: x});
@@ -95,9 +96,10 @@ function mineBlock(x, y, cause, luck) {
             verifiedOres.verifyLog(r, c);
     }
     if (mine[y][x] !== "⬜" && mine[y][x] !== "⛏️") {
+        const variant = variantMap[y]?.[x] ?? 0;
         if (checkFromCave(y, x)) {
             const adjMulti = getCaveMultiFromOre(mine[y][x]);
-            giveBlock(mine[y][x], x, y, false, true, adjMulti);
+            giveBlock(mine[y][x], x, y, false, true, variant, adjMulti);
             mine[y][x] = "⬜";
             checkAllAround(x, y, 1);
             totalMined++;
@@ -105,10 +107,10 @@ function mineBlock(x, y, cause, luck) {
             let ore = mine[y][x];
             if (ore === "🟩") ore = "🟫";
             if (cause === "reset") {
-                giveBlock(mine[y][x], x, y, true);
+                giveBlock(mine[y][x], x, y, undefined, undefined, variant, true);
                 mine[y][x] = "⬜";
             } else {
-                giveBlock(mine[y][x], x, y);
+                giveBlock(mine[y][x], x, y, undefined, undefined, variant);
                 mine[y][x] = "⬜";
                 checkAllAround(x, y, luck);
                 totalMined++;
@@ -131,7 +133,7 @@ const variantMultis = {
     "explosive": 500
 };
 
-function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
+function giveBlock(ore, x, y, fromReset, fromCave, variant, rarity) {
     if (hasGear("layer-materializer")) {
         const block = currentLayer[currentLayer.length-1];
         inventory[block]["normal"]++;
@@ -139,12 +141,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
     }
     
     if (ore !== "⛏️") {
-        let variant = 0;
         if (ore === "🟩") ore = "🟫";
-        const rand = random(1, 500);
-        if (rand % 50 === 0) variant = 1;
-        if (rand % 250 === 0) variant = 2;
-        if (rand % 500 === 0) variant = 3;
         if (!fromCave) {
             if (hasGear("layer-materializer")) {
                 const block = sortOres(currentLayer).reverse()[0];
@@ -156,7 +153,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, rarity) {
             if (oreList[ore]["prob"] >= 750000) {
                 if (hasGear("energy-siphoner")) gearAbilityProc();
                 if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000)
-                    logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+                    logFind(ore, x, y, variant, totalMined, fromReset);
             }
             inventory[ore][variantNames[variant].toLowerCase()]++;
             updateInventory(ore, variantNames[variant]);
@@ -195,7 +192,7 @@ function generateBlock(luck, location) {
     const layer = currentLayer.concat(spawnsEverywhere);
     if (location["y"] === 1)
         layer.push("🥬");
-    let blockToGive = "";
+    let blockToGive = "🟫";
     let summedProbability = 0;
     const baseLuck = Math.random()*layerProbsSum;
     const modifiedLuck = baseLuck/luck;
@@ -209,7 +206,14 @@ function generateBlock(luck, location) {
             break;
         }
     }
-    const probability = oreList[blockToGive]["prob"];
+    let variant = 0;
+    {
+        const rand = random(1, 500);
+        if (rand % 50 === 0) variant = 1;
+        if (rand % 250 === 0) variant = 2;
+        if (rand % 500 === 0) variant = 3;
+    }
+    const probability = oreList[blockToGive]["prob"]*variantMultis[variantNames[variant].toLowerCase()];
     if (probability >= 750000) {
         //TODO: make a better less hardcoded system for replacing blocks
         /*if (blockToGive === "🧌") {
@@ -220,13 +224,17 @@ function generateBlock(luck, location) {
             verifiedOres.createLog(location["y"], location["x"], blockToGive, new Error(), luck);
             hasLog = true;
         }
-        spawnMessage(blockToGive, location);
+        spawnMessage(blockToGive, variant, location);
         if (stopOnRare)
             if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || probability > 2000000)
                 stopMining();
     }
+    if (variant > 0) {
+        variantMap[location["y"]] ??= [];
+        variantMap[location["y"]][location["x"]] = variant;
+    }
     attemptToPlaySound(probability);
-    return {ore: blockToGive, hasLog: hasLog};
+    return {ore: blockToGive, variant: variant, hasLog: hasLog};
 }
 
 function stopMining() {

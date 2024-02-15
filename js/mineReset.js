@@ -20,14 +20,14 @@ let resetting = false;
 async function mineReset() {
     if (!resetting) {
         resetting = true;
-        resetsThisSession++;
-        totalResets++;
         mineCapacity = baseMineCapacity;
         layersChanged = {};
         layersChanged[`${Math.floor(curY/2000)}`] = allLayersNames[allLayers.indexOf(currentLayer)];
         const currDirectionBeforeReset = currDirection;
         currDirection = "";
         const temp = await collectOres(currDirectionBeforeReset);
+        resetsThisSession++;
+        totalResets++;
         canMine = await mineResetAid();
         checkAllAround(curX, curY, 1);
         mine[curY][curX] = "⛏️";

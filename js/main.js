@@ -2,7 +2,7 @@ const debug = window.location.href.match(/^(https?:\/\/127\.0\.0\.1|localhost):\
 let debugLuck = "";
 let debugActuallyPlaying = false;
 let currLuck = 1;
-let mine = []; //[y, x]
+let mine = []; //[y][x]
 let curX = 1000000000; //large for a reason
 let curY = 0;
 let currentDisplay = "";
@@ -673,7 +673,7 @@ function updateInventory(ore, variant) {
 let spawnOre;
 let loggedFinds = [];
 let latestSpawns = [];
-function spawnMessage(ore, location, caveInfo) {
+function spawnMessage(ore, variant, location, caveInfo) {
     //ADD TO MINE CAPACITY IF NEAR RESET
     //CAVEINFO["fromCave"] = TRUE/FALSE
     //CAVEINFO["rarity"] = ADJUSTED RARITY
@@ -685,7 +685,7 @@ function spawnMessage(ore, location, caveInfo) {
     if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000) {
         //IF PICKAXE IS 5, ADD LOCATION
         if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
-            latestSpawns.unshift({ore: ore, y: location["y"], x: location["x"], resetNum: resetsThisSession, fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
+            latestSpawns.unshift({ore: ore, variant: variant, y: location["y"], x: location["x"], resetNum: resetsThisSession, fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
         else latestSpawns.unshift({ore: ore});
     } else addToLatest = false;
     if (hasGear("real-vitriol") || hasGear("infinity-collector")) {
@@ -695,17 +695,17 @@ function spawnMessage(ore, location, caveInfo) {
     if (latestSpawns.length > 10) latestSpawns.pop();
     if (addToLatest) {
         for (let spawn of latestSpawns) {
-            output += `<span class="emoji">${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()}`;
+            output += `<span class="emoji">${variantNamesEmojis[spawn["variant"]]}${spawn["ore"]}</span> 1/${oreList[spawn["ore"]]["prob"].toLocaleString()}`;
             if (typeof spawn["y"] === "number" && typeof spawn["x"] === "number")
                 output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${spawn["resetNum"]}`;
             output += "<br>";
         }
         document.getElementById("latestSpawns").innerHTML = output;
-        document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${ore}</span> Has Spawned!<br>`;
+        document.getElementById("spawnMessage").innerHTML = `<span class="emoji">${variantNamesEmojis[variant]}${ore}</span> Has Spawned!<br>`;
         if (typeof caveInfo === "object" && caveInfo["rarity"])
             document.getElementById("spawnMessage").innerHTML += `1/${caveInfo["rarity"].toLocaleString()}`;
         else
-            document.getElementById("spawnMessage").innerHTML += `1/${oreList[ore]["prob"].toLocaleString()}`;
+            document.getElementById("spawnMessage").innerHTML += `1/${(oreList[ore]["prob"]*variantMultis[variantNames[variant].toLowerCase()]).toLocaleString()}`;
         
         //if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
         document.getElementById("spawnMessage").innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
@@ -717,12 +717,12 @@ function spawnMessage(ore, location, caveInfo) {
 }
 
 let latestFinds = [];
-function logFind(type, x, y, variant, atMined, resetNum, fromReset) {
+function logFind(type, x, y, variant, atMined, fromReset) {
     let output = "";
     latestFinds.unshift({type: type, x: x, y: y, variant: variant, atMined: atMined, resetNum: resetsThisSession, fromReset: fromReset});
     if (latestFinds.length > 10) latestFinds.pop();
     for (let find of latestFinds) {
-        output += `${find["variant"]}${find["type"]} | `;
+        output += `${variantNamesEmojis[find["variant"]]}${find["type"]} | `;
         if (hasGear("ore-tracker")) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${find["resetNum"]} | `;
         if (find["fromReset"]) output += "FROM RESET<br>";
         else output += `${find["atMined"].toLocaleString()}◻️<br>`;
