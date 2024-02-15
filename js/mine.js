@@ -126,18 +126,11 @@ function mineBlock(x, y, cause, luck) {
 
 //ORE GENERATION AND OBTAINING
 
-const variantMultis = {
-    "normal": 1,
-    "electrified": 50,
-    "radioactive": 250,
-    "explosive": 500
-};
-
 function giveBlock(ore, x, y, fromReset, fromCave, variant, rarity) {
     if (hasGear("layer-materializer")) {
         const block = currentLayer[currentLayer.length-1];
         inventory[block]["normal"]++;
-        updateInventory(block, "normal");
+        updateInventory(block, "Normal");
     }
     
     if (ore !== "⛏️") {
@@ -146,7 +139,7 @@ function giveBlock(ore, x, y, fromReset, fromCave, variant, rarity) {
             if (hasGear("layer-materializer")) {
                 const block = sortOres(currentLayer).reverse()[0];
                 inventory[block]["normal"]++;
-                updateInventory(block, "normal");
+                updateInventory(block, "Normal");
             }
             if (oreList[ore]["prob"] >= 160000000)
                 verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
@@ -167,14 +160,14 @@ function giveBlock(ore, x, y, fromReset, fromCave, variant, rarity) {
                         gearAbilityProc();
                     if (Object.keys(pickaxes).indexOf(currentPickaxe) >= 6)
                         if (oreList[ore]["prob"] > 2000000)
-                            logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+                            logFind(ore, x, y, variant, totalMined, fromReset);
                     else
-                        logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+                        logFind(ore, x, y, variant, totalMined, fromReset);
                 }
             } else {
                 if (oreList[ore]["prob"] * rarity >= 250000000) {
                     verifiedOres.verifyFind(mine[y][x], y, x, variantNames[variant]);
-                    logFind(ore, x, y, variantNamesEmojis[variant], totalMined, fromReset);
+                    logFind(ore, x, y, variant, totalMined, fromReset);
                 }
                 if (hasGear("energy-siphoner")) gearAbilityProc();
             }
@@ -193,27 +186,30 @@ function generateBlock(luck, location) {
     if (location["y"] === 1)
         layer.push("🥬");
     let blockToGive = "🟫";
-    let summedProbability = 0;
-    const baseLuck = Math.random()*layerProbsSum;
-    const modifiedLuck = baseLuck/luck;
     if (location["y"] === 0)
         return {ore: "🟩", hasLog: false};
-    for (let ore of sortOres(layer)) {
-        summedProbability += 1/oreList[ore]["prob"];
-        const chosenLuck = !unaffectedByLuck.includes(ore) ? modifiedLuck : baseLuck;
-        if (chosenLuck < summedProbability) {
-            blockToGive = ore;
-            break;
+    {
+        let summedProbability = 0;
+        const baseLuck = Math.random()*layerProbsSum;
+        const modifiedLuck = baseLuck/luck;
+        for (let ore of sortOres(layer)) {
+            summedProbability += 1/oreList[ore]["prob"];
+            const chosenLuck = !unaffectedByLuck.includes(ore) ? modifiedLuck : baseLuck;
+            if (chosenLuck < summedProbability) {
+                blockToGive = ore;
+                break;
+            }
         }
     }
     let variant = 0;
     {
-        const rand = random(1, 500);
-        if (rand % 50 === 0) variant = 1;
-        if (rand % 250 === 0) variant = 2;
-        if (rand % 500 === 0) variant = 3;
+        const rand = random(1,1000);
+        if (rand > 32) variant = 0;
+        else if (rand >= 4) variant = 1;
+        else if (rand >= 2) variant = 3;
+        else if (rand === 1) variant = 4;
     }
-    const probability = oreList[blockToGive]["prob"]*variantMultis[variantNames[variant].toLowerCase()];
+    const probability = oreList[blockToGive]["prob"]*variantMultis[variant];
     if (probability >= 750000) {
         //TODO: make a better less hardcoded system for replacing blocks
         /*if (blockToGive === "🧌") {

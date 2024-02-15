@@ -40,7 +40,7 @@ function loadAllData() {
         for (let ore in data["ores"])
             if (typeof oreList[ore] === "object")
                 for (let variant of variantNames)
-                    inventory[ore][variant.toLowerCase()] = data["ores"][ore][variant.toLowerCase()];
+                    inventory[ore][variant.toLowerCase()] = data["ores"][ore]?.[variant.toLowerCase()] ?? 0;
         if (typeof data["pickaxes"]["inv"] === "object") {
             if (data["version"] >= 4) {
                 for (let pick in data["pickaxes"]["inv"])
@@ -72,7 +72,7 @@ function loadAllData() {
         for (let ore in oreList)
             if (document.getElementById(`${ore}Normal`) !== null)
                 for (let variant in inventory[ore]) {
-                    updateInventory(ore, variant);
+                    updateInventory(ore, capitalize(variant));
                     if (inventory[ore][variant] >= 1)
                         visible(document.getElementById(ore + capitalize(variant)));
                 }

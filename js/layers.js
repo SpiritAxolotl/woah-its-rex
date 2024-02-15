@@ -164,11 +164,76 @@ const oreList = {
     "🦠": { prob: 1 }
 }
 
-let inventory = {};
-
-//sets the inventory to 0
-for (let ore in oreList)
-    inventory[ore] = {"normal": 0, "electrified": 0, "radioactive": 0, "explosive": 0};
+class VariantManager {
+    
+    static variants = {
+        "NORMAL": {
+            name: "Normal",
+            emoji: "",
+            prob: 1,
+            order: 0
+        },
+        "ELECTRIFIED": {
+            name: "Electrified",
+            emoji: "⚡️",
+            prob: 50,
+            order: 1
+        },
+        "RADIOACTIVE": {
+            name: "Radioactive",
+            emoji: "☢️",
+            prob: 250,
+            order: 2
+        },
+        "EXPLOSIVE": {
+            name: "Explosive",
+            emoji: "💥",
+            prob: 500,
+            order: 3
+        },
+        "BLOODY": {
+            name: "Bloody",
+            emoji: "🩸",
+            prob: 1000,
+            order: 4
+        }
+    }
+    
+    getVariantAttributeFromNum(num, type) {
+        for (let variant in VariantManager.variants)
+            if (VariantManager.variants[variant].order === num)
+                return VariantManager.variants[variant][type];
+        return undefined;
+    }
+    
+    getVariantAttributeFromName(name, type) {
+        for (let variant in VariantManager.variants)
+            if (VariantManager.variants[variant].name.toLowerCase() === name.toLowerCase())
+                return VariantManager.variants[variant][type];
+        return undefined;
+    }
+    
+    getVariantNames() {
+        let names = [];
+        for (let variant in VariantManager.variants)
+            names.push(VariantManager.variants[variant].name);
+        return names;
+    }
+    
+    getVariantMultis() {
+        let multis = [];
+        for (let variant in VariantManager.variants)
+            multis.push(VariantManager.variants[variant].prob);
+        return multis;
+    }
+    
+    getVariantEmojis() {
+        let emojis = [];
+        for (let variant in VariantManager.variants)
+            emojis.push(VariantManager.variants[variant].emoji);
+        return emojis;
+    }
+}
 
 class LayerManager {
     
@@ -325,22 +390,40 @@ function getLayerFromOre(ore) {
 
 // GENERAL STUFF (SAME NAME FOR COMPATIBILITY)
 
-const manager = new LayerManager();
+const variantManager = new VariantManager();
+const layerManager = new LayerManager();
 
-const allLayersNames = manager.getAllLayerNames();
-const allLayers = manager.getAllLayerOres();
+const variantNames = variantManager.getVariantNames();
+const variantMultis = variantManager.getVariantMultis();
+const variantMultisReverse = variantManager.getVariantMultis().reverse();
+const variantEmojis = variantManager.getVariantEmojis();
+const variantMultiSum = variantMultis.reduce((sum, multi) => sum + multi, 0);
 
-const normalLayers = manager.getLayersFromType("normal");
-const [sillyLayer] = manager.getLayersFromType("silly");
-const [fluteLayer] = manager.getLayersFromType("flute");
-const normalLayersDepths = manager.getLayerDepthsFromType("normal");
+const allLayersNames = layerManager.getAllLayerNames();
+const allLayers = layerManager.getAllLayerOres();
 
-const allCaves = manager.getLayersFromType("cave");
-const allCavesNames = manager.getLayerNamesFromType("cave");
-const allCaveMultis = manager.getLayerMultisFromType("cave");
+const normalLayers = layerManager.getLayersFromType("normal");
+const [sillyLayer] = layerManager.getLayersFromType("silly");
+const [fluteLayer] = layerManager.getLayersFromType("flute");
+const normalLayersDepths = layerManager.getLayerDepthsFromType("normal");
+
+const allCaves = layerManager.getLayersFromType("cave");
+const allCavesNames = layerManager.getLayerNamesFromType("cave");
+const allCaveMultis = layerManager.getLayerMultisFromType("cave");
 
 const spawnsEverywhere = LayerManager.spawnsEverywhere;
 const unaffectedByLuck = LayerManager.unaffectedByLuck;
+
+
+let inventory = {};
+
+//sets the inventory to 0
+for (let ore in oreList) {
+    let inv = {};
+    for (let variant of variantNames)
+        inv[variant.toLowerCase()] = 0;
+    inventory[ore] = inv;
+}
 
 let layersChanged = {};
 let currentLayer;
@@ -360,10 +443,10 @@ function setLayer(y) {
             currentLayer = fluteLayer;
         else
             currentLayer = normalLayers[random(normalLayers.length-1)];
-        layerProbsSum = addUpAllProbs(currentLayer);
+        layerProbsSum = addUpLayerProbs(currentLayer);
         layersChanged[`${regY}`] = allLayersNames[allLayers.indexOf(currentLayer)];
     } else if (currentLayer !== lastCurrentLayer) {
         currentLayer = lastCurrentLayer;
-        layerProbsSum = addUpAllProbs(currentLayer);
+        layerProbsSum = addUpLayerProbs(currentLayer);
     }
 }
