@@ -139,8 +139,13 @@ function loadAllData() {
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-    dataTimer = autoSave && (!debug || debugActuallyPlaying) ? setInterval(saveAllData, 5000) : null;
+    if (autoSave && (!debug || debugActuallyPlaying))
+        dataTimer ??= setInterval(saveAllData, 5000);
+    else
+        dataTimer = null;
 }
+
+let repeatDataSaveTimer = setInterval(repeatDataSave, 5000);
 
 function toBinary(string) {
     const codeUnits = new Uint16Array(string.length);
