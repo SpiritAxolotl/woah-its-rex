@@ -99,7 +99,7 @@ const gearDescriptions = {
     "ore-tracker": "Tracks the location of new ore spawns.",
     "real-candilium": "Boosts ability luck by 1.1x.",
     "real-vitriol": "Sets mining speed delay to 15ms from 25ms.",
-    "infinity-collector": "Mines all rare ores in the mine upon mine reset.",
+    "infinity-collector": "Attempts to mine all rare ores in the mine upon mine reset.<br>75% chance per ore.",
     "layer-materializer": "For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.",
     "fortune-3-book": "Increases ability luck by 1.6x. Stacks with Real Candilium.",
     "haste-2-beacon": "Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.",
@@ -341,7 +341,7 @@ function movePlayer(dir) {
             /*default:
                 console.log("wrong key!!");*/
         }
-        gearAbilityInfinityCollector();
+        //gearAbilityInfinityCollector();
         displayArea();
     }
 }
@@ -561,8 +561,8 @@ function createOreDisplay(ore, variant, luck) {
     return `
     <p class="emoji">${ore}</p>
     <div class="totalAndProbContainer">
-        <p class="oreTotal">x${oreTotal.toLocaleString()}</p>
-        <p class="oreProb">1/${oreProb.toLocaleString()}</p>
+        <p class="oreTotal">x${Math.round(oreTotal).toLocaleString()}</p>
+        <p class="oreProb">1/${Math.round(oreProb).toLocaleString()}</p>
     </div>
     `;
 }
@@ -670,44 +670,90 @@ function updateInventory(ore, variant) {
 //SPAWNS AND FINDS
 
 let spawnOre;
-let loggedFinds = [];
-let latestSpawns = [];
+let latestSpawns = []; //{ore, variant, y, x, resetNum, fromCave, rarity, id, found, html}
 function spawnMessage(ore, variant, location, caveInfo) {
     //ADD TO MINE CAPACITY IF NEAR RESET
-    //CAVEINFO["fromCave"] = TRUE/FALSE
-    //CAVEINFO["rarity"] = ADJUSTED RARITY
     if (!hasGear("real-vitriol") && blocksRevealedThisReset > mineCapacity - 10000 && mineCapacity < 120000)
         mineCapacity += 10000;
-    let output = "";
+    let latestDisplay = document.getElementById("latestDisplay");
     let addToLatest = true;
-    const fromCave = typeof caveInfo === "object" && caveInfo["fromCave"];
-    if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000) {
-        //IF PICKAXE IS 5, ADD LOCATION
-        if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
-            latestSpawns.unshift({ore: ore, variant: variant, y: location["y"], x: location["x"], resetNum: resetsThisSession, fromCave: fromCave, rarity: fromCave ? caveInfo["rarity"] : undefined});
-        else latestSpawns.unshift({ore: ore});
-    } else addToLatest = false;
-    if (hasGear("real-vitriol") || hasGear("infinity-collector")) {
-        if (Object.keys(pickaxes).indexOf(currentPickaxe) < 10 || oreList[ore]["prob"] > 2000000)
-            loggedFinds.unshift({y: location["y"], x: location["x"]});
+    let id = -1;
+    //only clear an id if it's no longer displaying and its state isn't null
+    {
+        let idList = [];
+        for (const spawn of latestSpawns)
+            idList.push(spawn["id"]);
+        for (let i=0; i<=latestSpawns.length; i++)
+            if (!idList.includes(i)) {
+                id = i;
+                break;
+            }
     }
-    if (latestSpawns.length > 10) latestSpawns.pop();
+    //maybe make this a function
+    mineBlockData[location["y"]] ??= [];
+    mineBlockData[location["y"]][location["x"]] ??= {};
+    mineBlockData[location["y"]][location["x"]]["id"] = id;
+    const fromCave = typeof caveInfo === "object" && caveInfo["fromCave"];
+    if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000)
+        if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
+            latestSpawns.unshift({
+                ore: ore,
+                variant: variant,
+                y: location["y"],
+                x: location["x"],
+                resetNum: resetsThisSession,
+                fromCave: fromCave,
+                rarity: fromCave ? caveInfo["rarity"] : undefined,
+                id: id,
+                state: null,
+                html: null
+            });
+        else
+            latestSpawns.unshift({
+                ore: ore,
+                variant: variant,
+                resetNum: resetsThisSession,
+                id: id,
+                state: null,
+                html: null
+            });
+    else addToLatest = false;
+    /*if (hasGear("real-vitriol") || hasGear("infinity-collector"))
+        if (Object.keys(pickaxes).indexOf(currentPickaxe) < 10 || oreList[ore]["prob"] > 2000000)
+            latestSpawns.unshift({y: location["y"], x: location["x"]});
+    */
+    //if (latestSpawns.length > 10) latestSpawns.pop();
+    
     if (addToLatest) {
-        for (let spawn of latestSpawns) {
-            output += `<span class="emoji">${variantEmojis[spawn["variant"]]}${spawn["ore"]}</span> 1/${(oreList[spawn["ore"]]["prob"]*variantMultis[variant]).toLocaleString()}`;
-            if (typeof spawn["y"] === "number" && typeof spawn["x"] === "number")
-                output += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${spawn["resetNum"]}`;
-            output += "<br>";
+        let removeSpawns = [];
+        latestDisplay.innerHTML = "";
+        for (let i=0; i<latestSpawns.length; i++) {
+            const spawn = latestSpawns[i];
+            if (spawn["html"] === null) {
+                spawn["html"] = document.createElement("p");
+                spawn["html"].id = `latestSpawns${id}`;
+                spawn["html"].innerHTML = `<span class="emoji">${variantEmojis[spawn["variant"]]}${spawn["ore"]}</span> 1/${Math.round(oreList[spawn["ore"]]["prob"]*variantMultis[variant]).toLocaleString()}`;
+                if (typeof spawn["y"] === "number" && typeof spawn["x"] === "number")
+                    spawn["html"].innerHTML += ` | X: ${(spawn["x"] - 1000000000).toLocaleString()}, Y: ${(-spawn["y"]).toLocaleString()}, R: ${spawn["resetNum"]}`;
+            }
+            if (i > 10) {
+                if (spawn["state"] !== null)
+                    removeSpawns.push(i);
+                continue;
+            }
+            latestDisplay.appendChild(spawn["html"]);
         }
-        document.getElementById("latestSpawns").innerHTML = output;
+        
+        for (const i of removeSpawns)
+            latestSpawns.splice(i, 1);
+        
         const spawnMessage = document.getElementById("spawnMessage");
         spawnMessage.innerHTML = `<span class="emoji">${variantEmojis[variant]}${ore}</span> Has Spawned!<br>`;
         if (typeof caveInfo === "object" && caveInfo["rarity"])
-            spawnMessage.innerHTML += `1/${caveInfo["rarity"].toLocaleString()}`;
+            spawnMessage += `1/${caveInfo["rarity"].toLocaleString()}`;
         else
-            spawnMessage.innerHTML += `1/${(oreList[ore]["prob"]*variantMultis[variant]).toLocaleString()}`;
+            spawnMessage.innerHTML += `1/${Math.round(oreList[ore]["prob"]*variantMultis[variant]).toLocaleString()}`;
         
-        //if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
         spawnMessage.innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
         clearTimeout(spawnOre);
         spawnOre = setTimeout(() => {
@@ -716,18 +762,23 @@ function spawnMessage(ore, variant, location, caveInfo) {
     }
 }
 
-let latestFinds = [];
-function logFind(type, x, y, variant, atMined, fromReset) {
-    let output = "";
-    latestFinds.unshift({type: type, x: x, y: y, variant: variant, atMined: atMined, resetNum: resetsThisSession, fromReset: fromReset});
-    if (latestFinds.length > 10) latestFinds.pop();
-    for (let find of latestFinds) {
-        output += `${variantEmojis[find["variant"]]}${find["type"]} | `;
-        if (hasGear("ore-tracker")) output += `X: ${(find["x"] - 1000000000).toLocaleString()}, Y: ${(-find["y"]).toLocaleString()}, R: ${find["resetNum"]} | `;
-        if (find["fromReset"]) output += "FROM RESET<br>";
-        else output += `${find["atMined"].toLocaleString()}◻️<br>`;
-    }
-    document.getElementById("latestFinds").innerHTML = output;
+function logFind(x, y, atMined, fromReset) {
+    //let output = "";
+    const id = mineBlockData[y][x]["id"];
+    const find = document.getElementById(`latestSpawns${id}`);
+    if (find === null) return;
+    find.classList.add("oreFound");
+    let spawn;
+    for (const spwn of latestSpawns)
+        if (spwn["id"] === id) {
+            spawn = spwn;
+            break;
+        }
+    spawn["state"] = true;
+    if (fromReset)
+        spawn["html"].innerHTML += " | FROM RESET<br>";
+    else
+        spawn["html"].innerHTML += ` | ${atMined.toLocaleString()} blocks<br>`;
 }
 
 let moveOnce = false;

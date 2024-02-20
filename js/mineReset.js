@@ -25,13 +25,21 @@ async function mineReset() {
         layersChanged[`${Math.floor(curY/2000)}`] = allLayersNames[allLayers.indexOf(currentLayer)];
         const currDirectionBeforeReset = currDirection;
         currDirection = "";
-        const temp = await collectOres(currDirectionBeforeReset);
+        await collectOres(currDirectionBeforeReset);
         resetsThisSession++;
         totalResets++;
+        for (const spawn of latestSpawns) {
+            const spawnElement = document.getElementById(`latestSpawns${spawn["id"]}`);
+            if (spawn["state"] === null) {
+                if (spawnElement !== null && !spawnElement.classList.contains("oreNotFound"))
+                    spawnElement.classList.add("oreNotFound");
+                spawn["state"] = false;
+            }
+        }
         canMine = await mineResetAid();
         checkAllAround(curX, curY, 1);
         mine[curY][curX] = "⛏️";
-        loggedFinds = [];
+        //loggedFinds = [];
         displayArea();
         goDirection(currDirectionBeforeReset);
         resetting = false;
@@ -41,10 +49,11 @@ async function mineReset() {
 function collectOres(inDirection) {
     return new Promise((resolve) => {
     if (hasGear("infinity-collector")) {
-        for (let find of loggedFinds) {
-            if (typeof mine[find["y"]] === "object" &&
-              typeof mine[find["y"]][find["x"]] === "string")
-                mineBlock(find["x"], find["y"], "reset", 1);
+        for (let spawn of latestSpawns) {
+            if (typeof mine[spawn["y"]] === "object" &&
+              typeof mine[spawn["y"]][spawn["x"]] === "string" &&
+              Math.random() < 0.75)
+                mineBlock(spawn["x"], spawn["y"], "reset", 1);
         }
     }
     let direction = "";
