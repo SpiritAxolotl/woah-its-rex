@@ -1,9 +1,7 @@
-# A final note
-Hi. It's Spax. Amber is filing a DMCA claim against this repository. As much as I hate to do this, I am going to be taking down the website build and archiving the repository. I would hope I won't have to delete it (or be forced to delete it) but I guess you'll find out if this webpage disappears. Thank you to everyone who playtested, sent me bug reports, and contributed to the code. I'm sorry for my mistakes.
--Spax
-
 # Woah It's Rex
 This is a 2D browser version of a 3D idle mining game on Roblox called REx:R.
+This is a fork of [amber](https://github.com/ambercatgirl)'s original (formerly open-source) project,
+which can be found [here](https://ambercatgirl.github.io/woah-its-rex).
 
 This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes). Her version can be found [here](https://ambercatgirl.github.io/woah-its-rex).
 
@@ -28,6 +26,7 @@ From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-l
 - [x] Figure out why gears don't save to inv
 - [x] Fix layer generation to accommodate the new layer setting system
 - [x] Make spawn messages work again
+  - Now they work *extra* correctly
 - [x] Make spawn logs generate in the correct order again
 - [x] Fix white hearts not having logs? (on pick 6?)
 - [x] Fix XY coords on "location" being NaN sometimes?
@@ -39,9 +38,11 @@ From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-l
 - [ ] Fix whatever causes the game to either freeze for a bit or just stop mining when automining
   - Probably a performance issue that can be solved with optimizing code
   - fixed?? maybe???
-- [ ] Fix latest spawns not displaying when it should be ??? \[medium priority\]
+- [x] Fix latest spawns not displaying when it should be ??? \[medium priority\]
+  - Fixed by combining the two
 - [ ] Fix index completion highlighting on ores themselves (only doesn't work for some ores)
 - [ ] Replace my `overflow-y: scroll;` stuff with `overflow: clip;` to better get rid of scrollbars
+- [ ] Nerf caves by making them more performant
 - [ ] Players can seemingly keep mining when the game is paused if they pause during an activity
 
 ## New features
@@ -63,7 +64,7 @@ From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-l
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
 - [ ] ~~Arrange the on-screen controls in a d-pad configuration~~
-- [ ] Add a dedicated "reset game" button
+- [x] Add a dedicated "reset game" button
 - [x] Add the main layer ore next to the teleport meter display button thing
 - [x] Center the emoji somehow
 - [ ] Display what pickaxe the player has currently selected
@@ -73,6 +74,9 @@ From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-l
 - [ ] Add what layer an ore spawns on when hovering (`title` attribute)
 - [x] Update the title to something like the main branch
 - [x] Hide crafting stuff by clicking the selected item again
+- [x] Make the white squares black squares and the white circles white squares
+- [ ] Combine the latestSpawns and latestFinds into one latestDisplay
+- [ ] Search bar for ores in the inventory (feature request from nykk)
 
 ## Misc.
 - [x] Update to latest
@@ -96,10 +100,17 @@ From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-l
   - [ ] and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
-  - cmon please be less spammy but still useful
 - [ ] Add more organized credits
 - [ ] Add a manager class for:
   - [x] layers
-  - [ ] pickaxes & gears
+  - [ ] pickaxes
+  - [ ] gears
   - [ ] ores
+  - [x] variants
 - [ ] Move this TODO list to the github projects thing
+- [ ] Get un-dmca'd on github
+- [x] Set up gitlab mirror in the meantime (hi!)
+- [x] More debugging features
+  - `debugIsActuallyPlaying`
+  - `debugVerbose`
+- [ ] Add a save conversion back to amber's old save file format (for people who want to switch back to the original)
