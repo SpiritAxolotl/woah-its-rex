@@ -1,4 +1,4 @@
-const debug = window.location.href.match(/^(https?:\/\/127\.0\.0\.1|localhost):\d{4}/) !== null;
+const debug = window.location.href.match(/^(?:https?:\/\/(?:127\.0\.0\.1|localhost)):\d{4,}/) !== null;
 let debugLuck = "";
 let debugActuallyPlaying = false;
 let currLuck = 1;
