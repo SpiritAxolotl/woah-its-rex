@@ -303,7 +303,7 @@ body {
   font-family: "Arial";
 }
 
-.latestDisplay {
+/*.latestDisplay {
   text-align: left;
   border: 0.15em solid #959595;
   border-radius: 0.2em;
@@ -311,8 +311,20 @@ body {
   float: left;
   width: 50%;
   font-size: 0.75em;
-  /*min-height: 15em;
-  max-height: 15em;*/
+  //min-height: 15em;
+  max-height: 15em;//
+}*/
+
+#latestDisplay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.75em;
+  border-top: 0.15em solid #313131;
+  margin: 0;
+  & > p {
+    margin: 0;
+  }
 }
 
 #spawnMessage {
@@ -502,6 +514,14 @@ button {
 
 #displayRecipe > div {
   border: none;
+}
+
+.oreFound {
+  color: green;
+}
+
+.oreNotFound {
+  color: red;
 }
 
 /*#latestDisplays {

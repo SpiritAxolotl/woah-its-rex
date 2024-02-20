@@ -138,14 +138,14 @@ function gearAbilitySillyTp() {
 }
 
 function gearAbilityInfinityCollector() {
-    if (gears["infinity-collector"] && currentGears["infinity-collector"] && loggedFinds.length > 0)
-        for (let find of loggedFinds)
-            if (typeof mine[find["y"]] === "object" && typeof mine[find["y"]][find["x"]] === "string") {
-                mineBlock(find["x"], find["y"], "ability", 1);
-                loggedFinds.splice(loggedFinds.indexOf(find), 1);
-            }
+    if (gears["infinity-collector"] && hasGear("infinity-collector") && latestSpawns.length > 0)
+        for (const spawn of latestSpawns)
+            if (typeof mine[spawn["y"]] === "object" &&
+              typeof mine[spawn["y"]][spawn["x"]] === "string" &&
+              Math.random() < 0.75)
+                mineBlock(spawn["x"], spawn["y"], "ability", 1);
+                //latestSpawns.splice(latestSpawns.indexOf(spawn), 1);
 }
-
 
 function pickaxeAbility1(x, y, boost) {
     return new Promise((resolve) => {
