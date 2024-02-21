@@ -572,6 +572,11 @@ button {
   margin: 0;
   line-height: 1.1em;
 }
+#subtextTitle {
+  font-size: 2em;
+  margin: 0;
+  color: #cccccc;
+}
 code {
   background-color: var(--bgcolor);
   padding: 5px;
