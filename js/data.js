@@ -10,7 +10,7 @@ function saveAllData() {
     
     //update this whenever the format of the data storage changes (then add if(data["version"]===num) to stuff)
     dataStorage["version"] = 4;
-    for (let ore in oreList)
+    for (const ore in oreList)
         dataStorage["ores"][ore] = inventory[ore];
     dataStorage["pickaxes"]["inv"] = pickaxes;
     dataStorage["pickaxes"]["curr"] = currentPickaxe;
@@ -37,13 +37,13 @@ function loadAllData() {
         const data = JSON.parse(localStorage.getItem("playerData"));
         if (typeof data["version"] !== "number")
             return loadAllDataOld();
-        for (let ore in data["ores"])
+        for (const ore in data["ores"])
             if (typeof oreList[ore] === "object")
-                for (let variant of variantNames)
+                for (const variant of variantNames)
                     inventory[ore][variant.toLowerCase()] = data["ores"][ore]?.[variant.toLowerCase()] ?? 0;
         if (typeof data["pickaxes"]["inv"] === "object") {
             if (data["version"] >= 4) {
-                for (let pick in data["pickaxes"]["inv"])
+                for (const pick in data["pickaxes"]["inv"])
                     pickaxes[pick] = data["pickaxes"]["inv"][pick];
                     currentPickaxe = data["pickaxes"]["curr"] ?? "ol-faithful";
             } else {
@@ -62,22 +62,22 @@ function loadAllData() {
                     11: "whirlpool-of-fate",
                     12: "wings-of-glory"
                 }
-                for (let pick in data["pickaxes"]["inv"])
+                for (const pick in data["pickaxes"]["inv"])
                     pickaxes[pickNumToStringConversion[pick]] = data["pickaxes"]["inv"][pick];
                 currentPickaxe = pickNumToStringConversion[data["pickaxes"]["curr"]] ?? "ol-faithful";
             }
         }
         totalMined = data["stats"]["totalMined"] ?? 0;
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
-        for (let ore in oreList)
+        for (const ore in oreList)
             if (document.getElementById(`${ore}Normal`) !== null)
-                for (let variant in inventory[ore]) {
+                for (const variant in inventory[ore]) {
                     updateInventory(ore, capitalize(variant));
                     if (inventory[ore][variant] >= 1)
                         visible(document.getElementById(ore + capitalize(variant)));
                 }
         if (typeof data["settings"]["mutedSounds"] === "number")
-            for (let sound in data["settings"]["mutedSounds"])
+            for (const sound in data["settings"]["mutedSounds"])
                 if (!data["settings"]["mutedSounds"][sound])
                     document.getElementById(`mute${capitalize(sound)}`).click();
         if (typeof data["settings"]["musicVolume"] === "number") {
@@ -112,15 +112,15 @@ function loadAllData() {
         totalResets = data["stats"]["totalResets"] ?? 0;
         if (typeof data["gears"] === "object")
             if (typeof data["gears"]["inv"] === "object")
-                for (let gear in data["gears"]["inv"])
+                for (const gear in data["gears"]["inv"])
                     gears[gear] = data["gears"]["inv"][gear];
             else if (data["version"] === 2)
-                for (let gear in data["gears"])
+                for (const gear in data["gears"])
                     gears[gear] = data["gears"][gear];
         if (data["version"] >= 3)
             currentGears = data["gears"]["curr"];
         else
-            for (let gear in data["gears"])
+            for (const gear in data["gears"])
                 if (data["gears"][gear])
                     currentGears.push(gear);
         if (typeof data["settings"]["autoSave"] === "boolean")
