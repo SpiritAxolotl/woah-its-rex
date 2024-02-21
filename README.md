@@ -3,7 +3,7 @@ This is a 2D browser version of a 3D idle mining game on Roblox called REx:R.
 This is a fork of [amber](https://github.com/ambercatgirl)'s original (formerly open-source) project,
 which can be found [here](https://ambercatgirl.github.io/woah-its-rex).
 
-This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes). Her version can be found [here](https://ambercatgirl.github.io/woah-its-rex).
+This is an unofficial version of amber's original project to make the code more readable and less messy, as well as implementing more QoL features that I felt the base game needed (and many UI fixes). 
 
 # [LICENSE](./media/LICENSE.mp4)
 From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-license-manifesto.html)
@@ -77,6 +77,7 @@ From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-l
 - [x] Make the white squares black squares and the white circles white squares
 - [ ] Combine the latestSpawns and latestFinds into one latestDisplay
 - [ ] Search bar for ores in the inventory (feature request from nykk)
+- [ ] Theming
 
 ## Misc.
 - [x] Update to latest

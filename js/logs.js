@@ -42,9 +42,9 @@ class secureLogs {
                     this.#spawnLogs.splice(i, 1);
                     this.#verifiedLogs.push({ore: mine[y][x], y: y, x: x, date: new Date(), something: false, variant: "Normal", luck: log["luck"]});
                     break;
-                } else {
+                }/* else {
                     console.log("failed to verify", r, c);
-                }
+                }*/
             }
         }
     }
@@ -58,11 +58,11 @@ class secureLogs {
                     log["variant"] = variant;
                     verified = true;
                     break;
-                } else
-                    console.log("failed to verify find", block, this.#verifiedLogs[i][0]);
+                }/* else
+                    console.log("failed to verify find", block, this.#verifiedLogs[i][0]);*/
             }
         }
-        console.log(verified);
+        //console.log(verified);
     }
     showLogs() {
         if (isVisible(document.getElementById("dataExport"))) {
