@@ -157,7 +157,7 @@
         <h1 id="pausedTitle">Woah It's Rex!
             <div>
                 <p class="subtext">SPAX'S FORK</p>
-                <p class="subtext"><a href="https://github.com/SpiritAxolotl/woah-its-rex">#c6b9194</a></p>
+                <!--<p class="subtext"><a href="https://github.com/SpiritAxolotl/woah-its-rex">#c6b9194</a></p>-->
             </div>
         </h1>
         <span>Paused</span>
@@ -169,13 +169,13 @@
         <button onclick="exportData()" id="dataExport">Export Data</button>
         <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
         <br>
-        <button onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
-        <button onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
-        <button onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
-        <button onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
-        <button onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
-        <button onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
-        <button onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
+        <button class="muteButton" onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
+        <button class="muteButton" onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
+        <button class="muteButton" onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
+        <button class="muteButton" onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
+        <button class="muteButton" onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
+        <button class="muteButton" onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
+        <button class="muteButton" onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
         <br>
         <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
         <button id="musicButton" class="inventoryButtons invisible" onclick="toggleMusic()">Mute Music</button>

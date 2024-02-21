@@ -49,14 +49,16 @@ function loadAllDataOld() {
                 }
             }
         }
+        /* //fuck this lol. I hate amber's fucked up save system so much. will fix in the future
         if (data[3][1] !== undefined) {
             document.getElementById("musicVolume").value = data[3][1];
             changeMusicVolume(data[3][1]);
         }
         if (data[3][2] !== undefined) {
-            document.getElementById("spawnVolume").value = data[3][2];
-            changeAllVolume(data[3][2]);
+            document.getElementById("spawnVolume").value = data[3][3];
+            changeAllVolume(data[3][3]);
         }
+        */
         //let canContinue = false;
         if (data[3][3] !== undefined) {
             if (data[3][3] === "Unmute Music") {

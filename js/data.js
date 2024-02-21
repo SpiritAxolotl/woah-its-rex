@@ -45,7 +45,7 @@ function loadAllData() {
             if (data["version"] >= 4) {
                 for (let pick in data["pickaxes"]["inv"])
                     pickaxes[pick] = data["pickaxes"]["inv"][pick];
-                    currentPickaxe = data["pickaxes"]["curr"] || "ol-faithful";
+                    currentPickaxe = data["pickaxes"]["curr"] ?? "ol-faithful";
             } else {
                 const pickNumToStringConversion = {
                     0: "ol-faithful",
@@ -64,10 +64,10 @@ function loadAllData() {
                 }
                 for (let pick in data["pickaxes"]["inv"])
                     pickaxes[pickNumToStringConversion[pick]] = data["pickaxes"]["inv"][pick];
-                currentPickaxe = pickNumToStringConversion[data["pickaxes"]["curr"]] || "ol-faithful";
+                currentPickaxe = pickNumToStringConversion[data["pickaxes"]["curr"]] ?? "ol-faithful";
             }
         }
-        totalMined = data["stats"]["totalMined"] || 0;
+        totalMined = data["stats"]["totalMined"] ?? 0;
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
         for (let ore in oreList)
             if (document.getElementById(`${ore}Normal`) !== null)
@@ -109,7 +109,7 @@ function loadAllData() {
             stopOnRare = data["settings"]["stopOnRare"];
             stopOnRareToggle(stopOnRare);
         }
-        totalResets = data["stats"]["totalResets"] || 0;
+        totalResets = data["stats"]["totalResets"] ?? 0;
         if (typeof data["gears"] === "object")
             if (typeof data["gears"]["inv"] === "object")
                 for (let gear in data["gears"]["inv"])
