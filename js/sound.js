@@ -52,7 +52,8 @@ function changeCanPlay(str, button) {
 //SOUND PLAYING
 
 function playSound(type) {
-    switch (type) {
+    //refactor audio at some point
+    /*switch (type) {
         case "exotic":
             if (canPlay["chills"]) {
                 chill.currentTime = 0;
@@ -95,7 +96,7 @@ function playSound(type) {
                 zenith.play();
             }
             break;
-    }
+    }*/
 }
 
 function attemptToPlaySound(prob) {
