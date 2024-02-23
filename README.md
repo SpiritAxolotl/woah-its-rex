@@ -8,6 +8,9 @@ This is an unofficial version of amber's original project to make the code more 
 # [LICENSE](./media/LICENSE.mp4)
 From the [anti-license manifesto](https://www.boringcactus.com/2021/09/29/anti-license-manifesto.html)
 
+# Bug Reporting
+Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/new?issuable_template=Bug)
+
 # TODO List
 
 ## Bugfixing
