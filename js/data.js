@@ -45,7 +45,7 @@ function loadAllData() {
             if (data["version"] >= 4) {
                 for (const pick in data["pickaxes"]["inv"])
                     pickaxes[pick] = data["pickaxes"]["inv"][pick];
-                    currentPickaxe = data["pickaxes"]["curr"] ?? "ol-faithful";
+                currentPickaxe = data["pickaxes"]["curr"] ?? "ol-faithful";
             } else {
                 const pickNumToStringConversion = {
                     0: "ol-faithful",
