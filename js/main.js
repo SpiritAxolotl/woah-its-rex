@@ -18,7 +18,7 @@ let warnClose = true;
 let autoSave = true;
 let caveToggle = true;
 let turnOffAbilities = false;
-let debugVerbose = false;
+let debugVerbose = debug;
 let stopOnRare = false;
 
 //TODO: refactor this
@@ -228,15 +228,12 @@ function init() {
     createInventory();
     createIndex();
     createMine();
-    //remove this line after no one has this anymore (it's basically cosmetic now)
-    localStorage.removeItem("newSaveFormat");
     const playedBefore = localStorage.getItem("playedBefore");
     if (!playedBefore) localStorage.setItem("newSaveFormat", true);
     canContinue = playedBefore ? loadAllData() : true;
     if (canContinue) {
         repeatDataSave();
         localStorage.setItem("playedBefore", true);
-        localStorage.setItem("game2DataChanges", true);
         createPickaxeRecipes();
         createGearRecipes();
         //document.getElementById("dataText").value = "";
