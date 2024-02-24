@@ -119,7 +119,7 @@ function generateCaveBlock(y, x, type) {
 }
 
 function getCaveMulti(cave) {
-    return allCaves.indexOf(cave);
+    return allCaveMultis[allCaves.indexOf(cave)];
 }
 
 const caveProbsSum = addUpLayerProbs(allCaveMultis);
