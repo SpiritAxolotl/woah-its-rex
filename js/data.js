@@ -147,11 +147,11 @@ function repeatDataSave() {
         dataTimer = null;
 }
 
+let repeatDataSaveTimer = setInterval(repeatDataSave, 5000);
+
 function incrementTimePlayed() {
     totalTimePlayed++;
 }
-
-let repeatDataSaveTimer = setInterval(repeatDataSave, 5000);
 
 function toBinary(string) {
     const codeUnits = new Uint16Array(string.length);
