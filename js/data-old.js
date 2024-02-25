@@ -72,8 +72,11 @@ function loadAllDataOld() {
             mineCapacity = data[3][4];
         }
         if (data[4] !== undefined || data[4] !== null) {
-            for (let i = 0; i < data[4][0].length; i++)
+            for (let i = 0; i < data[4][0].length; i++) {
                 gears[gearNames[i]] = data[4][0][i];
+                if (gears[gearNames[i]])
+                    currentGears.push(gearNames[i]);
+            }
         }
         if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
             visible(document.getElementById("layerDisplaySilly"));
