@@ -31,7 +31,7 @@ function loadAllDataOld() {
         for (let i = 0; i < data[1][0][0].length; i++)
             pickaxes[pickNumToStringConversion[i]] = data[1][0][0][i][1];
         currentPickaxe = pickNumToStringConversion[data[1][0][1]];
-        totalMined = data[2];
+        totalMined = data[2][0];
         document.getElementById("blocksMined").innerHTML = `${totalMined.toLocaleString()} Blocks Mined`;
         for (let ore in oreList) {
             if (document.getElementById(ore + "Normal") !== null) {

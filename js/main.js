@@ -22,6 +22,7 @@ let caveToggle = true;
 let turnOffAbilities = false;
 let debugVerbose = debug;
 let stopOnRare = false;
+let totalTimePlayed = 0;
 
 //TODO: refactor this
 let pickaxes = {
@@ -261,6 +262,7 @@ let chill,
     keepRunningAudio;
 function loadContent() {
     isPlaying = true;
+    setInterval(incrementTimePlayed, 5000);
     let allAudios = [];
     keepRunningAudio = new Audio("sounds/ambience.mp3")
     keepRunningAudio.load();
