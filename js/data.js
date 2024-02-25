@@ -139,7 +139,7 @@ function loadAllData() {
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-    if (autoSave && (!debug || debugActuallyPlaying))
+    if (isPlaying && autoSave && (!debug || debugActuallyPlaying))
         dataTimer ??= setInterval(saveAllData, 5000);
     else
         dataTimer = null;

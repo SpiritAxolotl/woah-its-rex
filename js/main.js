@@ -1,4 +1,6 @@
 const debug = window.location.href.match(/^(?:https?:\/\/(?:127\.0\.0\.1|localhost)):\d{4,}/) !== null;
+//let debug = false;
+let isPlaying = false;
 let debugLuck = "";
 let debugActuallyPlaying = false;
 let currLuck = 1;
@@ -258,6 +260,7 @@ let chill,
     zenith,
     keepRunningAudio;
 function loadContent() {
+    isPlaying = true;
     let allAudios = [];
     keepRunningAudio = new Audio("sounds/ambience.mp3")
     keepRunningAudio.load();
