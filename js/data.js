@@ -148,8 +148,9 @@ function repeatDataSave() {
 }
 
 function incrementTimePlayed() {
-    totaltimePlayed++;
+    totalTimePlayed++;
 }
+
 let repeatDataSaveTimer = setInterval(repeatDataSave, 5000);
 
 function toBinary(string) {
