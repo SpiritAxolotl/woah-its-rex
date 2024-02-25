@@ -16,6 +16,7 @@ function saveAllData() {
     dataStorage["pickaxes"]["curr"] = currentPickaxe;
     dataStorage["stats"]["totalMined"] = totalMined;
     dataStorage["stats"]["totalResets"] = totalResets;
+    dataStorage["stats"]["totalTimePlayed"] = totalTimePlayed;
     dataStorage["settings"]["mutedSounds"] = canPlay;
     dataStorage["settings"]["toggleCaves"] = caveToggle;
     dataStorage["settings"]["canDisplay"] = canDisplay;
@@ -110,6 +111,7 @@ function loadAllData() {
             stopOnRareToggle(stopOnRare);
         }
         totalResets = data["stats"]["totalResets"] ?? 0;
+        totalTimePlayed = data["stats"]["totalTimePlayed"] ?? 0;
         if (typeof data["gears"] === "object")
             if (typeof data["gears"]["inv"] === "object")
                 for (const gear in data["gears"]["inv"])
@@ -145,6 +147,9 @@ function repeatDataSave() {
         dataTimer = null;
 }
 
+function incrementTimePlayed() {
+    totaltimePlayed++;
+}
 let repeatDataSaveTimer = setInterval(repeatDataSave, 5000);
 
 function toBinary(string) {
