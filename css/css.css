@@ -567,6 +567,10 @@ button {
   z-index: 4;
 }
 
+#pressPlayText {
+  text-shadow: black 0 0 2rem;
+}
+
 #gameTitle {
   font-size: 8em;
   margin: 0;
