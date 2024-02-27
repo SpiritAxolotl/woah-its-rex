@@ -1,4 +1,6 @@
+// this is actually really smart but im psure you can just access debug by fucking up with the functions and shit
 const debug = window.location.href.match(/^(?:https?:\/\/(?:127\.0\.0\.1|localhost)):\d{4,}/) !== null;
+
 //let debug = false;
 let isPlaying = false;
 let debugLuck = "";
@@ -24,68 +26,7 @@ let debugVerbose = debug;
 let stopOnRare = false;
 let totalTimePlayed = 0;
 
-//TODO: refactor this
-let pickaxes = {
-    "ol-faithful": true,
-    "mulch-mallet": false,
-    "mud-sickle": false,
-    "dirt-ravager": false,
-    "void-crusher": false,
-    "geode-staff": false,
-    "earth-soiler": false,
-    "crypt-smasher": false,
-    "labrynthian-tide": false,
-    "77-leaf-destroyer": false,
-    "planet-buster": false,
-    "whirlpool-of-fate": false,
-    "wings-of-glory": false
-};
-const pickaxeNamesNormalized = {
-    "ol-faithful": "Ol' Faithful",
-    "mulch-mallet": "Mulch Mallet",
-    "mud-sickle": "Mud Sickle",
-    "dirt-ravager": "Dirt Ravager",
-    "void-crusher": "Void Crusher",
-    "geode-staff": "Geode Staff",
-    "earth-soiler": "Earth Soiler",
-    "crypt-smasher": "Crypt Smasher",
-    "labrynthian-tide": "Labrynthian Tide",
-    "77-leaf-destroyer": "77 Leaf Destroyer",
-    "planet-buster": "Planet Buster",
-    "whirlpool-of-fate": "Whirlpool of Fate",
-    "wings-of-glory": "Wings of Glory"
-};
-const pickaxeDescriptions = {
-    "ol-faithful": "Humble beginnings :)<br>No special abilities.",
-    "mulch-mallet": "Mines a few blocks in every cardinal direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.",
-    "mud-sickle": "Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.",
-    "dirt-ravager": "Mines blocks in an X shape around the player.<br>Has an ability proc rate of 1/30.<br>Has 1.8x luck.",
-    "void-crusher": "Mines a square randomly around the player.<br>Has an ability proc rate of 1/25.<br>Has 2x luck.",
-    "geode-staff": "Mines a circle randomly around the player.<br>Has an ability proc rate of 1/17.<br>Has 5x luck.",
-    "earth-soiler": "Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.",
-    "crypt-smasher": "Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.",
-    "labrynthian-tide": "Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.",
-    "77-leaf-destroyer": "Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck.",
-    "planet-buster": "Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.",
-    "whirlpool-of-fate": "Mines an extremely large spiral around the player.<br>Has an ability proc rate of 1/100.<br>Has 30x luck.",
-    "wings-of-glory": "Mines wings around the player.<br>Mines 2 blocks at once when using automine.<br>Has 2x special cave type luck.<br>Has an ability proc rate of 1/150.<br>Has 75x luck."
-};
-const pickaxeSillyDescriptions = {
-    "ol-faithful": ":33333333",
-    "mulch-mallet": "is anyone gonna read these lol",
-    "mud-sickle": "hi!!! hii!!",
-    "dirt-ravager": "wait no get out of here",
-    "void-crusher": "stop it get out",
-    "geode-staff": "leave!!!!!!!!",
-    "earth-soiler": "i have your ip",
-    "crypt-smasher": "grrrrr leave!!",
-    "labrynthian-tide": ":pouting-cat:",
-    "77-leaf-destroyer": ">:C",
-    "planet-buster": "IM HERE NOW TOO",
-    "whirlpool-of-fate": "mrrp meow meow!",
-    "wings-of-glory": "cataxe",
-    "undefined": "sorry chat, felt evil"
-};
+
 let gears = {
     "ore-tracker": false,
     "real-candilium": false,
@@ -133,7 +74,8 @@ Object.defineProperty(Array.prototype, 'contains', {
     }
 });
 */
-
+ 
+// todo: put this in a UI js script
 function visible(element) {
     element.classList.remove("invisible");
 }
@@ -825,3 +767,11 @@ function refreshButtons() {
 }
 
 refreshButtons();
+
+function showSettings(setting) {
+    const elements = document.getElementsByClassName("settingsItem");
+    for (let i = 0; i < elements.length; i++) {
+        invisible(elements[i]);
+    }
+    visible(document.getElementById(setting));
+}
