@@ -27,7 +27,7 @@
     <!--<link property="og:type" content="favicon.ico">-->
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="stylesheet" href="./css/css.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" defer href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <noscript>
@@ -47,7 +47,7 @@
                 <li>Background music made by <code>@x2corp</code> on Discord!</li>
                 <li>Spawn sounds come from REx:R on Roblox</li>
                 <li>Some sounds made by <code>@tevv_</code> on Discord!</li>
-                <li>With some help provided by <code>@nikoundrscr</code> on Discord!</li>
+                <!-- niko was here!! hello -->
                 <li>Icon made by <code>@tayfennec</code> on Twitter!</li>
             </ul>
             <button id="playButton" class="invisible" onclick="loadContent()">Play!</button>
@@ -168,11 +168,11 @@
         <span>Paused</span>
         <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
     </div>
-    <div class="container-fluid settingsMenu">
+    <!-- <div class="container-fluid settingsMenu">
         <label for="dataFile">Import Data</label>
         <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
         <button onclick="exportData()" id="dataExport">Export Data</button>
-        <!--<button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>-->
+        <button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>
         <br>
         <button class="muteButton" onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
         <button class="muteButton" onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
@@ -205,6 +205,71 @@
         <button onclick="stopOnRareToggle()" id="stopOnRareButton">Stop on Rare: off</button>
         <button onclick="resetGame()" id="resetGameButton">Reset Game</button>
         <p>No, we are not implementing custom background colors. Custom theme support is coming in the future.</p>
+    </div> -->
+    <div class="revampedSettings">
+        <div class="settingsContainer">
+            <div class="settingsItem">
+                <h1>Pick a setting category!</h1>
+            </div>
+            <div class="settingsItem invisible" id="data">
+                <h1><i class="fas fa-user-gear"></i> Data Settings</h1>
+                <hr>
+                <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
+                <button onclick="exportData()" id="dataExport">Export Data</button>
+                <button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>
+                <button onclick="resetGame()" id="resetGameButton">Reset Game</button>
+            </div>
+            <div class="settingsItem invisible" id="audio">
+                <h1><i class="fas fa-volume-high"></i> Audio Settings</h1>
+                <hr>
+                <button class="muteButton" onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
+                <button class="muteButton" onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
+                <button class="muteButton" onclick="changeCanPlay('blurs', this)" id="muteBlurs">Mute Blurs</button>
+                <button class="muteButton" onclick="changeCanPlay('unfaths', this)" id="muteUnfaths">Mute Unfaths</button>
+                <button class="muteButton" onclick="changeCanPlay('otherworldies', this)" id="muteOtherworldies">Mute Otherworldlies</button>
+                <button class="muteButton" onclick="changeCanPlay('metaversals', this)" id="muteMetaversals">Mute Metaversals</button>
+                <button class="muteButton" onclick="changeCanPlay('zeniths', this)" id="muteZeniths">Mute Zeniths</button>
+                <hr>
+                <div class="volumeController">
+                    <p>Spawn Volumes</p>
+                    <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
+                </div>
+                <div class="volumeController">
+                    <p>Music Volume</p>
+                    <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
+                </div>
+            </div>
+            <div class="settingsItem invisible" id="logs">
+                <h1><i class="fas fa-note-sticky"></i> Ore Logs</h1>
+                <hr>
+                <div id="logHolder"></div>
+                <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
+            </div>
+            <div class="settingsItem invisible" id="gameplay">
+                <h1><i class="fas fa-gamepad"></i> Gameplay Settings</h1>
+                <hr>
+                <input autocomplete="off" type="text" id="mineCapacitySetter">
+                <button onclick="updateCapacity(document.getElementById('mineCapacitySetter').value)" id="updateCapacityButton">Update Mine Capacity</button>
+                <hr>
+                <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
+                <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
+                <button onclick="stopOnRareToggle()" id="stopOnRareButton">Stop on Rare: off</button>
+            </div>
+        </div>
+        <div class="settingsSelector">
+            <button onclick="showSettings('gameplay')" class="settingSelector">
+                <i class="fas fa-gamepad"></i> Gameplay
+            </button>
+            <button onclick="showSettings('data')" class="settingSelector">
+                <i class="fas fa-user-gear"></i> Data
+            </button>
+            <button onclick="showSettings('audio')" class="settingSelector">
+                <i class="fas fa-volume-high"></i> Audio
+            </button>
+            <button onclick="showSettings('logs')" class="settingSelector">
+                <i class="fas fa-note-sticky"></i> Logs
+            </button>
+        </div>
     </div>
 </div>
 
@@ -212,6 +277,7 @@
 <script src="js/logs.js"></script>
 <script src="js/sound.js"></script>
 <script src="js/mineReset.js"></script>
+<script src="js/pickaxes.js"></script>
 <script src="js/main.js"></script>
 <script src="js/abilities.js"></script>
 <script src="js/crafting.js"></script>

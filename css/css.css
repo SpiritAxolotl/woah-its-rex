@@ -1,13 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lexend&display=swap");
-
 @font-face {
   font-family: "Twemoji";
   src: url("../fonts/Twemoji.otf");
 }
 
+@font-face {
+  font-family: "Lexend";
+  src: url("../fonts/Lexend.ttf");
+}
+
+@font-face {
+  font-family: "Icons";
+  src: url("../fonts/Icons-solid-900.woff2");
+}
+
 :root {
   --bgcolor: #14161a;
+  --border: #313131;
   --bgsecondary: #161b1d;
 }
 
@@ -98,6 +106,7 @@ body {
   font-size: 1.2em;
   height: max-content;
   margin: 0;
+  border-radius: 0em;
   border: none;
   border-bottom: solid #343434;
   background-color: #161b1d;
@@ -152,7 +161,9 @@ body {
   /* gap: 3em; */
   text-align: left;
 }
-
+.fas {
+  pointer-events: none;
+}
 #switchButtons {
   display: flex;
 }
@@ -361,11 +372,13 @@ button {
   cursor: pointer;
   font-size: 0.9em;
   user-select: none;
-  background-color: #494949;
+  background-color: var(--bgcolor);
+  border: none;
+  padding: 5px;
   border-style: solid;
-  border-color: white;
-  border-width: 0.1em;
-  /* border-radius: 0.25em; */
+  border-color: var(--border);
+  border-width: 0.25em;
+  border-radius: 0.25em;
   color: white;
   /* font-family: "Lexend", sans-serif; */
   text-align: center;
@@ -377,7 +390,7 @@ button {
   background-color: #343434;
 }
 
-#musicVolume {
+#musicVolume, #spawnVolume {
   width: 100%;
 }
 
@@ -433,6 +446,9 @@ button {
   background-color: white;
   color: black;
 }
+.headerButtons > button {
+  border-radius: 0em;
+}
 .redButton:hover {
   background-color: #eb2424;
   color: black;
@@ -480,15 +496,9 @@ button {
   width: 100%;
 }
 
-.volumeController > label {
-  padding: 0;
-  padding-bottom: 0.5em;
-}
-
-.volumeController > p {
-  text-wrap: nowrap;
-  margin-top: 0.5em;
-  margin-bottom: 0;
+.volumeController {
+  display: flex;
+  gap:1em;
 }
 
 #discord {
@@ -624,4 +634,45 @@ code {
 .pausedTitleContainer {
   margin-bottom: auto;
   color: white;
+}
+
+/* settings */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.revampedSettings {
+  padding:10px;
+  color: white;
+  width: fit-content;
+  background-color: var(--bgsecondary);
+}
+
+.settingsContainer {
+  padding:30px;
+  background-color: var(--bgcolor);
+}
+
+.settingsSelector {
+  display: flex;
+  gap:0.4em;
+}
+.settingSelector {
+  --size: 20px;
+  min-height: var(--size);
+  font-weight: 400;
+  padding: calc(var(--size) / 2);
+  min-width: 0 !important;
+  gap:10px;
+  align-items: center;
+  border: none;
+  font-size: var(--size);
+  position: relative;
+  display: flex;
+}
+
+.logHolder, #generatedLogs {
+  max-height:500px;
+  overflow-y: auto;
 }
