@@ -1,30 +1,34 @@
+
 @font-face {
   font-family: "Twemoji";
   src: url("../fonts/Twemoji.otf");
 }
 
 @font-face {
-  font-family: "Lexend";
+  font-family: "Lexend", sans-serif;
   src: url("../fonts/Lexend.ttf");
 }
-
-@font-face {
-  font-family: "Icons";
-  src: url("../fonts/Icons-solid-900.woff2");
-}
-
 :root {
-  --bgcolor: #14161a;
-  --border: #313131;
-  --bgsecondary: #161b1d;
+  --bgprimary: #020617;
+  --border: #1e293b;
+  --bgsecondary: #0f172a;
+
+  --accent: #22c55e;
+  --error: #ef4444;
+  
+  --text: #000;
+
+  --hoverbg: #ffffff;
+  --hoverfg: #000;
 }
 
 body {
   overscroll-behavior: none;
-  background-color: var(--bgcolor);
+  background-color: var(--bgprimary);
   max-height: 100%;
   font-family: "Courier";
   margin: 0;
+  color: var(--text);
   padding: 0;
 }
 
@@ -41,10 +45,10 @@ body {
   height: 100%;
   /*padding-top: 0.5em;*/
 }
-
+/* 
 .row > * > *:first-child {
   margin-top: 0.25em;
-}
+} */
 
 .row * {
   text-align: center;
@@ -90,7 +94,7 @@ body {
   overflow-y: scroll;
   /* justify-self: stretch; */
   border-style: solid;
-  border-color: #313131;
+  border-color: var(--border);
   border-left: none;
   border-top: none;
   border-right: none;
@@ -108,10 +112,9 @@ body {
   margin: 0;
   border-radius: 0em;
   border: none;
-  border-bottom: solid #343434;
-  background-color: #161b1d;
+  border-bottom: solid var(--border);
+  background-color: var(--bgsecondary);
   flex-grow: 1;
-  color: white;
   padding: 1em;
   transition: background-color 0.2s, color 0.2s, border 0.5s;
 }
@@ -119,8 +122,8 @@ body {
   width: 100%;
 }
 .movementButtons button:hover {
-  background-color: white;
-  color: black;
+  background-color: var(--hoverbg);
+  color: var(--hoverfg);
 }
 
 #teleportContainer {
@@ -181,11 +184,12 @@ body {
 }
 
 .oreTotal {
-  color: #ffffff;
+  color: var(--text);
 }
 
 .oreProb {
-  color: #666666;
+  color: var(--text);
+  opacity: 0.5;
 }
 
 .oreDisplay {
@@ -198,7 +202,7 @@ body {
   height: min-content;
   max-height: 100px;
   padding: 10px;
-  border: 1px solid #343434;
+  border: 1px solid var(--border);
   font-size: 2em;
 }
 
@@ -225,15 +229,15 @@ body {
 }
 
 .recipeRed {
-  color: red;
+  color: var(--error);
 }
 
 .recipeGreen {
-  color: green;
+  color: var(--accent);
 }
 
 .hasOne {
-  color: #00c300;
+  color: var(--accent);
 }
 
 .itemDescription {
@@ -331,7 +335,7 @@ body {
   flex-direction: column;
   justify-content: center;
   font-size: 0.75em;
-  border-top: 0.15em solid #313131;
+  border-top: 0.15em solid var(--border);
   margin: 0;
   & > p {
     margin: 0;
@@ -348,7 +352,7 @@ body {
   margin: 0;
 }
 p, label, input[type=file] {
-  color: white;
+  color: var(--text);
 }
 
 .mobile {
@@ -372,14 +376,14 @@ button {
   cursor: pointer;
   font-size: 0.9em;
   user-select: none;
-  background-color: var(--bgcolor);
+  background-color: var(--bgprimary);
   border: none;
   padding: 5px;
   border-style: solid;
   border-color: var(--border);
   border-width: 0.25em;
   border-radius: 0.25em;
-  color: white;
+  color: var(--text);
   /* font-family: "Lexend", sans-serif; */
   text-align: center;
   min-width: 5em;
@@ -387,7 +391,7 @@ button {
 }
 
 .darkButton {
-  background-color: #343434;
+  background-color: var(--bgsecondary);
 }
 
 #musicVolume, #spawnVolume {
@@ -435,22 +439,22 @@ button {
 .headerButtons > * {
   /* font-size: 2em; */
   border: none;
-  border-bottom: solid #343434;
-  background-color: #161b1d;
+  border-bottom: solid var(--border);
+  background-color: var(--bgsecondary);
   flex-grow: 1;
-  color: white;
+  color: var(--text);
   padding: 1em;
   transition: background-color 0.2s, color 0.2s, border 0.5s;
 }
 .headerButtons > *:hover {
-  background-color: white;
-  color: black;
+  background-color: var(--hoverbg);
+  color: var(--hoverfg);
 }
 .headerButtons > button {
   border-radius: 0em;
 }
 .redButton:hover {
-  background-color: #eb2424;
+  background-color: var(--error);
   color: black;
 }
 
@@ -458,16 +462,16 @@ button {
   max-height: 100px;
   font-size: 2em;
   /* border: none; */
-  background-color: #161b1d;
+  background-color: var(--bgsecondary);
   transition: all 0.2s;
 }
 #playButton:hover {
-  background-color: #24eb24;
-  border-color: #161b1d00;
+  background-color: var(--accent);
+  border-color: var(--bgsecondary);
 }
 #col-1 {
   width: 25%;
-  background-color: var(--bgcolor);
+  background-color: var(--bgprimary);
   /*resize: horizontal;*/
   /*float: left;*/
   padding: 0;
@@ -481,8 +485,8 @@ button {
   display: flex;
   flex-direction: column;
   border-style: none solid;
-  border-color: #313131;
-  background-color: var(--bgcolor);
+  border-color: var(--border);
+  background-color: var(--bgprimary);
 }
 #col-3 {
   width: 25%;
@@ -490,7 +494,7 @@ button {
   flex-direction: column;
   padding: 0;
   align-items: center;
-  background-color: var(--bgcolor);
+  background-color: var(--bgprimary);
 }
 #col-3 > * {
   width: 100%;
@@ -527,11 +531,11 @@ button {
 }
 
 .oreFound {
-  color: green;
+  color: var(--accent);
 }
 
 .oreNotFound {
-  color: red;
+  color: var(--error);
 }
 
 /*#latestDisplays {
@@ -569,6 +573,7 @@ button {
   width: 100%;
   display: flex;
   align-items: center;
+  color: white;
   justify-content: center;
   flex-direction: column;
   text-align: center;
@@ -592,7 +597,7 @@ button {
   color: #cccccc;
 }
 code {
-  background-color: var(--bgcolor);
+  background-color: var(--bgprimary);
   padding: 5px;
   border-radius: 5px;
 }
@@ -612,14 +617,14 @@ code {
 }
 
 .subtext {
-  color: #808080;
+  opacity: 0.5;
   margin: 0;
   font-size: medium;
 }
 #noscript {
   user-select: none;
   position: absolute;
-  background-color: var(--bgcolor);
+  background-color: var(--bgprimary);
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -644,14 +649,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .revampedSettings {
   padding:10px;
-  color: white;
+  color: var(--text);
   width: fit-content;
   background-color: var(--bgsecondary);
 }
 
 .settingsContainer {
   padding:30px;
-  background-color: var(--bgcolor);
+  background-color: var(--bgprimary);
 }
 
 .settingsSelector {
@@ -668,11 +673,61 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   border: none;
   font-size: var(--size);
+  margin-bottom: 0 !important;
   position: relative;
   display: flex;
+  transition: background 0.2s, color 0.2s;
+  &:hover {
+    background-color: var(--hoverbg);
+    color: var(--hoverfg);
+  }
 }
 
 .logHolder, #generatedLogs {
   max-height:500px;
   overflow-y: auto;
+}
+
+input[type="color"] {
+  border: solid 1px var(--border);
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+input[type="color"]::after {
+  content: '';
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.themeContainer {
+  display: flex;
+  gap: 0.5em;
+}
+
+.colorPicker {
+  display: flex;
+  gap: 0.3em;
+  flex-direction: column;
+  align-items: center;
+}
+
+hr {
+  border-color: var(--border);
+}
+
+select[id="themeSelect"] {
+  width: 100%;
+  font-size: larger;
+  background-color: var(--bgsecondary);
+  border: var(--border) 1px solid;
+  padding: 0.5em;
+  color:var(--text);
+  border-radius: 0.2em;
 }
