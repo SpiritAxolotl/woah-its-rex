@@ -74,20 +74,6 @@ Object.defineProperty(Array.prototype, 'contains', {
     }
 });
 */
- 
-// todo: put this in a UI js script
-function visible(element) {
-    element.classList.remove("invisible");
-}
-function invisible(element) {
-    element.classList.add("invisible");
-}
-function togglevisible(element) {
-    element.classList.toggle("invisible");
-}
-function isVisible(element) {
-    return !element.classList.contains("invisible");
-}
 
 function debugGiveAllOres(type) {
     if (debug) {
@@ -767,11 +753,3 @@ function refreshButtons() {
 }
 
 refreshButtons();
-
-function showSettings(setting) {
-    const elements = document.getElementsByClassName("settingsItem");
-    for (let i = 0; i < elements.length; i++) {
-        invisible(elements[i]);
-    }
-    visible(document.getElementById(setting));
-}
