@@ -203,11 +203,17 @@ function generateBlock(luck, location) {
     }
     let variant = 0;
     {
-        const rand = random(1,1000);
-        if (rand > 32) variant = 0;
-        else if (rand >= 4) variant = 1;
-        else if (rand >= 2) variant = 3;
-        else if (rand === 1) variant = 4;
+        const high = variantMultis[variantMultis.length-1];
+        const rand = random(1, high);
+        const weights = variantMultis.map(num => Math.round(high / num));
+        let totalWeight = 0;
+        for (let i=weights.length-1; i>0; i--) {
+            totalWeight += weights[i];
+            if (rand <= totalWeight) {
+                variant = i;
+                break;
+            }
+        }
     }
     const probability = oreList[blockToGive]["prob"]*variantMultis[variant];
     if (probability >= 750000) {

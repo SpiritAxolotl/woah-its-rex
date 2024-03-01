@@ -200,36 +200,36 @@ class VariantManager {
     }
     
     getVariantAttributeFromNum(num, type) {
-        for (let variant in VariantManager.variants)
+        for (const variant in VariantManager.variants)
             if (VariantManager.variants[variant].order === num)
                 return VariantManager.variants[variant][type];
         return undefined;
     }
     
     getVariantAttributeFromName(name, type) {
-        for (let variant in VariantManager.variants)
+        for (const variant in VariantManager.variants)
             if (VariantManager.variants[variant].name.toLowerCase() === name.toLowerCase())
                 return VariantManager.variants[variant][type];
         return undefined;
     }
     
     getVariantNames() {
-        let names = [];
-        for (let variant in VariantManager.variants)
+        const names = [];
+        for (const variant in VariantManager.variants)
             names.push(VariantManager.variants[variant].name);
         return names;
     }
     
     getVariantMultis() {
-        let multis = [];
-        for (let variant in VariantManager.variants)
+        const multis = [];
+        for (const variant in VariantManager.variants)
             multis.push(VariantManager.variants[variant].prob);
-        return multis;
+        return sortArray(multis);
     }
     
     getVariantEmojis() {
-        let emojis = [];
-        for (let variant in VariantManager.variants)
+        const emojis = [];
+        for (const variant in VariantManager.variants)
             emojis.push(VariantManager.variants[variant].emoji);
         return emojis;
     }
@@ -326,47 +326,47 @@ class LayerManager {
     }
     
     getLayerNamesFromType(type) {
-        let names = [];
-        for (let layer in LayerManager.layers)
+        const names = [];
+        for (const layer in LayerManager.layers)
             if (LayerManager.layers[layer].type === type)
                 names.push(LayerManager.layers[layer].name);
         return names;
     }
     
     getLayersFromType(type) {
-        let layers = [];
-        for (let layer in LayerManager.layers)
+        const layers = [];
+        for (const layer in LayerManager.layers)
             if (LayerManager.layers[layer].type === type)
                 layers.push(LayerManager.layers[layer].ores);
         return layers;
     }
     
     getLayerMultisFromType(type) {
-        let multis = [];
-        for (let layer in LayerManager.layers)
+        const multis = [];
+        for (const layer in LayerManager.layers)
             if (LayerManager.layers[layer].type === type)
                 multis.push(LayerManager.layers[layer].multi);
         return multis;
     }
     
     getLayerDepthsFromType(type) {
-        let depths = [];
-        for (let layer in LayerManager.layers)
+        const depths = [];
+        for (const layer in LayerManager.layers)
             if (LayerManager.layers[layer].type === type)
                 depths.push(LayerManager.layers[layer].depth);
         return depths;
     }
     
     getAllLayerNames() {
-        let names = [];
-        for (let layer in LayerManager.layers)
+        const names = [];
+        for (const layer in LayerManager.layers)
             names.push(LayerManager.layers[layer].name);
         return names;
     }
     
     getAllLayerOres() {
-        let ores = [];
-        for (let layer in LayerManager.layers)
+        const ores = [];
+        for (const layer in LayerManager.layers)
             ores.push(LayerManager.layers[layer].ores);
         return ores;
     }
@@ -375,14 +375,14 @@ class LayerManager {
 //SETTING LAYERS
 
 function getOreProbability(ore) {
-    for (let ores in oreList)
+    for (const ores in oreList)
         if (ores.includes(ore))
             return ores[ore];
     return undefined;
 }
 
 function getLayerFromOre(ore) {
-    for (let layer in LayerManager.layers)
+    for (const layer in LayerManager.layers)
         if (layer.includes(ore))
             return layer;
     return undefined;
@@ -415,17 +415,17 @@ const spawnsEverywhere = LayerManager.spawnsEverywhere;
 const unaffectedByLuck = LayerManager.unaffectedByLuck;
 
 
-let inventory = {};
+const inventory = {};
 
 //sets the inventory to 0
-for (let ore in oreList) {
-    let inv = {};
-    for (let variant of variantNames)
+for (const ore in oreList) {
+    const inv = {};
+    for (const variant of variantNames)
         inv[variant.toLowerCase()] = 0;
     inventory[ore] = inv;
 }
 
-let layersChanged = {};
+const layersChanged = {};
 let currentLayer;
 let overrideLayer;
 function setLayer(y) {
