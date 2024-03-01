@@ -5,7 +5,7 @@
 }
 
 @font-face {
-  font-family: "Lexend", sans-serif;
+  font-family: "Lexend";
   src: url("../fonts/Lexend.ttf");
 }
 :root {
@@ -16,7 +16,7 @@
   --accent: #22c55e;
   --error: #ef4444;
   
-  --text: #000;
+  --text: #fff;
 
   --hoverbg: #ffffff;
   --hoverfg: #000;
@@ -381,7 +381,7 @@ button {
   padding: 5px;
   border-style: solid;
   border-color: var(--border);
-  border-width: 0.25em;
+  border-width: 0.05em;
   border-radius: 0.25em;
   color: var(--text);
   /* font-family: "Lexend", sans-serif; */
@@ -656,7 +656,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .settingsContainer {
   padding:30px;
+  transition: all 0.5s;
   background-color: var(--bgprimary);
+  
 }
 
 .settingsSelector {
@@ -730,4 +732,22 @@ select[id="themeSelect"] {
   padding: 0.5em;
   color:var(--text);
   border-radius: 0.2em;
+}
+
+input[type="text"] {
+  width: 100%;
+  background-color: var(--bgsecondary);
+  border: var(--border) 1px solid;
+  padding-left: 1em;
+  color:var(--text);
+  border-radius: 0.2em;
+}
+
+.flex {
+  display: flex;
+  gap:0.5em;
+}
+
+#updateCapacityButton {
+  margin: 0 !important;
 }

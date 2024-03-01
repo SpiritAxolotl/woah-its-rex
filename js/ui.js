@@ -105,8 +105,8 @@ function selectTheme(theme) {
     for (let prop in themes[theme]) {
         setStyleVariable(prop, themes[theme][prop]);
     }
-    saveTheme();
     updateColorPickers();
+    saveTheme();
 }
 
 document.getElementById("themeSelect").onchange = function() {

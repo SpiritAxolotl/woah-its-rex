@@ -192,7 +192,7 @@ function loadContent() {
     isPlaying = true;
     setInterval(incrementTimePlayed, 5000);
     let allAudios = [];
-    keepRunningAudio = new Audio("sounds/ambience.mp3")
+    keepRunningAudio = new Audio("sounds/ambience2.mp3")
     keepRunningAudio.load();
     keepRunning();
     chill = new Audio("sounds/spinechill.mp3");
