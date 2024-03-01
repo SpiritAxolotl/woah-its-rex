@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "Twemoji";
   src: url("../fonts/Twemoji.otf");
@@ -16,7 +15,7 @@
   --accent: #22c55e;
   --error: #ef4444;
   
-  --text: #000;
+  --text: #fff;
 
   --hoverbg: #ffffff;
   --hoverfg: #000;
