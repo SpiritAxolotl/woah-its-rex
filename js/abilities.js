@@ -20,70 +20,81 @@ async function rollAbilities() {
             break;
         case "mulch-mallet":
             if (Math.random() < 1/30 * proc) {
-                canMine = await(pickaxeAbility1(curX, curY, boost));
+                canMine = await(pickaxeAbility1(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "mud-sickle":
             if (Math.random() <= 1/35 * proc) {
-                canMine = await(pickaxeAbility2(curX, curY, 3, 1.35, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility2(curX, curY, 3, 1.35, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "dirt-ravager":
             if (Math.random() <= 1/30 * proc) {
-                canMine = await(pickaxeAbility3(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility3(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "void-crusher":
             if (Math.random() <= 1/25 * proc) {
-                canMine = await(pickaxeAbility4(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility4(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "geode-staff":
             if (Math.random() <= 1/17 * proc) {
-                canMine = await(pickaxeAbility5(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility5(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "earth-soiler":
             if (Math.random() <= 1/60 * proc) {
-                canMine = await(pickaxeAbility6A(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility6A(curX, curY, boost)) && !settingsShown;
                 activated = true;
             } else if (Math.random() <= 1/40 * proc) {
-                canMine = await(pickaxeAbility6B(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility6B(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "crypt-smasher":
             if (Math.random() <= 1/50 * proc) {
-                canMine = await(pickaxeAbility7(curX, curY, 0, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility7(curX, curY, 0, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "labrynthian-tide":
             if (Math.random() <= 1/50 * proc) {
-                canMine = await(pickaxeAbility8(curX, curY, 0, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility8(curX, curY, 0, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "77-leaf-destroyer":
             if (Math.random() <= 1/30 * proc) {
-                canMine = await(pickaxeAbility9(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility9(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "planet-buster":
             if (Math.random() <= 1/50 * proc) {
-                canMine = await(pickaxeAbility10(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility10(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;
         case "whirlpool-of-fate":
             if (Math.random() <= 1/100 * proc) {
-                canMineMaybe = await(pickaxeAbility11(curX, curY, boost));
+                canMine = false;
+                canMineMaybe = await(pickaxeAbility11(curX, curY, boost)) && !settingsShown;
                 if (!resetting)
                     canMine = canMineMaybe;
                 activated = true;
@@ -91,7 +102,8 @@ async function rollAbilities() {
             break;
         case "wings-of-glory":
             if (Math.random() <= 1/150 * proc) {
-                canMine = await(pickaxeAbility12(curX, curY, boost));
+                canMine = false;
+                canMine = await(pickaxeAbility12(curX, curY, boost)) && !settingsShown;
                 activated = true;
             }
             break;

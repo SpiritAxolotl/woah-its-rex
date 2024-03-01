@@ -25,6 +25,7 @@ let turnOffAbilities = false;
 let debugVerbose = debug;
 let stopOnRare = false;
 let totalTimePlayed = 0;
+let settingsShown = false;
 
 
 let gears = {
@@ -231,9 +232,10 @@ document.addEventListener("keydown", (event) => {
         case "escape":
             event.preventDefault();
             settingsToggle = !settingsToggle;
-            hideData();
             if (settingsToggle)
                 showData();
+            else
+                hideData();
         /*default:
             console.log("wrong key!");
             break;*/

@@ -60,13 +60,13 @@ function loadAllDataOld() {
         }
         */
         //let canContinue = false;
-        if (data[3][3] !== undefined) {
+        /*if (data[3][3] !== undefined) {
             if (data[3][3] === "Unmute Music") {
                 setTimeout(() => {
                     document.getElementById("musicButton").click();
                 }, 100);
             }
-        }
+        }*/
         if (data[3][4] !== undefined && !isNaN(data[3][4] && data[3][4] > 0)) {
             baseMineCapacity = data[3][4];
             mineCapacity = data[3][4];
