@@ -425,7 +425,7 @@ for (const ore in oreList) {
     inventory[ore] = inv;
 }
 
-const layersChanged = {};
+let layersChanged = {};
 let currentLayer;
 let overrideLayer;
 function setLayer(y) {
