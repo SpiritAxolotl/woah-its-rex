@@ -393,11 +393,11 @@ function getLayerFromOre(ore) {
 const variantManager = new VariantManager();
 const layerManager = new LayerManager();
 
-const variantNames = variantManager.getVariantNames();
-const variantMultis = variantManager.getVariantMultis();
-const variantMultisReverse = variantManager.getVariantMultis().reverse();
+const variantNamesMultisSorted = sortAlongsideArray(variantManager.getVariantMultis(), variantManager.getVariantNames());
+const variantNames = variantNamesMultisSorted[1];
+const variantMultis = variantNamesMultisSorted[0];
 const variantEmojis = variantManager.getVariantEmojis();
-const variantMultiSum = variantMultis.reduce((sum, multi) => sum + multi, 0);
+delete variantNamesMultisSorted;
 
 const allLayersNames = layerManager.getAllLayerNames();
 const allLayers = layerManager.getAllLayerOres();
@@ -423,6 +423,19 @@ for (const ore in oreList) {
     for (const variant of variantNames)
         inv[variant.toLowerCase()] = 0;
     inventory[ore] = inv;
+}
+
+function decideVariant() {
+    const high = variantMultis[variantMultis.length-1];
+    const rand = random(1, high);
+    const weights = variantMultis.map(num => Math.round(high / num));
+    let totalWeight = 0;
+    for (let i=weights.length-1; i>0; i--) {
+        totalWeight += weights[i];
+        if (rand <= totalWeight)
+            return i;
+    }
+    return 0;
 }
 
 let layersChanged = {};

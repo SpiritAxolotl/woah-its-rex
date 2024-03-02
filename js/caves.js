@@ -31,7 +31,7 @@ function mineCaveBlock(x, y, type) {
     const block = mine[y][x];
     if (typeof block === "string") {
         if (block !== "⬜" && block !== "⬛️" && block !== "⛏️") {
-            const variant = mineBlockData[y]?.[x]?.["variant"] ?? 0;
+            const variant = mineBlockData[y]?.[x]?.["variant"] ?? decideVariant();
             giveBlock(block, x, y, false, true, variant, getCaveMultiFromOre(block));
             mine[y][x] = "⬜";
         }
