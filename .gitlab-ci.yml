@@ -30,3 +30,6 @@ pages-final:
   artifacts:
     paths:
       - public
+  only:
+    - main
+    - dev
