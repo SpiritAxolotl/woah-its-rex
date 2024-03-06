@@ -14,11 +14,12 @@ pages-beta:
   stage: deploy
   script:
     - mkdir -p .public/beta
-    - ls
+    - ls -A
+    - ls -A .public/
     - cp -r * .public/beta
   artifacts:
     paths:
-      - public
+      - public/beta
   only:
     - dev
 
