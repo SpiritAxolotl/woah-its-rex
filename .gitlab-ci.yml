@@ -1,25 +1,29 @@
+build-main:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - git clone --depth=1 --branch=dev https://gitlab.com/SpiritAxolotl/woah-its-rex.git
+    - rm -rf ./woah-its-rex/.*
+    - mkdir -p .public
+    - mv woah-its-rex .public/beta
+    - cp -R * .public
+
+build-dev:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+  script:
+    - git clone --depth=1 --branch=main https://gitlab.com/SpiritAxolotl/woah-its-rex.git
+    - rm -rf ./woah-its-rex/.*
+    - mv woah-its-rex .public
+    - mkdir -p .public/beta
+    - cp -R * .public/beta
+
 pages:
   stage: deploy
   script:
-    - mkdir -p .public
-    - cp -r * .public
     - mv .public public
   artifacts:
     paths:
       - public
-  only:
-    - main
-
-pages-beta:
-  extends: pages
-  stage: deploy
-  script:
-    - echo $CI_COMMIT_BRANCH
-    - mkdir -p .public/beta
-    - cp -r * .public/beta
-    - mv .public public
-  artifacts:
-    paths:
-      - public
-  only:
-    - dev
