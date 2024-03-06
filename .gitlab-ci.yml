@@ -20,6 +20,6 @@ pages-beta:
     - mv .beta public/beta
   artifacts:
     paths:
-      - public/beta
+      - public
   only:
     - dev
