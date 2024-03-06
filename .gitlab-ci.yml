@@ -14,10 +14,9 @@ pages-beta:
   extends: pages
   stage: deploy
   script:
-    - mkdir .beta
-    - mkdir public
-    - cp -r * .beta
-    - mv .beta public/beta
+    - mkdir .public
+    - cp -r * .public/beta
+    - mv .public public
   artifacts:
     paths:
       - public
