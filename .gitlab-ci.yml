@@ -3,6 +3,7 @@ pages:
   script:
     - mkdir -p .public
     - cp -r * .public
+    - mv .public public
   artifacts:
     paths:
       - public
@@ -13,24 +14,12 @@ pages-beta:
   extends: pages
   stage: deploy
   script:
-    - mkdir -p .public/beta
+    - mkdir .beta
     - ls -A
-    - ls -A .public/
-    - cp -r * .public/beta
+    - cp -r * .beta
+    - mv .beta public/beta
   artifacts:
     paths:
       - public/beta
   only:
-    - dev
-
-pages-final:
-  extends: pages
-  stage: deploy
-  script:
-    - mv .public public
-  artifacts:
-    paths:
-      - public
-  only:
-    - main
     - dev
