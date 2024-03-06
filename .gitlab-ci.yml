@@ -1,11 +1,31 @@
 pages:
   stage: deploy
   script:
-  - mkdir .public
-  - cp -r * .public
-  - mv .public public
+    - mkdir -p .public
+    - cp -r * .public
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - main
+    - main
+
+pages-beta:
+  extends: pages
+  stage: deploy
+  script:
+    - mkdir -p .public/beta
+    - cp -r * .public/beta
+  artifacts:
+    paths:
+      - public
+  only:
+    - dev
+
+pages-final:
+  extends: pages
+  stage: deploy
+  script:
+    - mv .public public
+  artifacts:
+    paths:
+      - public
