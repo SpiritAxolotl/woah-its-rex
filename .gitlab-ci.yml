@@ -14,7 +14,7 @@ pages-beta:
   extends: pages
   stage: deploy
   script:
-    - git branch
+    - echo $CI_COMMIT_BRANCH
     - mkdir -p .public/beta
     - cp -r * .public/beta
     - mv .public public
