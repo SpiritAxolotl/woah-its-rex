@@ -24,6 +24,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [x] Get Discord stuff clamped to the bottom of the screen \[low priority\]
 - [x] AND have the index/inventory stuff stretch \[low priority\]
 - [ ] AND get columns to stop scrolling horizontally \[low priority\]
+  - can probably do `overflow-x: hidden;`
 - [x] Implement old save file format transfer
 - [ ] Make sure that the old save file format transfer works well and consistently
 - [x] Figure out why gears don't save to inv
@@ -36,7 +37,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
   - it's persistent ughh
   - when is it safe to check this off
   - fuck it
-- [ ] Make the audio work properly (completely untested)
+- [ ] Make the audio work properly (audio is completely untested rn)
 - [x] Fix inventory variant being set to 0 sometimes
 - [ ] Fix whatever causes the game to either freeze for a bit or just stop mining when automining
   - Probably a performance issue that can be solved with optimizing code
@@ -44,9 +45,8 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [x] Fix latest spawns not displaying when it should be ??? \[medium priority\]
   - Fixed by combining the two
 - [ ] Fix index completion highlighting on ores themselves (only doesn't work for some ores)
-- [ ] Replace my `overflow-y: scroll;` stuff with `overflow: clip;` to better get rid of scrollbars
-- [ ] Nerf caves by making them more performant
-- [ ] Players can seemingly keep mining when the game is paused if they pause during an activity
+- [x] Nerf caves by making them more performant
+- [x] Players can seemingly keep mining when the game is paused if they pause during an activity
 
 ## New features
 - [x] Softcode things that will be harder to scale
@@ -62,8 +62,8 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
   - new UI changes this lol. will have to re-implement
   - (highlighting still works on completion)
 - [x] Add reset count to ore tracker logs
-- [ ] Color spawned messages based on whether the player mined it or not
-- [ ] Make the spawn/find messages into grids
+- [x] Color spawned messages based on whether the player mined it or not
+- [ ] Make the spawn messages into grids
 - [x] Implement unaffectedByLuck (ores that are unaffected by luck)
 - [ ] Abbreviate probabilities for screen space
 - [ ] ~~Arrange the on-screen controls in a d-pad configuration~~
@@ -71,6 +71,8 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [x] Add the main layer ore next to the teleport meter display button thing
 - [x] Center the emoji somehow
 - [ ] Display what pickaxe the player has currently selected
+  - the emoji will just be visibly different
+- [ ] Get custom pickaxe textures for each pickaxe
 - [x] Let players equip pickaxe 0 if they want to
 - [x] Let gears be equippable
 - [x] totalResets statistic
@@ -80,7 +82,8 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [x] Make the white squares black squares and the white circles white squares
 - [ ] Combine the latestSpawns and latestFinds into one latestDisplay
 - [ ] Search bar for ores in the inventory (feature request from nykk)
-- [ ] Theming
+- [x] Theming
+  - Thanks niko
 
 ## Misc.
 - [x] Update to latest
@@ -97,11 +100,12 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [x] Scale all probability things
 - [x] Add a better system for layer management (variable-wise) (make it a class maybe?)
   - Thank you niko
-- [ ] Somehow shift the game icon down by three pixels without increasing the filesize
+- [ ] ~~Somehow shift the game icon down by three pixels without increasing the filesize~~
   - replaced the icon (to differentiate between amber's version and my version) so I don't think I need to do this one yet
+  - replaced it to something completely different now
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
 - [x] Make a dev branch
-  - [ ] and have testable dev builds deploy at `https://spiritaxolotl.github.io/woah-its-rex/dev` or something
+  - [x] and have testable dev builds deploy at `https://rex.spax.zone/dev`
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
 - [ ] Add more organized credits
@@ -113,6 +117,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
   - [x] variants
 - [ ] Move this TODO list to the github projects thing
 - [ ] Get un-dmca'd on github
+  - march 9th babyyyyyy
 - [x] Set up gitlab mirror in the meantime (hi!)
 - [x] More debugging features
   - `debugIsActuallyPlaying`
