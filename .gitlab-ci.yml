@@ -10,7 +10,7 @@ build-main:
     - cp -R * .public
   artifacts:
     paths:
-      - public
+      - .public
 
 build-dev:
   stage: build
@@ -24,7 +24,7 @@ build-dev:
     - cp -R * .public/beta
   artifacts:
     paths:
-      - public
+      - .public
 
 pages:
   stage: deploy
@@ -34,3 +34,6 @@ pages:
   artifacts:
     paths:
       - public
+  dependencies:
+    - build-main
+    - build-dev
