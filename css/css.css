@@ -8,16 +8,17 @@
   font-family: "Lexend";
   src: url("../fonts/Lexend.ttf");
 }
+
 :root {
   --bgprimary: #020617;
   --border: #1e293b;
   --bgsecondary: #0f172a;
-
+  
   --accent: #22c55e;
   --error: #ef4444;
   
   --text: #fff;
-
+  
   --hoverbg: #ffffff;
   --hoverfg: #000;
 }
@@ -43,30 +44,18 @@ body {
 .row {
   display: flex;
   height: 100%;
-  /*padding-top: 0.5em;*/
-}
-/* 
-.row > * > *:first-child {
-  margin-top: 0.25em;
-} */
-
-.row * {
-  text-align: center;
-}
-
-.row > div {
-  overflow-y: scroll;
+  & * {
+    text-align: center;
+  }
+  & > div {
+    overflow-y: scroll;
+  }
 }
 
 .emoji {
   font-family: "Twemoji", monospace;
 }
-.small-emoji {
-  font-size: 0.6em;
-  /* display: flex; */
-  /* position: absolute; */
-  /* align-items: center; */
-}
+
 /*#teleportButton {
   display: flex;
   position: absolute;
@@ -83,13 +72,15 @@ body {
   box-sizing: border-box;
   font-family: "Lexend", "Twemoji", monospace;
 }
+
 #credits {
   line-height: 2em;
+  & li code {
+    color: #ff306b;
+    font-family: "Courier New", "Courier", monospace;
+  }
 }
-#credits li code {
-  color: #ff306b;
-  font-family: "Courier New", "Courier", monospace;
-}
+
 #inventoryDisplay {
   overflow-y: scroll;
   /* justify-self: stretch; */
@@ -105,22 +96,24 @@ body {
 .movementButtons {
   max-width: 100%;
   display: flex;
+  & button {
+    font-size: 1.2em;
+    height: max-content;
+    margin: 0;
+    border-radius: 0em;
+    border: none;
+    border-bottom: solid var(--border);
+    background-color: var(--bgsecondary);
+    flex-grow: 1;
+    padding: 1em;
+    transition: background-color 0.2s, color 0.2s, border 0.5s;
+  }
 }
-.movementButtons button {
-  font-size: 1.2em;
-  height: max-content;
-  margin: 0;
-  border-radius: 0em;
-  border: none;
-  border-bottom: solid var(--border);
-  background-color: var(--bgsecondary);
-  flex-grow: 1;
-  padding: 1em;
-  transition: background-color 0.2s, color 0.2s, border 0.5s;
-}
+
 .movementButtons > button {
   width: 100%;
 }
+
 .movementButtons button:hover {
   background-color: var(--hoverbg);
   color: var(--hoverfg);
@@ -164,9 +157,11 @@ body {
   /* gap: 3em; */
   text-align: left;
 }
+
 .fas {
   pointer-events: none;
 }
+
 #switchButtons {
   display: flex;
 }
@@ -268,11 +263,13 @@ body {
   margin-bottom: 0.5em;
   /* text-align: left; */
 }
+
 #resetsThisSession {
   margin-top: 0.5em;
 }
+
 #pausedGameContainer {
-  padding:3em;
+  padding: 3em;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -301,6 +298,7 @@ body {
   margin: 0;
   /* margin-top: 1em; */
 }
+
 #blockDisplay {
   /* padding: 0.5em 0; */
   margin: 0;
@@ -351,6 +349,7 @@ body {
   text-align: left;
   margin: 0;
 }
+
 p, label, input[type=file] {
   color: var(--text);
 }
@@ -413,10 +412,9 @@ button {
   /*width: 50%;*/
   flex: auto;
   /* padding-bottom: 0 !important;*/ /*figure out why this doesn't work | ?????????*/
-}
-
-.col > * {
-  overscroll-behavior: none;
+  & > * {
+    overscroll-behavior: none;
+  }
 }
 
 #credits {
@@ -430,12 +428,14 @@ button {
   gap: 3em;
   align-items: center;
 }
+
 .headerButtons {
   display: flex;
   gap: 0;
   margin: 0;
   width: 100%;
 }
+
 .headerButtons > * {
   /* font-size: 2em; */
   border: none;
@@ -446,13 +446,16 @@ button {
   padding: 1em;
   transition: background-color 0.2s, color 0.2s, border 0.5s;
 }
+
 .headerButtons > *:hover {
   background-color: var(--hoverbg);
   color: var(--hoverfg);
 }
+
 .headerButtons > button {
   border-radius: 0em;
 }
+
 .redButton:hover {
   background-color: var(--error);
   color: black;
@@ -465,10 +468,12 @@ button {
   background-color: var(--bgsecondary);
   transition: all 0.2s;
 }
+
 #playButton:hover {
   background-color: var(--accent);
   border-color: var(--bgsecondary);
 }
+
 #col-1 {
   width: 25%;
   background-color: var(--bgprimary);
@@ -476,9 +481,7 @@ button {
   /*float: left;*/
   padding: 0;
 }
-#col-2 > * {
-  flex-grow: 1;
-}
+
 #col-2 {
   min-width: 50%;
   padding: 0;
@@ -487,7 +490,11 @@ button {
   border-style: none solid;
   border-color: var(--border);
   background-color: var(--bgprimary);
+  & > * {
+    flex-grow: 1;
+  }
 }
+
 #col-3 {
   width: 25%;
   display: flex;
@@ -496,13 +503,14 @@ button {
   align-items: center;
   background-color: var(--bgprimary);
 }
+
 #col-3 > * {
   width: 100%;
 }
 
 .volumeController {
   display: flex;
-  gap:1em;
+  gap: 1em;
 }
 
 #discord {
@@ -512,18 +520,18 @@ button {
   justify-content: center;
   text-decoration: none;
   justify-self: end;
-}
-#discord > img {
-  width: 1.75em;
-  height: 1.75em;
-  aspect-ratio: 1;
-  margin: 0.5em 0.75em;
-}
-#discord > p {
-  /*width: 100%;*/
-  font-size: 100%;
-  margin: 0;
-  text-wrap: nowrap;
+  & > img {
+    width: 1.75em;
+    height: 1.75em;
+    aspect-ratio: 1;
+    margin: 0.5em 0.75em;
+  }
+  & > p {
+    /*width: 100%;*/
+    font-size: 100%;
+    margin: 0;
+    text-wrap: nowrap;
+  }
 }
 
 #displayRecipe > div {
@@ -591,16 +599,19 @@ button {
   margin: 0;
   line-height: 1.1em;
 }
+
 #subtextTitle {
   font-size: 2em;
   margin: 0;
   color: #cccccc;
 }
+
 code {
   background-color: var(--bgprimary);
   padding: 5px;
   border-radius: 5px;
 }
+
 #masterVolume {
   text-align: center;
   max-width: 30em;
@@ -612,6 +623,7 @@ code {
   border-style: solid;
   border-color: white;*/
 }
+
 #masterVolume > p {
   margin: 0;
 }
@@ -621,6 +633,7 @@ code {
   margin: 0;
   font-size: medium;
 }
+
 #noscript {
   user-select: none;
   position: absolute;
@@ -648,30 +661,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .revampedSettings {
-  padding:10px;
+  padding: 10px;
   color: var(--text);
   width: fit-content;
   background-color: var(--bgsecondary);
 }
 
 .settingsContainer {
-  padding:30px;
+  padding: 30px;
   transition: all 0.5s;
   background-color: var(--bgprimary);
-  
 }
 
 .settingsSelector {
   display: flex;
-  gap:0.4em;
+  gap: 0.4em;
 }
+
 .settingSelector {
   --size: 20px;
   min-height: var(--size);
   font-weight: 400;
   padding: calc(var(--size) / 2);
   min-width: 0 !important;
-  gap:10px;
+  gap: 10px;
   align-items: center;
   border: none;
   font-size: var(--size);
@@ -686,7 +699,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logHolder, #generatedLogs {
-  max-height:500px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
@@ -696,12 +709,13 @@ input[type="color"] {
   height: 100px;
   border-radius: 10px;
   overflow: hidden;
-  padding: 0;
+  cursor: pointer;
+  /* padding: 0; */
   margin: 0;
 }
 
 input[type="color"]::after {
-  content: '';
+  content: "";
   width: 100px;
   height: 100px;
   border-radius: 50px;
@@ -730,7 +744,7 @@ select[id="themeSelect"] {
   background-color: var(--bgsecondary);
   border: var(--border) 1px solid;
   padding: 0.5em;
-  color:var(--text);
+  color: var(--text);
   border-radius: 0.2em;
 }
 
@@ -739,15 +753,16 @@ input[type="text"] {
   background-color: var(--bgsecondary);
   border: var(--border) 1px solid;
   padding-left: 1em;
-  color:var(--text);
+  color: var(--text);
   border-radius: 0.2em;
 }
 
 .flex {
   display: flex;
-  gap:0.5em;
+  gap: 0.5em;
 }
 
 #updateCapacityButton {
   margin: 0 !important;
+  min-width: unset;
 }

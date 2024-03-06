@@ -231,8 +231,8 @@ document.addEventListener("keydown", (event) => {
             break;
         case "escape":
             event.preventDefault();
-            settingsToggle = !settingsToggle;
-            if (settingsToggle)
+            settingsShown = !settingsShown;
+            if (settingsShown)
                 showData();
             else
                 hideData();
