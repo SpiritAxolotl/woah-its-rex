@@ -32,13 +32,13 @@ function saveAllData(fileQuestionMark) {
     dataStorage["gears"]["curr"] = currentGears;
     if (fileQuestionMark)
         return JSON.stringify(dataStorage);
-    localStorage.setItem("playerData", JSON.stringify(dataStorage));
+    localStorage.setItem(`playerData${beta?"Beta":""}`, JSON.stringify(dataStorage));
 }
 
 function loadAllData() {
-    localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
+    localStorage.setItem(`dataBackup${beta?"Beta":""}`, localStorage.getItem(`playerData${beta?"Beta":""}`));
     try {
-        const data = JSON.parse(localStorage.getItem("playerData"));
+        const data = JSON.parse(localStorage.getItem(`playerData${beta?"Beta":""}`));
         if (typeof data?.["version"] !== "number")
             return loadAllDataOld();
         
@@ -131,12 +131,13 @@ function loadAllData() {
                     currentGears.push(gear);
         if (typeof data["settings"]["autoSave"] === "boolean")
             autoSave = data["settings"]["autoSave"];
-        localStorage.removeItem("dataBackup");
+        localStorage.removeItem(`dataBackup${beta?"Beta":""}`);
+        localStorage.setItem(`playedBefore${beta?"Beta":""}`, true);
         warnBeforeClosing();
         return true;
     } catch (error) {
         console.error(error);
-        localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
+        localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}`));
         window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
         return false;
     }
@@ -145,10 +146,9 @@ function loadAllData() {
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-    if (isPlaying && autoSave && (!debug || debugActuallyPlaying)) {
+    if (isPlaying && autoSave && (!debug || debugActuallyPlaying))
         dataTimer ??= setInterval(saveAllData, 5000);
-        localStorage.setItem("playedBefore", true);
-    } else
+    else
         dataTimer = null;
 }
 
@@ -195,13 +195,13 @@ function importData() {
             try {
                 const data = fromBinary(reader.result);
                 console.log(data);
-                localStorage.setItem("playerData", data);
+                localStorage.setItem(`playerData${beta?"Beta":""}`, data);
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             } catch (error) {
                 console.error(error);
-                localStorage.setItem("playerData", localStorage.getItem("dataBackup"));
+                localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}`));
                 window.alert("DATA CORRUPTION DETECTED, CONTACT A MODERATOR IN THE DISCORD");
             }
         },
@@ -214,7 +214,7 @@ function importData() {
         }
     } else {
         if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
-            localStorage.setItem("dataBackup", localStorage.getItem("playerData"));
+            localStorage.setItem(`dataBackup${beta?"Beta":""}`, localStorage.getItem(`playerData${beta?"Beta":""}`));
             clearInterval(dataTimer);
             reader.readAsText(file);
         }

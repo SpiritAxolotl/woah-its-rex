@@ -4,9 +4,9 @@
 //SETTINGS, 3
 //GEARS, 4
 function loadAllDataOld() {
-    localStorage.setItem("dataBackupOld", localStorage.getItem("playerData"));
+    localStorage.setItem(`dataBackup${beta?"Beta":""}Old`, localStorage.getItem(`playerData${beta?"Beta":""}`));
     try {
-        const data = JSON.parse(localStorage.getItem("playerData"));
+        const data = JSON.parse(localStorage.getItem(`playerData${beta?"Beta":""}`));
         for (let i = 0; i < data[0].length; i++) {
             if (oreList[data[0][i][0]] !== undefined) {
                 for (let j = 0; j < data[0][i][1][0].length; j++)
@@ -86,11 +86,11 @@ function loadAllDataOld() {
             visible(document.getElementById("layerDisplayFlute"));
         else
             invisible(document.getElementById("layerDisplayFlute"));
-        localStorage.removeItem("dataBackupOld");
+        localStorage.removeItem(`dataBackup${beta?"Beta":""}Old`);
         return true;
     } catch(error) {
         console.error(error);
-        localStorage.setItem("playerData", localStorage.getItem("dataBackupOld"));
+        localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}Old`));
         window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
         return false;
     }
