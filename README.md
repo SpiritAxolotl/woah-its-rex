@@ -76,14 +76,18 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [x] Let players equip pickaxe 0 if they want to
 - [x] Let gears be equippable
 - [x] totalResets statistic
+- [x] Bloody variant (1/1000)
 - [ ] Add what layer an ore spawns on when hovering (`title` attribute)
 - [x] Update the title to something like the main branch
 - [x] Hide crafting stuff by clicking the selected item again
 - [x] Make the white squares black squares and the white circles white squares
-- [ ] Combine the latestSpawns and latestFinds into one latestDisplay
-- [ ] Search bar for ores in the inventory (feature request from nykk)
+- [x] Combine the latestSpawns and latestFinds into one latestDisplay
+- [ ] Searchbar for ores in the inventory (feature request from nykk)
 - [x] Theming
   - Thanks niko
+- [x] New music!
+  - Thanks niko (again)
+- [x] Use exotic variants to craft things (if specified)
 
 ## Misc.
 - [x] Update to latest
