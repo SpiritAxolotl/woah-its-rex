@@ -88,10 +88,10 @@ function loadAllData() {
                 if (!data["settings"]["mutedSounds"][sound])
                     document.getElementById(`mute${capitalize(sound)}`).click();
         
-        document.getElementById("musicVolume").value ??= data["settings"]["musicVolume"];
+        document.getElementById("musicVolume").value = data["settings"]["musicVolume"] ?? 50;
         changeMusicVolume(document.getElementById("musicVolume").value);
         
-        document.getElementById("spawnVolume").value ??= data["settings"]["spawnVolume"];
+        document.getElementById("spawnVolume").value = data["settings"]["spawnVolume"] ?? 50;
         changeAllVolume(document.getElementById("spawnVolume").value);
         
         if (data["settings"]["musicButton"] === "Unmute Music") {
@@ -100,31 +100,31 @@ function loadAllData() {
             }, 100);
         }
         
-        caveToggle ??= data["settings"]["toggleCaves"];
+        caveToggle = data["settings"]["toggleCaves"] ?? true;
         toggleCaves(caveToggle);
         
-        canDisplay ??= data["settings"]["canDisplay"];
+        canDisplay = data["settings"]["canDisplay"] ?? true;
         changeCanDisplay(canDisplay);
         
-        warnClose ??= data["settings"]["warnBeforeClosing"];
+        warnClose = data["settings"]["warnBeforeClosing"] ?? true;
         warnBeforeClosingToggle(warnClose);
         
-        stopOnRare ??= data["settings"]["stopOnRare"];
+        stopOnRare = data["settings"]["stopOnRare"] ?? false;
         stopOnRareToggle(stopOnRare);
         
-        sellUpToVariant ??= data["settings"]["sellUpToVariant"];
+        sellUpToVariant = data["settings"]["sellUpToVariant"] ?? "Normal";
         switchSellUpToVariant(sellUpToVariant);
         totalResets = data["stats"]["totalResets"] ?? 0;
         totalTimePlayed = data["stats"]["totalTimePlayed"] ?? 0;
         if (typeof data["gears"] === "object")
             if (typeof data["gears"]["inv"] === "object")
                 for (const gear in data["gears"]["inv"])
-                    gears[gear] ??= data["gears"]["inv"][gear];
+                    gears[gear] = data["gears"]["inv"][gear] ?? false;
             else if (data["version"] === 2)
                 for (const gear in data["gears"])
-                    gears[gear] ??= data["gears"][gear];
+                    gears[gear] = data["gears"][gear] ?? false;
         if (data["version"] >= 3)
-            currentGears = data["gears"]["curr"];
+            currentGears = data["gears"]["curr"] ?? [];
         else
             for (const gear in data["gears"])
                 if (data["gears"][gear])
