@@ -1,5 +1,5 @@
-function saveAllData() {
-    localStorage.setItem("game2DataChanges", true);
+function saveAllData(fileQuestionMark) {
+    //localStorage.setItem("game2DataChanges", true);
     let dataStorage = {
         "ores": {},
         "pickaxes": {},
@@ -22,6 +22,7 @@ function saveAllData() {
     dataStorage["settings"]["canDisplay"] = canDisplay;
     dataStorage["settings"]["musicVolume"] = Number(document.getElementById("musicVolume").value);
     dataStorage["settings"]["spawnVolume"] = Number(document.getElementById("spawnVolume").value);
+    dataStorage["settings"]["sellUpToVariant"] = sellUpToVariant;
     //dataStorage["settings"]["musicButton"] = Number(document.getElementById("musicButton").innerHTML);
     dataStorage["settings"]["stopOnRare"] = stopOnRare;
     dataStorage["settings"]["baseMineCapacity"] = baseMineCapacity;
@@ -29,6 +30,8 @@ function saveAllData() {
     dataStorage["settings"]["autoSave"] = autoSave;
     dataStorage["gears"]["inv"] = gears;
     dataStorage["gears"]["curr"] = currentGears;
+    if (fileQuestionMark)
+        return JSON.stringify(dataStorage);
     localStorage.setItem("playerData", JSON.stringify(dataStorage));
 }
 
@@ -38,10 +41,12 @@ function loadAllData() {
         const data = JSON.parse(localStorage.getItem("playerData"));
         if (typeof data?.["version"] !== "number")
             return loadAllDataOld();
+        
         for (const ore in data["ores"])
             if (typeof oreList[ore] === "object")
                 for (const variant of variantNames)
                     inventory[ore][variant.toLowerCase()] = data["ores"][ore]?.[variant.toLowerCase()] ?? 0;
+        
         if (typeof data["pickaxes"]["inv"] === "object") {
             if (data["version"] >= 4) {
                 for (const pick in data["pickaxes"]["inv"])
@@ -77,48 +82,47 @@ function loadAllData() {
                     if (inventory[ore][variant] >= 1)
                         visible(document.getElementById(ore + capitalize(variant)));
                 }
+        
         if (typeof data["settings"]["mutedSounds"] === "number")
             for (const sound in data["settings"]["mutedSounds"])
                 if (!data["settings"]["mutedSounds"][sound])
                     document.getElementById(`mute${capitalize(sound)}`).click();
-        if (typeof data["settings"]["musicVolume"] === "number") {
-            document.getElementById("musicVolume").value = data["settings"]["musicVolume"];
-            changeMusicVolume(data["settings"]["musicVolume"]);
-        }
-        if (typeof data["settings"]["spawnVolume"] === "number") {
-            document.getElementById("spawnVolume").value = data["settings"]["spawnVolume"];
-            changeAllVolume(data["settings"]["spawnVolume"]);
-        }
+        
+        document.getElementById("musicVolume").value ??= data["settings"]["musicVolume"];
+        changeMusicVolume(document.getElementById("musicVolume").value);
+        
+        document.getElementById("spawnVolume").value ??= data["settings"]["spawnVolume"];
+        changeAllVolume(document.getElementById("spawnVolume").value);
+        
         if (data["settings"]["musicButton"] === "Unmute Music") {
             setTimeout(() => {
                 document.getElementById("musicButton").click();
             }, 100);
         }
-        if (typeof data["settings"]["toggleCaves"] === "boolean") {
-            caveToggle = data["settings"]["toggleCaves"];
-            toggleCaves(caveToggle);
-        }
-        if (typeof data["settings"]["canDisplay"] === "boolean") {
-            canDisplay = data["settings"]["canDisplay"];
-            changeCanDisplay(canDisplay);
-        }
-        if (typeof data["settings"]["warnBeforeClosing"] === "boolean") {
-            warnClose = data["settings"]["warnBeforeClosing"];
-            warnBeforeClosingToggle(warnClose);
-        }
-        if (typeof data["settings"]["stopOnRare"] === "boolean") {
-            stopOnRare = data["settings"]["stopOnRare"];
-            stopOnRareToggle(stopOnRare);
-        }
+        
+        caveToggle ??= data["settings"]["toggleCaves"];
+        toggleCaves(caveToggle);
+        
+        canDisplay ??= data["settings"]["canDisplay"];
+        changeCanDisplay(canDisplay);
+        
+        warnClose ??= data["settings"]["warnBeforeClosing"];
+        warnBeforeClosingToggle(warnClose);
+        
+        stopOnRare ??= data["settings"]["stopOnRare"];
+        stopOnRareToggle(stopOnRare);
+        
+        sellUpToVariant ??= data["settings"]["sellUpToVariant"];
+        switchSellUpToVariant(sellUpToVariant);
         totalResets = data["stats"]["totalResets"] ?? 0;
         totalTimePlayed = data["stats"]["totalTimePlayed"] ?? 0;
         if (typeof data["gears"] === "object")
             if (typeof data["gears"]["inv"] === "object")
                 for (const gear in data["gears"]["inv"])
-                    gears[gear] = data["gears"]["inv"][gear];
+                    gears[gear] ??= data["gears"]["inv"][gear];
             else if (data["version"] === 2)
                 for (const gear in data["gears"])
-                    gears[gear] = data["gears"][gear];
+                    gears[gear] ??= data["gears"][gear];
         if (data["version"] >= 3)
             currentGears = data["gears"]["curr"];
         else
@@ -141,9 +145,10 @@ function loadAllData() {
 let dataTimer = null;
 let dataLooping = false;
 function repeatDataSave() {
-    if (isPlaying && autoSave && (!debug || debugActuallyPlaying))
+    if (isPlaying && autoSave && (!debug || debugActuallyPlaying)) {
         dataTimer ??= setInterval(saveAllData, 5000);
-    else
+        localStorage.setItem("playedBefore", true);
+    } else
         dataTimer = null;
 }
 
@@ -169,7 +174,7 @@ function fromBinary(encoded) {
 }
 
 function exportData() {
-    const data = toBinary(JSON.stringify(JSON.parse(localStorage.getItem("playerData"))));
+    const data = toBinary(saveAllData(true));
     exportDataAsFile(data, `${debug?"debug":""}data.txt`, "text/plain");
     /*let textField = document.getElementById("dataText");
     textField.value = data;
@@ -257,7 +262,7 @@ function stopOnRareToggle(toggle) {
     if (typeof toggle === "boolean")
         stopOnRare = toggle;
     else
-    stopOnRare = !stopOnRare;
+        stopOnRare = !stopOnRare;
     document.getElementById("stopOnRareButton").innerHTML = `Stop on Rare: ${stopOnRare ? "on" : "off"}`;
 }
 
@@ -275,6 +280,22 @@ function toggleCaves(toggle) {
     else
         caveToggle = !caveToggle;
     document.getElementById("toggleCavesButton").innerHTML = `Toggle Caves: ${caveToggle ? "on" : "off"}`;
+}
+
+function switchSellUpToVariant(variant) {
+    if (typeof variant === "string" && variantNames.includes(variant))
+        sellUpToVariant = variant;
+    else
+        sellUpToVariant = variantNames[(variantNames.indexOf(sellUpToVariant) + 1) % variantNames.length];
+    document.getElementById("sellUpToVariantButton").innerHTML = `Sell Up To: ${capitalize(sellUpToVariant)}`;
+    updateActiveRecipe();
+    let displaySellUpToVariants = document.getElementById("displaySellUpToVariants");
+    let output = "";
+    for (const variant of variantNames) {
+        if (variantNames.indexOf(variant) > variantNames.indexOf(sellUpToVariant)) break;
+        output += variantEmojis[variantNames.indexOf(variant)];
+    }
+    displaySellUpToVariants.innerHTML = output;
 }
 
 function resetGame() {

@@ -21,6 +21,7 @@ let resetsThisSession = 0;
 let warnClose = true;
 let autoSave = true;
 let caveToggle = true;
+let sellUpToVariant = "Normal";
 let turnOffAbilities = false;
 let debugVerbose = debug;
 let stopOnRare = false;
@@ -75,12 +76,10 @@ function init() {
     createInventory();
     createIndex();
     createMine();
-    const playedBefore = localStorage.getItem("playedBefore");
-    if (!playedBefore) localStorage.setItem("newSaveFormat", true);
+    const playedBefore = localStorage.getItem("playedBefore") ?? typeof localStorage.getItem("playerData") === "string";
     canContinue = playedBefore ? loadAllData() : true;
     if (canContinue) {
         repeatDataSave();
-        localStorage.setItem("playedBefore", true);
         createPickaxeRecipes();
         createGearRecipes();
         //document.getElementById("dataText").value = "";
@@ -462,11 +461,18 @@ function updateIndex(type) {
 }
 
 function updateInventory(ore, variant) {
-    document.getElementById(ore + variant).innerHTML = createOreDisplay(ore, variant);
-    if (inventory[ore][variant.toLowerCase()] > 0)
-        visible(document.getElementById(ore + variant));
+    let variants = [];
+    if (typeof variant !== "string")
+        variants = variantNames;
     else
-        invisible(document.getElementById(ore + variant));
+        variants.push(variant);
+    for (const variant of variants) {
+        document.getElementById(ore + variant).innerHTML = createOreDisplay(ore, variant);
+        if (inventory[ore][variant.toLowerCase()] > 0)
+            visible(document.getElementById(ore + variant));
+        else
+            invisible(document.getElementById(ore + variant));
+    }
 }
 
 //SPAWNS AND FINDS

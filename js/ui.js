@@ -1,4 +1,5 @@
 // HELPERS
+
 function visible(element) {
     element.classList.remove("invisible");
 }

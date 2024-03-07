@@ -36,6 +36,7 @@ async function mineReset() {
                 spawn["state"] = false;
             }
         }
+        canMine = false;
         canMine = await mineResetAid();
         checkAllAround(curX, curY, 1);
         mine[curY][curX] = "⛏️";

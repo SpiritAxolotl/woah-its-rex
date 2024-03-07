@@ -234,10 +234,19 @@ gearRecipes = {
 };
 const gearList = Object.keys(gearRecipes);
 
+function calcTotalIngredients(ore) {
+    let total = 0;
+    for (const variant in inventory[ore])
+        if (variantNames.indexOf(capitalize(variant)) <= variantNames.indexOf(sellUpToVariant))
+            total += inventory[ore][variant];
+    return total;
+}
+
 let recipeElements = {"pickaxes": {}, "gears": {}};
 function displayRecipe(n, button) {
     if (button.classList.contains("darkButton")) {
         button.classList.remove("darkButton");
+        invisible(document.getElementById("displaySellUpToVariants"));
         if (isVisible(document.getElementById("pickaxeCrafts")))
             invisible(recipeElements["pickaxes"][n]);
         else
@@ -246,6 +255,7 @@ function displayRecipe(n, button) {
         invisible(document.getElementById("itemDescription"));
         return;
     }
+    visible(document.getElementById("displaySellUpToVariants"));
     visible(document.getElementById("displayRecipe"));
     visible(document.getElementById("displayedRecipe"));
     visible(document.getElementById("itemDescription"));
@@ -261,7 +271,7 @@ function displayRecipe(n, button) {
         let recipes = document.getElementById("displayRecipe");
         while (recipes.firstChild)
             recipes.removeChild(recipes.firstChild);
-        for (let pick in recipeElements["pickaxes"])
+        for (const pick in recipeElements["pickaxes"])
             invisible(recipeElements["pickaxes"][pick]);
         recipes.appendChild(recipeElements["pickaxes"][pick]);
         visible(recipeElements["pickaxes"][pick]);
@@ -283,7 +293,7 @@ function displayRecipe(n, button) {
         let recipes = document.getElementById("displayRecipe");
         while (recipes.firstChild)
             recipes.removeChild(recipes.firstChild);
-        for (let gear in recipeElements["gears"])
+        for (const gear in recipeElements["gears"])
             invisible(recipeElements["gears"][gear]);
         recipes.appendChild(recipeElements["gears"][gear]);
         visible(recipeElements["gears"][gear]);
@@ -298,16 +308,17 @@ function displayRecipe(n, button) {
 //TODO: combine these methods
 function createPickaxeRecipes() {
     let pickaxeCrafts = document.getElementById("pickaxeCrafts");
-    for (let pick in pickaxeRecipes) {
+    for (const pick in pickaxeRecipes) {
         let pickaxeDisplay = document.createElement("div");
         pickaxeDisplay.id = `pickaxeRecipe${snakeToCamel(pick, true)}`;
         invisible(pickaxeDisplay);
         pickaxeDisplay.classList.add("craftingAmountsDisplay");
-        for (let ingredient in pickaxeRecipes[pick]) {
+        for (const ingredient in pickaxeRecipes[pick]) {
+            const totalIngredients = calcTotalIngredients(ingredient);
             let ingredientDisplay = document.createElement("p");
             ingredientDisplay.id = (`${ingredient}pickaxeRecipe${pick}Display`);
-            ingredientDisplay.innerHTML = `${ingredient} ${inventory[ingredient]["normal"]}/${pickaxeRecipes[pick][ingredient]}`;
-            if (inventory[ingredient]["normal"] >= pickaxeRecipes[pick][ingredient]) {
+            ingredientDisplay.innerHTML = `${ingredient} ${totalIngredients}/${pickaxeRecipes[pick][ingredient]}`;
+            if (totalIngredients >= pickaxeRecipes[pick][ingredient]) {
                 ingredientDisplay.classList.add("recipeGreen");
                 ingredientDisplay.classList.remove("recipeRed");
             } else {
@@ -337,16 +348,17 @@ function createPickaxeRecipes() {
 
 function createGearRecipes() {
     let gearCrafts = document.getElementById("gearCrafts");
-    for (let gear in gearRecipes) {
+    for (const gear in gearRecipes) {
         let gearDisplay = document.createElement("div");
         gearDisplay.id = `gearRecipe${snakeToCamel(gear, true)}`;
         invisible(gearDisplay);
         gearDisplay.classList.add("craftingAmountsDisplay");
-        for (let ingredient in gearRecipes[gear]) {
+        for (const ingredient in gearRecipes[gear]) {
             let ingredientDisplay = document.createElement("p");
             ingredientDisplay.id = (`${ingredient}gearRecipe${snakeToCamel(gear, true)}Display`);
-            ingredientDisplay.innerHTML = `${ingredient} ${inventory[ingredient]["normal"]}/${gearRecipes[gear][ingredient]}`;
-            if (inventory[ingredient]["normal"] >= gearRecipes[gear][ingredient]) {
+            const totalIngredients = calcTotalIngredients(ingredient);
+            ingredientDisplay.innerHTML = `${ingredient} ${totalIngredients}/${gearRecipes[gear][ingredient]}`;
+            if (totalIngredients >= gearRecipes[gear][ingredient]) {
                 ingredientDisplay.classList.add("recipeGreen");
                 ingredientDisplay.classList.remove("recipeRed");
             } else {
@@ -372,7 +384,7 @@ function createGearRecipes() {
         
         let craftGearButton = document.createElement("button");
         //TODO: make a better unlock system
-        if (!gears["silly-tp"] && inventory["🎂"]["normal"] === 0 && gear === "silly-tp")
+        if (!gears["silly-tp"] && calcTotalIngredients("🎂") === 0 && gear === "silly-tp")
             invisible(craftGearButton);
         craftGearButton.setAttribute("onclick", `displayRecipe('${gear}', this)`);
         craftGearButton.classList.add("craftGearButton", "craftButton");
@@ -383,13 +395,14 @@ function createGearRecipes() {
 
 function updateActiveRecipe(ore) {
     if (isVisible(document.getElementById("pickaxeCrafts"))) {
-        for (let pick in recipeElements["pickaxes"]) {
+        for (const pick in recipeElements["pickaxes"]) {
             if (isVisible(recipeElements["pickaxes"][pick])) {
                 if (typeof ore === "string") {
+                    const totalOres = calcTotalIngredients(ore);
                     let pickaxeDisplay = document.getElementById(`${ore}pickaxeRecipe${pick}Display`);
                     if (pickaxeDisplay === null) break;
-                    pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${inventory[ore]["normal"].toLocaleString()}/${pickaxeRecipes[pick][ore].toLocaleString()}`;
-                    if (inventory[ore]["normal"] >= pickaxeRecipes[pick][ore]) {
+                    pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${totalOres.toLocaleString()}/${pickaxeRecipes[pick][ore].toLocaleString()}`;
+                    if (totalOres >= pickaxeRecipes[pick][ore]) {
                         pickaxeDisplay.classList.add("recipeGreen");
                         pickaxeDisplay.classList.remove("recipeRed");
                     } else {
@@ -398,11 +411,12 @@ function updateActiveRecipe(ore) {
                     }
                 } else {
                     //cake is delicious
-                    for (let ingredient in pickaxeRecipes[pick]) {
+                    for (const ingredient in pickaxeRecipes[pick]) {
+                        const totalIngredients = calcTotalIngredients(ingredient);
                         let pickaxeDisplay = document.getElementById(`${ingredient}pickaxeRecipe${pick}Display`);
                         if (pickaxeDisplay === null) break;
-                        pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ingredient]["prob"].toLocaleString()}">${ingredient}</span> ${inventory[ingredient]["normal"].toLocaleString()}/${pickaxeRecipes[pick][ingredient].toLocaleString()}`;
-                        if (inventory[ingredient]["normal"] >= pickaxeRecipes[pick][ingredient]) {
+                        pickaxeDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ingredient]["prob"].toLocaleString()}">${ingredient}</span> ${totalIngredients.toLocaleString()}/${pickaxeRecipes[pick][ingredient].toLocaleString()}`;
+                        if (totalIngredients >= pickaxeRecipes[pick][ingredient]) {
                             pickaxeDisplay.classList.add("recipeGreen");
                             pickaxeDisplay.classList.remove("recipeRed");
                         } else {
@@ -414,13 +428,14 @@ function updateActiveRecipe(ore) {
             }
         }
     } else {
-        for (let gear in recipeElements["gears"]) {
+        for (const gear in recipeElements["gears"]) {
             if (isVisible(recipeElements["gears"][gear])) {
                 if (typeof ore === "string") {
+                    const totalOre = calcTotalIngredients(ore);
                     let gearDisplay = document.getElementById(`${ore}gearRecipe${snakeToCamel(gear, true)}Display`);
                     if (gearDisplay === null) break;
-                    gearDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${inventory[ore]["normal"].toLocaleString()}/${gearRecipes[gear][ore].toLocaleString()}`;
-                    if (inventory[ore]["normal"] >= gearRecipes[gear][ore]) {
+                    gearDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ore]["prob"].toLocaleString()}">${ore}</span> ${totalOre.toLocaleString()}/${gearRecipes[gear][ore].toLocaleString()}`;
+                    if (totalOre >= gearRecipes[gear][ore]) {
                         gearDisplay.classList.add("recipeGreen");
                         gearDisplay.classList.remove("recipeRed");
                     } else {
@@ -428,10 +443,11 @@ function updateActiveRecipe(ore) {
                         gearDisplay.classList.remove("recipeGreen");
                     }
                 } else {
-                    for (let ingredient in gearRecipes[gear]) {
+                    for (const ingredient in gearRecipes[gear]) {
+                        const totalIngredients = calcTotalIngredients(ingredient);
                         let gearDisplay = document.getElementById(`${ingredient}gearRecipe${snakeToCamel(gear, true)}Display`);
-                        gearDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ingredient]["prob"].toLocaleString()}">${ingredient}</span> ${inventory[ingredient]["normal"].toLocaleString()}/${gearRecipes[gear][ingredient].toLocaleString()}`;
-                        if (inventory[ingredient]["normal"] >= gearRecipes[gear][ingredient]) {
+                        gearDisplay.innerHTML = `<span class="emoji" title="1/${oreList[ingredient]["prob"].toLocaleString()}">${ingredient}</span> ${totalIngredients.toLocaleString()}/${gearRecipes[gear][ingredient].toLocaleString()}`;
+                        if (totalIngredients >= gearRecipes[gear][ingredient]) {
                             gearDisplay.classList.add("recipeGreen");
                             gearDisplay.classList.remove("recipeRed");
                         } else {
@@ -448,8 +464,8 @@ function updateActiveRecipe(ore) {
 function craftPickaxe(pick) {
     canCraft = true;
     if (!pickaxes[pick]) {
-        for (let ingredient in pickaxeRecipes[pick]) {
-            if (inventory[ingredient]["normal"] < pickaxeRecipes[pick][ingredient]) {
+        for (const ingredient in pickaxeRecipes[pick]) {
+            if (calcTotalIngredients(ingredient) < pickaxeRecipes[pick][ingredient]) {
                 canCraft = false;
                 break;
             }
@@ -457,9 +473,19 @@ function craftPickaxe(pick) {
         if (canCraft) {
             pickaxes[pick] = true;
             currentPickaxe = pick;
-            for (let ingredient in pickaxeRecipes[pick]) {
-                inventory[ingredient]["normal"] -= pickaxeRecipes[pick][ingredient];
-                updateInventory(ingredient, "Normal");
+            for (const ingredient in pickaxeRecipes[pick]) {
+                let remainder = pickaxeRecipes[gear][ingredient];
+                for (const v of variantNames) {
+                    const variant = v.toLowerCase();
+                    if (inventory[ingredient][variant] < remainder) {
+                        remainder -= inventory[ingredient][variant];
+                        inventory[ingredient][variant] = 0;
+                    } else {
+                        inventory[ingredient][variant] -= remainder;
+                        break;
+                    }
+                }
+                updateInventory(ingredient);
             }
             let pickaxeDisplay = document.getElementById(`pickaxeRecipe${snakeToCamel(pick, true)}`);
             pickaxeDisplay.lastElementChild.innerHTML = "Equipped!";
@@ -478,8 +504,8 @@ function craftGear(gear, button) {
     let gearDisplay = document.getElementById(`gearRecipe${snakeToCamel(gear, true)}`);
     button = button || gearDisplay.lastElementChild.innerHTML;
     if (!gears[gear]) {
-        for (let ingredient in gearRecipes[gear]) {
-            if (inventory[ingredient]["normal"] < gearRecipes[gear][ingredient]) {
+        for (const ingredient in gearRecipes[gear]) {
+            if (calcTotalIngredients(ingredient) < gearRecipes[gear][ingredient]) {
                 canCraft = false;
                 break;
             }
@@ -487,9 +513,19 @@ function craftGear(gear, button) {
         if (canCraft) {
             gears[gear] = true;
             currentGears.push(gear);
-            for (let ingredient in gearRecipes[gear]) {
-                inventory[ingredient]["normal"] -= gearRecipes[gear][ingredient];
-                updateInventory(ingredient, "Normal");
+            for (const ingredient in gearRecipes[gear]) {
+                let remainder = gearRecipes[gear][ingredient];
+                for (const v of variantNames) {
+                    const variant = v.toLowerCase();
+                    if (inventory[ingredient][variant] < remainder) {
+                        remainder -= inventory[ingredient][variant];
+                        inventory[ingredient][variant] = 0;
+                    } else {
+                        inventory[ingredient][variant] -= remainder;
+                        break;
+                    }
+                }
+                updateInventory(ingredient);
             }
             button.innerHTML = gear !== "silly-tp" ? "Equipped!" : "Teleport!";
             updateActiveRecipe();
@@ -505,6 +541,7 @@ function craftGear(gear, button) {
     if (gear === "silly-tp" && gears["silly-tp"]) gearAbilitySillyTp();
 }
 
+//gotta combine these at some point
 function showPickaxes() {
     if (document.getElementById("showPickaxes").classList.contains("darkButton")) {
         document.getElementById("showPickaxes").classList.remove("darkButton");
@@ -512,6 +549,7 @@ function showPickaxes() {
         invisible(document.getElementById("displayRecipe"));
         invisible(document.getElementById("displayedRecipe"));
         invisible(document.getElementById("itemDescription"));
+        invisible(document.getElementById("displaySellUpToVariants"));
     } else {
         visible(document.getElementById("pickaxeCrafts"));
         document.getElementById("showPickaxes").classList.add("darkButton");
@@ -526,6 +564,7 @@ function showGears() {
         invisible(document.getElementById("displayRecipe"));
         invisible(document.getElementById("displayedRecipe"));
         invisible(document.getElementById("itemDescription"));
+        invisible(document.getElementById("displaySellUpToVariants"));
     } else {
         invisible(document.getElementById("pickaxeCrafts"));
         document.getElementById("showPickaxes").classList.remove("darkButton");

@@ -397,7 +397,7 @@ const variantNamesMultisSorted = sortAlongsideArray(variantManager.getVariantMul
 const variantNames = variantNamesMultisSorted[1];
 const variantMultis = variantNamesMultisSorted[0];
 const variantEmojis = variantManager.getVariantEmojis();
-delete variantNamesMultisSorted;
+//delete variantNamesMultisSorted;
 
 const allLayersNames = layerManager.getAllLayerNames();
 const allLayers = layerManager.getAllLayerOres();

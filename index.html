@@ -71,6 +71,7 @@
             <div id="pickaxeCrafts"></div>
             <div id="gearCrafts" class="invisible"></div>
         </div>
+        <p id="displaySellUpToVariants"></p>
         <div id="displayRecipe">
             <p id="displayedRecipe"></p>
         </div>
@@ -144,7 +145,7 @@
             <div id="inventoryBloody" class="invisible"></div>
             <div id="indexDisplay" class="invisible"></div>
         </div>
-        <a href="https://discord.gg/tXxYa6ubYf" id="discord" target="_blank">
+        <a href="https://spax.zone/discord" id="discord" target="_blank">
             <img src="./media/discord-logo.svg" alt="Discord Logo">
             <p>Join the Spinning Rat Discord!</p>
         </a>
@@ -161,6 +162,7 @@
         <h1 id="pausedTitle">Woah It's Rex!
             <div>
                 <p class="subtext">SPAX'S FORK</p>
+                <!--see if it's possible to update this via a github/gitlab workflow-->
                 <!--<p class="subtext"><a href="https://github.com/SpiritAxolotl/woah-its-rex">#c6b9194</a></p>-->
             </div>
         </h1>
@@ -176,7 +178,7 @@
             <div class="settingsItem invisible" id="data">
                 <h1><i class="fas fa-user-gear"></i> Data Settings</h1>
                 <hr>
-                <input type="file" id="dataFile" accept=".txt" onchange="loadAllData()">
+                <input type="file" id="dataFile" accept=".txt">
                 <button onclick="exportData()" id="dataExport">Export Data</button>
                 <button onclick="importData(document.getElementById('dataFile').files)">Import Data</button>
                 <button onclick="resetGame()" id="resetGameButton">Reset Game</button>
@@ -218,6 +220,7 @@
                 <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
                 <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
                 <button onclick="stopOnRareToggle()" id="stopOnRareButton">Stop on Rare: off</button>
+                <button onclick="switchSellUpToVariant()" id="sellUpToVariantButton">Sell Up To: Normal</button>
             </div>
             <div class="settingsItem invisible" id="theming">
                 <h1><i class="fas fa-paintbrush"></i> Theme Settings</h1>

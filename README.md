@@ -111,7 +111,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [ ] Add more organized credits
 - [ ] Add a manager class for:
   - [x] layers
-  - [ ] pickaxes
+  - [x] pickaxes
   - [ ] gears
   - [ ] ores
   - [x] variants

@@ -78,11 +78,11 @@ function loadAllDataOld() {
                     currentGears.push(gearNames[i]);
             }
         }
-        if (inventory["🎂"]["normal"] > 0 || gears["silly-tp"])
+        if (calcTotalIngredients("🎂") > 0 || gears["silly-tp"])
             visible(document.getElementById("layerDisplaySilly"));
         else
             invisible(document.getElementById("layerDisplaySilly"));
-        if (inventory["🪈"]["normal"] > 0)
+        if (calcTotalIngredients("🪈") > 0)
             visible(document.getElementById("layerDisplayFlute"));
         else
             invisible(document.getElementById("layerDisplayFlute"));
