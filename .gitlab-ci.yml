@@ -12,3 +12,4 @@ scrape-amber:
     - git add .
     - git commit -m "Daily amber WIR scrape"
     - git push gitlab_origin HEAD:amber -o ci.skip
+  allow_failure: true
