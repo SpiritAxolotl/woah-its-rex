@@ -1,0 +1,14 @@
+scrape-amber:
+  stage: build
+  rules:
+    - if: $AMBER_SCRAPE == "true" || $CI_COMMIT_MESSAGE =~ /.*debug.*/i
+  script:
+    - git config user.name "Not Amber"
+    - git config user.email notambuwu@website.null
+    - git remote add gitlab_origin https://oauth2:$AMBER_ACCESS_API@gitlab.com/SpiritAxolotl/woah-its-rex.git
+    - wget -r https://ambercatgirl.github.io/woah-its-rex/
+    - mv ambercatgirl.github.io/woah-its-rex/* .
+    - rm -rf ambercatgirl.github.io
+    - git add .
+    - git commit -m "Daily amber WIR scrape"
+    - git push gitlab_origin HEAD:amber -o ci.skip
