@@ -1,3 +1,9 @@
+<!-- Copyright (C) Amber Blessing - All Rights Reserved
+ 
+Unauthorized copying of this file, via any medium is strictly prohibited
+Proprietary and confidential
+Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--Importing JS Files-->
+    <script src="settings.js"></script>
     <script src="layers.js"></script>
     <script src="logs.js"></script>
     <script src="mine.js"></script>
@@ -22,6 +29,7 @@
     <script src="crafting.js"></script>
     <script src="data.js"></script>
     <script src="caves.js"></script>
+    <script src="commands.js"></script>
     <link rel="stylesheet" href="css.css">
 </head>
 <body>
@@ -31,21 +39,20 @@
         </div>
     </noscript>
     <div id="pressPlay">
-        <img class="roundcat" src="https://cdn.discordapp.com/attachments/1180648798972821630/1198130471410872320/roundcat.png?ex=65bdc8f4&is=65ab53f4&hm=47ed3ca45b02f8011161322d16150527df1001331fc7a533391d46f71dd95a71" alt="Round Cat Image">
+        <img class="roundcat" src="roundcat.png" alt="Round Cat Image">
 
 <div class="credits">
   <h2>Credits:</h2>
   <ul>
     <b><li>UI by @catlover/@ZayedLovesCats on Discord! 😼</li></b>
     <b><li>Game made by @thecatofalltime on Discord! 😺</li></b>
-    <li>Some features made by @millabasset on Discord! 💖</li>
     <li>Background music made by @x2corp on Discord!</li>
     <li>Spawn sounds come from REx:R on Roblox</li>
-    <li>Some sounds made by @tevv_ on Discord!</li>
+    <li>Some sounds made by @tevv_  & @CederStar15 on Discord!</li>
     <li>Thanks to all the spreadsheet editors!</li>
   </ul>
   <a class="server-link" href="https://discord.gg/qxBBvAm2bM" target="_blank">
-    <img src="https://cdn.discordapp.com/attachments/1180648798972821630/1198147054090854440/discord-logo.png?ex=65bdd866&is=65ab6366&hm=e9b62d974e21650e6bc0f52760822994b24caaabdfd92b47af908ba4d534248e" alt="Discord Logo">
+    <img src="discord-logo.png" alt="Discord Logo">
     Join the Server
   </a>
 
@@ -69,7 +76,7 @@
                 <button onclick="moveOne('s', this)" class="movementButton">Down 1</button>
                 <button onclick="moveOne('w', this)" class="movementButton">Up 1</button>
                 <button onclick="moveOne('d', this)" class="movementButton">Right 1</button>
-                <button onclick="switchDistance()" class="movementButton" id="meterDisplay">1,000m</button>
+                <button onclick="switchDistance()" class="movementButton" id="meterDisplay">🟫 1,000m</button>
             </div>
             <p id="blockDisplay"></p>
             <div>
@@ -81,9 +88,8 @@
         </div>
         <div class="col-2">
             <div>
-                <button id="resetMine" onclick="resetMine()">Reset Mine</button>
-                <button id="settings" onclick="showData()">Settings</button>
-                <button onclick="changeCanDisplay(this)">Disable Display</button>
+                <button id="resetMine" onclick="toSurface()">To Surface</button>
+                <button id="settings" onclick="showSettings()">Settings</button>
             </div>
             <p id="mineResetProgress"></p>
             <p id="blocksMined">0 Blocks Mined</p>
@@ -97,30 +103,53 @@
                 </div>
                 <div id="pickaxeCrafts">
                     <br>
-                    <button onclick="displayRecipe(0)">Pickaxe 1</button>
-                    <button onclick="displayRecipe(1)">Pickaxe 2</button>
-                    <button onclick="displayRecipe(2)">Pickaxe 3</button>
-                    <button onclick="displayRecipe(3)">Pickaxe 4</button>
-                    <button onclick="displayRecipe(4)">Pickaxe 5</button>
-                    <button onclick="displayRecipe(5)">Pickaxe 6</button>
-                    <button onclick="displayRecipe(6)">Pickaxe 7</button>
-                    <button onclick="displayRecipe(7)">Pickaxe 8</button>
-                    <button onclick="displayRecipe(8)">Pickaxe 9</button>
-                    <button onclick="displayRecipe(9)">Pickaxe 10</button>
-                    <button onclick="displayRecipe(10)">Pickaxe 11</button>
+                    <button class="craftingButton" onclick="displayRecipe(0, this)">Mulch Mallet</button>
+                    <button class="craftingButton" onclick="displayRecipe(1, this)">Mud Sickle</button>
+                    <button class="craftingButton" onclick="displayRecipe(2, this)">Dirt Ravager</button>
+                    <button class="craftingButton" onclick="displayRecipe(3, this)">Void Crusher</button>
+                    <button class="craftingButton" onclick="displayRecipe(4, this)">Geode Staff</button>
+                    <button class="craftingButton" onclick="displayRecipe(5, this)">Earth Soiler</button>
+                    <button class="craftingButton" onclick="displayRecipe(6, this)">Crypt Smasher</button>
+                    <button class="craftingButton" onclick="displayRecipe(7, this)">Labyrinthian Tide</button>
+                    <button class="craftingButton" onclick="displayRecipe(8, this)">77 Leaf Destroyer</button>
+                    <button class="craftingButton" onclick="displayRecipe(9, this)">Planet Buster</button>
+                    <button class="craftingButton" onclick="displayRecipe(10, this)">Whirlpool of Fate</button>
+                    <button class="craftingButton" onclick="displayRecipe(11, this)">Wings of Glory</button>
+                    <button class="craftingButton" onclick="displayRecipe(12, this)">The Key</button>
+                    <button class="craftingButton" onclick="displayRecipe(13, this)" style="display: none;">Extreme Echolocator</button>
+                    <button class="craftingButton" onclick="displayRecipe(14, this)" style="display: none;">Corundum Caver</button>
+                    <button class="craftingButton" onclick="displayRecipe(15, this)" style="display: none;">Starborne Slasher</button>
+                    <button class="craftingButton" onclick="displayRecipe(16, this)" style="display: none;" id="cat">Nyabomb</button>
+                    <button class="craftingButton" onclick="displayRecipe(17, this)" style="display: none;">Lunar Lightsabre</button>
+                    <button class="craftingButton" onclick="displayRecipe(18, this)" style="display: none;">Gemstone Engraver</button>
+                    <button class="craftingButton" onclick="displayRecipe(19, this)" style="display: none;">Gambler's Fallacy</button>
+                    <button class="craftingButton" onclick="displayRecipe(20, this)" style="display: none;">Exponential Centrifuge</button>
+                    <button class="craftingButton" onclick="displayRecipe(21, this)" style="display: none;">Singularity Slammer</button>
+                    <button class="craftingButton" onclick="displayRecipe(22, this)" style="display: none;">Staff of Binding</button>
                 </div>
                 <div id="gearCrafts" class="hidden">
                     <br>
-                    <button onclick="displayRecipe(0)">Ore Tracker</button>
-                    <button onclick="displayRecipe(1)">Real Candilium</button>
-                    <button onclick="displayRecipe(2)">Real Vitriol</button>
-                    <button onclick="displayRecipe(7)">Energy Siphoner</button>
-                    <button onclick="displayRecipe(8)">Sugar Rush</button>
-                    <button onclick="displayRecipe(3)">Infinity Collector</button>
-                    <button onclick="displayRecipe(4)">Layer Materializer</button>
-                    <button onclick="displayRecipe(5)">Fortune III Book</button>
-                    <button onclick="displayRecipe(6)">Haste II Beacon</button>
-                    <button onclick="displayRecipe(9)" id="sillyRecipe" style="display: none;">SILLYYYY</button>
+                    <button class="craftingButton" onclick="displayRecipe(0, this)">Ore Tracker</button>
+                    <button class="craftingButton" onclick="displayRecipe(1, this)">Real Candilium</button>
+                    <button class="craftingButton" onclick="displayRecipe(2, this)">Real Vitriol</button>
+                    <button class="craftingButton" onclick="displayRecipe(7, this)">Energy Siphoner</button>
+                    <button class="craftingButton" onclick="displayRecipe(8, this)">Sugar Rush</button>
+                    <button class="craftingButton" onclick="displayRecipe(3, this)">Infinity Collector</button>
+                    <button class="craftingButton" onclick="displayRecipe(4, this)">Layer Materializer</button>
+                    <button class="craftingButton" onclick="displayRecipe(5, this)">Fortune III Book</button>
+                    <button class="craftingButton" onclick="displayRecipe(6, this)">Haste II Beacon</button>
+                    <button class="craftingButton" onclick="displayRecipe(9, this)" id="sillyRecipe" style="display: none;">SILLYYYY</button>
+                    <button class="craftingButton" onclick="displayRecipe(10, this)" style="display: none;">Logical Randomiser</button>
+                    <button class="craftingButton" onclick="displayRecipe(11, this)" style="display: none;">Storm Sneakers</button>
+                    <button class="craftingButton" onclick="displayRecipe(12, this)" style="display: none;">Artifice Annihilator</button>
+                    <button class="craftingButton" onclick="displayRecipe(13, this)" style="display: none;">Repurposed Replicator</button>
+                    <button class="craftingButton" onclick="displayRecipe(14, this)" style="display: none;">Cavern Capacitator</button>
+                    <button class="craftingButton" onclick="displayRecipe(15, this)" style="display: none;">High Powered Vacuum</button>
+                    <button class="craftingButton" onclick="displayRecipe(16, this)" style="display: none;">Unlocked Speedcap</button>
+                    <button class="craftingButton" onclick="displayRecipe(17, this)" style="display: none;">Infinity Collector II</button>
+                    <button class="craftingButton" onclick="displayRecipe(18, this)" style="display: none;"disabled="true">Clover's Undoing</button>
+                    <button class="craftingButton" onclick="displayRecipe(19, this)" style="display: none;"disabled="true">Fantastical Feather</button>
+                    <button class="craftingButton" onclick="displayRecipe(20, this)" style="display: none;"disabled="true">Statistical Analyzer</button>
                 </div>
             </div>
             <hr>
@@ -138,9 +167,21 @@
                 <p class="itemDescription" id="pickaxe5Description" style="display: none;">Has 2 abilities.<br>Ability 1 mines a triangle around the player.<br>Ability 2 mines a heart around the player.<br>Ability 1 has a 1/60 proc rate.<br>Ability 2 has a 1/40 proc rate.<br>Both abilities have 10x luck.</p>
                 <p class="itemDescription" id="pickaxe6Description" style="display: none;">Mines a few blocks in every direction. However, each line has a chance to re-activate the ability from the end of said line with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 3x luck.</p>
                 <p class="itemDescription" id="pickaxe7Description" style="display: none;">Mines blocks in an X shape around the player, with each end having a chance to re-activate the ability at that position with a 75% chance and up to 4 times.<br>Has an ability proc rate of 1/50.<br>Has 4x luck.</p>
-                <p class="itemDescription" id="pickaxe8Description" style="display: none;">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck. </p>
+                <p class="itemDescription" id="pickaxe8Description" style="display: none;">Mines the shape of a clover around the player.<br>Has an ability proc rate of 1/30.<br>Has 20x luck.<br><i>The pickaxe resonates with a distant entity.. a signal sent from far beyond these lands. Further traces of it are found within the blueprint for a particular craft of a key, one designed to open the lock to a completely new world..</i></p>
                 <p class="itemDescription" id="pickaxe9Description" style="display: none;">Has a 50% chance to mine a 7x7 square in a 49x49 area around the player, with an average of 24 7x7 squares being mined each activation.<br>Has an ability proc rate of 1/50.<br>Has 17.5x luck.</p>
                 <p class="itemDescription" id="pickaxe10Description" style="display: none;">Mines an extremely large spiral around the player.<br>Has an ability proc rate of 1/100.<br>Has 30x luck.</p>
+                <p class="itemDescription" id="pickaxe11Description" style="display: none;">Mines wings around the player.<br>Mines 2 blocks at once when using automine.<br>Has 2x special cave type luck.<br>Has an ability proc rate of 1/150.<br>Has 75x luck.</p>
+                <p class="itemDescription" id="pickaxe12Description" style="display: none;">The Key to World 2.<br>Requires 77 Leaf Destroyer.<br>Pressing "Teleport!" on this pickaxe will switch the current world.<br>Has the power of pickaxe 0.<br>World 1 gears will NOT work in world 2, except for the ore tracker.<br>Certain World 2 gears will work in World 1, including all luck related gears, Repurposed Replicator, and High Powered Vacuum.</p>
+                <p class="itemDescription" id="pickaxe13Description" style="display: none;">Mines a randomly sized circle around the player.<br>Has an ability proc rate of 1/45.<br>Has 1.05x luck.</p>
+                <p class="itemDescription" id="pickaxe14Description" style="display: none;">Mines a diamond around the player.<br>Has an ability proc rate of 1/75.<br>Has 1.075x luck.</p>
+                <p class="itemDescription" id="pickaxe15Description" style="display: none;">Mines a star around the player.<br>Has an ability proc rate of 1/100.<br>Has 1.3x luck.</p>
+                <p class="itemDescription" id="pickaxe16Description" style="display: none;">Mines a cat around the player :3c.<br>Has an ability proc rate of 1/150.<br>Has 1x luck.</p>
+                <p class="itemDescription" id="pickaxe17Description" style="display: none;">Mines a crescent moon around the player.<br>Has an ability proc rate of 1/150<br>Has 1.5x luck.</p>
+                <p class="itemDescription" id="pickaxe18Description" style="display: none;">Mines a diamond around the player, but is able to keep activating itself.<br>Has an ability proc rate of 1/50.<br>Has 2x luck.</p>
+                <p class="itemDescription" id="pickaxe19Description" style="display: none;">Plays a game of tic tac toe around the player, mining X's and O's around you and fully excavating any winning lines.<br>Has an ability proc rate of 1/75.<br>Has 3x luck, but gains +0.02x luck for every winning line.</p>
+                <p class="itemDescription" id="pickaxe20Description" style="display: none;">Mines swirls around the player.<br>Has an ability proc rate of 1/75.<br>Has 1.25x luck.</p>
+                <p class="itemDescription" id="pickaxe21Description" style="display: none;">Mines 20 circles around the player, each having it's radius increased 2 blocks more than the last.<br>Has an ability proc rate of 1/150.<br>Has 3x luck.</p>
+                <p class="itemDescription" id="pickaxe22Description" style="display: none;">Creates 4 points and mines between the top left and bottom right points, and the top right and bottom left points.<br>Has an ability proc rate of 1/75, but takes 2 activations to begin mining. The further apart the points, the more it'll mine.<br>Has 4x luck.<br><i>Disclaimer: I thought it'd be funny to not reset the activation points on reset.</i></p>
                 <!--
                     Pickaxes above
                     Gears below
@@ -154,28 +195,31 @@
                 <p class="itemDescription" id="gear4Description" style="display: none;">For every block mined, gives you an additional layer block from the current layer.<br>Can duplicate layer blocks.</p>
                 <p class="itemDescription" id="gear5Description" style="display: none;">Increases ability luck by 1.6x. Stacks with Real Candilium.</p>
                 <p class="itemDescription" id="gear6Description" style="display: none;">Sets mining speed delay to 10ms from 25ms.<br>Takes priority over Real Vitriol.</p>
-                <p class="itemDescription" id="gear9Description" style="display: none;">When crafted, clicking on the Owned! button will set the current layer to the SILLY LAYER!!! :P<br>Moving up or down or teleporting will reset the layer back to its original layer.</p>
+                <p class="itemDescription" id="gear9Description" style="display: none;">When crafted, clicking on the SILLIFY! button will set the current layer to the SILLY LAYER!!! :P<br>Moving up or down or teleporting will reset the layer back to its original layer.</p>
+                <p class="itemDescription" id="gear10Description" style="display: none;">+0.25x Luck.<br>Stacks with all other luck additions.</p>
+                <p class="itemDescription" id="gear11Description" style="display: none;">-3ms Mining Speed.<br>Stacks with all other speed buffs.</p>
+                <p class="itemDescription" id="gear12Description" style="display: none;">+0.35x Luck.<br>Stacks with all other luck additions.</p>
+                <p class="itemDescription" id="gear13Description" style="display: none;">Has a 75% chance to duplicate any common ore, (1 - 750,000)</p>
+                <p class="itemDescription" id="gear14Description" style="display: none;">Enables cave spawns in World 2.<br>Currently, this will allow miners to obtain ores from World 1 that spawn in caves, this will be a thing until new cave types are made for World 2.</p>
+                <p class="itemDescription" id="gear15Description" style="display: none;">Has a 50% chance to give you 2 extra layer blocks upon mining a layer block.</p>
+                <p class="itemDescription" id="gear16Description" style="display: none;">-5ms Mining Speed.<br>Stacks with all other speed buffs.</p>
+                <p class="itemDescription" id="gear17Description" style="display: none;">Wait... what do you mean its the same as the first? Why is it called the 2nd if its the exact same thing???</p>
+                <p class="itemDescription" id="gear18Description" style="display: none;">+0.75x Luck.<br>Stacks with all other luck additions.</p>
+                <p class="itemDescription" id="gear19Description" style="display: none;">-7ms Mining Speed.<br>Stacks with all other speed buffs.</p>
+                <p class="itemDescription" id="gear20Description" style="display: none;">Multiplies all luck by 5% of your current pickaxes luck +1. (Cannot lower luck)</p>
             </div>
             
         </div>
         <div class="col-3">
-            <div id="musicStuff">
-                <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
-                <p>Music Volume</p>
-                <label class="slidecontainer">
-                    <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
-                </label>
-            </div>
+            
             <div>
                 <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
-                <button id="showIndex" class="inventoryButtons" onclick="showIndex()">Show Index</button>
             </div>
             <div id="inventoryDisplay">
                 <p id="inventory1"   style="display:block;"></p>
                 <p id="inventory2"   style="display:none;"></p>
                 <p id="inventory3"   style="display:none;"></p>
                 <p id="inventory4"   style="display:none;"></p>
-                <p id="indexDisplay" style="display:none;"></p>
             </div>
             <a href="https://discord.gg/aVXkHB7Y4w" id="discord" target="_blank">
                 <img src="discord-logo.png" alt="Discord">
@@ -185,35 +229,172 @@
     </div>
 </div>
 </div>
-<div id="dataExport">
-    <div>
-        <input type="text" id="dataText">
-        <button onclick="exportData()">Export Data</button>
-        <button onclick="importData(document.getElementById('dataText').value)">Import Data</button>
-        <button onclick="hideData(); verifiedOres.showLogs()">Back to Game</button>
+
+<div id="settingsContainer" style="display: none;">
+    <h1 class="settingsTitle">Settings</h1>
+            <button class="settingsCategorySelector" onclick="hideSettings(); verifiedOres.showLogs()">Return to Game</button>
+            <button class="settingsCategorySelector" onclick="openFrame('index')">Ore Index</button>
+            <button class="settingsCategorySelector" onclick="openFrame('audio')">Audio Settings</button>
+            <button class="settingsCategorySelector" onclick="openFrame('game')">Game Settings</button>
+            <button class="settingsCategorySelector" onclick="openFrame('inventory')">Inventory Settings</button>
+            <button class="settingsCategorySelector" onclick="openFrame('color')">Colour Settings</button>
+            <button class="settingsCategorySelector" onclick="openFrame('data')">Data Settings</button>
+    <div class="frame" id="audio-frame">
+      <h2>Audio Settings</h2>
+      <br>
+      <!--ADD TEST BUTTON-->
+      <div id="musicStuff">
+        <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
+        <p>Music Volume</p>
+        <label class="slidecontainer">
+            <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
+        </label>
+    </div>
+    <hr class="settingsSeparator">
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(0, this)" id="mute0">Mute Chills</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="100" value="75" onchange="changeSpawnVolume(this.value, 0)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(0)"></button>
+    </div>
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(1, this)"id="mute1">Mute Ringings</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="100" value="75" onchange="changeSpawnVolume(this.value, 1)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(1)"></button>
+    </div>
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(2, this)"id="mute2">Mute Blurs</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="100" value="75" onchange="changeSpawnVolume(this.value, 2)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(2)"></button>
+    </div>
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(3, this)"id="mute3">Mute Unfaths</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="100" value="75" onchange="changeSpawnVolume(this.value, 3)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(3)"></button>
+    </div>
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(4, this)"id="mute4">Mute Otherworldlies</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="100" value="75" onchange="changeSpawnVolume(this.value, 4)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(4)"></button>
+    </div>
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(5, this)"id="mute5">Mute Metaversals</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="100" value="75" onchange="changeSpawnVolume(this.value, 5)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(5)"></button>
+    </div>
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(6, this)"id="mute6">Mute Zeniths</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="100" value="75" onchange="changeSpawnVolume(this.value, 6)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(6)"></button>
+    </div>
+    <div class="spawnSoundSettings">
+        <button class="muteButton" onclick="changeCanPlay(7, this)"id="mute6">Mute Ethereals</button>
+        <label class="spawnSoundContainer">
+            <input type="range" min="0" max="25" value="10" onchange="changeSpawnVolume(this.value, 7)" class="spawnVolume">
+        </label>
+        <button class="testButton" onclick="testSound(7)"></button>
+    </div>
+    </div>
+    <div class="frame" id="inventory-frame">
+      <h2>Inventory Settings</h2>
+      <div class="inputAndButton">
+        <button class="invSettingButton fullyRounded" onclick="switchToIndex(this, 0)" id="invIndex">Travel to layer index on inventory click</button>
+      </div>
+      <div class="inputAndButton">
+        <button class="invSettingButton fullyRounded" onclick="switchToIndex(this, 1)" id="craftIndex">Travel to layer index on crafting click</button>
+      </div>
+      <h3></h3>
+    </div>
+
+    <div class="frame" id="game-frame">
+      <h2>Game Settings</h2>
+      <div class="inputAndButton">
+        <input autocomplete ="off" type="text" class="textInput roundedLeft" id="minSpeedInput" placeholder="Default: 0">
+        <button class="inputButton roundedRight" onclick="changeMinMiningSpeed(document.getElementById('minSpeedInput'))">Set Min Speed</button>
+      </div>
+      <div class="inputAndButton">
+        <input autocomplete ="off" type="text" class="textInput roundedLeft" id="mineCapacitySetter" placeholder="Default: 40000">
+        <button class="inputButton roundedRight" onclick="updateCapacity(document.getElementById('mineCapacitySetter'))">Update Capacity</button>
+      </div>
+      <div class="inputAndButton">
+        <button class="stopOnRareButton roundedLeft" onclick="changeStopOnRare(this)" id="stopOnRare">Stop On Rare</button>
+        <button class="stopOnRareSelector roundedRight" onclick="changeMinRarity(this)" id="stopOnRareDisplay">Chill+</button>
+      </div>
+      <div class="inputAndButton">
+        <button class="toggleDisplay fullyRounded" onclick="changeCanDisplay(this)" id="blockUpdates">Toggle Block Updates</button>
+      </div>
+      <div class="inputAndButton">
+        <button class="toggleDisplay fullyRounded" style="background-color: red;" onclick="changeUseNumbers(this)" id="useNumbers">Use Numbers for Pickaxe Names</button>
+      </div>
+      <div class="inputAndButton">
+        <button class="toggleDisplay fullyRounded" onclick="togglePathBlocks();" id="pathBlocks">Invisible Path Blocks</button>
+      </div>
+    </div>
+
+    <div class="frame" id="color-frame">
+      <h2>Colour Settings</h2>
+      <div class="inputAndButton">
+        <input autocomplete ="off" type="text" class="textInput roundedLeft" id="colorInput" placeholder="#1a1a1a">
+        <button class="inputButton roundedRight" onclick="changeBackgroundColor()">Change Background</button>
+      </div>
+      <div class="inputAndButton">
+        <input autocomplete ="off" type="text" class="displayValueInput roundedLeft" placeholder="Latest Finds" id="latestColor">
+        <button class="displayColorButton roundedRight"onclick="changeLatestColors(2)">Background</button>
+        <button class="displayColorButton" onclick="changeLatestColors(1)">Border</button>
+        <button class="displayColorButton" onclick="changeLatestColors(0)">Text Colour</button>
+      </div>
+      <div class="inputAndButton">
+        <input autocomplete ="off" type="text" class="displayValueInput roundedLeft" placeholder="Inventory" id="inventoryColors">
+        <button class="displayColorButton roundedRight twoButtons" onclick="changeInventoryColors(1)">Background</button>
+        <button class="displayColorButton twoButtons" onclick="changeInventoryColors(0)">Border</button>
+      </div>
+      <div class="inputAndButton">
+        <input autocomplete ="off" type="text" class="displayValueInput roundedLeft" placeholder="Crafting" id="craftingColors">
+        <button class="displayColorButton roundedRight twoButtons" onclick="changeCraftingColors(1)">Background</button>
+        <button class="displayColorButton twoButtons" onclick="changeCraftingColors(0)">Border</button>
+      </div>
+    </div>
+
+    <div class="frame" id="data-frame">
+    <h2>Data Settings</h2>
+    <br>
+    <div class="dataDiv">
+    <input type="text" id="dataText">
+    <button class="dataButton" onclick="exportData()">Export Data</button>
+    <button class="dataButton" onclick="importData(document.getElementById('dataText').value)">Import Data</button>
+    
+      
         <br>
-        <br>
-        <button onclick="changeCanPlay(0, this)"id="mute0">Mute Chills</button>
-        <button onclick="changeCanPlay(1, this)"id="mute1">Mute Ringings</button>
-        <button onclick="changeCanPlay(2, this)"id="mute2">Mute Blurs</button>
-        <button onclick="changeCanPlay(3, this)"id="mute3">Mute Unfaths</button>
-        <button onclick="changeCanPlay(4, this)"id="mute4">Mute Otherworldlies</button>
-        <button onclick="changeCanPlay(5, this)"id="mute5">Mute Metaversals</button>
-        <button onclick="changeCanPlay(6, this)"id="mute6">Mute Zeniths</button>
-        <br>
-        <br>
-        <div id="masterVolume">
-            <p>Spawn Volumes</p>
-            <label class="slidecontainer" style="max-width: 10vw;">
-                <input type="range" min="0" max="100" value="100" onchange="changeAllVolume(this.value)" id="spawnVolume">
-            </label>
-        </div>
-        <br>
-        <input autocomplete = "off" type="text" id="mineCapacitySetter">
-        <button onclick="updateCapacity(document.getElementById('mineCapacitySetter').value)">Update Capacity</button>
-        <br>
-        <button onclick="verifiedOres.showLogs()">Generate Ore Logs</button>
+        <button onclick="verifiedOres.showLogs()" class="dataButton">Generate Ore Logs</button>
         <div id="logHolder"></div>
     </div>
-</div>
+    </div>
+    <div class="frame" id="index-frame">
+        
+        <div id="indexDisplay">
+            <h2>Ore Index</h2>
+            <hr>
+            <p id="indexSwitchButton">Layer Placeholder</p>
+            <button class="indexDirectionButton" onclick="switchLayerIndex(-1)"><</button>
+            <button class="indexDirectionButton" onclick="switchLayerIndex(1)">></button>
+        </div>
+        
+        <div id="oreCardHolder">
+            
+        </div>
+    </div>
+  </div>
 </body>

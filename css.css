@@ -1,3 +1,10 @@
+
+/*Copyright (C) Amber Blessing - All Rights Reserved
+ 
+Unauthorized copying of this file, via any medium is strictly prohibited
+Proprietary and confidential
+Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
+*/
 @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
 .emoji {
@@ -17,6 +24,7 @@
   border-left: none;
   border-right: none;
   margin-top: 0.35em;
+  background-color: #1a1a1a;
 }
 
 #inventoryDisplay > * {
@@ -30,7 +38,8 @@
 }
 
 .movementButton {
-  width: 6vw;
+  width: 7vw!important;
+  font-size: 1vw!important;
 }
 
 .craftingAmountsDisplay {
@@ -52,6 +61,7 @@
   font-size: 0.75vw;
   min-height: 4em;
   max-height: 16em;
+  background-color: #1a1a1a;
 }
 .itemDescription {
   font-size:1vw;
@@ -60,14 +70,17 @@
   display:flex;
   flex-flow:column;
   align-items:center;
-  gap:3px;
+  gap:1vh;
 }
 
 #pickaxeCrafts {
   display:flex;
   flex-flow:column;
   align-items:center;
-  gap:3px;
+  gap:1vh;
+}
+.craftingButton {
+  width: 55%;
 }
 #pressPlay {
   font-family: 'Arial', sans-serif;
@@ -101,10 +114,12 @@
   width: 100%;
   position: absolute;
   display: none;
+  overflow-y: scroll!important;
 }
 
 #dataText {
-  width: 50vw;
+  width: 25vw;
+  height: 100%;
 }
 
 body {
@@ -112,8 +127,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  overflow: hidden;
   justify-content: flex-end;
+  overflow-x: hidden;
 }
 img.roundcat {
   position: absolute;
@@ -129,7 +144,7 @@ img.roundcat {
   color: #fff;
   width: 80vw;
   line-height: 2.5;
-  font-size: 1vw;
+  font-size: 1.2vw;
 }
 .play-button {
   position: absolute;
@@ -174,17 +189,23 @@ img.roundcat {
 
 #blockDisplay {
   padding: 0.5em;
+  width: 100%;
   margin: 0;
   line-height: 1.8vw;
-  font-size: 1.7vw;
+  font-size: 1.55vw;
   user-select: none;
   text-wrap: nowrap;
   text-align: center;
   letter-spacing: -0.2em;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #fff;
 }
 
 #spawnMessage {
   font-size: 1vw;
+  width: 100%;
+  font-weight: 400;
 }
 
 p {
@@ -235,7 +256,7 @@ button, .col-3 > div > button {
 }
 
 .slidecontainer > input {
-  width: 100%;
+  width: 10%;
 }
 
 .col-7 {
@@ -249,11 +270,17 @@ button, .col-3 > div > button {
   width: 25%;
   height: 100vh;
   max-height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-style: solid;
   border-color: rgb(49, 49, 49);
   border-top: 0;
   border-bottom: 0;
+}
+/*
+
+*/
+::-webkit-scrollbar {
+  width: 0;
 }
 
 .col-3 {
@@ -344,4 +371,285 @@ button, .col-3 > div > button {
   font-size: 10vw;
   text-align: center;
   text-wrap: wrap;
+}
+
+#settingsContainer {
+  width: 100%;
+  max-width: 100%;
+  margin: 0.5vh auto;
+  background-color: #1a1a1a!important;
+  padding: 1vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: #1a1a1a;
+  border-style: solid;
+}
+.settingsTitle {
+  text-align: center;
+  color: #fff;
+}
+.settingsCategorySelector {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  width: 20em;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 2vh;
+  height: 4em;
+}
+.settingsCategorySelector:hover {
+  background-color: #2e2e2e;
+}
+.frame {
+  display: none;
+  margin-top: 2%;
+  margin-left: 1%;
+  width: 100%;
+
+}
+
+.frame h2 {
+  color: #fff;
+} 
+
+.spawnSoundSettings {
+  vertical-align: middle;
+  width: 50%;
+  height: 5vh;
+  padding-bottom: 1%;
+}
+.spawnSoundContainer {
+  float: left;
+  width: 25%;
+  height:100%;
+}
+.muteButton {
+  height:100%;
+  float: left;
+  width: 30%;
+  background-color: #333;
+  color: #fff;
+  border: none;
+}
+.muteButton:hover {
+  background-color: #2e2e2e;
+}
+.spawnVolume {
+  margin-left: 2%;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  background: #d3d3d3;
+  outline:#333;
+  border-style: solid;
+  border-color: #333;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.spawnVolume:hover {
+  opacity: 1; 
+}
+
+
+.spawnVolume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15%;
+  height: 100%;
+  background: #333;
+  cursor: pointer;
+}
+
+.spawnVolume::-moz-range-thumb {
+  width: 15%; 
+  height: 100%; 
+  background: #04AA6D; 
+  cursor: pointer;
+}
+.testButton {
+  float: left;
+  height: 100%;
+  margin-left: 1%;
+  width: 2%;
+  background-color: red;
+  border: none;
+}
+.settingsSeparator {
+  width:50%;
+  height: 3px!important;
+  color:white;
+}
+.textInput {
+  width: 50%;
+  border-style: solid;
+  border-color: black;
+  font-size: 1vw;
+  font-weight: 1000;
+}
+
+.inputAndButton {
+  vertical-align: middle;
+  border-style: solid;
+  border-color: white;
+  height: 3%;
+  margin: 10px;
+  width: 25%;
+  background-color: white;
+  border-radius: 20px;
+  border-width:1px;
+}
+.inputButton {
+  width: 50%;
+  background-color: #333;
+  border-style: solid;
+}
+.stopOnRareButton {
+  width: 50%;
+  border-style: solid;
+  background-color: red;
+}
+.stopOnRareSelector {
+  width:50%;
+  background-color: #333;
+  padding: 1px;
+}
+.toggleDisplay {
+  width: 100%;
+  background-color: #333;
+  background-color: green;
+}
+.inputButton:hover {
+  background-color: #2e2e2e;
+}
+.invSettingButton {
+  width: 100%;
+  background-color: green;
+  border-radius: 20px;
+}
+.displayColorButton {
+  float:right;
+  height: 100%;
+  width: 25%;
+  background-color: #333;
+  font-size: 0.75vw;
+}
+.displayValueInput {
+  width: 25%;
+  text-align: center;
+  font-size: 0.75vw;
+  font-weight: 1000;
+}
+.roundedRight {
+  float: right;
+  border-radius: 20px;
+  border-top-left-radius:0px;
+  border-bottom-left-radius:0px;
+  border-style: solid;
+  height:100%;
+  text-align: center;
+  padding: 1px;
+}
+.roundedLeft {
+  float:left;
+  border-radius: 20px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-style: solid;
+  height:100%;
+  text-align: center;
+  padding: 1px;
+}
+.fullyRounded {
+  height: 100%;
+  border-radius: 20px;
+  border-style: solid;
+  padding: 1px;
+}
+.twoButtons {
+  width: 37.5%!important;
+}
+.dataButton {
+  width: 10%;
+  background-color: #333;
+}
+.dataDiv {
+  height: 3%;
+  vertical-align: middle;
+}
+#indexSwitchButton {
+  width: 10em;
+  height: 2em;
+  border-radius: 0px;
+  background-color: #3d3c3c;
+  border-style: solid;
+  border-width: 2px;
+  float: left;
+  text-align: center;
+  margin-left: 0.45%;
+  font-size: 100%;
+}
+.indexDirectionButton {
+  width: 4em;
+  height: 2em;
+  border-radius: 0px;
+  border-width: 2px;
+  float: left;
+  font-size: 100%;
+  background-color: #333;
+}
+.indexDirectionButton:hover {
+  background-color: #2e2e2e;
+}
+
+#oreCardHolder {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.oreCard {
+  display: inline-block;
+  text-align: center;
+  border-style: solid;
+  border-radius: 15px;
+  width: 19%;
+  height: 20%;
+  margin: 5px;
+}
+
+#pathBlocks {
+  background-color: red;
+}
+@keyframes flashGreen {
+  0% {background-color:white;}
+  50% {background-color:lightgreen;}
+  100% {background-color:white;}
+}
+@keyframes flashRed {
+  0% {background-color:white;}
+  50% {background-color:red;}
+  100% {background-color:white;}
+}
+@keyframes inventoryFlash {
+  0% {background-color:#1a1a1a;}
+  50% {background-color:lightgreen;}
+  100% {background-color:#1a1a1a;}
+
+  50% {background-color:lightgreen;}
+  100% {background-color:white;}
+}
+@keyframes flashRed {
+  0% {background-color:white;}
+  50% {background-color:red;}
+  100% {background-color:white;}
+}
+@keyframes inventoryFlash {
+  0% {background-color:#1a1a1a;}
+  50% {background-color:lightgreen;}
+  100% {background-color:#1a1a1a;}
 }
