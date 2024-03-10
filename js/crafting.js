@@ -266,6 +266,7 @@ function displayRecipe(item, button) {
         element.classList.remove("darkButton");
     button.classList.add("darkButton");
     
+    const allItemNames = {...pickaxeNames, ...gearNamesNormalized};
     currentRecipe = item;
     const type = `${pickOrGear(item)}s`;
     let itemDescription = document.getElementById("itemDescription");
@@ -285,7 +286,7 @@ function displayRecipe(item, button) {
     //actually I can probably add a separate "abilities" thing soon
     let recipeTitle = document.createElement("p");
     recipeTitle.id = "recipeTitle";
-    recipeTitle.innerHTML = `${pickaxeNames[item]}:`;
+    recipeTitle.innerHTML = `${allItemNames[item]}:`;
     if (type === "pickaxes")
         recipeTitle.title = pickaxeSillyDescriptions[item];
     recipes.insertBefore(recipeTitle, recipes.children[0]);
