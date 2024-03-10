@@ -29,16 +29,13 @@ function debugGiveAllOres(type) {
 function snakeToCamel(str, startUpper) {
     const snake = str.toLowerCase();
     let camel = "";
-    let detect = startUpper ?? false;
-    for (let i = 0; i < snake.length; i++) {
-        let letter = snake.substring(i,i+1);
-        if (letter === "-" || letter === "_") detect = true;
-        else if (detect)
-            if (letter !== "-" && letter !== "_") {
-                detect = false;
-                camel += letter.toUpperCase();
-            }
-        else camel += letter.toLowerCase();
+    let shouldCapitalize = startUpper ?? false;
+    for (const char of snake) {
+        if (["-","_"].includes(char)) shouldCapitalize = true;
+        else {
+            camel += shouldCapitalize ? char.toUpperCase() : char.toLowerCase();
+            shouldCapitalize = false;
+        }
     }
     return camel;
 }
