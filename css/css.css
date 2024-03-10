@@ -41,14 +41,14 @@ body {
   overflow: clip;
 }*/
 
-.row {
+#mainContent {
   display: flex;
   height: 100%;
   & * {
     text-align: center;
   }
-  & > div {
-    overflow-y: scroll;
+  & > .col {
+    overflow: hidden scroll;
   }
 }
 
