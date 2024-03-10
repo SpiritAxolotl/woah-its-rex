@@ -44,7 +44,7 @@ body {
 #mainContent {
   display: flex;
   height: 100%;
-  & * {
+  & > * {
     text-align: center;
   }
   & > .col {
