@@ -153,3 +153,9 @@ function sortAlongsideArray(arr, arr2) {
     }
     return [sorted, sorted2];
 }
+
+function pickOrGear(name) {
+    if (Object.keys(pickaxes).includes(name)) return "pickaxe";
+    else if (Object.keys(gears).includes(name)) return "gear";
+    else return "unknown";
+}

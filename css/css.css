@@ -146,7 +146,7 @@ body {
   text-align: center;
 }
 
-#displayedRecipe {
+#recipeTitle {
   margin-bottom: 0;
 }
 
@@ -211,15 +211,15 @@ body {
   margin-bottom: 1em;
 }
 
-.craftingAmountsDisplay {
+/*.craftingAmountsDisplay {
   margin-bottom: 0.5em;
-}
+}*/
 
 .actualCraftButton {
   margin-top: 0.5em;
 }
 
-#displayRecipe > div > p {
+.recipeIngredient {
   margin: 0.2em auto;
 }
 
