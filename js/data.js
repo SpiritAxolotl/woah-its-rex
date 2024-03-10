@@ -149,7 +149,7 @@ function repeatDataSave() {
     if (isPlaying && autoSave && (!debug || debugActuallyPlaying))
         dataTimer ??= setInterval(saveAllData, 5000);
     else
-        dataTimer = null;
+        dataTimer = null; //clearInterval(dataTimer) instead??
 }
 
 let repeatDataSaveTimer = setInterval(repeatDataSave, 5000);
@@ -239,6 +239,7 @@ function exportDataAsFile(textToWrite, fileNameToSaveAs, fileType) {
 function showData() {
     settingsShown = true;
     canMine = false;
+    clearInterval(totalTimePlayedTimer);
     visible(document.getElementById("pausedGameContainer"));
     // invisible(document.getElementById("mainContent"));
 }
@@ -246,6 +247,7 @@ function showData() {
 function hideData() {
     settingsShown = false;
     canMine = true;
+    totalTimePlayedTimer = setInterval(incrementTimePlayed, 1000);
     invisible(document.getElementById("pausedGameContainer"));
     //visible(document.getElementById("mainContent"));
 }

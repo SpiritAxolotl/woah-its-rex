@@ -27,6 +27,7 @@ let turnOffAbilities = false;
 let debugVerbose = debug;
 let stopOnRare = false;
 let totalTimePlayed = 0;
+let totalTimePlayedTimer = null;
 let settingsShown = false;
 
 
@@ -106,7 +107,7 @@ let chill,
     keepRunningAudio;
 function loadContent() {
     isPlaying = true;
-    setInterval(incrementTimePlayed, 5000);
+    totalTimePlayedTimer = setInterval(incrementTimePlayed, 1000);
     let allAudios = [];
     keepRunningAudio = new Audio("sounds/ambience2.mp3")
     keepRunningAudio.load();
