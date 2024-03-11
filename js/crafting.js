@@ -267,10 +267,11 @@ function displayRecipe(item, button) {
     button.classList.add("darkButton");
     
     const allItemNames = {...pickaxeNames, ...gearNamesNormalized};
+    const allItemDescriptions = {...pickaxeDescriptions, ...gearDescriptions};
     currentRecipe = item;
     const type = `${pickOrGear(item)}s`;
     let itemDescription = document.getElementById("itemDescription");
-    itemDescription.innerHTML = pickaxeDescriptions[item] ?? gearDescriptions[item];
+    itemDescription.innerHTML = allItemDescriptions[item];
     let recipes = document.getElementById("displayRecipe");
     recipes.innerHTML = "";
     for (const i in recipeElements[type])
@@ -293,6 +294,7 @@ function displayRecipe(item, button) {
     
     const allRecipes = {...pickaxeRecipes, ...gearRecipes};
     document.querySelector("#displayRecipe > div").removeChild(craftButton);
+    document.querySelector("#displayRecipe > div").innerHTML = "";
     for (const ingredient in allRecipes[item]) {
         const totalIngredients = calcTotalIngredients(ingredient);
         let ingredientDisplay = document.createElement("p");
