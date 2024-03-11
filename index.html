@@ -60,9 +60,9 @@
             <button id="settings" class="whiteButton" onclick="showData()">Settings</button>
             <button id ="disableDisplay" class="whiteButton" onclick="changeCanDisplay()">Disable Display</button>
         </div>
-        <p id="spawnMessage" style="padding-top: 1rem;">Spawn Messages Appear Here!</p>
+        <p id="spawnMessage">Spawn Messages Appear Here!</p>
         <div id="craftingClick">
-            <div class="headerButtons" style="border-top: solid var(--border);">
+            <div class="headerButtons">
                 <button onclick="showPickaxes()" class="whiteButton" id="showPickaxes" class="darkButton">Pickaxes</button>
                 <button onclick="showGears()" class="whiteButton" id="showGears">Gears</button>
             </div>
@@ -119,7 +119,7 @@
         <p id="blockDisplay" class="emoji"></p>
         <div id="generalStats">
             <p id="location">X: 0<br>Y: 0</p>
-            <div>
+            <div id="mineStats">
                 <p id="mineResetProgress">Reset Progress:<br>0.00%</p>
                 <p id="resetsThisSession">(Reset #0)</p>
                 <p id="blocksMined">0 Blocks Mined</p>

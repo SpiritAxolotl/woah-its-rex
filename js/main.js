@@ -317,8 +317,8 @@ function displayArea() {
     if (canDisplay) {
         let output = "";
         const constraints = getParams(12, 9);
-        for (let y = curY - constraints["up"]; y <= curY + 9 + (9-constraints["up"]); y++) {
-            for (let x = curX - constraints["left"]; x <= curX + 12 + (12-constraints["left"]); x++) {
+        for (let y = curY - constraints["up"]; y <= curY + 18 - constraints["up"]; y++) {
+            for (let x = curX - constraints["left"]; x <= curX + 24 - constraints["left"]; x++) {
                 /*if (mine[r][c] === "⬜") {
                     output += "<span style='opacity:0;'>" + mine[r][c] + "</span>"
                 } else {
@@ -326,7 +326,7 @@ function displayArea() {
                 }*/
                 output += mine[y][x];
             }
-            output += "<br>";
+            if (y < curY + 18 - constraints["up"]) output += "<br>";
         }
         document.getElementById("blockDisplay").innerHTML = output;
     }
@@ -561,11 +561,11 @@ function spawnMessage(ore, variant, location, caveInfo) {
         const spawnMessage = document.getElementById("spawnMessage");
         spawnMessage.innerHTML = `<span class="emoji">${variantEmojis[variant]}${ore}</span> Has Spawned!<br>`;
         if (typeof caveInfo === "object" && caveInfo["rarity"])
-            spawnMessage += `1/${caveInfo["rarity"].toLocaleString()}`;
+            spawnMessage += `1/${caveInfo["rarity"]}`;
         else
             spawnMessage.innerHTML += `1/${Math.round(oreList[ore]["prob"]*variantMultis[variant]).toLocaleString()}`;
         
-        spawnMessage.innerHTML += `<br>X: ${(location["x"] - 1000000000).toLocaleString()}<br>Y: ${(-location["y"]).toLocaleString()}`;
+        spawnMessage.innerHTML += `<br>X: ${(location["x"] - 1000000000)}<br>Y: ${(-location["y"])}`;
         clearTimeout(spawnOre);
         spawnOre = setTimeout(() => {
             spawnMessage.innerHTML = "Spawn Messages Appear Here!";

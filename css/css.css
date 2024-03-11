@@ -33,13 +33,50 @@ body {
   padding: 0;
 }
 
-*::-webkit-scrollbar {
+/**::-webkit-scrollbar {
   width: 0;
-}
+}*/
 
 /** {
   overflow: clip;
 }*/
+
+@supports (scrollbar-color: auto) {
+  * {
+    scrollbar-color: var(--bgprimary) var(--bgsecondary);
+  }
+}
+
+@supports selector(::-webkit-scrollbar) {
+  *::-webkit-scrollbar {
+    background: var(--bgprimary);
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--bgsecondary);
+  }
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  font-size: 0.9em;
+  user-select: none;
+  background-color: var(--bgprimary);
+  border: none;
+  padding: 5px;
+  border-style: solid;
+  border-color: var(--border);
+  border-width: 0.05em;
+  border-radius: 0.25em;
+  color: var(--text);
+  /* font-family: "Lexend", sans-serif; */
+  text-align: center;
+  min-width: 5em;
+  text-wrap: nowrap;
+}
 
 #mainContent {
   display: flex;
@@ -48,7 +85,7 @@ body {
     text-align: center;
   }
   & > .col {
-    overflow: hidden scroll;
+    overflow: hidden auto;
   }
 }
 
@@ -82,7 +119,7 @@ body {
 }
 
 #inventoryDisplay {
-  overflow-y: scroll;
+  overflow: hidden auto;
   /* justify-self: stretch; */
   border-style: solid;
   border-color: var(--border);
@@ -122,22 +159,19 @@ body {
 #teleportContainer {
   display: flex;
   flex-direction: column;
-}
-
-#teleportContainer button {
-  padding: 0;
+  & button {
+    padding: 0;
+  }
 }
 
 #switchDistanceContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: max-content;
-}
-
-#switchDistanceContainer > button {
-  border-bottom: none;
-  max-width: 10%;
+  & > button {
+    border-bottom: none;
+    min-width: 3em;
+  }
 }
 
 #inventoryDisplay > * {
@@ -150,14 +184,6 @@ body {
   margin-bottom: 0;
 }
 
-#generalStats {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  /* gap: 3em; */
-  text-align: left;
-}
-
 .fas {
   pointer-events: none;
 }
@@ -168,8 +194,7 @@ body {
 
 .oreDisplay .emoji {
   font-size: 2em;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto 0;
   display: block;
 }
 
@@ -192,7 +217,7 @@ body {
   flex-grow: 1;
   margin: 0.3em;
   text-align: left;
-  gap: 1em;
+  gap: 0.4em;
   background: var(--bgsecondary);
   height: min-content;
   max-height: 100px;
@@ -210,10 +235,6 @@ body {
 .layerDisplay {
   margin-bottom: 1em;
 }
-
-/*.craftingAmountsDisplay {
-  margin-bottom: 0.5em;
-}*/
 
 .actualCraftButton {
   margin-top: 0.5em;
@@ -251,21 +272,33 @@ body {
   margin: 0.1em;
 }
 
-/*.hidden{display: none !important;}*/
-
 .inventoryButtons {
   width: 100%;
 }
 
-#mineResetProgress {
-  /* font-size: 1vw; */
-  /* margin-top: 0.75em; */
-  margin-bottom: 0.5em;
-  /* text-align: left; */
+#generalStats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto 0;
+  /* gap: 3em; */
+  text-align: left;
+  & > * {
+    width: 16rem;
+  }
 }
 
-#resetsThisSession {
-  margin-top: 0.5em;
+#mineStats {
+  text-align: center;
+  & > p {
+    margin: 0.5em 0;
+  }
+}
+
+#location {
+  font-size: 3em;
+  text-align: left;
+  margin: 0;
 }
 
 #pausedGameContainer {
@@ -309,24 +342,13 @@ body {
   user-select: none;
   text-wrap: nowrap;
   text-align: center;
+  margin: auto 0;
 }
 
 .disabledDisplay {
   letter-spacing: 0 !important;
   font-family: "Arial";
 }
-
-/*.latestDisplay {
-  text-align: left;
-  border: 0.15em solid #959595;
-  border-radius: 0.2em;
-  padding: 0 0.25em;
-  float: left;
-  width: 50%;
-  font-size: 0.75em;
-  //min-height: 15em;
-  max-height: 15em;//
-}*/
 
 #latestDisplay {
   display: flex;
@@ -335,19 +357,12 @@ body {
   font-size: 0.75em;
   border-top: 0.15em solid var(--border);
   margin: 0;
-  & > p {
-    margin: 0;
-  }
+  padding: 1em;
 }
 
 #spawnMessage {
   font-size: 2em;
-}
-
-#location {
-  font-size: 3em;
-  text-align: left;
-  margin: 0;
+  padding: 1rem;
 }
 
 p, label, input[type=file] {
@@ -369,24 +384,6 @@ p, label, input[type=file] {
 
 #craftingClick > div:first-of-type {
   margin-bottom: 0.25rem;
-}
-
-button {
-  cursor: pointer;
-  font-size: 0.9em;
-  user-select: none;
-  background-color: var(--bgprimary);
-  border: none;
-  padding: 5px;
-  border-style: solid;
-  border-color: var(--border);
-  border-width: 0.05em;
-  border-radius: 0.25em;
-  color: var(--text);
-  /* font-family: "Lexend", sans-serif; */
-  text-align: center;
-  min-width: 5em;
-  text-wrap: nowrap;
 }
 
 .darkButton {
@@ -434,6 +431,7 @@ button {
   gap: 0;
   margin: 0;
   width: 100%;
+  border-top: solid var(--border);
 }
 
 .headerButtons > * {
@@ -490,9 +488,6 @@ button {
   border-style: none solid;
   border-color: var(--border);
   background-color: var(--bgprimary);
-  & > * {
-    flex-grow: 1;
-  }
 }
 
 #col-3 {
@@ -545,35 +540,6 @@ button {
 .oreNotFound {
   color: var(--error);
 }
-
-/*#latestDisplays {
-  height: auto;
-  border-style: solid;
-  border-color: #959595;
-  border-radius: 0.2em;
-}*/
-
-/*
-.col-5 {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  position: absolute;
-}
-
-.col-3 > br {
-  display: none;
-}
-
-.col-3 > p:first-of-type {
-  margin-bottom: 0.5rem;
-}
-
-.container-fluid {
-  display: flex;
-}
-*/
 
 #pressPlay {
   position: absolute;
@@ -656,8 +622,7 @@ code {
 
 /* settings */
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: auto 0;
 }
 
 .revampedSettings {
