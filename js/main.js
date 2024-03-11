@@ -505,7 +505,7 @@ function spawnMessage(ore, variant, location, caveInfo) {
     mineBlockData[location["y"]][location["x"]]["id"] = id;
     mineBlockData[location["y"]][location["x"]]["variant"] = variant;
     const fromCave = typeof caveInfo === "object" && caveInfo["fromCave"];
-    if (Object.values(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000)
+    if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000)
         if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
             latestSpawns.unshift({
                 ore: ore,
