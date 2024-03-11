@@ -3,12 +3,34 @@ scrape-amber:
   rules:
     - if: $AMBER_SCRAPE == "true" || $CI_COMMIT_MESSAGE =~ /.*debug.*/i
   script:
+    - mkdir .old
+    - mv * .old
     - git config user.name "Not Amber"
     - git config user.email notambuwu@website.null
     - git remote add gitlab_origin https://oauth2:$AMBER_ACCESS_API@gitlab.com/SpiritAxolotl/woah-its-rex.git
     - wget -r https://ambercatgirl.github.io/woah-its-rex/
-    - mv ambercatgirl.github.io/woah-its-rex/* .
+    - cwd=$(pwd)
+    - valid=()
+    - cd "${cwd}/ambercatgirl.github.io/woah-its-rex/"
+    - for file in *; do
+        if [ -f "${cwd}/.old/$(basename $file)" ]; then
+          valid=("${valid[@]}" $file)
+          echo "$file"
+        fi
+      done
+    - cd "${cwd}/.old"
+    - for file in *; do
+        if [[ ! " ${valid[*]} " =~ [[:space:]]$file[[:space:]] ]]; then
+          wget "https://ambercatgirl.github.io/woah-its-rex/$(basename "$file")" || rm -v "$file"
+        else
+          mv "${cwd}/ambercatgirl.github.io/woah-its-rex/$(basename "$file")" "$cwd/.old"
+        fi
+      done
+    - cd "$cwd"
+    - mv ambercatgirl.github.io/woah-its-rex/* .old/
+    - mv .old/ .
     - rm -rf ambercatgirl.github.io
+    - rm -rf .old
     - git add .
     - git commit -m "Daily amber WIR scrape"
     - git push gitlab_origin HEAD:amber -o ci.skip
