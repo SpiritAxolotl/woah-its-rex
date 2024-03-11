@@ -1,37 +1,56 @@
+stages:
+  - add-new-tracked
+  - scrape
+  - commit
+
 scrape-amber:
-  stage: build
+  stage: scrape
   rules:
-    - if: $AMBER_SCRAPE == "true" || $CI_COMMIT_MESSAGE =~ /.*debug.*/i
+    - if: $AMBER_SCRAPE == "true"
   script:
+    - cwd=$(pwd)
     - mkdir .old
     - mv * .old
-    - git config user.name "Not Amber"
-    - git config user.email notambuwu@website.null
-    - git remote add gitlab_origin https://oauth2:$AMBER_ACCESS_API@gitlab.com/SpiritAxolotl/woah-its-rex.git
-    - wget -r https://ambercatgirl.github.io/woah-its-rex/
-    - cwd=$(pwd)
     - valid=()
+    - wget -r https://ambercatgirl.github.io/woah-its-rex/
     - cd "${cwd}/ambercatgirl.github.io/woah-its-rex/"
-    - for file in *; do
+    - >
+      for file in *; do
         if [ -f "${cwd}/.old/$(basename $file)" ]; then
           valid=("${valid[@]}" $file)
-          echo "$file"
         fi
       done
     - cd "${cwd}/.old"
-    - for file in *; do
+    - >
+      for file in *; do
         if [[ ! " ${valid[*]} " =~ [[:space:]]$file[[:space:]] ]]; then
-          wget "https://ambercatgirl.github.io/woah-its-rex/$(basename "$file")" || rm -v "$file"
+          rm -v "$file" && wget "https://ambercatgirl.github.io/woah-its-rex/$(basename "$file")" || echo "${file} not found."
         else
           mv "${cwd}/ambercatgirl.github.io/woah-its-rex/$(basename "$file")" "$cwd/.old"
         fi
       done
     - cd "$cwd"
-    - mv ambercatgirl.github.io/woah-its-rex/* .old/
-    - mv .old/ .
+    - mv ambercatgirl.github.io/woah-its-rex/* .old/ || echo "No files in directory"
+    - mv .old/ .new/ || echo "No files in directory"
     - rm -rf ambercatgirl.github.io
     - rm -rf .old
+  artifacts:
+    paths:
+      - .new
+
+commit-amber:
+  stage: commit
+  rules:
+    - if: $AMBER_SCRAPE == "true"
+  script:
+    - git config user.name "Not Amber"
+    - git config user.email notambuwu@website.null
+    - git remote add gitlab_origin https://oauth2:$AMBER_ACCESS_API@gitlab.com/SpiritAxolotl/woah-its-rex.git
+    - mv .new/* .
+    - rm -rf .new/
     - git add .
     - git commit -m "Daily amber WIR scrape"
     - git push gitlab_origin HEAD:amber -o ci.skip
+  dependencies:
+    - scrape-amber
   allow_failure: true
