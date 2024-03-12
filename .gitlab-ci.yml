@@ -1,5 +1,4 @@
 stages:
-  - add-new-tracked
   - scrape
   - commit
 
