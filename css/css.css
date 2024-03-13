@@ -168,7 +168,7 @@ input[type="color"]::after {
     font-size: 1.2em;
     padding: 0;
     margin: 0;
-    border-radius: 0em;
+    border-radius: 0;
     border: none;
     background-color: var(--bgsecondary);
     transition: background-color 0.2s, color 0.2s, border 0.5s;
@@ -353,7 +353,7 @@ input[type="color"]::after {
   line-height: 1.14em;
   white-space: nowrap;
   letter-spacing: -0.1em;
-  font-size: 1.3vw;
+  font-size: 1.5vw;
   user-select: none;
   text-wrap: nowrap;
   text-align: center;
@@ -454,7 +454,7 @@ input[type="color"]::after {
 }
 
 .headerButtons > button {
-  border-radius: 0em;
+  border-radius: 0;
 }
 
 .redButton:hover {
@@ -567,7 +567,7 @@ input[type="color"]::after {
 #subtextTitle {
   font-size: 2em;
   margin: 0;
-  color: #cccccc;
+  color: #ccc;
 }
 
 #masterVolume {
