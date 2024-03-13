@@ -123,8 +123,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
   - [x] variants
 - [ ] Move this TODO list to the github projects thing
 - [ ] Get un-dmca'd on github
-  - march 9th babyyyyyy
-  - uhhhh
+  - march 13th babyyyyyy
 - [x] Set up gitlab mirror in the meantime (hi!)
 - [x] More debugging features
   - `debugIsActuallyPlaying`
