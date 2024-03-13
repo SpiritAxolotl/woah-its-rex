@@ -1,3 +1,4 @@
+const corruptionAlert = "Your save data wasn't read properly. Contact @spaxolotl in the Discord to report a potential bug!";
 function saveAllData(fileQuestionMark) {
     //localStorage.setItem("game2DataChanges", true);
     let dataStorage = {
@@ -138,7 +139,7 @@ function loadAllData() {
     } catch (error) {
         console.error(error);
         localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}`));
-        window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
+        window.alert(corruptionAlert);
         return false;
     }
 }
@@ -202,7 +203,7 @@ function importData() {
             } catch (error) {
                 console.error(error);
                 localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}`));
-                window.alert("DATA CORRUPTION DETECTED, CONTACT A MODERATOR IN THE DISCORD");
+                window.alert(corruptionAlert);
             }
         },
         false,
@@ -213,7 +214,7 @@ function importData() {
             location.reload();
         }
     } else {
-        if (confirm("Are you sure you want to do this? Any mistakes in imported data will corrupt your savefile.")) {
+        if (confirm("Are you sure you want to do this? Any mistakes in the imported data will corrupt your savefile. (Please backup your data first)")) {
             localStorage.setItem(`dataBackup${beta?"Beta":""}`, localStorage.getItem(`playerData${beta?"Beta":""}`));
             clearInterval(dataTimer);
             reader.readAsText(file);

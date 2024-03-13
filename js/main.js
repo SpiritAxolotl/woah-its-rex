@@ -442,7 +442,7 @@ function updateIndex(type) {
     for (let ore of ores) {
         const hasAnyOre = hasAny(ore);
         if (document.getElementById(`${ore}Index`) !== null && hasAnyOre)
-            document.getElementById(`${ore}Index`).classList.add("hasOne");
+            document.getElementById(`${ore}Index`).classList.add("completedLayer");
         const index = allLayers.indexOf(getLayerFromOre(ore));
         const name = index !== -1 ? allLayersNames[index] : spawnsEverywhere.includes(ore) ? "Everywhere" : undefined;
         const display = document.getElementById(`layerDisplay${name}`);
@@ -451,12 +451,12 @@ function updateIndex(type) {
                 visible(display);
             let isCompleted = true;
             for (let child of display.children) {
-                if (!child.classList.contains("oreTitle") && !child.classList.contains("hasOne")) {
+                if (!child.classList.contains("oreTitle") && !child.classList.contains("completedLayer")) {
                     isCompleted = false;
                     break;
                 }
             }
-            if (isCompleted) display.getElementsByClassName("oreTitle")[0].classList.add("hasOne");
+            if (isCompleted) display.getElementsByClassName("oreTitle")[0].classList.add("completedLayer");
         }
     }
 }

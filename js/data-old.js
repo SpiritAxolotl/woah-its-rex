@@ -91,7 +91,7 @@ function loadAllDataOld() {
     } catch(error) {
         console.error(error);
         localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}Old`));
-        window.alert("DATA CORRUPTION DETECTED, EXPORT YOUR SAVE FILE AND CONTACT A MODERATOR IN THE DISCORD");
+        window.alert(corruptionAlert);
         return false;
     }
 }

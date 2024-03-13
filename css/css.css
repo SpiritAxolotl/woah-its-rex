@@ -263,7 +263,7 @@ input[type="color"]::after {
 }
 
 .actualCraftButton {
-  margin-top: 0.5em;
+  margin: 0.5em;
 }
 
 .recipeIngredient {
@@ -278,7 +278,7 @@ input[type="color"]::after {
   color: var(--accent);
 }
 
-.hasOne {
+.completedLayer {
   color: var(--accent);
 }
 
