@@ -23,23 +23,20 @@
   --hoverfg: #000;
 }
 
+* {
+  image-rendering: pixelated;
+  box-sizing: border-box;
+  font-family: "Lexend", "Twemoji", monospace;
+}
+
 body {
   overscroll-behavior: none;
   background-color: var(--bgprimary);
   max-height: 100%;
-  font-family: "Courier";
   margin: 0;
   color: var(--text);
   padding: 0;
 }
-
-/**::-webkit-scrollbar {
-  width: 0;
-}*/
-
-/** {
-  overflow: clip;
-}*/
 
 @supports (scrollbar-color: auto) {
   * {
@@ -62,6 +59,10 @@ p {
   margin: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: auto 0;
+}
+
 button {
   cursor: pointer;
   font-size: 0.9em;
@@ -74,10 +75,49 @@ button {
   border-width: 0.05em;
   border-radius: 0.25em;
   color: var(--text);
-  /* font-family: "Lexend", sans-serif; */
   text-align: center;
-  min-width: 5em;
   text-wrap: nowrap;
+}
+
+code {
+  background-color: var(--bgprimary);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+p, label, input[type=file] {
+  color: var(--text);
+}
+
+hr {
+  border-color: var(--border);
+}
+
+input[type="text"] {
+  width: 100%;
+  background-color: var(--bgsecondary);
+  border: var(--border) 1px solid;
+  padding-left: 1em;
+  color: var(--text);
+  border-radius: 0.2em;
+}
+
+input[type="color"] {
+  border: solid 1px var(--border);
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0;
+}
+
+input[type="color"]::after {
+  content: "";
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  overflow: hidden;
 }
 
 #mainContent {
@@ -95,21 +135,9 @@ button {
   font-family: "Twemoji", monospace;
 }
 
-/*#teleportButton {
-  display: flex;
-  position: absolute;
-  align-items: center;
-}*/
-
 .invisible {
   display: none !important;
   visibility: hidden !important;
-}
-
-* {
-  image-rendering: pixelated;
-  box-sizing: border-box;
-  font-family: "Lexend", "Twemoji", monospace;
 }
 
 #credits {
@@ -122,35 +150,32 @@ button {
 
 #inventoryDisplay {
   overflow: hidden auto;
-  /* justify-self: stretch; */
   border-style: solid;
   border-color: var(--border);
   border-left: none;
   border-top: none;
   border-right: none;
-  /* margin-top: 0.35em; */
   flex-grow: 1;
 }
 
 .movementButtons {
   max-width: 100%;
+  min-width: 0;
+  height: 4em;
   display: flex;
+  border-bottom: solid var(--border);
   & button {
     font-size: 1.2em;
-    height: max-content;
+    padding: 0;
     margin: 0;
     border-radius: 0em;
     border: none;
-    border-bottom: solid var(--border);
     background-color: var(--bgsecondary);
-    flex-grow: 1;
-    padding: 1em;
-    transition: background-color 0.2s, color 0.2s, border 0.5s;
+    transition: "background-color" 0.2s, color 0.2s, border 0.5s;
   }
-}
-
-.movementButtons > button {
-  width: 100%;
+  & > button {
+    flex-grow: 1;
+  }
 }
 
 .movementButtons button:hover {
@@ -161,6 +186,7 @@ button {
 #teleportContainer {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   & button {
     padding: 0;
   }
@@ -171,15 +197,13 @@ button {
   flex-direction: row;
   align-items: center;
   & > button {
-    border-bottom: none;
-    min-width: 3em;
+    flex-grow: 1;
   }
 }
 
-#inventoryDisplay > * {
-  font-size: 0.85em;
-  height: 10%;
-  text-align: center;
+#teleportButton {
+  width: 100%;
+  height: 100%;
 }
 
 #recipeTitle {
@@ -200,9 +224,12 @@ button {
   display: block;
 }
 
-.totalAndProbContainer > * {
-  text-align: left;
-  margin: 0;
+.totalAndProbContainer {
+  width: 100%;
+  & > p {
+    text-align: left;
+    margin: 0;
+  }
 }
 
 .oreTotal {
@@ -221,15 +248,12 @@ button {
   text-align: left;
   gap: 0.4em;
   background: var(--bgsecondary);
-  height: min-content;
-  max-height: 100px;
   padding: 10px;
   border: 1px solid var(--border);
-  font-size: 2em;
+  font-size: 1.7em;
 }
 
 .oreTitle {
-  /*margin-top: 1em;*/
   margin: 0;
   font-size: 1.2em;
 }
@@ -283,7 +307,6 @@ button {
   justify-content: center;
   align-items: center;
   margin: auto 0;
-  /* gap: 3em; */
   text-align: left;
   & > * {
     width: 16rem;
@@ -310,7 +333,6 @@ button {
   position: absolute;
   top: 0;
   left: 0;
-  backdrop-filter: blur(5px) brightness(0.5);
   z-index: 3;
   display: flex;
   flex-direction: column;
@@ -321,21 +343,11 @@ button {
   margin: 0.3em 0;
 }
 
-/*#dataText {
-  width: 50vw;
-}*/
-
-/*#dataFile, label {
-  font-family: "Arial";
-}*/
-
 #blocksMined {
   margin: 0;
-  /* margin-top: 1em; */
 }
 
 #blockDisplay {
-  /* padding: 0.5em 0; */
   margin: 0;
   line-height: 1.14em;
   white-space: nowrap;
@@ -367,18 +379,10 @@ button {
   padding: 1rem;
 }
 
-p, label, input[type=file] {
-  color: var(--text);
-}
-
 .mobile {
   padding-bottom: 0.25em;
   display: block;
 }
-
-/*.mobile > button {
-  width: 6vw;
-}*/
 
 #crafting, #craftingClick {
   margin-bottom: 0.5rem;
@@ -408,9 +412,7 @@ p, label, input[type=file] {
 .col {
   height: 100vh;
   max-height: 100vh;
-  /*width: 50%;*/
   flex: auto;
-  /* padding-bottom: 0 !important;*/ /*figure out why this doesn't work | ?????????*/
   & > * {
     overscroll-behavior: none;
   }
@@ -424,7 +426,7 @@ p, label, input[type=file] {
 #creditsContainer {
   display: flex;
   flex-direction: column;
-  gap: 3em;
+  gap: 1em;
   align-items: center;
 }
 
@@ -437,14 +439,12 @@ p, label, input[type=file] {
 }
 
 .headerButtons > * {
-  /* font-size: 2em; */
   border: none;
-  border-bottom: solid var(--border);
   background-color: var(--bgsecondary);
   flex-grow: 1;
   color: var(--text);
   padding: 1em;
-  transition: background-color 0.2s, color 0.2s, border 0.5s;
+  transition: "background-color" 0.2s, color 0.2s, border 0.5s;
 }
 
 .headerButtons > *:hover {
@@ -462,11 +462,10 @@ p, label, input[type=file] {
 }
 
 #playButton {
-  max-height: 100px;
+  min-width: 5em;
   font-size: 2em;
-  /* border: none; */
   background-color: var(--bgsecondary);
-  transition: all 0.2s;
+  transition: 0.2s;
 }
 
 #playButton:hover {
@@ -477,8 +476,6 @@ p, label, input[type=file] {
 #col-1 {
   width: 25%;
   background-color: var(--bgprimary);
-  /*resize: horizontal;*/
-  /*float: left;*/
   padding: 0;
 }
 
@@ -512,7 +509,6 @@ p, label, input[type=file] {
 
 #discord {
   display: flex;
-  /*align-self: flex-end;*/
   align-items: center;
   justify-content: center;
   text-decoration: none;
@@ -524,7 +520,6 @@ p, label, input[type=file] {
     margin: 0.5em 0.75em;
   }
   & > p {
-    /*width: 100%;*/
     font-size: 100%;
     margin: 0;
     text-wrap: nowrap;
@@ -574,22 +569,11 @@ p, label, input[type=file] {
   color: #cccccc;
 }
 
-code {
-  background-color: var(--bgprimary);
-  padding: 5px;
-  border-radius: 5px;
-}
-
 #masterVolume {
   text-align: center;
   max-width: 30em;
   gap: 2em;
   display: flex;
-  /*position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border-style: solid;
-  border-color: white;*/
 }
 
 #masterVolume > p {
@@ -622,11 +606,6 @@ code {
   color: white;
 }
 
-/* settings */
-h1, h2, h3, h4, h5, h6 {
-  margin: auto 0;
-}
-
 .revampedSettings {
   padding: 10px;
   color: var(--text);
@@ -636,7 +615,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .settingsContainer {
   padding: 30px;
-  transition: all 0.5s;
+  transition: 0.5s;
   background-color: var(--bgprimary);
 }
 
@@ -658,7 +637,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0 !important;
   position: relative;
   display: flex;
-  transition: background 0.2s, color 0.2s;
+  transition: "background" 0.2s, color 0.2s;
   &:hover {
     background-color: var(--hoverbg);
     color: var(--hoverfg);
@@ -668,25 +647,6 @@ h1, h2, h3, h4, h5, h6 {
 .logHolder, #generatedLogs {
   max-height: 500px;
   overflow-y: auto;
-}
-
-input[type="color"] {
-  border: solid 1px var(--border);
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  /* padding: 0; */
-  margin: 0;
-}
-
-input[type="color"]::after {
-  content: "";
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  overflow: hidden;
 }
 
 .themeContainer {
@@ -701,25 +661,12 @@ input[type="color"]::after {
   align-items: center;
 }
 
-hr {
-  border-color: var(--border);
-}
-
 select[id="themeSelect"] {
   width: 100%;
   font-size: larger;
   background-color: var(--bgsecondary);
   border: var(--border) 1px solid;
   padding: 0.5em;
-  color: var(--text);
-  border-radius: 0.2em;
-}
-
-input[type="text"] {
-  width: 100%;
-  background-color: var(--bgsecondary);
-  border: var(--border) 1px solid;
-  padding-left: 1em;
   color: var(--text);
   border-radius: 0.2em;
 }
