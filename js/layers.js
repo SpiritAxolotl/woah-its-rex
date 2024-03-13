@@ -393,9 +393,7 @@ function getLayerFromOre(ore) {
 const variantManager = new VariantManager();
 const layerManager = new LayerManager();
 
-const variantNamesMultisSorted = sortAlongsideArray(variantManager.getVariantMultis(), variantManager.getVariantNames());
-const variantNames = variantNamesMultisSorted[1];
-const variantMultis = variantNamesMultisSorted[0];
+const [variantMultis, variantNames] = sortAlongsideArray(variantManager.getVariantMultis(), variantManager.getVariantNames());
 const variantEmojis = variantManager.getVariantEmojis();
 //delete variantNamesMultisSorted;
 

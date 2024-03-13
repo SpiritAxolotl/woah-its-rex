@@ -171,7 +171,7 @@ input[type="color"]::after {
     border-radius: 0em;
     border: none;
     background-color: var(--bgsecondary);
-    transition: "background-color" 0.2s, color 0.2s, border 0.5s;
+    transition: background-color 0.2s, color 0.2s, border 0.5s;
   }
   & > button {
     flex-grow: 1;
@@ -444,7 +444,7 @@ input[type="color"]::after {
   flex-grow: 1;
   color: var(--text);
   padding: 1em;
-  transition: "background-color" 0.2s, color 0.2s, border 0.5s;
+  transition: background-color 0.2s, color 0.2s, border 0.5s;
 }
 
 .headerButtons > *:hover {
@@ -637,7 +637,7 @@ input[type="color"]::after {
   margin-bottom: 0 !important;
   position: relative;
   display: flex;
-  transition: "background" 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s;
   &:hover {
     background-color: var(--hoverbg);
     color: var(--hoverfg);

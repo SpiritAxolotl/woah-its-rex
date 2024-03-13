@@ -126,6 +126,6 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
   - march 13th babyyyyyy
 - [x] Set up gitlab mirror in the meantime (hi!)
 - [x] More debugging features
-  - `debugIsActuallyPlaying`
+  - `debugActuallyPlaying`
   - `debugVerbose`
 - [ ] Add a save conversion back to amber's old save file format (for people who want to switch back to the original)
