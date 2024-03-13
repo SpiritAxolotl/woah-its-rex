@@ -108,7 +108,7 @@ function loadContent() {
     isPlaying = true;
     totalTimePlayedTimer = setInterval(incrementTimePlayed, 1000);
     let allAudios = [];
-    keepRunningAudio = new Audio("sounds/ambience2.mp3")
+    keepRunningAudio = new Audio("sounds/ambience2.mp3");
     keepRunningAudio.load();
     keepRunning();
     chill = new Audio("sounds/spinechill.mp3");
@@ -117,7 +117,7 @@ function loadContent() {
     unfath = new Audio("sounds/unfathomable.mp3");
     ow = new Audio("sounds/otherworldly.mp3");
     zenith = new Audio("sounds/zenith.mp3");
-    magnificent = new Audio("sounds/magnificent.mp3")
+    magnificent = new Audio("sounds/magnificent.mp3");
     allAudios.push(chill);
     allAudios.push(ringing);
     allAudios.push(visionblur);
@@ -133,8 +133,8 @@ function loadContent() {
     magnificent.volume = 1;
     zenith.volume = 0.6;
     
-    for (let i = 0; i < allAudios.length; i++)
-        allAudios[i].load();
+    for (const audio of allAudios)
+        audio.load();
     invisible(document.getElementById("pressPlay"));
     visible(document.getElementById("mainContent"));
     canMine = true;
