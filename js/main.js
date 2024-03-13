@@ -21,7 +21,7 @@ let lastDirection = "";
 let resetsThisSession = 0;
 let warnClose = true;
 let autoSave = true;
-let caveToggle = true;
+let caveToggle = false; //default should be true but I'm disabling it for now
 let sellUpToVariant = "Normal";
 let turnOffAbilities = false;
 let debugVerbose = debug;
@@ -29,7 +29,6 @@ let stopOnRare = false;
 let totalTimePlayed = 0;
 let totalTimePlayedTimer = null;
 let settingsShown = false;
-
 
 let gears = {
     "ore-tracker": false,
@@ -506,7 +505,7 @@ function spawnMessage(ore, variant, location, caveInfo) {
     mineBlockData[location["y"]][location["x"]]["variant"] = variant;
     const fromCave = typeof caveInfo === "object" && caveInfo["fromCave"];
     if (Object.keys(pickaxes).indexOf(currentPickaxe) < 6 || oreList[ore]["prob"] > 2000000)
-        if (currentPickaxe === "geode-staff" || hasGear("ore-tracker"))
+        if (hasPickaxe("geode-staff") || hasGear("ore-tracker"))
             latestSpawns.unshift({
                 ore: ore,
                 variant: variant,

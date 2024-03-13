@@ -100,8 +100,8 @@ function loadAllData() {
             }, 100);
         }
         
-        caveToggle = data["settings"]["toggleCaves"] ?? true;
-        toggleCaves(caveToggle);
+        caveToggle = data["settings"]["toggleCaves"] ?? false;
+        //toggleCaves(caveToggle);
         
         canDisplay = data["settings"]["canDisplay"] ?? true;
         changeCanDisplay(canDisplay);

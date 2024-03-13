@@ -130,8 +130,18 @@ function hasAny(ore) {
     return false;
 }
 
+//maybe rename these to "equipped" or something
+
 function hasGear(gear) {
     return gears[gear] && currentGears.includes(gear);
+}
+
+function hasPickaxe(pick) {
+    return pickaxes[pick] && currentPickaxe === pick;
+}
+
+function hasItem(item) {
+    return hasGear(item) || hasPickaxe(item);
 }
 
 function sortArray(arr) {

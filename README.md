@@ -23,7 +23,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [x] Fix inventory being weird on first load (no data)
 - [x] Get Discord stuff clamped to the bottom of the screen \[low priority\]
 - [x] AND have the index/inventory stuff stretch \[low priority\]
-- [ ] AND get columns to stop scrolling horizontally \[low priority\]
+- [x] AND get columns to stop scrolling horizontally \[low priority\]
   - can probably do `overflow-x: hidden;`
 - [x] Implement old save file format transfer
 - [ ] Make sure that the old save file format transfer works well and consistently
@@ -37,7 +37,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
   - it's persistent ughh
   - when is it safe to check this off
   - fuck it
-- [ ] Make the audio work properly (audio is completely untested rn)
+- [ ] Make the audio work properly (audio is completely untested rn) \[high priority\]
 - [x] Fix inventory variant being set to 0 sometimes
 - [ ] Fix whatever causes the game to either freeze for a bit or just stop mining when automining
   - Probably a performance issue that can be solved with optimizing code
@@ -47,6 +47,9 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [ ] Fix index completion highlighting on ores themselves (only doesn't work for some ores)
 - [x] Nerf caves by making them more performant
 - [x] Players can seemingly keep mining when the game is paused if they pause during an activity
+- [ ] Fix cave ore generation from softlocking the game
+  - underlying issue of them being separate methods. will try to combine them with the normal methods at some point
+  - disabled caves until this is fixed
 
 ## New features
 - [x] Softcode things that will be harder to scale
@@ -91,9 +94,8 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 
 ## Misc.
 - [x] Update to latest
-- [ ] Combine gear and pickaxe crafting methods \[low priority\]
+- [ ] Combine gear and pickaxe crafting methods \[medium priority\]
 - [x] Make the layer variables arrays again with probability being stored in orelist
-- [ ] Rename all "block"s to "ore"?
 - [x] Add margins back to the craft buttons
 - [ ] Add a web worker so music doesn't have to keep the page active
 - [x] Add a readme
@@ -122,6 +124,7 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [ ] Move this TODO list to the github projects thing
 - [ ] Get un-dmca'd on github
   - march 9th babyyyyyy
+  - uhhhh
 - [x] Set up gitlab mirror in the meantime (hi!)
 - [x] More debugging features
   - `debugIsActuallyPlaying`

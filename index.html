@@ -181,6 +181,7 @@
             </div>
             <div class="settingsItem invisible" id="audio">
                 <h1><i class="fas fa-volume-high"></i> Audio Settings</h1>
+                <h3>Note: Spawn sounds have been disabled until their code is refactored.</h3>
                 <hr>
                 <button class="muteButton" onclick="changeCanPlay('chills', this)" id="muteChills">Mute Chills</button>
                 <button class="muteButton" onclick="changeCanPlay('ringings', this)" id="muteRingings">Mute Ringings</button>
@@ -207,6 +208,7 @@
             </div>
             <div class="settingsItem invisible" id="gameplay">
                 <h1><i class="fas fa-gamepad"></i> Gameplay Settings</h1>
+                <h3>Note: Caves have been disabled until its code is refactored.</h3>
                 <hr>
                 <div class="flex">
                     <input autocomplete="off" type="text" id="mineCapacitySetter">
@@ -214,7 +216,7 @@
                 </div>
                 <hr>
                 <button onclick="warnBeforeClosingToggle()" id="warnBeforeClosingButton">Warn Before Closing: on</button>
-                <button onclick="toggleCaves()" id="toggleCavesButton">Toggle Caves: on</button>
+                <button id="toggleCavesButton">Toggle Caves: off</button> <!--onclick="toggleCaves()"-->
                 <button onclick="stopOnRareToggle()" id="stopOnRareButton">Stop on Rare: off</button>
                 <button onclick="switchSellUpToVariant()" id="sellUpToVariantButton">Sell Up To: Normal</button>
             </div>

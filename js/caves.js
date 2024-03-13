@@ -23,7 +23,7 @@ function generateCave(x, y, rate, reps, type) {
     }
     rate += random(9) / 450;
     reps++;
-    for (let origin of newOrigins)
+    for (const origin of newOrigins)
         generateCave(origin["x"], origin["y"], rate, reps, type);
 }
 
@@ -85,13 +85,14 @@ function mineCaveBlock(x, y, type) {
 }
 
 let caveLuck = 1;
+//I think this causes problems when rare ores spawn. disabling caves until fixed
 function generateCaveBlock(y, x, type) {
     let hasLog = false;
     const layer = type.concat(spawnsEverywhere);
     let summedProbability = 0;
     const baseLuck = Math.random()*addUpLayerProbs(layer);
     const modifiedLuck = baseLuck/caveLuck;
-    for (let ore of sortOres(layer)) {
+    for (const ore of sortOres(layer)) {
         summedProbability += 1/oreList[ore]["prob"];
         const chosenLuck = !unaffectedByLuck.includes(ore) ? modifiedLuck : baseLuck;
         if (chosenLuck < summedProbability) {
@@ -125,19 +126,19 @@ function getCaveMulti(cave) {
 const caveProbsSum = addUpLayerProbs(allCaveMultis);
 function getCaveType() {
     let luck = 1;
-    if (pickaxes["wings-of-glory"] && currentPickaxe === "wings-of-glory")
+    if (hasPickaxe("wings-of-glory"))
         luck = 2;
     let caveType = undefined;
     let summedProbability = 0;
     const chosenValue = Math.random()*caveProbsSum;
-    for (let cave of allCaveMultis) {
+    for (const cave of allCaveMultis) {
         summedProbability += 1/cave;
         if (chosenValue < summedProbability) {
             caveType = allCaves[allCaveMultis.indexOf(cave)];
             break;
         }
     }
-    return typeof caveType === "object" ? caveType : currentLayer;
+    return caveType ?? currentLayer;
 }
 
 let caveOreLocations = [];
@@ -150,15 +151,17 @@ function checkFromCave(y, x) {
     }
     return false;
 }
+
 function getCaveMultiFromOre(ore) {
-    for (let cave of allCaves) {
+    for (const cave of allCaves) {
         if (cave.includes(ore))
             return allCaveMultis[allCaves.indexOf(cave)];
     }
     return 1;
 }
+
 function getCaveTypeFromOre(ore) {
-    for (let cave of allCaves) {
+    for (const cave of allCaves) {
         if (cave.includes(ore)) {
             return cave;
         }

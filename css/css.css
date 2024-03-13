@@ -50,6 +50,8 @@ body {
 @supports selector(::-webkit-scrollbar) {
   *::-webkit-scrollbar {
     background: var(--bgprimary);
+    /*bit experimental. might remove*/
+    border-left: 1px solid var(--border);
   }
   *::-webkit-scrollbar-thumb {
     background: var(--bgsecondary);

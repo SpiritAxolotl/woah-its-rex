@@ -279,7 +279,9 @@ function displayRecipe(item, button) {
     recipes.appendChild(recipeElements[type][item]);
     visible(recipeElements[type][item]);
     let craftButton = document.querySelector(".actualCraftButton");
-    if (currentPickaxe === item || currentGears.includes(item))
+    if (gears["silly-tp"])
+        craftButton.innerHTML = "Teleport!";
+    else if (hasItem(item))
         craftButton.innerHTML = "Equipped!";
     else if (pickaxes[item] || gears[item])
         craftButton.innerHTML = "Equip!";
@@ -486,8 +488,8 @@ function craftGear(gear, button) {
 
 //gotta combine these at some point
 function showPickaxes() {
-    if (document.getElementById("showPickaxes").classList.contains("darkButton")) {
-        document.getElementById("showPickaxes").classList.remove("darkButton");
+    if (isVisible(document.getElementById("pickaxeCrafts"))) {
+        Array.from(document.getElementsByClassName("craftPickaxeButton")).forEach(i=>i.classList.remove("darkButton"));
         invisible(document.getElementById("pickaxeCrafts"));
         invisible(document.getElementById("displayRecipe"));
         invisible(document.getElementById("recipeTitle"));
@@ -501,8 +503,8 @@ function showPickaxes() {
     }
 }
 function showGears() {
-    if (document.getElementById("showGears").classList.contains("darkButton")) {
-        document.getElementById("showGears").classList.remove("darkButton");
+    if (isVisible(document.getElementById("gearCrafts"))) {
+        Array.from(document.getElementsByClassName("craftGearButton")).forEach(i=>i.classList.remove("darkButton"));
         invisible(document.getElementById("gearCrafts"));
         invisible(document.getElementById("displayRecipe"));
         invisible(document.getElementById("recipeTitle"));
