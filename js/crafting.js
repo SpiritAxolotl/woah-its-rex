@@ -279,7 +279,7 @@ function displayRecipe(item, button) {
     recipes.appendChild(recipeElements[type][item]);
     visible(recipeElements[type][item]);
     let craftButton = document.querySelector(".actualCraftButton");
-    if (gears["silly-tp"])
+    if (gears["silly-tp"] && currentRecipe === "silly-tp")
         craftButton.innerHTML = "Teleport!";
     else if (hasItem(item))
         craftButton.innerHTML = "Equipped!";
