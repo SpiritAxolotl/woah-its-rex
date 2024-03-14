@@ -115,6 +115,8 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
 - [ ] Combine data-old.js with data.js (using `data["version"]` to differentiate the different save files)
 - [x] Make a dev branch
   - [x] and have testable dev builds deploy at `https://rex.spax.zone/dev`
+- [ ] make an actual beta branch
+  - I want the workflow to be main < beta < dev, where dev is the actively worked on, gets merged into beta, and then merged into main
 - [ ] Add some sort of symmetry function to eliminate repetitive code (for pickaxe abilities)
 - [x] Set up webhook on discord to post whatever activity goes on in the repository
 - [ ] Add more organized credits
@@ -125,9 +127,11 @@ Report all bugs [here](https://gitlab.com/SpiritAxolotl/woah-its-rex/-/issues/ne
   - [ ] ores
   - [x] variants
 - [ ] Move this TODO list to the github projects thing
-- [ ] Get un-dmca'd on github
+- [x] Get un-dmca'd on github
   - march 13th babyyyyyy
+  - hell yeah
 - [x] Set up gitlab mirror in the meantime (hi!)
+  - permanently moved to gitlab actually
 - [x] More debugging features
   - `debugActuallyPlaying`
   - `debugVerbose`
