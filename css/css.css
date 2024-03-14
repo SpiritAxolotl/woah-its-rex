@@ -430,6 +430,14 @@ input[type="color"]::after {
   align-items: center;
 }
 
+#importantButtons, #switchButtons {
+  border-bottom: solid var(--border);
+}
+
+#showPickaxeGearButtons {
+  border-top: solid var(--border);
+}
+
 .headerButtons {
   display: flex;
   gap: 0;
