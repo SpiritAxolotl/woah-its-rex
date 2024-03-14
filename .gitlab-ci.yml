@@ -3,11 +3,27 @@ build-main:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
-    - git clone --depth=1 --branch=dev $CI_REPOSITORY_URL
-    - rm -rf ./woah-its-rex/.*
     - mkdir -p .public
-    - mv woah-its-rex .public/beta
     - cp -R * .public
+    - git clone --depth=1 --branch=dev $CI_REPOSITORY_URL
+    - mv woah-its-rex .public/dev
+    - git clone --depth=1 --branch=beta $CI_REPOSITORY_URL
+    - mv woah-its-rex .public/beta
+  artifacts:
+    paths:
+      - .public
+
+build-beta:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "beta"
+  script:
+    - mkdir -p .public/beta
+    - cp -R * .public/beta
+    - git clone --depth=1 --branch=main $CI_REPOSITORY_URL
+    - mv woah-its-rex .public
+    - git clone --depth=1 --branch=dev $CI_REPOSITORY_URL
+    - mv woah-its-rex .public/dev
   artifacts:
     paths:
       - .public
@@ -17,11 +33,12 @@ build-dev:
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
   script:
-    - git clone --depth=1 --branch=main $CI_REPOSITORY_URL
-    - rm -rf ./woah-its-rex/.*
-    - mv woah-its-rex .public
     - mkdir -p .public/beta
     - cp -R * .public/beta
+    - git clone --depth=1 --branch=main $CI_REPOSITORY_URL
+    - mv woah-its-rex .public
+    - git clone --depth=1 --branch=beta $CI_REPOSITORY_URL
+    - mv woah-its-rex .public/beta
   artifacts:
     paths:
       - .public
@@ -29,10 +46,12 @@ build-dev:
 pages:
   stage: deploy
   script:
+    - rm -rf .public/.*
     - mv .public public
   artifacts:
     paths:
       - public
   dependencies:
     - build-main
+    - build-beta
     - build-dev
