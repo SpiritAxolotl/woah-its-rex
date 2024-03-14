@@ -1,4 +1,5 @@
 const corruptionAlert = "Your save data wasn't read properly. Contact @spaxolotl in the Discord to report a potential bug!";
+const saveSuffix = dev ? "Dev" : beta ? "Beta" : "";
 function saveAllData(fileQuestionMark) {
     //localStorage.setItem("game2DataChanges", true);
     let dataStorage = {
@@ -33,13 +34,13 @@ function saveAllData(fileQuestionMark) {
     dataStorage["gears"]["curr"] = currentGears;
     if (fileQuestionMark)
         return JSON.stringify(dataStorage);
-    localStorage.setItem(`playerData${beta?"Beta":""}`, JSON.stringify(dataStorage));
+    localStorage.setItem(`playerData${saveSuffix}`, JSON.stringify(dataStorage));
 }
 
 function loadAllData() {
-    localStorage.setItem(`dataBackup${beta?"Beta":""}`, localStorage.getItem(`playerData${beta?"Beta":""}`));
+    localStorage.setItem(`dataBackup${saveSuffix}`, localStorage.getItem(`playerData${saveSuffix}`));
     try {
-        const data = JSON.parse(localStorage.getItem(`playerData${beta?"Beta":""}`));
+        const data = JSON.parse(localStorage.getItem(`playerData${saveSuffix}`));
         if (typeof data?.["version"] !== "number")
             return loadAllDataOld();
         
@@ -132,13 +133,13 @@ function loadAllData() {
                     currentGears.push(gear);
         if (typeof data["settings"]["autoSave"] === "boolean")
             autoSave = data["settings"]["autoSave"];
-        localStorage.removeItem(`dataBackup${beta?"Beta":""}`);
-        localStorage.setItem(`playedBefore${beta?"Beta":""}`, true);
+        localStorage.removeItem(`dataBackup${saveSuffix}`);
+        localStorage.setItem(`playedBefore${saveSuffix}`, true);
         warnBeforeClosing();
         return true;
     } catch (error) {
         console.error(error);
-        localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}`));
+        localStorage.setItem(`playerData${saveSuffix}`, localStorage.getItem(`dataBackup${saveSuffix}`));
         window.alert(corruptionAlert);
         return false;
     }
@@ -196,13 +197,13 @@ function importData() {
             try {
                 const data = fromBinary(reader.result);
                 console.log(data);
-                localStorage.setItem(`playerData${beta?"Beta":""}`, data);
+                localStorage.setItem(`playerData${saveSuffix}`, data);
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             } catch (error) {
                 console.error(error);
-                localStorage.setItem(`playerData${beta?"Beta":""}`, localStorage.getItem(`dataBackup${beta?"Beta":""}`));
+                localStorage.setItem(`playerData${saveSuffix}`, localStorage.getItem(`dataBackup${saveSuffix}`));
                 window.alert(corruptionAlert);
             }
         },
@@ -215,7 +216,7 @@ function importData() {
         }
     } else {
         if (confirm("Are you sure you want to do this? Any mistakes in the imported data will corrupt your savefile. (Please backup your data first)")) {
-            localStorage.setItem(`dataBackup${beta?"Beta":""}`, localStorage.getItem(`playerData${beta?"Beta":""}`));
+            localStorage.setItem(`dataBackup${saveSuffix}`, localStorage.getItem(`playerData${saveSuffix}`));
             clearInterval(dataTimer);
             reader.readAsText(file);
         }

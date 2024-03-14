@@ -1,6 +1,7 @@
 // this is actually really smart but im psure you can just access debug by fucking up with the functions and shit
 const debug = window.location.href.match(/^(?:https?:\/\/(?:127\.0\.0\.1|localhost)):\d{4,}/) !== null;
 const beta = window.location.href.match(/^(?:https?:\/\/.+?\/beta\/?)/) !== null; // || debug
+const dev = window.location.href.match(/^(?:https?:\/\/.+?\/dev\/?)/) !== null; // || debug
 
 //let debug = false;
 let isPlaying = false;
@@ -77,7 +78,7 @@ function init() {
     createInventory();
     createIndex();
     createMine();
-    const playedBefore = localStorage.getItem(`playedBefore${beta?"Beta":""}`) ?? typeof localStorage.getItem(`playerData${beta?"Beta":""}`) === "string";
+    const playedBefore = localStorage.getItem(`playedBefore${saveSuffix}`) ?? typeof localStorage.getItem(`playerData${saveSuffix}`) === "string";
     canContinue = playedBefore ? loadAllData() : true;
     if (canContinue) {
         repeatDataSave();
