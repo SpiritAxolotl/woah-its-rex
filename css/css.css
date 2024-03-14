@@ -370,7 +370,6 @@ input[type="color"]::after {
   flex-direction: column;
   justify-content: center;
   font-size: 0.75em;
-  border-top: 0.15em solid var(--border);
   margin: 0;
   padding: 1em;
 }
@@ -436,7 +435,6 @@ input[type="color"]::after {
   gap: 0;
   margin: 0;
   width: 100%;
-  border-top: solid var(--border);
 }
 
 .headerButtons > * {
