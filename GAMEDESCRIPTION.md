@@ -1,8 +1,12 @@
-# Woah it's Rex
+# Woah It's Rex
 
 > Start your journey from nothing and craft your way to the most overpowered pickaxes to ever exist! Collect ores ranging from 1/750,000 to over 1/5,000,000,000!
 
 This fork is meant to be a rewrite of the original, complimenting the core gameplay with a better UI and tons of QoL features.
+
+# IF THE GAME DOESN'T WORK FOR YOU
+If you get the error "**The connection was reset**", the domain spax.zone might be blocked by your internet service provider (because it was registered relatively recently, and ISPs tend to block new sites as a low-effort anti-scam measure). Contact them and request the domain get unblocked so you can play the game in the browser.  
+If you want to play the game still, the [gitlab mirror](https://spiritaxolotl.gitlab.io/woah-its-rex) should work for you. If you still want to play the game on galaxy, I recommend getting a VPN or proxy. Alternatively, I might write a small userscript that replaces the iframe for rex.spax.zone with the gitlab mirror.
 
 ## DIFFERENCES
 
@@ -20,6 +24,7 @@ This fork is meant to be a rewrite of the original, complimenting the core gamep
   - No more OS-specific emoji issues!
   - Won't work on mobile, but this game is REALLY not meant for mobile
 - A [beta version](https://rex.spax.zone/beta) for testing new experimental features before they get merged to stable
+- A [dev version](https://rex.spax.zone/dev) for testing cutting-edge features before they go to the beta
 - New "bloody" variant! (1/1000 rarity)
 - A plethora of bug fixes, too many to list (but [here](#notable-bugs-fixed))
 - Equippable gears!
