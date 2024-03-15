@@ -17,12 +17,11 @@ function toSurface() {
     for (let i = curY - 101; i < curY + 101; i++)
         if (i > -1 && mine[i] === undefined) 
             mine[i] = [];
-    blocksRevealedThisReset = 0;
     setLayer(curY);
     mine[curY][curX] = "⛏️";
     checkAllAround(curX, curY, 1);
     displayArea();
-    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset + "/" + mineCapacity + " Blocks Revealed This Reset";
+    document.getElementById("mineResetProgress").innerHTML = blocksRevealedThisReset.toLocaleString() + "/" + mineCapacity.toLocaleString() + " Blocks Revealed This Reset";
 }
 let resetting = false;
 async function mineReset() {

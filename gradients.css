@@ -1,0 +1,115 @@
+#mulchMallet span{
+    background: linear-gradient(to right, darkgray, darkgray);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#mudSickle span{
+    background: linear-gradient(to right, #412B15, #412B15);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#dirtRavager span{
+    background: linear-gradient(to right, #C4A484, #C4A484);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#voidCrusher span{
+    background: linear-gradient(to right, white, #808080);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#geodeStaff span{
+    background: linear-gradient(to right, #87CEEB, #2C75FF);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#earthSoiler span{
+    background: linear-gradient(to right, #53CB59 30%, 50%, #CF7C5C);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#cryptSmasher span{
+    background: linear-gradient(to right, #FFC71F 30%, 55%, #440B81);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#labyrinthianTide span{
+    background: linear-gradient(to right, #94BDC0 40%, 60%, #FFFF9D);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#LeafDestroyer span{
+    background: linear-gradient(to right, #E4A436 20%, #00F438, #33FFA4);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#planetBuster span{
+    background: linear-gradient(to right, #DF1717, #00CF11, #2100CA);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#whirlpoolOfFate span{
+    background: linear-gradient(to right, #A0EE30, #FCFF25, #CFFFFE, #9AC6F1);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#wingsOfGlory span{
+    background: linear-gradient(to right,rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#theKey span{
+    background: linear-gradient(to right, #ffffff, #404040);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#extremeEcholocator span{
+    background: linear-gradient(to right, #70E3FF, 65%, #2BFF00);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#corundumCaver span{
+    background: linear-gradient(to right, #FF143E 25%, 50%, #3127ED 75%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#starborneSlasher span{
+    background: linear-gradient(to right, #FF3607, #FFE428);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#nyabomb span{
+    background: linear-gradient(to right, #FF7011, 40%, #A9A9A9, #6C6C6C);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#lunarLightsabre span{
+    background: linear-gradient(to right, #C6F9FF, #5B6BC1, #FAFAFA);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#gemstoneEngraver span{
+    background: linear-gradient(to right, #FF9F39, 30%, #6BFFE5, 80%, #FF9F39);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#gamblersFallacy span{
+    background: linear-gradient(to right, #D10003, #F210A7, 50%, #FFDF55 90%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#exponentialCentrifuge span{
+    background: linear-gradient(to right, #FFE200, #464646, #FFE200, #464646, #FFE200, #464646, #FFE200);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#singularitySlammer span{
+    background: linear-gradient(to right, #C20000, #FF5300, #0D0D0D , #0D0D0D, #0D0D0D, #0D0D0D, #FF5300, #C20000);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#staffOfBinding span{
+    background: linear-gradient(to right, #F5F5F5, #0D0D0D, #FFFDAF, #0D0D0D, #F5F5F5);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

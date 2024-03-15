@@ -8,7 +8,7 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Woah It's Rex!</title>
-    <link rel="icon" type="image/x-icon" href="game-icon.png">
+    <link rel="icon" type="image/x-icon" href="media/game-icon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
@@ -31,6 +31,7 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
     <script src="caves.js"></script>
     <script src="commands.js"></script>
     <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="gradients.css">
 </head>
 <body>
     <noscript>
@@ -39,7 +40,7 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
         </div>
     </noscript>
     <div id="pressPlay">
-        <img class="roundcat" src="roundcat.png" alt="Round Cat Image">
+        <img class="roundcat" src="media/roundcat.png" alt="Round Cat Image">
 
 <div class="credits">
   <h2>Credits:</h2>
@@ -52,7 +53,7 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
     <li>Thanks to all the spreadsheet editors!</li>
   </ul>
   <a class="server-link" href="https://discord.gg/qxBBvAm2bM" target="_blank">
-    <img src="discord-logo.png" alt="Discord Logo">
+    <img src="media/discord-logo.png" alt="Discord Logo">
     Join the Server
   </a>
 
@@ -65,18 +66,18 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
     <div class="row">
         <div class="col-7">
             <div class="mobile">
-                <button onclick="goDirection('a')" class="movementButton">Left</button>
-                <button onclick="goDirection('s')" class="movementButton">Down</button>
-                <button onclick="goDirection('w')" class="movementButton">Up</button>
-                <button onclick="goDirection('d')" class="movementButton">Right</button>
-                <button onclick="teleport()" class="movementButton">Teleport!</button>
-            </div>
-            <div class="mobile">
-                <button onclick="moveOne('a', this)" class="movementButton">Left 1</button>
-                <button onclick="moveOne('s', this)" class="movementButton">Down 1</button>
-                <button onclick="moveOne('w', this)" class="movementButton">Up 1</button>
-                <button onclick="moveOne('d', this)" class="movementButton">Right 1</button>
-                <button onclick="switchDistance()" class="movementButton" id="meterDisplay">🟫 1,000m</button>
+                    <button onclick="goDirection('a')" class="movementButton horizontalArrow" id="leftAutoMine"></button>
+                    <button onclick="goDirection('s')" class="movementButton verticalArrow" id="downAutoMine"></button>
+                    <button onclick="goDirection('w')" class="movementButton verticalArrow" id="upAutoMine"></button>
+                    <button onclick="goDirection('d')" class="movementButton horizontalArrow" id="rightAutoMine"></button>
+                    <button onclick="teleport()" class="movementButton"id="teleportButton">Teleport!</button>
+                    </div>  
+                    <div class="mobile">
+                    <button onclick="moveOne('a', this)" class="movementButton horizontalArrow"id="leftOne"></button>
+                    <button onclick="moveOne('s', this)" class="movementButton verticalArrow"id="downOne"></button>
+                    <button onclick="moveOne('w', this)" class="movementButton verticalArrow"id="upOne"></button>
+                    <button onclick="moveOne('d', this)" class="movementButton horizontalArrow"id="rightOne"></button>
+                    <button onclick="switchDistance()" class="movementButton"id="meterDisplay">🟫 1,000m</button>
             </div>
             <p id="blockDisplay"></p>
             <div>
@@ -88,47 +89,47 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
         </div>
         <div class="col-2">
             <div>
-                <button id="resetMine" onclick="toSurface()">To Surface</button>
-                <button id="settings" onclick="showSettings()">Settings</button>
+                <button id="resetMine" class="topButtons" onclick="toSurface()">To Surface</button>
+                <button id="settings" class="topButtons" onclick="showSettings()">Settings</button>
             </div>
             <p id="mineResetProgress"></p>
             <p id="blocksMined">0 Blocks Mined</p>
             <p id="location">X: 0 | Y: 0</p>
             <p id="spawnMessage">Spawn Messages Appear Here!</p>
-            <p id="crafting">Crafting</p>
+            <br>
+            <p id="crafting" class="middleTitle">Crafting</p>
             <div id="craftingClick">
                 <div>
-                    <button onclick="showPickaxes()">Pickaxes</button>
-                    <button onclick="showGears()">Gears</button>
+                    <button onclick="showPickaxes()" class="craftingSelector">Pickaxes</button>
+                    <button onclick="showGears()" class="craftingSelector">Gears</button>
                 </div>
+                <br>
                 <div id="pickaxeCrafts">
-                    <br>
-                    <button class="craftingButton" onclick="displayRecipe(0, this)">Mulch Mallet</button>
-                    <button class="craftingButton" onclick="displayRecipe(1, this)">Mud Sickle</button>
-                    <button class="craftingButton" onclick="displayRecipe(2, this)">Dirt Ravager</button>
-                    <button class="craftingButton" onclick="displayRecipe(3, this)">Void Crusher</button>
-                    <button class="craftingButton" onclick="displayRecipe(4, this)">Geode Staff</button>
-                    <button class="craftingButton" onclick="displayRecipe(5, this)">Earth Soiler</button>
-                    <button class="craftingButton" onclick="displayRecipe(6, this)">Crypt Smasher</button>
-                    <button class="craftingButton" onclick="displayRecipe(7, this)">Labyrinthian Tide</button>
-                    <button class="craftingButton" onclick="displayRecipe(8, this)">77 Leaf Destroyer</button>
-                    <button class="craftingButton" onclick="displayRecipe(9, this)">Planet Buster</button>
-                    <button class="craftingButton" onclick="displayRecipe(10, this)">Whirlpool of Fate</button>
-                    <button class="craftingButton" onclick="displayRecipe(11, this)">Wings of Glory</button>
-                    <button class="craftingButton" onclick="displayRecipe(12, this)">The Key</button>
-                    <button class="craftingButton" onclick="displayRecipe(13, this)" style="display: none;">Extreme Echolocator</button>
-                    <button class="craftingButton" onclick="displayRecipe(14, this)" style="display: none;">Corundum Caver</button>
-                    <button class="craftingButton" onclick="displayRecipe(15, this)" style="display: none;">Starborne Slasher</button>
-                    <button class="craftingButton" onclick="displayRecipe(16, this)" style="display: none;" id="cat">Nyabomb</button>
-                    <button class="craftingButton" onclick="displayRecipe(17, this)" style="display: none;">Lunar Lightsabre</button>
-                    <button class="craftingButton" onclick="displayRecipe(18, this)" style="display: none;">Gemstone Engraver</button>
-                    <button class="craftingButton" onclick="displayRecipe(19, this)" style="display: none;">Gambler's Fallacy</button>
-                    <button class="craftingButton" onclick="displayRecipe(20, this)" style="display: none;">Exponential Centrifuge</button>
-                    <button class="craftingButton" onclick="displayRecipe(21, this)" style="display: none;">Singularity Slammer</button>
-                    <button class="craftingButton" onclick="displayRecipe(22, this)" style="display: none;">Staff of Binding</button>
+                    <button class="craftingButton" onclick="displayRecipe(0, this)" id="mulchMallet"><span>Mulch Mallet</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(1, this)" id="mudSickle"><span>Mud Sickle</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(2, this)" id="dirtRavager"><span>Dirt Ravager</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(3, this)" id="voidCrusher"><span>Void Crusher</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(4, this)" id="geodeStaff"><span>Geode Staff</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(5, this)" id="earthSoiler"><span>Earth Soiler</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(6, this)" id="cryptSmasher"><span>Crypt Smasher</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(7, this)" id="labyrinthianTide"><span>Labyrinthian Tide</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(8, this)" id="LeafDestroyer"><span>77 Leaf Destroyer</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(9, this)" id="planetBuster"><span>Planet Buster</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(10, this)" id="whirlpoolOfFate"><span>Whirlpool of Fate</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(11, this)" id="wingsOfGlory"><span>Wings of Glory</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(12, this)" id="theKey"><span>The Key</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(13, this)" id ="extremeEcholocator" style="display: none;"><span>Extreme Echolocator</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(14, this)" id="corundumCaver" style="display: none;"><span>Corundum Caver</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(15, this)" id="starborneSlasher" style="display: none;"><span>Starborne Slasher</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(16, this)" id="nyabomb" style="display: none;" id="cat"><span>Nyabomb</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(17, this)" id="lunarLightsabre" style="display: none;"><span>Lunar Lightsabre</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(18, this)" id="gemstoneEngraver" style="display: none;"><span>Gemstone Engraver</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(19, this)" id="gamblersFallacy" style="display: none;"><span>Gambler's Fallacy</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(20, this)" id="exponentialCentrifuge" style="display: none;"><span>Exponential Centrifuge</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(21, this)" id="singularitySlammer" style="display: none;"><span>Singularity Slammer</span></button>
+                    <button class="craftingButton" onclick="displayRecipe(22, this)" id="staffOfBinding" style="display: none;"><span>Staff of Binding</span></button>
                 </div>
                 <div id="gearCrafts" class="hidden">
-                    <br>
                     <button class="craftingButton" onclick="displayRecipe(0, this)">Ore Tracker</button>
                     <button class="craftingButton" onclick="displayRecipe(1, this)">Real Candilium</button>
                     <button class="craftingButton" onclick="displayRecipe(2, this)">Real Vitriol</button>
@@ -152,12 +153,9 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
                     <button class="craftingButton" onclick="displayRecipe(20, this)" style="display: none;"disabled="true">Statistical Analyzer</button>
                 </div>
             </div>
-            <hr>
-            <div id="displayRecipe">
-
-                
-            </div>
-            <hr>
+            <p id = "craftingRecipeTitle" class="middleTitle" style="display: none;">Recipe</p>
+            <div id="displayRecipe"></div>
+            <p id = "descriptionTitle" class="middleTitle" style="display: none;">Description</p>
             <div id="craftableDescriptions">
                 <p class="itemDescription" id="pickaxe0Description" style="display: none;">Mines a few blocks in every direction.<br>Has an ability proc rate of 1/30.<br>Has 1.2x luck.</p>
                 <p class="itemDescription" id="pickaxe1Description" style="display: none;">Mines a small square around the player.<br>Has an ability proc rate of 1/35.<br>Has 1.35x luck.</p>
@@ -212,8 +210,10 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
         </div>
         <div class="col-3">
             
-            <div>
-                <button id="switchInventory" class="inventoryButtons" onclick="switchInventory()">Normal Inventory</button>
+            <div style="height: 3%;">
+                <button id="inventoryLeft" onclick="switchInventory(-1)" class="inventoryButtons"><</button>
+                <button id="switchInventory" class="inventoryButtons">Normal Inventory</button>
+                <button id="inventoryRight" onclick="switchInventory(1)" class="inventoryButtons">></button>
             </div>
             <div id="inventoryDisplay">
                 <p id="inventory1"   style="display:block;"></p>
@@ -222,8 +222,8 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
                 <p id="inventory4"   style="display:none;"></p>
             </div>
             <a href="https://discord.gg/aVXkHB7Y4w" id="discord" target="_blank">
-                <img src="discord-logo.png" alt="Discord">
-                <p>Join the Discord!</p>
+                <img src="media/discord-logo.png" alt="Discord">
+                <u><p>Join the Discord!</p></u>
             </a>
         </div>
     </div>
@@ -244,7 +244,7 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
       <br>
       <!--ADD TEST BUTTON-->
       <div id="musicStuff">
-        <button id="musicButton" class="inventoryButtons" onclick="toggleMusic()">Mute Music</button>
+        <button id="musicButton" onclick="toggleMusic()">Mute Music</button>
         <p>Music Volume</p>
         <label class="slidecontainer">
             <input type="range" min="0" max="100" value="100" onchange="changeMusicVolume(this.value)" id="musicVolume">
@@ -342,6 +342,9 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
       <div class="inputAndButton">
         <button class="toggleDisplay fullyRounded" onclick="togglePathBlocks();" id="pathBlocks">Invisible Path Blocks</button>
       </div>
+      <div class="inputAndButton">
+        <button class="toggleDisplay fullyRounded" onclick="toggleCaves();" id="caveToggle">Toggle Caves</button>
+      </div>
     </div>
 
     <div class="frame" id="color-frame">
@@ -387,9 +390,19 @@ Written by Amber Blessing <ambwuwu@gmail.com>, January 2024
         <div id="indexDisplay">
             <h2>Ore Index</h2>
             <hr>
-            <p id="indexSwitchButton">Layer Placeholder</p>
-            <button class="indexDirectionButton" onclick="switchLayerIndex(-1)"><</button>
-            <button class="indexDirectionButton" onclick="switchLayerIndex(1)">></button>
+            <div class="container-fluid h-10 d-flex flex-column">
+                <div class="row h-25">
+                    <div class="col-md-5" style="z-index: 1;">
+                        <button class="indexDirectionButton" onclick="switchLayerIndex(-1)" style="float: right; margin-right: -4vh;"><</button>
+                    </div>
+                    <div class="col-md-2" style="z-index: 0;">
+                            <p id="indexSwitchButton">Layer Placeholder</p>
+                    </div>
+                    <div class="col-md-5" style="z-index: 1;">
+                        <button class="indexDirectionButton" onclick="switchLayerIndex(1)" style="float: left; margin-left: -4vh;">></button>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div id="oreCardHolder">
