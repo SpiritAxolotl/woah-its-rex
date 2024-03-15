@@ -87,7 +87,7 @@ function init() {
         //document.getElementById("dataText").value = "";
         createIndex();
     }
-    for (let element of document.getElementsByClassName("itemDescription"))
+    for (const element of document.getElementsByClassName("itemDescription"))
         invisible(element)
     //for (let ore in oreList) updateIndex(ore);
 }
@@ -112,6 +112,7 @@ function loadContent() {
     keepRunningAudio = new Audio("sounds/ambience2.mp3");
     keepRunningAudio.load();
     keepRunning();
+    /*
     chill = new Audio("sounds/spinechill.mp3");
     ringing = new Audio("sounds/transcendent.mp3");
     visionblur = new Audio("sounds/visionblur.mp3");
@@ -133,9 +134,9 @@ function loadContent() {
     ow.volume = 0.6;
     magnificent.volume = 1;
     zenith.volume = 0.6;
-    
     for (const audio of allAudios)
         audio.load();
+    */
     invisible(document.getElementById("pressPlay"));
     visible(document.getElementById("mainContent"));
     canMine = true;
