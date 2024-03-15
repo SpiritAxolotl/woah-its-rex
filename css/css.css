@@ -353,7 +353,7 @@ input[type="color"]::after {
   line-height: 1.14em;
   white-space: nowrap;
   letter-spacing: -0.1em;
-  font-size: 1.5vw;
+  font-size: 1.4vw;
   user-select: none;
   text-wrap: nowrap;
   text-align: center;
@@ -372,6 +372,8 @@ input[type="color"]::after {
   font-size: 0.75em;
   margin: 0;
   padding: 1em;
+  border-top: solid var(--border);
+  overflow: hidden auto;
 }
 
 #spawnMessage {

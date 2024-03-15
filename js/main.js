@@ -30,6 +30,7 @@ let stopOnRare = false;
 let totalTimePlayed = 0;
 let totalTimePlayedTimer = null;
 let settingsShown = false;
+let currentTheme = "Dark"; //"Custom" when custom
 
 let gears = {
     "ore-tracker": false,

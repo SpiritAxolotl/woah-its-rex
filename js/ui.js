@@ -25,41 +25,31 @@ function setStyleVariable(prop, val) {
 }
 
 function updateColorPickers() {
-    const colorPickers = document.getElementsByClassName("colorPicker");
-    
-    for (let i = 0; i < colorPickers.length; i++) {
-        const picker = colorPickers[i].getElementsByTagName("input")[0];
-        const prop = picker.id;
-        picker.value = getComputedStyle(document.body).getPropertyValue("--"+prop).trim();
-    }
+    Array.from(document.querySelectorAll(".colorPicker > input")).forEach(picker => {
+        picker.value = getComputedStyle(document.body).getPropertyValue(`--${picker.id}`).trim();
+    });
 }
 function checkColorPickers() {
-    const colorPickers = document.getElementsByClassName("colorPicker");
-    for (let i = 0; i < colorPickers.length; i++) {
-        const picker = colorPickers[i].getElementsByTagName("input")[0];
+    Array.from(document.querySelectorAll(".colorPicker > input")).forEach(picker => {
         picker.onchange = () => {
             setStyleVariable(picker.id, picker.value);
             saveTheme();
             updateColorPickers();
         }
-    }
+    });
 }
 
 function saveTheme() {
-    const colorPickers = document.getElementsByClassName("colorPicker");
-    for (let i = 0; i < colorPickers.length; i++) {
-        const picker = colorPickers[i].getElementsByTagName("input")[0];
+    Array.from(document.querySelectorAll(".colorPicker > input")).forEach(picker => {
         localStorage.setItem(picker.id, picker.value);
-    }
+    });
 }
 function loadTheme() {
-    const colorPickers = document.getElementsByClassName("colorPicker");
-    for (let i = 0; i < colorPickers.length; i++) {
-        const picker = colorPickers[i].getElementsByTagName("input")[0];
+    Array.from(document.querySelectorAll(".colorPicker > input")).forEach(picker => {
         const prop = picker.id;
         const val = localStorage.getItem(prop);
         if (val) setStyleVariable(prop, val);
-    }
+    });
 }
 
 const themes = {
@@ -69,7 +59,9 @@ const themes = {
         "border": "#1e293b",
         "accent": "#22c55e",
         "error": "#ef4444",
-        "text": "#ffffff"
+        "text": "#fff",
+        "hoverbg": "#fff",
+        "hoverfg": "#000"
     },
     "light": {
         "bgprimary": "#f3f4f6",
@@ -77,7 +69,9 @@ const themes = {
         "border": "#d1d5db",
         "accent": "#22c55e",
         "error": "#ef4444",
-        "text": "#000000"
+        "text": "#000",
+        "hoverbg": "#000",
+        "hoverfg": "#fff"
     },
     "catppuccin": {
         "bgprimary":"#1e1e2e",
@@ -85,7 +79,9 @@ const themes = {
         "border": "#45475a",
         "accent": "#a6e3a1",
         "error": "#f38ba8",
-        "text": "#ffffff"
+        "text": "#fff",
+        "hoverbg": "#fff",
+        "hoverfg": "#000"
     },
     "rose": {
         "bgprimary": "#4c0519",
@@ -93,7 +89,9 @@ const themes = {
         "border": "#9d174d",
         "accent": "#f43f5e",
         "error": "#9f1239",
-        "text": "#ffffff"
+        "text": "#fff",
+        "hoverbg": "#fff",
+        "hoverfg": "#000"
     },
     "purple": {
         "bgprimary": "#24273a",
